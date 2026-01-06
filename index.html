@@ -3,91 +3,46 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Analyze With Rutuja</title>
-
-    <!-- Link CSS -->
+    <title>Rutuja Patel | Analytics Portfolio</title>
     <link rel="stylesheet" href="style.css">
 </head>
-
 <body>
 
-    <!-- ================= HERO SECTION ================= -->
-    <section class="hero">
-        <div class="hero-content">
-            <h1>Hi, I'm <span class="highlight">Rutuja</span> 👋</h1>
-            <p class="tagline">
-                Data Analyst • Business Analyst • Strategy • Storytelling With Data
-            </p>
-            <p class="intro">
-                I make data fun, meaningful, and easy to understand — 
-                for students, for companies, and for anyone curious about analytics.
-            </p>
+<!-- ================= HERO SECTION ================= -->
+<section class="hero">
 
-            <a href="#projects" class="btn">Explore My Work ↓</a>
-        </div>
+    <!-- LEFT SIDE - BUSINESS -->
+    <div class="hero-left" 
+        onmouseenter="showBusiness()" 
+        onmouseleave="showNeutral()">
+        <h2>Business Side of Analytics</h2>
+    </div>
 
-        <div class="hero-image">
-            <!-- You can replace this with your own image later -->
-            <img src="https://via.placeholder.com/250" alt="Rutuja Photo">
-        </div>
-    </section>
+    <!-- CENTER IMAGE -->
+    <div class="hero-center">
+        <img id="heroImage" src="images/neutral.jpg" alt="Rutuja Illustration">
+    </div>
 
-    <!-- ================= INTERACTIVE SECTION ================= -->
-    <section class="interactive" id="interactive">
-        <h2>Interactive Fun Zone 🎮</h2>
-        <p class="section-subtitle">Learn, play, and explore analytics in a fun way!</p>
+    <!-- RIGHT SIDE - DATA -->
+    <div class="hero-right" 
+        onmouseenter="showEngineer()" 
+        onmouseleave="showNeutral()">
+        <h2>Data Side of Analytics</h2>
+    </div>
 
-        <div class="card-container">
+</section>
 
-            <div class="card" onclick="showFunFact()">
-                <h3>Fun Fact</h3>
-                <p>I will show a random fun fact when you click!</p>
-            </div>
+<!-- ================= PROJECTS SECTION ================= -->
+<section class="projects">
+    <h2>My Projects</h2>
+    <div class="project-grid">
+        <div class="project-card">Project 1</div>
+        <div class="project-card">Project 2</div>
+        <div class="project-card">Project 3</div>
+    </div>
+</section>
 
-            <div class="card" onclick="showSkillMeter()">
-                <h3>Skills Meter</h3>
-                <p>See my skill levels magically animate.</p>
-            </div>
+<script src="script.js"></script>
 
-            <div class="card" onclick="startQuiz()">
-                <h3>Mini Quiz</h3>
-                <p>Guess your ideal analyst role.</p>
-            </div>
-
-        </div>
-    </section>
-
-    <!-- ================= PROJECTS SECTION ================= -->
-    <section class="projects" id="projects">
-        <h2>My Projects 💡</h2>
-        <p class="section-subtitle">A collection of work that reflects my journey.</p>
-
-        <div class="project-grid">
-
-            <div class="project-card">
-                <h3>CoStar Automation + OCR Pipeline</h3>
-                <p>Automated document extraction using OCR + APIs.</p>
-            </div>
-
-            <div class="project-card">
-                <h3>Indian Cuisine Predictive Modeling</h3>
-                <p>Flavor profile classification and prep-time prediction.</p>
-            </div>
-
-            <div class="project-card">
-                <h3>GeoServer Spatial Query API</h3>
-                <p>Polygon-based dynamic spatial search system.</p>
-            </div>
-
-            <div class="project-card">
-                <h3>Topic Modeling: TF-IDF, BERTopic, LLaMA</h3>
-                <p>Advanced NLP pipeline for Google Play reviews.</p>
-            </div>
-
-        </div>
-    </section>
-
-    <!-- Link JS -->
-    <script src="script.js"></script>
 </body>
 </html>
