@@ -57,8 +57,10 @@
     position: relative;
     display: flex;
     justify-content: center;
-    align-items: center;
+    align-items: flex-end;   /* Move image to the bottom */
+    transition: flex 0.4s ease, opacity 0.4s ease;
 }
+
 
 .hero-image-layer {
     position: absolute;
