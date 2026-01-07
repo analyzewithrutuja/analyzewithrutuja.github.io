@@ -2,7 +2,7 @@
 .hero {
     height: 100vh;
     display: flex;
-    align-items: center;
+    align-items: stretch;   /* ← IMPORTANT: removes vertical centering */
     position: relative;
     overflow: hidden;
 }
@@ -30,8 +30,12 @@
 /* LEFT + RIGHT PANELS (TEXT ONLY, NO MOVEMENT) */
 .hero-left, .hero-right {
     flex: 1;
-    text-align: center;
+    display: flex;
+    align-items: center;         /* Centers text vertically */
+    justify-content: center;
     cursor: pointer;
+    position: relative;
+    z-index: 3;                  /* Ensure text stays above image */
 }
 
 .hero-left h2, .hero-right h2 {
@@ -57,13 +61,15 @@
     position: relative;
     display: flex;
     justify-content: center;
-    align-items: flex-end;   /* Move image to the bottom */
-    transition: flex 0.4s ease, opacity 0.4s ease;
+    align-items: flex-end;   /* ← THIS makes image touch bottom */
+    padding-bottom: 0;       /* ← ensures no extra spacing */
+    z-index: 2;
 }
 
-
+/* IMAGE STACKING */
 .hero-image-layer {
     position: absolute;
+    bottom: 0;               /* ← Forces image to bottom of hero */
     width: 75%;
     max-width: 450px;
     opacity: 0;

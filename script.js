@@ -1,36 +1,31 @@
-function showNeutral() {
-    document.getElementById("imgNeutral").classList.add("active");
-    document.getElementById("imgBusiness").classList.remove("active");
-    document.getElementById("imgEngineer").classList.remove("active");
-}
+const imgNeutral = document.getElementById("imgNeutral");
+const imgBusiness = document.getElementById("imgBusiness");
+const imgEngineer = document.getElementById("imgEngineer");
 
-function showBusiness() {
-    document.getElementById("imgNeutral").classList.remove("active");
-    document.getElementById("imgBusiness").classList.add("active");
-    document.getElementById("imgEngineer").classList.remove("active");
-}
+const bgLeft = document.querySelector(".bg-left");
+const bgRight = document.querySelector(".bg-right");
 
-function showEngineer() {
-    document.getElementById("imgNeutral").classList.remove("active");
-    document.getElementById("imgBusiness").classList.remove("active");
-    document.getElementById("imgEngineer").classList.add("active");
+function showImage(activeImg) {
+    [imgNeutral, imgBusiness, imgEngineer].forEach(img => {
+        img.classList.remove("active");
+    });
+    activeImg.classList.add("active");
 }
-
 
 function hoverLeft() {
-    document.querySelector(".bg-left").style.width = "60%";
-    document.querySelector(".bg-right").style.width = "40%";
-    showBusiness();
+    showImage(imgBusiness);
+    bgLeft.style.width = "60%";
+    bgRight.style.width = "40%";
 }
 
 function hoverRight() {
-    document.querySelector(".bg-right").style.width = "60%";
-    document.querySelector(".bg-left").style.width = "40%";
-    showEngineer();
+    showImage(imgEngineer);
+    bgLeft.style.width = "40%";
+    bgRight.style.width = "60%";
 }
 
 function hoverNeutral() {
-    document.querySelector(".bg-left").style.width = "50%";
-    document.querySelector(".bg-right").style.width = "50%";
-    showNeutral();
+    showImage(imgNeutral);
+    bgLeft.style.width = "50%";
+    bgRight.style.width = "50%";
 }
