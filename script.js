@@ -1,31 +1,17 @@
-const imgNeutral = document.getElementById("imgNeutral");
-const imgBusiness = document.getElementById("imgBusiness");
-const imgEngineer = document.getElementById("imgEngineer");
-
-const bgLeft = document.querySelector(".bg-left");
-const bgRight = document.querySelector(".bg-right");
-
-function showImage(activeImg) {
-    [imgNeutral, imgBusiness, imgEngineer].forEach(img => {
-        img.classList.remove("active");
-    });
-    activeImg.classList.add("active");
+function showBusiness() {
+    document.getElementById("imgNeutral").classList.remove("active");
+    document.getElementById("imgEngineer").classList.remove("active");
+    document.getElementById("imgBusiness").classList.add("active");
 }
 
-function hoverLeft() {
-    showImage(imgBusiness);
-    bgLeft.style.width = "60%";
-    bgRight.style.width = "40%";
+function showEngineer() {
+    document.getElementById("imgNeutral").classList.remove("active");
+    document.getElementById("imgBusiness").classList.remove("active");
+    document.getElementById("imgEngineer").classList.add("active");
 }
 
-function hoverRight() {
-    showImage(imgEngineer);
-    bgLeft.style.width = "40%";
-    bgRight.style.width = "60%";
-}
-
-function hoverNeutral() {
-    showImage(imgNeutral);
-    bgLeft.style.width = "50%";
-    bgRight.style.width = "50%";
+function showNeutral() {
+    document.getElementById("imgBusiness").classList.remove("active");
+    document.getElementById("imgEngineer").classList.remove("active");
+    document.getElementById("imgNeutral").classList.add("active");
 }

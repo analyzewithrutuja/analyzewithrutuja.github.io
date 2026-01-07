@@ -1,13 +1,16 @@
-/* ================= HERO SECTION ================ */
+/* ============================================= */
+/*                HERO SECTION                   */
+/* ============================================= */
+
 .hero {
     height: 100vh;
     display: flex;
-    align-items: stretch;   /* ← IMPORTANT: removes vertical centering */
+    align-items: stretch;
     position: relative;
     overflow: hidden;
 }
 
-/* BACKGROUND PANELS (THE SLIDING BACKGROUND) */
+/* BACKGROUND PANELS */
 .bg-left, .bg-right {
     position: absolute;
     top: 0;
@@ -19,23 +22,22 @@
 
 .bg-left {
     left: 0;
-    background-color: #F7EDE9;   /* Business side */
+    background-color: #F7EDE9; /* Business color */
 }
 
 .bg-right {
     right: 0;
-    background-color: #EEEAF6;   /* Data side */
+    background-color: #EEEAF6; /* Data color */
 }
 
-/* LEFT + RIGHT PANELS (TEXT ONLY, NO MOVEMENT) */
+/* LEFT & RIGHT PANELS (TEXT ONLY) */
 .hero-left, .hero-right {
     flex: 1;
     display: flex;
-    align-items: center;         /* Centers text vertically */
+    align-items: center;
     justify-content: center;
     cursor: pointer;
-    position: relative;
-    z-index: 3;                  /* Ensure text stays above image */
+    z-index: 3;
 }
 
 .hero-left h2, .hero-right h2 {
@@ -44,32 +46,32 @@
     transition: 0.3s ease;
 }
 
-/* HOVER COLOR HIGHLIGHTS */
+/* TEXT HOVER COLORS */
 .hero-left:hover h2 {
     opacity: 1;
-    color: #af6b79; /* Mauve business */
+    color: #af6b79;
 }
 
 .hero-right:hover h2 {
     opacity: 1;
-    color: #7a6bb3; /* Lilac engineer */
+    color: #7a6bb3;
 }
 
-/* CENTER IMAGE WRAPPER */
+/* CENTER IMAGE AREA */
 .hero-center {
     flex: 1;
     position: relative;
     display: flex;
     justify-content: center;
-    align-items: flex-end;   /* ← THIS makes image touch bottom */
-    padding-bottom: 0;       /* ← ensures no extra spacing */
+    align-items: flex-end; /* Puts image at bottom */
+    padding-bottom: 0;
     z-index: 2;
 }
 
-/* IMAGE STACKING */
+/* IMAGE STACK */
 .hero-image-layer {
     position: absolute;
-    bottom: 0;               /* ← Forces image to bottom of hero */
+    bottom: 0;
     width: 75%;
     max-width: 450px;
     opacity: 0;
@@ -78,4 +80,64 @@
 
 .hero-image-layer.active {
     opacity: 1;
+}
+
+/* ============================================= */
+/*         BACKGROUND EXPANSION ON HOVER         */
+/* ============================================= */
+
+/* Hover Business Side */
+.hero-left:hover ~ .bg-left {
+    width: 60%;
+}
+.hero-left:hover ~ .bg-right {
+    width: 40%;
+}
+
+/* Hover Data Side */
+.hero-right:hover ~ .bg-right {
+    width: 60%;
+}
+.hero-right:hover ~ .bg-left {
+    width: 40%;
+}
+
+/* Reset inside hero */
+.hero:hover .bg-left,
+.hero:hover .bg-right {
+    transition: width 0.35s ease;
+}
+
+/* ============================================= */
+/*               PROJECT SECTION                */
+/* ============================================= */
+
+.projects {
+    padding: 60px 10%;
+    background: #fff;
+}
+
+.projects h2 {
+    text-align: center;
+    margin-bottom: 40px;
+}
+
+.project-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 20px;
+}
+
+.project-card {
+    background: #f3e7df;
+    padding: 20px;
+    border-radius: 10px;
+    text-align: center;
+    transition: 0.3s;
+    cursor: pointer;
+}
+
+.project-card:hover {
+    background: #e5d6cf;
+    transform: translateY(-5px);
 }
