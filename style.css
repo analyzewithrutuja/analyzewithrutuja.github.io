@@ -10,16 +10,17 @@ body {
     height: 100vh;
     display: flex;
     align-items: center;
-    justify-content: space-between;
+    justify-content: center;
     background: linear-gradient(to right, #F7EDE9 50%, #EEEAF6 50%);
-    transition: 0.3s ease;
+    transition: 0.4s ease;
 }
 
 /* LEFT + RIGHT PANELS */
 .hero-left, .hero-right {
-    width: 33%;
+    flex: 1;                  /* <-- replaces your fixed width */
     text-align: center;
     cursor: pointer;
+    transition: flex 0.4s ease, opacity 0.4s ease;
 }
 
 .hero-left h2, .hero-right h2 {
@@ -39,20 +40,55 @@ body {
     color: #7a6bb3; /* Lilac engineer */
 }
 
+/* HOVER EXPANSION — THE IMPORTANT PART */
+.hero-left:hover {
+    flex: 1.2;
+}
+.hero-left:hover ~ .hero-center,
+.hero-left:hover ~ .hero-right {
+    flex: 0.9;
+    opacity: 0.85;
+}
+
+.hero-right:hover {
+    flex: 1.2;
+}
+.hero-right:hover ~ .hero-center,
+.hero-right:hover ~ .hero-left {
+    flex: 0.9;
+    opacity: 0.85;
+}
+
 /* CENTER IMAGE WRAPPER */
 .hero-center {
-    width: 34%;
+    flex: 1;                 /* <-- replaces fixed width */
+    position: relative;
     display: flex;
     justify-content: center;
+    align-items: center;
+    transition: flex 0.4s ease, opacity 0.4s ease;
 }
 
 #heroImage {
     width: 75%;
     max-width: 450px;
-    transition: opacity 0.3s ease, transform 0.3s ease;
+    transition: opacity 0.4s ease, transform 0.4s ease;
 }
 
-/* PROJECT SECTION */
+/* ================= IMAGE LAYER SYSTEM FOR HOVER TRANSITIONS ================= */
+.hero-image-layer {
+    position: absolute;
+    width: 75%;
+    max-width: 450px;
+    opacity: 0;
+    transition: opacity 0.4s ease-in-out;
+}
+
+.hero-image-layer.active {
+    opacity: 1;
+}
+
+/* ================= PROJECT SECTION ================ */
 .projects {
     padding: 60px 10%;
     background: #fff;
@@ -81,25 +117,4 @@ body {
 .project-card:hover {
     background: #e5d6cf;
     transform: translateY(-5px);
-}
-
-/* ================= IMAGE LAYER SYSTEM FOR HOVER TRANSITIONS ================= */
-.hero-center {
-    position: relative;
-    width: 34%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-
-.hero-image-layer {
-    position: absolute;
-    width: 75%;
-    max-width: 450px;
-    opacity: 0;
-    transition: opacity 0.4s ease-in-out;
-}
-
-.hero-image-layer.active {
-    opacity: 1;
 }
