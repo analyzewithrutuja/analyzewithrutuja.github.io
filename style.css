@@ -82,3 +82,24 @@ body {
     background: #e5d6cf;
     transform: translateY(-5px);
 }
+
+/* ================= IMAGE LAYER SYSTEM FOR HOVER TRANSITIONS ================= */
+.hero-center {
+    position: relative;
+    width: 34%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.hero-image-layer {
+    position: absolute;
+    width: 75%;
+    max-width: 450px;
+    opacity: 0;
+    transition: opacity 0.4s ease-in-out;
+}
+
+.hero-image-layer.active {
+    opacity: 1;
+}
