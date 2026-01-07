@@ -1,26 +1,37 @@
-body {
-    margin: 0;
-    font-family: "Poppins", sans-serif;
-    background: #F5EDE2;
-    color: #2E2C2F;
-}
-
 /* ================= HERO SECTION ================ */
 .hero {
     height: 100vh;
     display: flex;
     align-items: center;
-    justify-content: center;
-    background: linear-gradient(to right, #F7EDE9 50%, #EEEAF6 50%);
-    transition: 0.4s ease;
+    position: relative;
+    overflow: hidden;
 }
 
-/* LEFT + RIGHT PANELS */
+/* BACKGROUND PANELS (THE SLIDING BACKGROUND) */
+.bg-left, .bg-right {
+    position: absolute;
+    top: 0;
+    height: 100%;
+    width: 50%;
+    transition: width 0.35s ease;
+    z-index: -1;
+}
+
+.bg-left {
+    left: 0;
+    background-color: #F7EDE9;   /* Business side */
+}
+
+.bg-right {
+    right: 0;
+    background-color: #EEEAF6;   /* Data side */
+}
+
+/* LEFT + RIGHT PANELS (TEXT ONLY, NO MOVEMENT) */
 .hero-left, .hero-right {
-    flex: 1;                  /* <-- replaces your fixed width */
+    flex: 1;
     text-align: center;
     cursor: pointer;
-    transition: flex 0.4s ease, opacity 0.4s ease;
 }
 
 .hero-left h2, .hero-right h2 {
@@ -40,42 +51,15 @@ body {
     color: #7a6bb3; /* Lilac engineer */
 }
 
-/* HOVER EXPANSION — THE IMPORTANT PART */
-.hero-left:hover {
-    flex: 1.2;
-}
-.hero-left:hover ~ .hero-center,
-.hero-left:hover ~ .hero-right {
-    flex: 0.9;
-    opacity: 0.85;
-}
-
-.hero-right:hover {
-    flex: 1.2;
-}
-.hero-right:hover ~ .hero-center,
-.hero-right:hover ~ .hero-left {
-    flex: 0.9;
-    opacity: 0.85;
-}
-
 /* CENTER IMAGE WRAPPER */
 .hero-center {
-    flex: 1;                 /* <-- replaces fixed width */
+    flex: 1;
     position: relative;
     display: flex;
     justify-content: center;
     align-items: center;
-    transition: flex 0.4s ease, opacity 0.4s ease;
 }
 
-#heroImage {
-    width: 75%;
-    max-width: 450px;
-    transition: opacity 0.4s ease, transform 0.4s ease;
-}
-
-/* ================= IMAGE LAYER SYSTEM FOR HOVER TRANSITIONS ================= */
 .hero-image-layer {
     position: absolute;
     width: 75%;
@@ -86,35 +70,4 @@ body {
 
 .hero-image-layer.active {
     opacity: 1;
-}
-
-/* ================= PROJECT SECTION ================ */
-.projects {
-    padding: 60px 10%;
-    background: #fff;
-}
-
-.projects h2 {
-    text-align: center;
-    margin-bottom: 40px;
-}
-
-.project-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-    gap: 20px;
-}
-
-.project-card {
-    background: #f3e7df;
-    padding: 20px;
-    border-radius: 10px;
-    text-align: center;
-    transition: 0.3s;
-    cursor: pointer;
-}
-
-.project-card:hover {
-    background: #e5d6cf;
-    transform: translateY(-5px);
 }

@@ -11,10 +11,14 @@
 <!-- ================= HERO SECTION ================= -->
 <section class="hero">
 
+    <!-- BACKGROUND PANELS FOR HOVER EFFECT -->
+    <div class="bg-left"></div>
+    <div class="bg-right"></div>
+
     <!-- LEFT SIDE - BUSINESS -->
     <div class="hero-left"
-        onmouseenter="showBusiness()"
-        onmouseleave="showNeutral()">
+        onmouseenter="hoverLeft()"
+        onmouseleave="hoverNeutral()">
         <h2>Business Side of Analytics</h2>
     </div>
 
@@ -27,12 +31,13 @@
 
     <!-- RIGHT SIDE - DATA -->
     <div class="hero-right"
-        onmouseenter="showEngineer()"
-        onmouseleave="showNeutral()">
+        onmouseenter="hoverRight()"
+        onmouseleave="hoverNeutral()">
         <h2>Data Side of Analytics</h2>
     </div>
 
 </section>
+
 
 
 <!-- ================= PROJECTS SECTION ================= -->
