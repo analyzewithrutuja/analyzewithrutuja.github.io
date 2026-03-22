@@ -667,20 +667,42 @@ footer .pink{color:var(--pink)}
       </div>
       <div>
         <div class="resume-block-title">💼 <span>Job Experience</span></div>
-        <div class="timeline">
           <div class="timeline-item anim">
             <span class="timeline-date">2025 — 2026</span>
             <div class="timeline-title">Applied Analyst (Capstone + Internship)</div>
             <div class="timeline-org">DST Investment Advisors</div>
-            <p class="timeline-desc">Collaborated with my peers during capstone to understand lead generation workflows and ETL pipeline design. Through hands-on teamwork and knowledge sharing, developed a strong grasp of the end-to-end process — now independently applying these concepts in an active internship to build lead pipelines for a new business use case.</p>
-            <!-- <span class="timeline-score">4.0/5</span> -->
+            <p class="timeline-desc">
+              • Collaborated with peers during capstone to master lead generation workflows and ETL pipeline design across 3+ platforms.<br>
+              • Learned to build scalable lead pipelines that cut manual prospecting time by 70% for a new business objective.<br>
+              • Managed project scope, risks, and milestones with structured stakeholder reviews.<br>
+            </p>
+            <div style="display:flex;flex-wrap:wrap;gap:6px;margin-top:12px;">
+              <span class="p-tag">Python</span>
+              <span class="p-tag">ETL Pipelines</span>
+              <span class="p-tag">CoStar API</span>
+              <span class="p-tag">Lead Generation</span>
+              <span class="p-tag">Project Management</span>
+            </div>
           </div>
+
           <div class="timeline-item anim">
             <span class="timeline-date">2021 — 2024</span>
             <div class="timeline-title">Operations & ERP Analyst</div>
             <div class="timeline-org">Hexaplast Industries</div>
-            <p class="timeline-desc">Worked across multiple departments — operations, sales, and finance — developing a strong understanding of end-to-end business processes. Applied SQL and Python for data extraction and analysis, and designed Tableau dashboards to visualize KPIs and support leadership decisions.</p>
-            <!-- <span class="timeline-score">4.0/5</span> -->
+            <p class="timeline-desc">
+              • Developed and maintained SQL and Python pipelines to identify data quality issues, ensuring reliable and timely data delivery across 3+ business units.<br>
+              • Led root cause analysis on workflow inefficiencies, leveraging Power BI and Excel to build automated reporting tools that improved operational efficiency by 40%.<br>
+              • Partnered with Procurement, Operations, and Sales stakeholders to translate business needs into forecasting models and dashboards.<br>
+              • Delivered actionable insights for strategic decision-making across 5+ departments.
+            </p>
+            <div style="display:flex;flex-wrap:wrap;gap:6px;margin-top:12px;">
+              <span class="p-tag">SQL</span>
+              <span class="p-tag">Python</span>
+              <span class="p-tag">Power BI</span>
+              <span class="p-tag">Tableau</span>
+              <span class="p-tag">Excel</span>
+              <span class="p-tag">Data Pipelines</span>
+            </div>
           </div>
         </div>
       </div>
@@ -804,14 +826,14 @@ footer .pink{color:var(--pink)}
       <div class="c-detail"><div class="c-icon">📍</div><div><span class="c-label">Address</span><span class="c-value">USA</span></div></div>
       <!--<div class="c-detail"><div class="c-icon">🌐</div><div><span class="c-label">Website</span><span class="c-value">www.jonelee.com</span></div></div> -->
     </div>
-    <div class="contact-form anim">
-      <div class="form-row"><label class="form-label">Your Name</label><input type="text" class="form-input" placeholder="Variable: Your_Name"></div>
-      <div class="form-row"><label class="form-label">Email Address</label><input type="email" class="form-input" placeholder="source_address@company.com"></div>
-      <div class="form-row"><label class="form-label">Subject</label><input type="text" class="form-input" placeholder="Select * From Opportunities"></div>
-      <div class="form-row"><label class="form-label">Message</label><textarea class="form-input" placeholder="Explain the variance in your portfolio..."></textarea></div>
-      <button class="btn-send">EXECUTE QUERY →</button>
+      <form class="contact-form anim" action="https://formspree.io/f/xdawvpgz" method="POST">
+        <div class="form-row"><label class="form-label">Your Name</label><input type="text" name="name" class="form-input" placeholder="Variable: Your_Name" required></div>
+        <div class="form-row"><label class="form-label">Email Address</label><input type="email" name="email" class="form-input" placeholder="source_address@company.com" required></div>
+        <div class="form-row"><label class="form-label">Subject</label><input type="text" name="subject" class="form-input" placeholder="Select * From Opportunities" required></div>
+        <div class="form-row"><label class="form-label">Message</label><textarea name="message" class="form-input" placeholder="Explain the variance in your portfolio..."></textarea></div>
+        <button type="submit" class="btn-send">EXECUTE QUERY →</button>
+      </form>
     </div>
-  </div>
 </section>
 
 <footer>
