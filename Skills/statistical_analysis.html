@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Statistical Analysis Skills | Rutuja Patel</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet"/>
+<style>
+:root{--pk:#e8187a;--pka:rgba(232,24,122,.1);--pkb:rgba(232,24,122,.2);--pkc:rgba(232,24,122,.5);--bg:#f8f7f5;--bg2:#ffffff;--bg3:#f2f1ef;--border:rgba(0,0,0,0.08);--border2:rgba(232,24,122,.25);--text:#1a1a1a;--muted:#6b6b6b;--dim:#aaaaaa;--mono:'JetBrains Mono',monospace;--sans:'Inter',sans-serif;--r:16px;--rl:22px}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--text);font-family:var(--sans);font-size:15px;line-height:1.7}
+nav{position:sticky;top:0;z-index:100;background:rgba(248,247,245,.95);backdrop-filter:blur(12px);border-bottom:1px solid var(--border);padding:0 5%;display:flex;align-items:center;justify-content:space-between;height:60px}
+.logo{font-family:var(--mono);font-size:.83rem;color:var(--muted);text-decoration:none}
+.logo span{color:var(--pk)}
+.nav-links{display:flex;gap:28px}
+.nav-links a{text-decoration:none;color:var(--muted);font-size:.8rem;font-weight:500;transition:color .2s}
+.nav-links a:hover{color:var(--pk)}
+.hero{max-width:900px;margin:0 auto;padding:40px 5% 32px;text-align:center}
+.eyebrow{font-family:var(--mono);font-size:.68rem;letter-spacing:.14em;text-transform:uppercase;color:var(--pk);margin-bottom:14px;font-weight:500}
+.hero h1{font-size:clamp(1.6rem,4vw,2.4rem);font-weight:700;line-height:1.15;letter-spacing:-.025em;color:var(--text);margin-bottom:8px}
+.hero-sub{font-size:.95rem;color:var(--muted);max-width:480px;margin:0 auto 40px}
+
+.hstat{flex:1;min-width:120px;padding:20px 16px;text-align:center;border-right:1px solid var(--border)}
+.hstat:last-child{border-right:none}
+.hstat-num{font-family:var(--mono);font-size:1.5rem;font-weight:700;color:var(--pk);line-height:1}
+.hstat-lbl{font-size:.68rem;color:var(--dim);letter-spacing:.05em;margin-top:4px}
+.page{max-width:900px;margin:0 auto;padding:32px 5% 80px}
+.sec{margin-bottom:56px}
+.sec-head{display:flex;align-items:center;gap:14px;margin-bottom:8px}
+.sec-num{font-family:var(--mono);font-size:.68rem;color:var(--pk);font-weight:500}
+.sec-title{font-size:1.1rem;font-weight:700;color:var(--text);letter-spacing:-.01em}
+.sec-line{flex:1;height:1px;background:var(--border)}
+.sec-desc{font-size:.83rem;color:var(--muted);margin-bottom:20px;padding-left:42px}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:14px}
+.card{background:var(--bg2);border:1px solid var(--border);border-radius:var(--rl);padding:20px 16px 16px;display:flex;flex-direction:column;align-items:center;gap:10px;transition:border-color .2s,box-shadow .2s;cursor:default}
+.card:hover{border-color:var(--pkb);box-shadow:0 4px 20px rgba(232,24,122,.08)}
+.chart-wrap{width:100%;height:64px;position:relative}
+.card-label{font-size:12.5px;font-weight:600;color:var(--text);text-align:center;line-height:1.35}
+.card-tag{font-size:10px;color:var(--pk);background:var(--pka);border:1px solid var(--pkb);border-radius:20px;padding:3px 10px;font-family:var(--mono);letter-spacing:.04em}
+.formula{background:var(--bg3);border:1px solid var(--border);border-left:3px solid var(--pk);border-radius:0 var(--r) var(--r) 0;padding:12px 16px;font-family:var(--mono);font-size:.75rem;color:#555;margin:12px 0;line-height:2}
+.formula .c{color:var(--dim)}
+.formula .k{color:var(--pk)}
+.wgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:14px}
+.wcard{background:var(--bg2);border:1px solid var(--border);border-radius:var(--rl);padding:20px;transition:border-color .2s,box-shadow .2s}
+.wcard:hover{border-color:var(--pkb);box-shadow:0 4px 20px rgba(232,24,122,.08)}
+.wcard-top{display:flex;align-items:center;gap:12px;margin-bottom:10px}
+.wcard-icon{width:36px;height:36px;border-radius:10px;background:var(--pka);border:1px solid var(--pkb);display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.wcard-icon svg{width:17px;height:17px;stroke:var(--pk);fill:none;stroke-width:1.6;stroke-linecap:round}
+.wcard-title{font-size:.88rem;font-weight:700;color:var(--text)}
+.wcard-desc{font-size:.78rem;color:var(--muted);line-height:1.65}
+.wcard-pills{display:flex;flex-wrap:wrap;gap:6px;margin-top:12px}
+.pill{font-family:var(--mono);font-size:.63rem;color:var(--muted);background:var(--bg3);border:1px solid var(--border);border-radius:5px;padding:2px 7px}
+footer{border-top:1px solid var(--border);padding:28px 5%;display:flex;align-items:center;justify-content:space-between;font-family:var(--mono);font-size:.7rem;color:var(--dim)}
+footer span{color:var(--pk)}
+@media(max-width:600px){.grid{grid-template-columns:repeat(2,1fr)}.nav-links{gap:14px}.hstat{min-width:80px}}
+</style>
+</head>
+<body>
+
+<div class="hero">
+  <h1>Statistical Analysis</h1>
+  <p style="font-size:.95rem;color:var(--muted);max-width:520px;margin:0 auto;line-height:1.7;">Skills that translate data into decisions.</p>
+</div>
+
+<div class="page">
+
+<div class="sec">
+  <div class="sec-head"><span class="sec-num">01</span><div class="sec-title">Descriptive Statistics</div><div class="sec-line"></div></div>
+  <p class="sec-desc">Summarising data before drawing any conclusions — the foundation of every analysis.</p>
+  <div class="grid">
+    <div class="card"><div class="chart-wrap"><canvas id="d1" role="img" aria-label="Center measures bar chart">Center</canvas></div><div class="card-label">Measures of Center</div><div class="card-tag">mean · median · mode</div></div>
+    <div class="card"><div class="chart-wrap"><canvas id="d2" role="img" aria-label="Spread visualization">Spread</canvas></div><div class="card-label">Measures of Spread</div><div class="card-tag">SD · variance · IQR</div></div>
+    <div class="card"><div class="chart-wrap"><canvas id="d3" role="img" aria-label="Z-score on bell curve">Z-score</canvas></div><div class="card-label">Z-Score & Position</div><div class="card-tag">z = (x−μ)/σ</div></div>
+    <div class="card"><div class="chart-wrap"><canvas id="d4" role="img" aria-label="Empirical rule chart">68-95-99</canvas></div><div class="card-label">Empirical Rule</div><div class="card-tag">68 · 95 · 99.7%</div></div>
+    <div class="card"><div class="chart-wrap"><canvas id="d5" role="img" aria-label="Skewness shapes">Skew</canvas></div><div class="card-label">Shape & Skewness</div><div class="card-tag">left · right · normal</div></div>
+  </div>
+</div>
+
+<div class="sec">
+  <div class="sec-head"><span class="sec-num">02</span><div class="sec-title">Probability</div><div class="sec-line"></div></div>
+  <p class="sec-desc">Quantifying uncertainty and building the backbone for statistical inference.</p>
+  <div class="grid">
+    <div class="card"><div class="chart-wrap"><canvas id="p1" role="img" aria-label="AND OR NOT probability bars">Rules</canvas></div><div class="card-label">Basic Rules</div><div class="card-tag">AND · OR · NOT</div></div>
+    <div class="card"><div class="chart-wrap"><canvas id="p2" role="img" aria-label="Conditional probability">Conditional</canvas></div><div class="card-label">Conditional Probability</div><div class="card-tag">P(A|B)</div></div>
+    <div class="card"><div class="chart-wrap"><canvas id="p3" role="img" aria-label="Prior to posterior update">Prior→Post</canvas></div><div class="card-label">Bayesian Updating</div><div class="card-tag">prior → posterior</div></div>
+    <div class="card"><div class="chart-wrap"><canvas id="bay2" role="img" aria-label="Types of priors">Priors</canvas></div><div class="card-label">Types of Priors</div><div class="card-tag">informative · uniform · Jeffreys</div></div>
+    <div class="card"><div class="chart-wrap"><canvas id="bay3" role="img" aria-label="Conjugate prior beta binomial">Conjugate</canvas></div><div class="card-label">Conjugate Priors</div><div class="card-tag">Beta-Binomial · Normal-Normal</div></div>
+    <div class="card"><div class="chart-wrap"><canvas id="bay4" role="img" aria-label="Likelihood function">Likelihood</canvas></div><div class="card-label">Likelihood Function</div><div class="card-tag">P(Data|θ)</div></div>
+    <div class="card"><div class="chart-wrap"><canvas id="bay5" role="img" aria-label="Bayes vs Frequentist">Freq vs Bay</canvas></div><div class="card-label">Frequentist vs Bayesian</div><div class="card-tag">fixed param · uncertain param</div></div>
+    <div class="card"><div class="chart-wrap"><canvas id="p4" role="img" aria-label="At least one complement">Complement</canvas></div><div class="card-label">At Least One</div><div class="card-tag">1 − P(none)</div></div>
+  </div>
+  <div class="formula"><span class="c"># Bayes Rule</span><br/>P(A|B) = <span class="k">P(B|A) × P(A)</span> / P(B)</div>
+</div>
+
+<div class="sec">
+  <div class="sec-head"><span class="sec-num">03</span><div class="sec-title">Probability Distributions</div><div class="sec-line"></div></div>
+  <p class="sec-desc">Modelling how data and outcomes are distributed — from coin flips to continuous measurements.</p>
+  <div class="grid">
+    <div class="card"><div class="chart-wrap"><canvas id="dist1" role="img" aria-label="Normal bell curve">Normal</canvas></div><div class="card-label">Normal Distribution</div><div class="card-tag">μ · σ</div></div>
+    <div class="card"><div class="chart-wrap"><canvas id="dist2" role="img" aria-label="Binomial bars">Binomial</canvas></div><div class="card-label">Binomial</div><div class="card-tag">n · p · q</div></div>
+    <div class="card"><div class="chart-wrap"><canvas id="dist3" role="img" aria-label="Poisson bars">Poisson</canvas></div><div class="card-label">Poisson</div><div class="card-tag">λ = rate</div></div>
+    <div class="card"><div class="chart-wrap"><canvas id="dist4" role="img" aria-label="Beta distribution">Beta</canvas></div><div class="card-label">Beta Distribution</div><div class="card-tag">α · β</div></div>
+    <div class="card"><div class="chart-wrap"><canvas id="dist5" role="img" aria-label="Normal approximation">Approx</canvas></div><div class="card-label">Normal Approximation</div><div class="card-tag">np≥10 · nq≥10</div></div>
+  </div>
+</div>
+
+<div class="sec">
+  <div class="sec-head"><span class="sec-num">04</span><div class="sec-title">Sampling & CLT</div><div class="sec-line"></div></div>
+  <p class="sec-desc">Using samples to make inferences about populations — and why averages are always normal.</p>
+  <div class="grid">
+    <div class="card"><div class="chart-wrap"><canvas id="s1" role="img" aria-label="CLT narrowing bell">CLT</canvas></div><div class="card-label">Central Limit Theorem</div><div class="card-tag">n ≥ 30</div></div>
+    <div class="card"><div class="chart-wrap"><canvas id="s2" role="img" aria-label="SE decreasing with n">SE</canvas></div><div class="card-label">Standard Error</div><div class="card-tag">SE = σ/√n</div></div>
+    <div class="card"><div class="chart-wrap"><canvas id="s3" role="img" aria-label="LLN convergence">LLN</canvas></div><div class="card-label">Law of Large Numbers</div><div class="card-tag">x̄ → μ</div></div>
+    <div class="card"><div class="chart-wrap"><canvas id="s4" role="img" aria-label="Sampling methods comparison">Methods</canvas></div><div class="card-label">Sampling Methods</div><div class="card-tag">SRS · stratified</div></div>
+    <div class="card"><div class="chart-wrap"><canvas id="s5" role="img" aria-label="Bias and chance error">Bias</canvas></div><div class="card-label">Bias & Chance Error</div><div class="card-tag">systematic · random</div></div>
+  </div>
+  <div class="formula">SE(mean) = σ/√n <span class="c">← decreases with n</span><br/>SE(sum)&nbsp; = σ·√n <span class="c">← increases with n</span></div>
+</div>
+
+<div class="sec">
+  <div class="sec-head"><span class="sec-num">05</span><div class="sec-title">Inferential Statistics</div><div class="sec-line"></div></div>
+  <p class="sec-desc">Drawing conclusions about populations from sample data — the engine of data-driven decisions.</p>
+  <div class="grid">
+    <div class="card"><div class="chart-wrap"><canvas id="i1" role="img" aria-label="Confidence interval">CI</canvas></div><div class="card-label">Confidence Intervals</div><div class="card-tag">x̄ ± Z·SE</div></div>
+    <div class="card"><div class="chart-wrap"><canvas id="i2" role="img" aria-label="P-value under curve">P-value</canvas></div><div class="card-label">Hypothesis Testing</div><div class="card-tag">H₀ · H₁ · α</div></div>
+    <div class="card"><div class="chart-wrap"><canvas id="i3a" role="img" aria-label="One sample t-test">One-Sample</canvas></div><div class="card-label">One-Sample T-Test</div><div class="card-tag">x̄ vs μ₀</div></div>
+    <div class="card"><div class="chart-wrap"><canvas id="i3b" role="img" aria-label="Independent t-test">Independent</canvas></div><div class="card-label">Independent T-Test</div><div class="card-tag">μ₁ vs μ₂ · σ unknown</div></div>
+    <div class="card"><div class="chart-wrap"><canvas id="i3c" role="img" aria-label="Paired t-test">Paired</canvas></div><div class="card-label">Paired Sample T-Test</div><div class="card-tag">before vs after</div></div>
+    <div class="card"><div class="chart-wrap"><canvas id="i4" role="img" aria-label="Two sample comparison">Z-test</canvas></div><div class="card-label">Two-Sample Z-Test</div><div class="card-tag">μ₁ vs μ₂</div></div>
+    <div class="card"><div class="chart-wrap"><canvas id="i5" role="img" aria-label="Effect size dumbbell">Effect</canvas></div><div class="card-label">Effect Size</div><div class="card-tag">Cohen's d · power</div></div>
+    <div class="card"><div class="chart-wrap"><canvas id="i6" role="img" aria-label="Matched pairs">Pairs</canvas></div><div class="card-label">Matched Pairs</div><div class="card-tag">d̄ / (sd/√n)</div></div>
+  </div>
+  <div class="formula">Z = (x̄₁ − x̄₂) / √(<span class="k">σ₁²/n₁ + σ₂²/n₂</span>) <span class="c">← reject H₀ if |Z| > 1.96</span></div>
+</div>
+
+<div class="sec">
+  <div class="sec-head"><span class="sec-num">06</span><div class="sec-title">Correlation & Regression</div><div class="sec-line"></div></div>
+  <p class="sec-desc">Measuring relationships between variables and building predictive models.</p>
+  <div class="grid">
+    <div class="card"><div class="chart-wrap"><canvas id="r1" role="img" aria-label="Scatter plot correlation">Scatter</canvas></div><div class="card-label">Correlation</div><div class="card-tag">r = −1 to +1</div></div>
+    <div class="card"><div class="chart-wrap"><canvas id="r2" role="img" aria-label="Regression line">Line</canvas></div><div class="card-label">Linear Regression</div><div class="card-tag">Y = a + bX</div></div>
+    <div class="card"><div class="chart-wrap"><canvas id="r3" role="img" aria-label="Residual plot">Residuals</canvas></div><div class="card-label">Residual Diagnostics</div><div class="card-tag">y − ŷ</div></div>
+    <div class="card"><div class="chart-wrap"><canvas id="r4" role="img" aria-label="R-squared bar">R²</canvas></div><div class="card-label">R² & Model Fit</div><div class="card-tag">SST · SSR · SSE</div></div>
+    <div class="card"><div class="chart-wrap"><canvas id="r5" role="img" aria-label="RTM convergence">RTM</canvas></div><div class="card-label">Regression to Mean</div><div class="card-tag">extreme → average</div></div>
+    <div class="card"><div class="chart-wrap"><canvas id="r6" role="img" aria-label="Influential point">Leverage</canvas></div><div class="card-label">Outliers & Leverage</div><div class="card-tag">Cook's D · hᵢᵢ</div></div>
+    <div class="card"><div class="chart-wrap"><canvas id="r7" role="img" aria-label="Multiple regression">Multiple</canvas></div><div class="card-label">Multiple Linear Regression</div><div class="card-tag">Y = a + b₁X₁ + b₂X₂</div></div>
+    <div class="card"><div class="chart-wrap"><canvas id="r8" role="img" aria-label="Logistic sigmoid">Logistic</canvas></div><div class="card-label">Logistic Regression</div><div class="card-tag">0 or 1 · sigmoid</div></div>
+    <div class="card"><div class="chart-wrap"><canvas id="r9" role="img" aria-label="VIF multicollinearity">VIF</canvas></div><div class="card-label">Multicollinearity</div><div class="card-tag">VIF · corr matrix</div></div>
+    <div class="card"><div class="chart-wrap"><canvas id="r10" role="img" aria-label="Normality of errors">Errors</canvas></div><div class="card-label">Normality of Errors</div><div class="card-tag">e ~ N(0, σ²)</div></div>
+  </div>
+  <div class="formula">b = r · (sy/sx) <span class="c">← slope</span>&nbsp;&nbsp;&nbsp;a = ȳ − b·x̄ <span class="c">← intercept</span><br/>R² = 1 − SSR/SST <span class="c">← proportion explained</span></div>
+</div>
+
+<div class="sec">
+  <div class="sec-head"><span class="sec-num">07</span><div class="sec-title">Bootstrap & Simulation</div><div class="sec-line"></div></div>
+  <p class="sec-desc">Estimating uncertainty without assumptions — using data itself as the population.</p>
+  <div class="grid">
+    <div class="card"><div class="chart-wrap"><canvas id="b1" role="img" aria-label="Bootstrap distribution">Bootstrap</canvas></div><div class="card-label">Bootstrap SE</div><div class="card-tag">resample · SD</div></div>
+    <div class="card"><div class="chart-wrap"><canvas id="b2" role="img" aria-label="Percentile CI">Percentile CI</canvas></div><div class="card-label">Bootstrap CI</div><div class="card-tag">2.5th · 97.5th %ile</div></div>
+    <div class="card"><div class="chart-wrap"><canvas id="b3" role="img" aria-label="Monte Carlo scatter">Monte Carlo</canvas></div><div class="card-label">Monte Carlo</div><div class="card-tag">simulate · estimate</div></div>
+    <div class="card"><div class="chart-wrap"><canvas id="b4" role="img" aria-label="Plug-in comparison">Plug-in</canvas></div><div class="card-label">Plug-in Principle</div><div class="card-tag">μ≈x̄ · σ≈s</div></div>
+  </div>
+</div>
+
+<div class="sec">
+  <div class="sec-head"><span class="sec-num">08</span><div class="sec-title">Categorical Data Analysis</div><div class="sec-line"></div></div>
+  <p class="sec-desc">Analysing relationships between non-numeric variables using contingency tables and chi-square tests.</p>
+  <div class="grid">
+    <div class="card"><div class="chart-wrap"><canvas id="cat1" role="img" aria-label="Contingency table heatmap">Table</canvas></div><div class="card-label">Contingency Tables</div><div class="card-tag">joint · marginal</div></div>
+    <div class="card"><div class="chart-wrap"><canvas id="cat2" role="img" aria-label="Chi-square O vs E">Chi²</canvas></div><div class="card-label">Chi-Square Test</div><div class="card-tag">χ² = Σ(O−E)²/E</div></div>
+    <div class="card"><div class="chart-wrap"><canvas id="cat3" role="img" aria-label="Goodness of fit">GoF</canvas></div><div class="card-label">Goodness of Fit</div><div class="card-tag">observed vs claimed</div></div>
+    <div class="card"><div class="chart-wrap"><canvas id="cat4" role="img" aria-label="ANOVA group comparison">ANOVA</canvas></div><div class="card-label">ANOVA</div><div class="card-tag">F = MSB/MSW</div></div>
+    <div class="card"><div class="chart-wrap"><canvas id="cat5" role="img" aria-label="One-way ANOVA">One-Way</canvas></div><div class="card-label">One-Way ANOVA</div><div class="card-tag">1 factor · F-test</div></div>
+    <div class="card"><div class="chart-wrap"><canvas id="cat6" role="img" aria-label="Two-way ANOVA">Two-Way</canvas></div><div class="card-label">Two-Way ANOVA</div><div class="card-tag">2 factors · interaction</div></div>
+    <div class="card"><div class="chart-wrap"><canvas id="cat9" role="img" aria-label="Repeated Measures ANOVA">Repeated</canvas></div><div class="card-label">Repeated Measures ANOVA</div><div class="card-tag">same subject · time</div></div>
+    <div class="card"><div class="chart-wrap"><canvas id="cat10" role="img" aria-label="Mixed Model ANOVA">Mixed</canvas></div><div class="card-label">Mixed Model ANOVA</div><div class="card-tag">between + within</div></div>
+    <div class="card"><div class="chart-wrap"><canvas id="cat7" role="img" aria-label="Post-hoc Tukey">Post-hoc</canvas></div><div class="card-label">Post-Hoc Test</div><div class="card-tag">Tukey's HSD</div></div>
+    <div class="card"><div class="chart-wrap"><canvas id="cat8" role="img" aria-label="Homogeneity test">Homog.</canvas></div><div class="card-label">Chi-Square Homogeneity</div><div class="card-tag">multiple populations</div></div>
+  </div>
+  <div class="formula">χ² = Σ(O−E)²/E <span class="c">← E = row×col/N</span>&nbsp;&nbsp;&nbsp;F = MSB/MSW <span class="c">← between/within</span></div>
+</div>
+
+<div class="sec">
+  <div class="sec-head"><span class="sec-num">09</span><div class="sec-title">Research Methods</div><div class="sec-line"></div></div>
+  <p class="sec-desc">Designing rigorous experiments and avoiding the pitfalls that make findings unreliable.</p>
+  <div class="wgrid">
+    <div class="wcard">
+      <div class="wcard-top"><div class="wcard-icon"><svg viewBox="0 0 24 24"><path d="M12 2L2 7l10 5 10-5-10-5M2 17l10 5 10-5M2 12l10 5 10-5"/></svg></div><div class="wcard-title">RCT Design</div></div>
+      <div class="wcard-desc">Random assignment eliminates confounding. Blind and double-blind variants control placebo effects.</div>
+      <div class="wcard-pills"><span class="pill">randomisation</span><span class="pill">control group</span><span class="pill">placebo</span><span class="pill">double blind</span></div>
+    </div>
+    <div class="wcard">
+      <div class="wcard-top"><div class="wcard-icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 8v4l3 3"/></svg></div><div class="wcard-title">Confounding</div></div>
+      <div class="wcard-desc">A third variable affecting both X and Y. Controlled via randomisation in experiments or regression in observational studies.</div>
+      <div class="wcard-pills"><span class="pill">X ← C → Y</span><span class="pill">third variable</span><span class="pill">adjustment</span></div>
+    </div>
+    <div class="wcard">
+      <div class="wcard-top"><div class="wcard-icon"><svg viewBox="0 0 24 24"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg></div><div class="wcard-title">Reproducibility</div></div>
+      <div class="wcard-desc">Data snooping, multiple testing fallacy, p-hacking, and publication bias — knowing them separates rigorous analysis from noise.</div>
+      <div class="wcard-pills"><span class="pill">p-hacking</span><span class="pill">Bonferroni</span><span class="pill">pre-registration</span></div>
+    </div>
+  </div>
+</div>
+
+</div>
+
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
+<script>
+const PK='#e8187a',PKA='rgba(232,24,122,0.12)',PKB='rgba(232,24,122,0.35)',PKC='rgba(232,24,122,0.6)';
+const base={responsive:true,maintainAspectRatio:false,animation:{duration:600},plugins:{legend:{display:false},tooltip:{enabled:false}},scales:{x:{display:false},y:{display:false}}};
+function ln(id,data,fill=true){new Chart(document.getElementById(id),{type:'line',data:{labels:data.map((_,i)=>i),datasets:[{data,borderColor:PK,borderWidth:2,pointRadius:0,fill,backgroundColor:fill?PKA:false,tension:.4}]},options:{...base}})}
+function br(id,labels,data,colors){new Chart(document.getElementById(id),{type:'bar',data:{labels,datasets:[{data,backgroundColor:colors,borderRadius:4,borderSkipped:false}]},options:{...base}})}
+
+// ===== 01 Descriptive =====
+br('d1',['Mean','Med','Mode'],[70,65,68],[PK,PKA,PKB]);
+(()=>{const xs=[...Array(41).keys()],g=(s,a)=>xs.map(x=>a*Math.exp(-Math.pow((x-20)/s,2)/2)),wide=g(11,0.34),med=g(6,0.6),narrow=g(3,1);new Chart(document.getElementById('d2'),{type:'line',data:{labels:xs,datasets:[{data:wide,borderColor:PKB,borderWidth:1.5,pointRadius:0,fill:false,tension:.4},{data:med,borderColor:PKC,borderWidth:1.5,pointRadius:0,fill:false,tension:.4},{data:narrow,borderColor:PK,borderWidth:2,pointRadius:0,fill:true,backgroundColor:PKA,tension:.4}]},options:{...base,scales:{x:{display:false},y:{display:false,min:0,max:1.05}}}})})();
+(()=>{const b=[0.5,2,8,20,34,20,8,2,0.5];new Chart(document.getElementById('d3'),{type:'line',data:{labels:b.map((_,i)=>i),datasets:[{data:b,borderColor:PK,borderWidth:2,pointRadius:0,fill:true,backgroundColor:PKA,tension:.4},{data:b.map((v,i)=>i===6?v:null),type:'scatter',pointRadius:7,pointBackgroundColor:PK,pointBorderColor:'#fff',pointBorderWidth:2}]},options:{...base}})})();
+(()=>{const b=[0.4,1,2.5,6,12,20,26,20,12,6,2.5,1,0.4];const col=i=>{const d=Math.abs(i-6);return d<=1?PK:d<=2?PKC:d<=3?PKB:PKA;};br('d4',b.map((_,i)=>i),b,b.map((_,i)=>col(i)))})();
+(()=>{const l=[4,6,5,8,7,5,4],r=[1,2,5,12,8,3,1];new Chart(document.getElementById('d5'),{type:'line',data:{labels:l.map((_,i)=>i),datasets:[{data:l,borderColor:PK,borderWidth:2,pointRadius:0,fill:false,tension:.4},{data:r,borderColor:PKB,borderWidth:1.5,pointRadius:0,fill:false,tension:.4,borderDash:[3,3]}]},options:{...base}})})();
+
+// ===== 02 Probability & Bayesian =====
+br('p1',['P(A)','P(B)','P(A∩B)'],[0.4,0.35,0.15],[PK,PKA,PKB]);
+(()=>{new Chart(document.getElementById('p2'),{type:'bubble',data:{datasets:[{data:[{x:2.4,y:3,r:17}],backgroundColor:'rgba(232,24,122,0.22)',borderColor:PK,borderWidth:1.5},{data:[{x:3.6,y:3,r:17}],backgroundColor:'rgba(0,0,0,0.05)',borderColor:'rgba(0,0,0,0.25)',borderWidth:1.5}]},options:{...base,scales:{x:{display:false,min:0,max:6},y:{display:false,min:0,max:6}}}})})();
+ln('p3',[1,2,4,9,14,17,16,15]);
+(()=>{new Chart(document.getElementById('bay2'),{type:'bar',data:{labels:['Informative','Uniform','Jeffreys'],datasets:[{data:[8,5,6],backgroundColor:[PK,PKB,PKA],borderRadius:4}]},options:{...base,scales:{x:{display:false},y:{display:false,min:0,max:10}}}})})();
+(()=>{const prior=[2,4,6,8,9,8,6,4,2],post=[1,2,5,10,16,14,9,4,1];new Chart(document.getElementById('bay3'),{type:'line',data:{labels:prior.map((_,i)=>i),datasets:[{data:prior,borderColor:PKB,borderWidth:1.5,pointRadius:0,fill:false,tension:.4,borderDash:[3,3]},{data:post,borderColor:PK,borderWidth:2,pointRadius:0,fill:true,backgroundColor:PKA,tension:.4}]},options:{...base}})})();
+(()=>{const like=[0.5,1,3,8,16,22,18,10,4,1.5,0.5];new Chart(document.getElementById('bay4'),{type:'line',data:{labels:like.map((_,i)=>i),datasets:[{data:like,borderColor:PK,borderWidth:2,pointRadius:0,fill:true,backgroundColor:PKA,tension:.4}]},options:{...base}})})();
+(()=>{new Chart(document.getElementById('bay5'),{type:'bar',data:{labels:['Freq','Bayes'],datasets:[{data:[7,9],backgroundColor:[PKA,PK],borderRadius:6,categoryPercentage:.5}]},options:{...base,scales:{x:{display:false},y:{display:false,min:0,max:10}}}})})();
+ln('p4',[1,0.65,0.42,0.28,0.18,0.11,0.07]);
+
+// ===== 03 Distributions =====
+(()=>{const b=[0.5,2,8,20,34,20,8,2,0.5];new Chart(document.getElementById('dist1'),{type:'line',data:{labels:b.map((_,i)=>i),datasets:[{data:b,borderColor:PK,borderWidth:2,pointRadius:0,fill:true,backgroundColor:PKA,tension:.4}]},options:{...base}})})();
+(()=>{const d=[1,8,28,56,70,56,28,8,1].map(v=>v/70*34);br('dist2',d.map((_,i)=>i),d,d.map((_,i)=>i===4?PK:PKA))})();
+(()=>{const d=[7,16,22,22,17,10,5,2,1];br('dist3',d.map((_,i)=>i),d,d.map((_,i)=>i===2?PK:PKA))})();
+(()=>{const d=[0.1,1,3,7,12,14,12,8,4,1.5,0.5];new Chart(document.getElementById('dist4'),{type:'line',data:{labels:d.map((_,i)=>i),datasets:[{data:d,borderColor:PK,borderWidth:2,pointRadius:0,fill:true,backgroundColor:PKA,tension:.4}]},options:{...base}})})();
+(()=>{const bins=[1,3,7,13,20,28,33,28,20,13,7,3,1],curve=[2,5,10,17,24,30,33,30,24,17,10,5,2];new Chart(document.getElementById('dist5'),{type:'bar',data:{labels:bins.map((_,i)=>i),datasets:[{data:bins,backgroundColor:PKA,borderColor:PKB,borderWidth:1,borderRadius:2,order:2},{type:'line',data:curve,borderColor:PK,borderWidth:2,pointRadius:0,fill:false,tension:.45,order:1}]},options:{...base}})})();
+
+// ===== 04 Sampling & CLT =====
+(()=>{const w=[2,5,10,16,20,16,10,5,2],n=[1,2,6,18,30,18,6,2,1];new Chart(document.getElementById('s1'),{type:'line',data:{labels:w.map((_,i)=>i),datasets:[{data:w,borderColor:PKB,borderWidth:1.5,pointRadius:0,fill:false,tension:.4,borderDash:[3,3]},{data:n,borderColor:PK,borderWidth:2,pointRadius:0,fill:true,backgroundColor:PKA,tension:.4}]},options:{...base}})})();
+ln('s2',[50,35,25,18,14,11,9,7,6],true);
+(()=>{const d=[0.92,0.18,0.61,0.38,0.57,0.45,0.53,0.485,0.515,0.498,0.502,0.5],t=d.map(()=>0.5);new Chart(document.getElementById('s3'),{type:'line',data:{labels:d.map((_,i)=>i),datasets:[{data:t,borderColor:PKB,borderWidth:1.5,pointRadius:0,fill:false,borderDash:[4,3]},{data:d,borderColor:PK,borderWidth:2,pointRadius:0,fill:false,tension:.3}]},options:{...base,scales:{x:{display:false},y:{display:false,min:0,max:1}}}})})();
+(()=>{const pop=[{x:0.8,y:4.5},{x:1.6,y:2.1},{x:2.2,y:5},{x:1.1,y:3.2},{x:2.8,y:1.5},{x:3.4,y:4.2},{x:0.6,y:1.8},{x:2,y:3.6},{x:3.1,y:2.8},{x:1.4,y:5.2},{x:3.7,y:3.4},{x:0.9,y:2.6},{x:2.6,y:4.7},{x:1.9,y:1.2},{x:3.3,y:5.3}],samp=[{x:5,y:2},{x:5,y:3},{x:5,y:4}];new Chart(document.getElementById('s4'),{type:'scatter',data:{datasets:[{data:pop,backgroundColor:PKA,pointRadius:3.5},{data:samp,backgroundColor:PK,pointRadius:5,pointBorderColor:'#fff',pointBorderWidth:1}]},options:{...base,scales:{x:{display:false,min:0,max:6},y:{display:false,min:0,max:6.5}}}})})();
+(()=>{const x=[...Array(10).keys()],bias=[9,6,4.2,2.9,2,1.4,1,0.75,0.6,0.5],vari=[0.5,0.7,1,1.5,2.2,3.1,4.2,5.5,7,8.7],tot=bias.map((b,i)=>b+vari[i]);new Chart(document.getElementById('s5'),{type:'line',data:{labels:x,datasets:[{data:tot,borderColor:'#1a1a1a',borderWidth:2,pointRadius:0,fill:false,tension:.4},{data:bias,borderColor:PKC,borderWidth:1.5,pointRadius:0,fill:false,tension:.4},{data:vari,borderColor:PK,borderWidth:1.5,pointRadius:0,fill:false,tension:.4}]},options:{...base,scales:{x:{display:false},y:{display:false,min:0,max:11}}}})})();
+
+// ===== 05 Inferential =====
+(()=>{new Chart(document.getElementById('i1'),{type:'bar',data:{labels:['Low','','Mid','','High'],datasets:[{data:[null,3,5,3,null],backgroundColor:PKA,borderColor:PK,borderWidth:1.5,borderRadius:4}]},options:{...base,indexAxis:'y'}})})();
+(()=>{const b=[0.5,1.5,4,10,18,24,18,10,4,1.5,0.5];br('i2',b.map((_,i)=>i),b,b.map((_,i)=>i>=8?PK:PKA))})();
+(()=>{const b=[0.5,1.5,4,10,18,24,18,10,4,1.5,0.5];new Chart(document.getElementById('i3a'),{type:'line',data:{labels:b.map((_,i)=>i),datasets:[{data:b,borderColor:PK,borderWidth:2,pointRadius:0,fill:true,backgroundColor:PKA,tension:.4},{data:b.map((v,i)=>i>=8?v:null),borderColor:PK,borderWidth:0,fill:true,backgroundColor:PKB,tension:.4}]},options:{...base}})})();
+(()=>{new Chart(document.getElementById('i3b'),{type:'bar',data:{labels:['G1','G2'],datasets:[{data:[72,65],backgroundColor:[PK,PKA],borderRadius:6,categoryPercentage:.5}]},options:{...base,scales:{x:{display:false},y:{display:false,min:55,max:80}}}})})();
+(()=>{new Chart(document.getElementById('i3c'),{type:'scatter',data:{datasets:[{data:[{x:1,y:80},{x:2,y:75},{x:3,y:90},{x:4,y:85}],backgroundColor:PKB,pointRadius:5,pointBorderColor:PK,pointBorderWidth:1.5},{data:[{x:1,y:74},{x:2,y:68},{x:3,y:83},{x:4,y:77}],backgroundColor:PK,pointRadius:5}]},options:{...base,scales:{x:{display:false,min:0,max:5},y:{display:false,min:60,max:95}}}})})();
+(()=>{new Chart(document.getElementById('i4'),{type:'bar',data:{labels:['G1','G2'],datasets:[{data:[72,68],backgroundColor:[PK,PKA],borderRadius:6,categoryPercentage:.5}]},options:{...base,scales:{x:{display:false},y:{display:false,min:60,max:78}}}})})();
+(()=>{new Chart(document.getElementById('i5'),{type:'scatter',data:{datasets:[{data:[{x:1,y:1.5},{x:4.5,y:1.5}],type:'line',borderColor:PK,borderWidth:2.5,pointRadius:6,pointBackgroundColor:PK,showLine:true},{data:[{x:1,y:2.5},{x:3.2,y:2.5}],type:'line',borderColor:PKB,borderWidth:2,pointRadius:5,pointBackgroundColor:PKB,showLine:true}]},options:{...base,scales:{x:{display:false,min:0,max:6},y:{display:false,min:0,max:4}}}})})();
+(()=>{new Chart(document.getElementById('i6'),{type:'scatter',data:{datasets:[{data:[{x:1,y:80},{x:2,y:75},{x:3,y:90},{x:4,y:85},{x:5,y:70}],backgroundColor:PKA,pointRadius:5,pointBorderColor:PK,pointBorderWidth:1.5},{data:[{x:1,y:75},{x:2,y:70},{x:3,y:85},{x:4,y:79},{x:5,y:66}],backgroundColor:PK,pointRadius:5}]},options:{...base,scales:{x:{display:false,min:0,max:6},y:{display:false,min:60,max:95}}}})})();
+
+// ===== 06 Correlation & Regression =====
+(()=>{new Chart(document.getElementById('r1'),{type:'scatter',data:{datasets:[{data:[{x:1,y:2},{x:2,y:3.5},{x:3,y:4.2},{x:4,y:5.5},{x:5,y:6.2},{x:2.5,y:3.2},{x:3.5,y:4.8}],backgroundColor:PK,pointRadius:4}]},options:{...base,scales:{x:{display:false,min:0,max:6},y:{display:false,min:0,max:8}}}})})();
+(()=>{new Chart(document.getElementById('r2'),{type:'scatter',data:{datasets:[{data:[{x:1,y:2},{x:2,y:3.5},{x:3,y:4.2},{x:4,y:5.5},{x:5,y:6.2}],backgroundColor:PKA,pointRadius:4,pointBorderColor:PK,pointBorderWidth:1.5},{data:[{x:0,y:1},{x:6,y:7}],type:'line',borderColor:PK,borderWidth:2,pointRadius:0,showLine:true}]},options:{...base,scales:{x:{display:false,min:0,max:6},y:{display:false,min:0,max:8}}}})})();
+(()=>{new Chart(document.getElementById('r3'),{type:'scatter',data:{datasets:[{data:[{x:1,y:3},{x:2,y:-2},{x:3,y:1.5},{x:4,y:-1},{x:5,y:2},{x:6,y:-2.5}],backgroundColor:PK,pointRadius:4},{data:[{x:0,y:0},{x:7,y:0}],type:'line',borderColor:PKB,borderWidth:1.5,pointRadius:0,showLine:true,borderDash:[4,3]}]},options:{...base,scales:{x:{display:false,min:0,max:7},y:{display:false,min:-5,max:5}}}})})();
+(()=>{new Chart(document.getElementById('r4'),{type:'bar',data:{labels:[''],datasets:[{data:[0.82],backgroundColor:PK,borderRadius:4,borderSkipped:false,categoryPercentage:.4},{data:[0.18],backgroundColor:PKA,borderRadius:0}]},options:{...base,indexAxis:'y',scales:{x:{display:false,stacked:true,max:1},y:{display:false,stacked:true}}}})})();
+ln('r5',[8,6.8,5.8,5.2,4.8,4.6,4.5],false);
+(()=>{new Chart(document.getElementById('r6'),{type:'scatter',data:{datasets:[{data:[{x:2,y:4},{x:3,y:5.5},{x:4,y:6},{x:5,y:7}],backgroundColor:PKA,pointRadius:4,pointBorderColor:PK,pointBorderWidth:1},{data:[{x:13,y:3}],backgroundColor:PK,pointRadius:9,pointStyle:'star'},{data:[{x:0,y:2.5},{x:8,y:8}],type:'line',borderColor:PKA,borderWidth:1.5,pointRadius:0,showLine:true,borderDash:[3,3]},{data:[{x:0,y:3},{x:14,y:3.3}],type:'line',borderColor:PK,borderWidth:2,pointRadius:0,showLine:true}]},options:{...base,scales:{x:{display:false,min:0,max:15},y:{display:false,min:0,max:10}}}})})();
+(()=>{new Chart(document.getElementById('r7'),{type:'bar',data:{labels:['X₁','X₂','X₃'],datasets:[{data:[0.6,0.3,0.45],backgroundColor:[PK,PKB,PKA],borderRadius:4}]},options:{...base,scales:{x:{display:false},y:{display:false,min:0,max:0.8}}}})})();
+(()=>{const x=[...Array(30).keys()].map(i=>i/3);const sig=x.map(v=>1/(1+Math.exp(-(v-4.5))));new Chart(document.getElementById('r8'),{type:'line',data:{labels:x,datasets:[{data:sig,borderColor:PK,borderWidth:2,pointRadius:0,fill:true,backgroundColor:PKA,tension:.4}]},options:{...base}})})();
+br('r9',['X₁','X₂','X₃'],[1.2,8.4,2.1],[PKA,PK,PKA]);
+(()=>{const b=[0.5,2,8,20,34,20,8,2,0.5];new Chart(document.getElementById('r10'),{type:'line',data:{labels:b.map((_,i)=>i),datasets:[{data:b,borderColor:PK,borderWidth:2,pointRadius:0,fill:true,backgroundColor:PKA,tension:.4}]},options:{...base}})})();
+
+// ===== 07 Bootstrap & Simulation =====
+(()=>{const d=[3,7,13,20,25,22,14,8,4];br('b1',d.map((_,i)=>i),d,d.map(()=>PK))})();
+(()=>{const d=[...Array(16).keys()].map(i=>i>2&&i<13?20:5);br('b2',d.map((_,i)=>i),d,d.map((v,i)=>i>2&&i<13?PK:PKA))})();
+(()=>{const p=[];for(let i=0;i<35;i++)p.push({x:Math.random()*10,y:Math.random()*10});new Chart(document.getElementById('b3'),{type:'scatter',data:{datasets:[{data:p.filter(d=>Math.pow(d.x-5,2)+Math.pow(d.y-5,2)<16),backgroundColor:PK,pointRadius:3},{data:p.filter(d=>Math.pow(d.x-5,2)+Math.pow(d.y-5,2)>=16),backgroundColor:PKA,pointRadius:2}]},options:{...base,scales:{x:{display:false,min:0,max:10},y:{display:false,min:0,max:10}}}})})();
+br('b4',['σ','s','p','p̂'],[8,7.8,6,6.1],[PKA,PK,PKA,PK]);
+
+// ===== 08 Categorical & ANOVA =====
+br('cat1',['A·M','B·M','C·M','A·F','B·F','C·F'],[30,40,30,40,35,25],['rgba(232,24,122,.9)','rgba(232,24,122,.65)','rgba(232,24,122,.35)','rgba(232,24,122,.9)','rgba(232,24,122,.65)','rgba(232,24,122,.35)']);
+br('cat2',['O₁','E₁','O₂','E₂','O₃','E₃'],[40,35,60,62,25,28],[PK,PKA,PK,PKA,PK,PKA]);
+br('cat3',['R','O','Y','G','B','Br'],[10,22,12,18,28,10],[PKA,PK,PKA,PKA,PK,PKA]);
+(()=>{new Chart(document.getElementById('cat4'),{type:'bar',data:{labels:['A','B','C'],datasets:[{data:[70,85,65],backgroundColor:[PKA,PK,PKA],borderRadius:5},{data:[70,70,70],type:'line',borderColor:'rgba(0,0,0,0.2)',borderWidth:1,pointRadius:0,borderDash:[4,3]}]},options:{...base,scales:{x:{display:false},y:{display:false,min:50,max:100}}}})})();
+(()=>{new Chart(document.getElementById('cat5'),{type:'bar',data:{labels:['A','B','C'],datasets:[{data:[70,85,65],backgroundColor:[PKA,PK,PKA],borderRadius:5},{data:[70,70,70],type:'line',borderColor:'rgba(0,0,0,0.15)',borderWidth:1.5,pointRadius:0,borderDash:[4,3]}]},options:{...base,scales:{x:{display:false},y:{display:false,min:50,max:100}}}})})();
+(()=>{new Chart(document.getElementById('cat6'),{type:'bar',data:{labels:['A·M','A·F','B·M','B·F'],datasets:[{data:[80,72,65,60],backgroundColor:[PK,PKC,PKB,PKA],borderRadius:4}]},options:{...base,scales:{x:{display:false},y:{display:false,min:50,max:90}}}})})();
+(()=>{new Chart(document.getElementById('cat9'),{type:'line',data:{labels:[1,2,3,4,5,6],datasets:[{data:[60,65,70,74,77,79],borderColor:PK,borderWidth:2,pointRadius:3,pointBackgroundColor:PK,fill:false,tension:.3},{data:[58,56,55,57,56,55],borderColor:PKC,borderWidth:2,pointRadius:3,pointBackgroundColor:PKC,fill:false,tension:.3,borderDash:[3,3]}]},options:{...base,scales:{x:{display:false},y:{display:false,min:50,max:85}}}})})();
+(()=>{new Chart(document.getElementById('cat10'),{type:'bar',data:{labels:['G1·T1','G1·T2','G2·T1','G2·T2'],datasets:[{data:[70,75,65,72],backgroundColor:['rgba(232,24,122,0.9)','rgba(232,24,122,0.6)','rgba(232,24,122,0.4)','rgba(232,24,122,0.2)'],borderRadius:4}]},options:{...base,scales:{x:{display:false},y:{display:false,min:55,max:82}}}})})();
+(()=>{new Chart(document.getElementById('cat7'),{type:'bar',data:{labels:['A-B','A-C','B-C'],datasets:[{data:[15,5,10],backgroundColor:[PK,PKA,PKB],borderRadius:4}]},options:{...base,scales:{x:{display:false},y:{display:false,min:0,max:20}}}})})();
+(()=>{new Chart(document.getElementById('cat8'),{type:'bar',data:{labels:['Pop1','Pop2','Pop3'],datasets:[{data:[3,5,4],backgroundColor:PK,borderRadius:3,stack:'s'},{data:[4,3,5],backgroundColor:PKB,borderRadius:3,stack:'s'},{data:[2,4,3],backgroundColor:PKA,borderRadius:3,stack:'s'}]},options:{...base,scales:{x:{display:false,stacked:true},y:{display:false,stacked:true}}}})})();
+</script>
+</body>
+</html>
