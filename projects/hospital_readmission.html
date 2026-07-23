@@ -1,0 +1,1287 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Hospital Readmission of Diabetic Patients | Rutuja Patel</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@500;600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --pink: #EC1361;
+    --pink-tint: #FDE7EF;
+    --black: #14131A;
+    --gray-text: #6B7280;
+    --card-bg: #F4F4F3;
+    --border: #ECECEA;
+    --green: #0F9D58;
+    --green-tint: #E4F6EC;
+    --amber: #B8860B;
+    --amber-tint: #FBF3DE;
+    --red: #D93025;
+    --red-tint: #FCE9E7;
+    --heading: 'Poppins', sans-serif;
+    --body: 'Inter', -apple-system, sans-serif;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    background: #FFFFFF;
+    color: var(--black);
+    font-family: var(--body);
+    line-height: 1.65;
+  }
+  .wrap { max-width: 1040px; margin: 0 auto; padding: 56px 28px 100px; }
+
+  .crumb {
+    font-family: var(--body);
+    font-size: 13px;
+    color: var(--gray-text);
+    margin: 0 0 28px;
+  }
+  .crumb a { color: var(--gray-text); text-decoration: none; }
+  .crumb a:hover { color: var(--pink); }
+
+  .eyebrow {
+    font-family: var(--body);
+    font-size: 12.5px;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--pink);
+    margin: 0 0 10px;
+  }
+  h1.title {
+    font-family: var(--heading);
+    font-weight: 800;
+    font-size: 40px;
+    line-height: 1.15;
+    margin: 0 0 16px;
+    max-width: 760px;
+  }
+  h1.title span { color: var(--pink); }
+
+  .dek {
+    font-size: 16.5px;
+    color: var(--gray-text);
+    max-width: 620px;
+    margin: 0 0 24px;
+  }
+
+  .tag-row { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 44px; }
+  .tag {
+    font-size: 13px;
+    font-weight: 500;
+    padding: 7px 16px;
+    border-radius: 999px;
+    border: 1px solid var(--border);
+    color: var(--black);
+    background: #fff;
+  }
+  .tag.filled { background: var(--pink); color: #fff; border-color: var(--pink); }
+
+  .section { margin-bottom: 64px; }
+  .section-eyebrow {
+    font-family: var(--body);
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--pink);
+    margin: 0 0 8px;
+  }
+  h2.section-title {
+    font-family: var(--heading);
+    font-weight: 700;
+    font-size: 26px;
+    margin: 0 0 10px;
+  }
+  .section-desc {
+    font-size: 15px;
+    color: var(--gray-text);
+    max-width: 640px;
+    margin: 0 0 28px;
+  }
+
+  .stat-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+    gap: 12px;
+    margin-bottom: 32px;
+  }
+  .stat-card {
+    background: var(--card-bg);
+    border-radius: 16px;
+    padding: 18px 20px;
+  }
+  .stat-num {
+    font-family: var(--heading);
+    font-weight: 700;
+    font-size: 24px;
+    margin: 0 0 4px;
+  }
+  .stat-label {
+    font-size: 12.5px;
+    color: var(--gray-text);
+    margin: 0;
+  }
+
+  .field-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(230px, 1fr));
+    gap: 12px;
+  }
+  .field-card {
+    border-radius: 16px;
+    padding: 18px 20px;
+  }
+  .field-top {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 8px;
+  }
+  .field-icon {
+    width: 34px; height: 34px;
+    border-radius: 10px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 17px;
+    background: rgba(255,255,255,0.55);
+    flex-shrink: 0;
+  }
+  .field-name { font-weight: 600; font-size: 14.5px; flex: 1; }
+  .field-count {
+    font-size: 11.5px;
+    font-weight: 600;
+    background: rgba(255,255,255,0.6);
+    padding: 2px 9px;
+    border-radius: 999px;
+    flex-shrink: 0;
+  }
+  .field-desc { font-size: 13px; margin: 0; opacity: 0.85; }
+
+  .c-purple { background: #EEEDFE; color: #3C3489; }
+  .c-teal   { background: #E1F5EE; color: #085041; }
+  .c-coral  { background: #FAECE7; color: #712B13; }
+  .c-pink2  { background: #FBEAF0; color: #72243E; }
+  .c-amber  { background: #FAEEDA; color: #633806; }
+  .c-green  { background: #EAF3DE; color: #27500A; }
+  .c-red    { background: #FCEBEB; color: #791F1F; }
+
+  .dg-wrap { overflow-x: auto; margin-bottom: 8px; }
+  .dg-wrap svg { min-width: 600px; }
+  .dg-line { stroke: var(--gray-text); stroke-width: 0.75; opacity: 0.6; }
+  .dg-arrow { stroke: var(--gray-text); fill: none; stroke-width: 1; }
+  .dg-lane-label { font-family: var(--body); font-size: 12px; fill: var(--gray-text); }
+  .dg-phase-label { font-family: var(--body); font-size: 12px; font-weight: 600; fill: var(--pink); }
+  .dg-th { font-family: var(--body); font-size: 13.5px; font-weight: 600; fill: var(--black); }
+  .dg-ts { font-family: var(--body); font-size: 11.5px; fill: var(--gray-text); }
+  .dg-box rect, .dg-box polygon { fill: #fff; stroke: var(--border); stroke-width: 0.5; }
+  .dg-box .dg-th { fill: var(--black); }
+  .dgc-blue rect, .dgc-blue polygon { fill: #E8F0FE; stroke: #1A4480; }
+  .dgc-blue .dg-th, .dgc-blue .dg-ts { fill: #1A4480; }
+  .dgc-teal rect, .dgc-teal polygon { fill: #E1F5EE; stroke: #085041; }
+  .dgc-teal .dg-th, .dgc-teal .dg-ts { fill: #085041; }
+  .dgc-purple rect, .dgc-purple polygon, .dgc-purple circle { fill: #EEEDFE; stroke: #3C3489; }
+  .dgc-purple .dg-th, .dgc-purple .dg-ts { fill: #3C3489; }
+  .dgc-coral rect, .dgc-coral polygon { fill: #FAECE7; stroke: #712B13; }
+  .dgc-coral .dg-th, .dgc-coral .dg-ts { fill: #712B13; }
+  .dgc-amber rect, .dgc-amber polygon { fill: #FAEEDA; stroke: #633806; }
+  .dgc-amber .dg-th, .dgc-amber .dg-ts { fill: #633806; }
+  .dgc-green rect, .dgc-green polygon { fill: #EAF3DE; stroke: #27500A; }
+  .dgc-green .dg-th, .dgc-green .dg-ts { fill: #27500A; }
+  .dgc-red rect, .dgc-red polygon { fill: #FCEBEB; stroke: #791F1F; stroke-width: 1; }
+  .dgc-red .dg-th, .dgc-red .dg-ts { fill: #791F1F; }
+  .dg-note rect { fill: #fff; stroke: var(--border); }
+  .dg-note text { fill: var(--gray-text); }
+  .dg-dashed { fill: none; stroke: var(--gray-text); stroke-width: 0.5; stroke-dasharray: 4 3; }
+
+  .quality-table {
+    background: var(--card-bg);
+    border-radius: 16px;
+    overflow: hidden;
+  }
+  .quality-head {
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr;
+    padding: 12px 20px;
+    font-size: 11.5px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--gray-text);
+  }
+  .quality-row {
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr;
+    align-items: center;
+    padding: 14px 20px;
+    background: #fff;
+    font-size: 13.5px;
+  }
+  .quality-row:first-of-type { border-top-left-radius: 16px; border-top-right-radius: 16px; }
+  .quality-row:last-of-type { border-bottom-left-radius: 16px; border-bottom-right-radius: 16px; }
+  .quality-val { font-weight: 600; }
+  .status-pill {
+    font-size: 11.5px;
+    font-weight: 600;
+    padding: 4px 12px;
+    border-radius: 999px;
+    display: inline-block;
+    width: fit-content;
+  }
+  .status-red { background: var(--red-tint); color: var(--red); }
+  .status-amber { background: var(--amber-tint); color: var(--amber); }
+  .status-green { background: var(--green-tint); color: var(--green); }
+
+  .callout {
+    display: flex;
+    gap: 10px;
+    align-items: flex-start;
+    background: var(--pink-tint);
+    border-radius: 14px;
+    padding: 14px 18px;
+    margin-top: 20px;
+  }
+  .callout p { font-size: 13.5px; color: var(--black); margin: 0; }
+  .callout .dot {
+    width: 6px; height: 6px; border-radius: 50%;
+    background: var(--pink); margin-top: 7px; flex-shrink: 0;
+  }
+
+  .next-badge {
+    display: inline-flex; align-items: center; gap: 6px;
+    font-size: 13px; color: var(--gray-text);
+    border: 1px dashed var(--border); border-radius: 999px;
+    padding: 8px 18px; margin-top: 8px;
+  }
+
+  @media (max-width: 640px) {
+    h1.title { font-size: 30px; }
+    .quality-head, .quality-row { grid-template-columns: 1.6fr 1fr 1fr; font-size: 12px; }
+  }
+  .kpi-strip {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
+    gap: 12px;
+    margin-bottom: 28px;
+  }
+  .kpi-card {
+    background: var(--card-bg);
+    border-radius: 14px;
+    padding: 16px 18px;
+  }
+  .kpi-num { font-family: var(--heading); font-weight: 700; font-size: 22px; margin: 0 0 3px; }
+  .kpi-label { font-size: 11.5px; color: var(--gray-text); margin: 0; }
+
+  .chart-row { display: grid; gap: 14px; margin-bottom: 14px; }
+  .chart-row.hero { grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); }
+  .chart-row.secondary { grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); }
+
+  .chart-card {
+    background: var(--card-bg);
+    border-radius: 18px;
+    padding: 20px 22px;
+  }
+  .chart-card.hero { padding: 24px 26px; }
+  .chart-title { font-weight: 700; font-size: 15.5px; margin: 0 0 3px; }
+  .chart-sub { font-size: 12.5px; color: var(--gray-text); margin: 0 0 18px; }
+
+  .bar-row { display: flex; align-items: center; gap: 10px; margin-bottom: 10px; }
+  .bar-row:last-child { margin-bottom: 0; }
+  .bar-label { width: 92px; font-size: 12.5px; color: var(--black); flex-shrink: 0; }
+  .bar-track { flex: 1; background: #fff; border-radius: 5px; height: 22px; overflow: hidden; }
+  .bar-fill { height: 100%; border-radius: 5px; display: flex; align-items: center; padding-left: 8px; }
+  .bar-fill span { font-size: 11.5px; font-weight: 600; }
+  .bar-val { width: 40px; font-size: 12.5px; font-weight: 600; text-align: right; flex-shrink: 0; }
+
+  .callout-card {
+    background: var(--pink-tint);
+    border-radius: 18px;
+    padding: 20px 22px;
+  }
+  .callout-card .chart-title { color: var(--pink); }
+
+  .so-what {
+    display: flex; gap: 8px; align-items: flex-start;
+    margin-top: 14px; padding-top: 14px; border-top: 1px solid var(--border);
+  }
+  .so-what .dot { width: 5px; height: 5px; border-radius: 50%; background: var(--pink); margin-top: 6px; flex-shrink: 0; }
+  .so-what p { font-size: 12.5px; color: var(--black); margin: 0; }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <p class="crumb"><a href="https://analyzewithrutuja.github.io/#portfolio">← Back to portfolio</a></p>
+
+  <p class="eyebrow">Data Analysis · Healthcare</p>
+  <h1 class="title">Hospital Readmission of <span>Diabetic Patients</span></h1>
+  <p class="dek">
+    101,766 hospital encounters, 130 U.S. hospitals, one question: which patients
+    are most likely to come back within 30 days — and can that be predicted early enough to act on?
+  </p>
+
+  <div class="tag-row">
+    <span class="tag">Python</span>
+    <span class="tag">scikit-learn</span>
+    <span class="tag">XGBoost</span>
+    <span class="tag">SHAP</span>
+    <span class="tag">K-Means</span>
+    <span class="tag">Statistics</span>
+    <span class="tag">Healthcare Analytics</span>
+  </div>
+
+  <div class="section">
+    <p class="section-eyebrow">01 · Before data science</p>
+    <h2 class="section-title">The manual discharge process</h2>
+    <p class="section-desc">Before any model gets involved, here's how a diabetic patient's hospital stay actually flows — entirely on clinical judgment, with no automated risk score anywhere in the loop.</p>
+
+    <div class="dg-wrap">
+<svg viewBox="0 0 680 850" role="img" style="width:100%;" aria-label="Process map of the manual, pre-data-science hospital discharge workflow">
+<desc>A patient is admitted, registered by type, assessed by a physician who orders tests and medications, monitored, and checked for stability in a loop back to reassessment if needed. Once stable, a manual discharge decision with no automated risk score routes to five outcome pills in the patient lane: home, home with care, skilled nursing facility, other facility, and hospice or expired.</desc>
+<defs>
+<marker id="pm-arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M2 1L8 5L2 9" fill="none" stroke="context-stroke" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></marker>
+</defs>
+
+<line x1="0" y1="38" x2="635" y2="38" class="dg-line"/>
+<line x1="0" y1="190" x2="635" y2="190" class="dg-line"/>
+<line x1="0" y1="330" x2="635" y2="330" class="dg-line"/>
+<line x1="0" y1="620" x2="635" y2="620" class="dg-line"/>
+<line x1="0" y1="750" x2="635" y2="750" class="dg-line"/>
+<line x1="0" y1="800" x2="635" y2="800" class="dg-line"/>
+<line x1="95" y1="20" x2="95" y2="800" class="dg-line"/>
+<line x1="230" y1="20" x2="230" y2="800" class="dg-line"/>
+<line x1="365" y1="20" x2="365" y2="800" class="dg-line"/>
+<line x1="500" y1="20" x2="500" y2="800" class="dg-line"/>
+
+<text class="dg-phase-label" x="162" y="30" text-anchor="middle">Entry</text>
+<text class="dg-phase-label" x="297" y="30" text-anchor="middle">Assessment</text>
+<text class="dg-phase-label" x="432" y="30" text-anchor="middle">Treatment</text>
+<text class="dg-phase-label" x="567" y="30" text-anchor="middle">Discharge</text>
+
+<text class="dg-lane-label" x="8" y="114" dominant-baseline="central">Patient</text>
+<text class="dg-lane-label" x="8" y="260" dominant-baseline="central">Admission</text>
+<text class="dg-lane-label" x="8" y="475" dominant-baseline="central">Clinical</text>
+<text class="dg-lane-label" x="8" y="685" dominant-baseline="central">Discharge</text>
+<text class="dg-lane-label" x="8" y="775" dominant-baseline="central">Records</text>
+
+<g class="dg-box"><rect x="102" y="54" width="120" height="36" rx="18"/>
+<text class="dg-th" x="162" y="72" text-anchor="middle" dominant-baseline="central">Admitted</text></g>
+<line x1="162" y1="90" x2="162" y2="188" class="dg-arrow" marker-end="url(#pm-arrow)"/>
+
+<line x1="485" y1="60" x2="485" y2="196" class="dg-arrow"/>
+
+<g class="dgc-green"><rect x="495" y="48" width="140" height="24" rx="12"/>
+<text class="dg-ts" x="565" y="60" text-anchor="middle" dominant-baseline="central">59% home</text></g>
+<line x1="485" y1="60" x2="493" y2="60" class="dg-arrow" marker-end="url(#pm-arrow)"/>
+
+<g class="dgc-teal"><rect x="495" y="76" width="140" height="24" rx="12"/>
+<text class="dg-ts" x="565" y="88" text-anchor="middle" dominant-baseline="central">13% + care</text></g>
+<line x1="485" y1="88" x2="493" y2="88" class="dg-arrow" marker-end="url(#pm-arrow)"/>
+
+<g class="dgc-amber"><rect x="495" y="104" width="140" height="24" rx="12"/>
+<text class="dg-ts" x="565" y="116" text-anchor="middle" dominant-baseline="central">14% SNF</text></g>
+<line x1="485" y1="116" x2="493" y2="116" class="dg-arrow" marker-end="url(#pm-arrow)"/>
+
+<g class="dgc-coral"><rect x="495" y="132" width="140" height="24" rx="12"/>
+<text class="dg-ts" x="565" y="144" text-anchor="middle" dominant-baseline="central">4% other facility</text></g>
+<line x1="485" y1="144" x2="493" y2="144" class="dg-arrow" marker-end="url(#pm-arrow)"/>
+
+<g class="dgc-red"><rect x="495" y="160" width="140" height="24" rx="12"/>
+<text class="dg-ts" x="565" y="172" text-anchor="middle" dominant-baseline="central">2.4% hospice/exp.</text></g>
+<line x1="485" y1="172" x2="493" y2="172" class="dg-arrow" marker-end="url(#pm-arrow)"/>
+
+<g class="dgc-blue"><rect x="100" y="200" width="125" height="90" rx="8"/>
+<text class="dg-th" x="162" y="218" text-anchor="middle" dominant-baseline="central">Registration</text>
+<text class="dg-ts" x="162" y="236" text-anchor="middle" dominant-baseline="central">emergency</text>
+<text class="dg-ts" x="162" y="251" text-anchor="middle" dominant-baseline="central">elective</text>
+<text class="dg-ts" x="162" y="266" text-anchor="middle" dominant-baseline="central">urgent</text></g>
+
+<g class="dg-note"><rect x="250" y="222" width="370" height="46" rx="6" class="dg-dashed"/>
+<text class="dg-ts" x="435" y="238" text-anchor="middle" dominant-baseline="central">diabetes = primary reason in only 8.6% of admissions</text>
+<text class="dg-ts" x="435" y="254" text-anchor="middle" dominant-baseline="central">usually a comorbid condition (91.4%)</text></g>
+
+<path d="M162,290 L162,310 L365,310 L365,330" class="dg-arrow" marker-end="url(#pm-arrow)"/>
+
+<g class="dgc-teal"><rect x="290" y="332" width="150" height="70" rx="8"/>
+<text class="dg-th" x="365" y="352" text-anchor="middle" dominant-baseline="central">Physician</text>
+<text class="dg-th" x="365" y="368" text-anchor="middle" dominant-baseline="central">Assessment</text>
+<text class="dg-ts" x="365" y="386" text-anchor="middle" dominant-baseline="central">hx, exam, orders</text></g>
+
+<path d="M365,402 L365,412 L297,412 L297,422" class="dg-arrow" marker-end="url(#pm-arrow)"/>
+<path d="M365,402 L365,412 L432,412 L432,420" class="dg-arrow" marker-end="url(#pm-arrow)"/>
+
+<g class="dgc-purple"><circle cx="297" cy="468" r="46"/>
+<text class="dg-th" x="297" y="458" text-anchor="middle" dominant-baseline="central">Tests</text>
+<text class="dg-ts" x="297" y="476" text-anchor="middle" dominant-baseline="central">glu &middot; A1C</text>
+<text class="dg-ts" x="297" y="490" text-anchor="middle" dominant-baseline="central">&middot; labs</text></g>
+<line x1="297" y1="514" x2="297" y2="528" class="dg-arrow" marker-end="url(#pm-arrow)"/>
+
+<g class="dgc-blue"><rect x="235" y="530" width="125" height="46" rx="8"/>
+<text class="dg-th" x="297" y="546" text-anchor="middle" dominant-baseline="central">Diagnosis</text>
+<text class="dg-ts" x="297" y="562" text-anchor="middle" dominant-baseline="central">+ comorbid.</text></g>
+<path d="M297,576 L297,588 L377,588" class="dg-arrow" marker-end="url(#pm-arrow)"/>
+
+<g class="dgc-purple"><rect x="370" y="422" width="125" height="54" rx="8"/>
+<rect x="376" y="428" width="113" height="42" rx="6" fill="none" stroke="#3C3489" stroke-width="0.5"/>
+<text class="dg-th" x="432" y="440" text-anchor="middle" dominant-baseline="central">Meds</text>
+<text class="dg-ts" x="432" y="458" text-anchor="middle" dominant-baseline="central">insulin &middot; metf.</text></g>
+<line x1="432" y1="476" x2="432" y2="488" class="dg-arrow" marker-end="url(#pm-arrow)"/>
+
+<g class="dgc-blue"><rect x="370" y="490" width="125" height="46" rx="8"/>
+<text class="dg-th" x="432" y="513" text-anchor="middle" dominant-baseline="central">Monitor</text></g>
+<line x1="432" y1="536" x2="432" y2="558" class="dg-arrow" marker-end="url(#pm-arrow)"/>
+
+<g class="dgc-coral"><polygon points="432,558 487,588 432,618 377,588"/>
+<text class="dg-th" x="432" y="588" text-anchor="middle" dominant-baseline="central">Stable?</text></g>
+
+<path d="M487,588 L530,588 L530,340 L440,340" class="dg-arrow" marker-end="url(#pm-arrow)"/>
+<text class="dg-ts" x="508" y="580" text-anchor="middle">no</text>
+
+<path d="M432,618 L432,635 L567,635 L567,658" class="dg-arrow" marker-end="url(#pm-arrow)"/>
+<text class="dg-ts" x="440" y="628" text-anchor="middle">yes</text>
+
+<g class="dgc-amber"><polygon points="567,660 622,690 567,720 512,690" stroke-width="1.5"/>
+<text class="dg-th" x="567" y="690" text-anchor="middle" dominant-baseline="central">Discharge?</text></g>
+
+<g class="dg-note"><rect x="467" y="732" width="200" height="30" rx="6"/>
+<text class="dg-ts" x="567" y="742" text-anchor="middle" dominant-baseline="central">manual decision &mdash;</text>
+<text class="dg-ts" x="567" y="755" text-anchor="middle" dominant-baseline="central">no AI/ML risk score</text></g>
+
+<path d="M622,690 L622,196 L485,196" class="dg-arrow"/>
+
+<g class="dg-note"><rect x="100" y="760" width="535" height="30" rx="8" class="dg-dashed"/>
+<text class="dg-ts" x="367" y="775" text-anchor="middle">stores data only &mdash; no risk score generated</text></g>
+</svg>
+    </div>
+
+    <div class="callout">
+      <span class="dot"></span>
+      <p>This is the baseline the project measures itself against: no systematic risk flagging, no proactive follow-up scheduling, and discharge decisions made purely on clinical judgment. The predictive model built later in this project is meant to sit inside this same flow — not replace it.</p>
+    </div>
+
+    <p class="chart-title" style="margin-bottom:2px; margin-top:24px;">How data science helps — in this same process</p>
+    <p class="chart-sub" style="margin-bottom:14px;">Three points (marked in pink above) where a predictive model plugs in — not replacing any step, just adding a signal at moments that already exist.</p>
+
+    <div style="font-size:13.5px; line-height:1.8; margin-bottom:20px;">
+      <p style="margin:0 0 8px;"><strong>1. At registration</strong> — prior visit history and admission type are already known the moment a patient is admitted. A model can compute an initial risk score right here, before any test results come in.</p>
+      <p style="margin:0 0 8px;"><strong>2. At physician assessment</strong> — instead of every patient being reviewed in arrival order, flagged high-risk patients get looked at first.</p>
+      <p style="margin:0;"><strong>3. At the discharge decision</strong> — this is where it matters most. Today this call is made on judgment alone. A risk score here means high-risk patients get extra follow-up scheduled <em>before</em> they leave, not after they've already come back.</p>
+    </div>
+
+    <p class="chart-title" style="margin-bottom:2px;">What this could realistically deliver</p>
+    <div class="quality-table" style="margin-bottom:16px;">
+      <div class="quality-head" style="grid-template-columns: 1.1fr 2fr;"><span>Benefit</span><span>What it means</span></div>
+      <div class="quality-row" style="grid-template-columns: 1.1fr 2fr;">
+        <span>Reactive → proactive</span>
+        <span style="font-size:12.5px; color:var(--gray-text);">today, risk is only known after a patient already returns; a model surfaces it at discharge, before they leave</span>
+      </div>
+      <div class="quality-row" style="grid-template-columns: 1.1fr 2fr;">
+        <span>Prioritization</span>
+        <span style="font-size:12.5px; color:var(--gray-text);">staff can't deep-review every patient during multiple emergencies — the model surfaces ~57% of genuine readmissions automatically</span>
+      </div>
+      <div class="quality-row" style="grid-template-columns: 1.1fr 2fr;">
+        <span>Consistency</span>
+        <span style="font-size:12.5px; color:var(--gray-text);">human judgment varies by doctor, day, and fatigue — a model applies the same criteria to every patient</span>
+      </div>
+      <div class="quality-row" style="grid-template-columns: 1.1fr 2fr;">
+        <span>Better resource allocation</span>
+        <span style="font-size:12.5px; color:var(--gray-text);">discharge planning can focus on the ~35 of 100 patients flagged, instead of spreading effort evenly</span>
+      </div>
+      <div class="quality-row" style="grid-template-columns: 1.1fr 2fr;">
+        <span>Auditable &amp; improvable</span>
+        <span style="font-size:12.5px; color:var(--gray-text);">a doctor's gut feel can't be traced or re-checked — a model's decisions can be tracked and improved over time</span>
+      </div>
+      <div class="quality-row" style="grid-template-columns: 1.1fr 2fr;">
+        <span>Cost reduction potential</span>
+        <span style="font-size:12.5px; color:var(--gray-text);">every readmission costs the hospital in beds, staff, and resources — catching genuine cases earlier can lower that cost</span>
+      </div>
+    </div>
+
+    <div class="callout">
+      <span class="dot"></span>
+      <p><strong>Caveat:</strong> these benefits are conditional, not guaranteed — they depend on the model being deployed correctly. As covered in <strong>Section 08 · Limitations</strong>, this is currently a proof-of-concept, not a validated clinical tool. The benefits above are real, but only once the remaining gaps (patient-level leakage, expired-patient contamination) are addressed.</p>
+    </div>
+  </div>
+
+  <div class="section">
+    <p class="section-eyebrow">02 · Intake</p>
+    <h2 class="section-title">Dataset overview</h2>
+    <p class="section-desc">Before any model gets built, here's what's actually in the data — and where it can't be fully trusted.</p>
+
+    <div class="stat-grid">
+      <div class="stat-card"><p class="stat-num">101,766</p><p class="stat-label">Hospital encounters</p></div>
+      <div class="stat-card"><p class="stat-num">71,518</p><p class="stat-label">Unique patients</p></div>
+      <div class="stat-card"><p class="stat-num">130</p><p class="stat-label">Hospitals</p></div>
+      <div class="stat-card"><p class="stat-num">1999–2008</p><p class="stat-label">Years covered</p></div>
+      <div class="stat-card"><p class="stat-num">50</p><p class="stat-label">Fields recorded</p></div>
+    </div>
+
+    <div class="field-grid">
+      <div class="field-card c-purple">
+        <div class="field-top"><span class="field-icon">👤</span><span class="field-name">Demographics</span><span class="field-count">4</span></div>
+        <p class="field-desc">Race, gender, age band, weight</p>
+      </div>
+      <div class="field-card c-teal">
+        <div class="field-top"><span class="field-icon">🏥</span><span class="field-name">Admission details</span><span class="field-count">4</span></div>
+        <p class="field-desc">Type, discharge disposition, source, length of stay</p>
+      </div>
+      <div class="field-card c-coral">
+        <div class="field-top"><span class="field-icon">📈</span><span class="field-name">Clinical utilization</span><span class="field-count">7</span></div>
+        <p class="field-desc">Prior visits, procedures, medication count, diagnoses</p>
+      </div>
+      <div class="field-card c-pink2">
+        <div class="field-top"><span class="field-icon">🩺</span><span class="field-name">Diagnosis codes</span><span class="field-count">3</span></div>
+        <p class="field-desc">ICD-9 codes, later grouped into clinical categories</p>
+      </div>
+      <div class="field-card c-amber">
+        <div class="field-top"><span class="field-icon">💧</span><span class="field-name">Lab results</span><span class="field-count">2</span></div>
+        <p class="field-desc">Glucose serum test, A1C blood sugar control</p>
+      </div>
+      <div class="field-card c-green">
+        <div class="field-top"><span class="field-icon">💊</span><span class="field-name">Medications</span><span class="field-count">23</span></div>
+        <p class="field-desc">One column per diabetes drug — steady, up, down, none</p>
+      </div>
+      <div class="field-card c-red">
+        <div class="field-top"><span class="field-icon">🎯</span><span class="field-name">Outcome (target)</span><span class="field-count">1</span></div>
+        <p class="field-desc">Readmitted — no, after 30 days, within 30 days</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="section">
+    <p class="section-eyebrow">03 · Quality check</p>
+    <h2 class="section-title">Data quality flags</h2>
+    <p class="section-desc">What needs to be known before trusting any number downstream — every analysis in this project accounts for these.</p>
+
+    <div class="quality-table">
+      <div class="quality-head"><span>Field</span><span>Result</span><span>Flag</span></div>
+      <div class="quality-row">
+        <span>Weight — missing</span>
+        <span class="quality-val">97%</span>
+        <span class="status-pill status-red">drop</span>
+      </div>
+      <div class="quality-row">
+        <span>Medical specialty — missing</span>
+        <span class="quality-val">49%</span>
+        <span class="status-pill status-red">high</span>
+      </div>
+      <div class="quality-row">
+        <span>Payer code — missing</span>
+        <span class="quality-val">40%</span>
+        <span class="status-pill status-amber">caution</span>
+      </div>
+      <div class="quality-row">
+        <span>Stays ending in death or hospice</span>
+        <span class="quality-val">2,423 rows</span>
+        <span class="status-pill status-amber">caution</span>
+      </div>
+      <div class="quality-row">
+        <span>Patients with repeat encounters</span>
+        <span class="quality-val">16,773 pts</span>
+        <span class="status-pill status-amber">caution</span>
+      </div>
+      <div class="quality-row">
+        <span>Race — missing</span>
+        <span class="quality-val">2,273 rows</span>
+        <span class="status-pill status-green">minor</span>
+      </div>
+    </div>
+
+    <div class="callout">
+      <span class="dot"></span>
+      <p>Repeat encounters mean a patient can appear in both a training set and a test set unless the data is split by patient, not by row — a leakage risk addressed later in the modeling section.</p>
+    </div>
+  </div>
+
+  <div class="section">
+    <p class="section-eyebrow">04 · Transparency</p>
+    <h2 class="section-title">Data ethics &amp; feature exclusion</h2>
+    <p class="section-desc">Before any pattern gets shown or any model gets trained, here's what was deliberately left out — and why. Three different reasons, not one.</p>
+
+    <div class="quality-table">
+      <div class="quality-head"><span>Column</span><span>Reason</span><span>Category</span></div>
+      <div class="quality-row">
+        <span>encounter_id</span>
+        <span class="quality-val">No analytical value</span>
+        <span class="status-pill status-green">identifier</span>
+      </div>
+      <div class="quality-row">
+        <span>patient_nbr</span>
+        <span class="quality-val">No analytical value</span>
+        <span class="status-pill status-green">identifier</span>
+      </div>
+      <div class="quality-row">
+        <span>weight</span>
+        <span class="quality-val">97% missing</span>
+        <span class="status-pill status-amber">data quality</span>
+      </div>
+      <div class="quality-row">
+        <span>race</span>
+        <span class="quality-val">Excluded from model decisions</span>
+        <span class="status-pill status-red">fairness</span>
+      </div>
+      <div class="quality-row">
+        <span>gender</span>
+        <span class="quality-val">Excluded from model decisions</span>
+        <span class="status-pill status-red">fairness</span>
+      </div>
+    </div>
+
+    <p class="section-desc" style="margin-top:24px;">
+      Two other high-missingness columns — <strong>payer_code (40% missing)</strong> and
+      <strong>medical_specialty (49% missing)</strong> — were <em>not</em> dropped. They were kept
+      and their missing values labeled "Unknown," since that absence can itself be informative
+      rather than just noise.
+    </p>
+
+    <div class="callout">
+      <span class="dot"></span>
+      <p><strong>On the fairness exclusion:</strong> removing race and gender from the model means
+      neither variable can directly drive a prediction — but this is a partial safeguard, not a
+      complete one. Other fields (discharge disposition, admission source) can act as indirect
+      proxies for demographic patterns. Race and gender are still shown in the exploratory analysis
+      below, deliberately, because the disparities in the raw data are worth seeing — they're just
+      not used to make the model's decisions.</p>
+    </div>
+  </div>
+
+  <div class="section">
+    <p class="section-eyebrow">05 · Exploration</p>
+    <h2 class="section-title">Exploratory data analysis</h2>
+    <p class="section-desc">Five views into the data, ordered by how much they actually explain — the two biggest risk signals first, context second, a null result last.</p>
+
+    <div class="kpi-strip">
+      <div class="kpi-card"><p class="kpi-num">11.2%</p><p class="kpi-label">30-day readmit rate</p></div>
+      <div class="kpi-card"><p class="kpi-num">4.4 days</p><p class="kpi-label">avg. length of stay</p></div>
+      <div class="kpi-card"><p class="kpi-num">39.8%</p><p class="kpi-label">readmit rate, 6+ prior visits</p></div>
+      <div class="kpi-card"><p class="kpi-num">27.7%</p><p class="kpi-label">readmit rate, rehab discharge</p></div>
+    </div>
+
+    <div class="chart-row hero">
+      <div class="chart-card hero">
+        <p class="chart-title">Prior inpatient visits → readmission risk</p>
+        <p class="chart-sub">the single strongest signal in the data — risk nearly 5× from 0 to 6+ prior visits</p>
+        <div class="bar-row"><span class="bar-label">0 visits</span><div class="bar-track"><div class="bar-fill c-green" style="width:21%"><span>8.4%</span></div></div><span class="bar-val">67,630</span></div>
+        <div class="bar-row"><span class="bar-label">1–2 visits</span><div class="bar-track"><div class="bar-fill c-teal" style="width:36%"><span>14.2%</span></div></div><span class="bar-val">27,087</span></div>
+        <div class="bar-row"><span class="bar-label">3–5 visits</span><div class="bar-track"><div class="bar-fill c-amber" style="width:57%"><span>22.8%</span></div></div><span class="bar-val">5,845</span></div>
+        <div class="bar-row"><span class="bar-label">6+ visits</span><div class="bar-track"><div class="bar-fill c-red" style="width:100%"><span>39.8%</span></div></div><span class="bar-val">1,204</span></div>
+      </div>
+
+      <div class="chart-card hero">
+        <p class="chart-title">Discharge disposition → readmission risk</p>
+        <p class="chart-sub">where a patient goes next predicts almost as strongly as their history does</p>
+        <div class="bar-row"><span class="bar-label">Home</span><div class="bar-track"><div class="bar-fill c-green" style="width:34%"><span>9.3%</span></div></div><span class="bar-val">60,234</span></div>
+        <div class="bar-row"><span class="bar-label">Home + care</span><div class="bar-track"><div class="bar-fill c-teal" style="width:46%"><span>12.7%</span></div></div><span class="bar-val">12,902</span></div>
+        <div class="bar-row"><span class="bar-label">SNF</span><div class="bar-track"><div class="bar-fill c-amber" style="width:53%"><span>14.7%</span></div></div><span class="bar-val">13,954</span></div>
+        <div class="bar-row"><span class="bar-label">Rehab</span><div class="bar-track"><div class="bar-fill c-red" style="width:100%"><span>27.7%</span></div></div><span class="bar-val">1,993</span></div>
+      </div>
+    </div>
+
+    <div class="chart-row secondary">
+      <div class="chart-card">
+        <p class="chart-title">Readmission outcome</p>
+        <p class="chart-sub">the target this whole project predicts</p>
+        <div class="bar-row"><span class="bar-label">Not readmit.</span><div class="bar-track"><div class="bar-fill c-green" style="width:100%"><span>54.9%</span></div></div></div>
+        <div class="bar-row"><span class="bar-label">&gt;30 days</span><div class="bar-track"><div class="bar-fill c-amber" style="width:64%"><span>34.9%</span></div></div></div>
+        <div class="bar-row"><span class="bar-label">&lt;30 days</span><div class="bar-track"><div class="bar-fill c-red" style="width:20%"><span>11.2%</span></div></div></div>
+      </div>
+
+      <div class="chart-card">
+        <p class="chart-title">Length of stay</p>
+        <p class="chart-sub">heavily right-skewed, most stays are short</p>
+        <div class="bar-row"><span class="bar-label">1–3 days</span><div class="bar-track"><div class="bar-fill c-teal" style="width:100%"><span>48.3%</span></div></div></div>
+        <div class="bar-row"><span class="bar-label">4–6 days</span><div class="bar-track"><div class="bar-fill c-teal" style="width:64%"><span>30.9%</span></div></div></div>
+        <div class="bar-row"><span class="bar-label">7–9 days</span><div class="bar-track"><div class="bar-fill c-teal" style="width:27%"><span>13.0%</span></div></div></div>
+        <div class="bar-row"><span class="bar-label">10–14 days</span><div class="bar-track"><div class="bar-fill c-teal" style="width:16%"><span>7.8%</span></div></div></div>
+      </div>
+
+      <div class="callout-card">
+        <p class="chart-title">A null result worth noting</p>
+        <p class="chart-sub">A1C blood sugar control test</p>
+        <p style="font-size:13px; margin:0 0 6px;">Normal: <strong>9.7%</strong> readmit &nbsp;·&nbsp; &gt;7: <strong>10.0%</strong> &nbsp;·&nbsp; &gt;8: <strong>9.9%</strong></p>
+        <p style="font-size:12.5px; color:var(--gray-text); margin:0;">Practically flat. A clinically important test turns out to carry almost no predictive signal on its own — matching its very low feature importance in the model built later.</p>
+      </div>
+    </div>
+
+    <div class="so-what">
+      <span class="dot"></span>
+      <p>The two hero charts explain why the predictive model leans so heavily on <strong>utilization history</strong> and <strong>discharge destination</strong> — not point-in-time lab results like A1C.</p>
+    </div>
+  </div>
+
+  <div class="section">
+    <p class="section-eyebrow">06 · Inference</p>
+    <h2 class="section-title">Statistical modeling</h2>
+    <p class="section-desc">Before any variable earns a place in the predictive model, it has to prove it isn't just noise. Race and gender are excluded from this step too — see the data ethics section above.</p>
+
+    <p style="font-size: 14.5px; line-height: 1.7; margin: 0 0 20px;">
+      Not every question can be answered the same way — the right test depends on what kind of thing is being compared.
+      If both things are <strong>categories</strong> (like age group and whether someone was readmitted), a
+      <strong>chi-square test</strong> asks whether the groups look meaningfully different, or if the pattern could
+      be chance. If one thing is a category and the other is an <strong>actual number</strong> (like length of stay
+      in days), a <strong>t-test</strong> compares the average between the two groups instead. Once individual
+      variables pass this screening, the ones that matter get combined into one <strong>logistic regression
+      model</strong> — because in real patients, several factors act together, not in isolation.
+    </p>
+
+    <p class="chart-title" style="margin-bottom:2px;">Decision logic — by variable type</p>
+    <p class="chart-sub" style="margin-bottom:12px;">This is the general rule, before any specific data gets involved.</p>
+    <div class="quality-table" style="margin-bottom:24px;">
+      <div class="quality-head" style="grid-template-columns: 1.3fr 1.3fr 2.4fr;"><span>X (independent)</span><span>Y (dependent)</span><span>Test</span></div>
+      <div class="quality-row" style="grid-template-columns: 1.3fr 1.3fr 2.4fr;">
+        <span>Categorical (groups)</span>
+        <span>Categorical (groups)</span>
+        <span style="font-size:12.5px; color:var(--gray-text);"><strong style="color:var(--black);">Chi-square</strong> — both variables are buckets, so only counts can be compared, not averages</span>
+      </div>
+      <div class="quality-row" style="grid-template-columns: 1.3fr 1.3fr 2.4fr;">
+        <span>Categorical (2 groups)</span>
+        <span>Continuous (number)</span>
+        <span style="font-size:12.5px; color:var(--gray-text);"><strong style="color:var(--black);">T-test</strong> — one side is a group, the other an actual number, so averages get compared</span>
+      </div>
+      <div class="quality-row" style="grid-template-columns: 1.3fr 1.3fr 2.4fr;">
+        <span>Categorical (3+ groups)</span>
+        <span>Continuous</span>
+        <span style="font-size:12.5px; color:var(--gray-text);"><strong style="color:var(--black);">ANOVA</strong> — a t-test only works for 2 groups; 3 or more needs ANOVA</span>
+      </div>
+      <div class="quality-row" style="grid-template-columns: 1.3fr 1.3fr 2.4fr;">
+        <span>Multiple X's together</span>
+        <span>Categorical (binary)</span>
+        <span style="font-size:12.5px; color:var(--gray-text);"><strong style="color:var(--black);">Logistic regression</strong> — used when several variables' combined effect needs to be seen at once</span>
+      </div>
+    </div>
+
+    <p class="chart-title" style="margin-bottom:2px;">Applied to this dataset</p>
+    <p class="chart-sub" style="margin-bottom:12px;">The same rule, now with the actual variables tested here.</p>
+    <div class="quality-table" style="margin-bottom:24px;">
+      <div class="quality-head" style="grid-template-columns: 1.6fr 1.3fr 1.3fr 1fr;"><span>Variable pair</span><span>X type</span><span>Y type</span><span>Test</span></div>
+      <div class="quality-row" style="grid-template-columns: 1.6fr 1.3fr 1.3fr 1fr;">
+        <span>Age → Readmit</span>
+        <span>Categorical (age buckets)</span>
+        <span>Categorical (yes/no)</span>
+        <span class="status-pill status-green">chi-square</span>
+      </div>
+      <div class="quality-row" style="grid-template-columns: 1.6fr 1.3fr 1.3fr 1fr;">
+        <span>Diabetes medication → Readmit</span>
+        <span>Categorical (yes/no)</span>
+        <span>Categorical (yes/no)</span>
+        <span class="status-pill status-green">chi-square</span>
+      </div>
+      <div class="quality-row" style="grid-template-columns: 1.6fr 1.3fr 1.3fr 1fr;">
+        <span>Readmit → Length of stay</span>
+        <span>Categorical (2 groups)</span>
+        <span>Continuous (days)</span>
+        <span class="status-pill status-amber">t-test</span>
+      </div>
+    </div>
+    <div class="callout" style="margin-top:0; margin-bottom:24px;">
+      <span class="dot"></span>
+      <p>For the length-of-stay test, X and Y flip relative to the other two rows — the question here is "what was the average stay <em>among</em> readmitted patients," not "does stay length predict readmission." Same test, reversed framing.</p>
+    </div>
+
+    <div class="field-grid" style="margin-bottom: 20px;">
+      <div class="field-card c-purple">
+        <p class="field-name" style="margin-bottom:6px;">Chi-square test</p>
+        <p class="field-desc" style="font-family:'IBM Plex Mono',monospace; font-size:12.5px;">&Chi;&sup2; = &Sigma; (O&minus;E)&sup2; / E</p>
+        <p class="field-desc">O = observed count, E = expected count if no relationship existed</p>
+      </div>
+      <div class="field-card c-teal">
+        <p class="field-name" style="margin-bottom:6px;">T-test (Welch's)</p>
+        <p class="field-desc" style="font-family:'IBM Plex Mono',monospace; font-size:12.5px;">t = (x&#772;&#8321; &minus; x&#772;&#8322;) / &radic;(s&#178;&#8321;/n&#8321; + s&#178;&#8322;/n&#8322;)</p>
+        <p class="field-desc">compares the average of a number between two groups</p>
+      </div>
+    </div>
+
+    <div class="quality-table">
+      <div class="quality-head"><span>X → Y</span><span>Result</span><span>Flag</span></div>
+      <div class="quality-row">
+        <span>Age group → Readmitted &lt;30d</span>
+        <span class="quality-val">&Chi;&sup2;=116.6, p&lt;0.001</span>
+        <span class="status-pill status-green">significant</span>
+      </div>
+      <div class="quality-row">
+        <span>Diabetes medication → Readmitted &lt;30d</span>
+        <span class="quality-val">&Chi;&sup2;=74.7, p&lt;0.001</span>
+        <span class="status-pill status-green">significant</span>
+      </div>
+      <div class="quality-row">
+        <span>Readmitted &lt;30d → Length of stay</span>
+        <span class="quality-val">t=13.93, p&lt;0.001</span>
+        <span class="status-pill status-green">significant</span>
+      </div>
+    </div>
+
+    <div class="field-grid" style="margin-top: 20px;">
+      <div class="field-card c-amber">
+        <p class="field-name" style="margin-bottom:6px;">Age — what it means clinically</p>
+        <p class="field-desc">Age is a proxy for slower recovery, more comorbidities, and less support at home. Elderly patients need thorough discharge planning, not just medical clearance.</p>
+      </div>
+      <div class="field-card c-coral">
+        <p class="field-name" style="margin-bottom:6px;">Diabetes meds — what it means clinically</p>
+        <p class="field-desc">Medication management quality after discharge genuinely affects outcomes. Discharge counseling on proper use isn't a formality — it measurably matters.</p>
+      </div>
+      <div class="field-card c-pink2">
+        <p class="field-name" style="margin-bottom:6px;">Length of stay — what it means clinically</p>
+        <p class="field-desc">A longer-than-expected stay is itself an early warning sign — a signal for extra discharge attention, not just a scheduling detail.</p>
+      </div>
+    </div>
+
+    <div class="callout">
+      <span class="dot"></span>
+      <p>No single factor is enough on its own to flag a patient — age, medication history, and stay length only become a useful risk picture once combined. That combination is what the predictive model does next.</p>
+    </div>
+  </div>
+
+  <div class="section">
+    <p class="section-eyebrow">07 · Prediction</p>
+    <h2 class="section-title">Predictive modeling</h2>
+    <p class="section-desc">Statistical tests confirm that individual factors matter. This is where they get combined into one number per patient — an actual, usable risk score, not just a group-level association.</p>
+
+    <div class="callout" style="margin-bottom: 24px;">
+      <span class="dot"></span>
+      <p><strong>Why this matters for this dataset specifically:</strong> knowing "age is statistically associated with readmission" doesn't tell a care team what to do with the patient in front of them right now. A predictive model turns dozens of individual signals into a single risk score for one specific person — which is what actually makes a screening tool usable.</p>
+    </div>
+
+    <div class="field-card c-blue" style="margin-bottom: 28px; background:#E8F0FE;">
+      <p class="field-name" style="margin-bottom:8px; color:#1A4480;">How does the model actually learn this — is it told what's medically important?</p>
+      <p class="field-desc" style="opacity:1; color:#1A4480; margin-bottom:10px;">
+        No. Nothing is told to the model about which factors are clinically important. It only works because
+        every patient in this dataset is <strong>historical</strong> — the actual outcome (readmitted or not)
+        is already known. The model compares patients with a given trait against patients without it, and
+        checks whether their real outcomes actually differed.
+      </p>
+      <p class="field-desc" style="opacity:1; color:#1A4480; margin-bottom:10px;">
+        <strong>Analogy:</strong> imagine being handed 1,000 old exam sheets, each with the student's answers
+        <em>and</em> their final grade already written on it. If students who got Question 5 right tended to
+        have higher grades, you'd notice that pattern yourself — nobody had to tell you Question 5 mattered.
+        The model does the same thing with patient data, using statistics instead of eyeballing it.
+      </p>
+      <p class="field-desc" style="opacity:1; color:#1A4480;">
+        This is also why a clinically important test like A1C ended up with a small weight — the model checked,
+        and its statistical relationship with readmission was weak in this data, regardless of its medical
+        significance. The model only learns statistical patterns, not clinical seriousness.
+      </p>
+    </div>
+
+    <p class="chart-title" style="margin-bottom:2px;">Why predictive modeling, on this dataset</p>
+    <p class="chart-sub" style="margin-bottom:12px;">Statistical tests (previous section) stop at "does this factor matter." This is the step that turns that into something usable.</p>
+    <div class="quality-table" style="margin-bottom:24px;">
+      <div class="quality-head" style="grid-template-columns: 1.2fr 1.2fr 1.4fr;"><span>Statistical testing gave us</span><span>What it can't do</span><span>What predictive modeling adds</span></div>
+      <div class="quality-row" style="grid-template-columns: 1.2fr 1.2fr 1.4fr;">
+        <span>Age & meds are significant (p&lt;0.001)</span>
+        <span style="color:var(--gray-text); font-size:12.5px;">only tells you this on average, across the whole population</span>
+        <span style="color:var(--gray-text); font-size:12.5px;">a single risk score for one specific patient in front of you</span>
+      </div>
+      <div class="quality-row" style="grid-template-columns: 1.2fr 1.2fr 1.4fr;">
+        <span>Readmitted patients stayed longer</span>
+        <span style="color:var(--gray-text); font-size:12.5px;">describes a pattern, doesn't combine it with other factors</span>
+        <span style="color:var(--gray-text); font-size:12.5px;">combines all 189 signals — age, meds, history — into one number</span>
+      </div>
+      <div class="quality-row" style="grid-template-columns: 1.2fr 1.2fr 1.4fr;">
+        <span>No single factor is enough alone</span>
+        <span style="color:var(--gray-text); font-size:12.5px;">group-level association only</span>
+        <span style="color:var(--gray-text); font-size:12.5px;">an actionable screening tool a care team can actually use</span>
+      </div>
+    </div>
+
+    <p class="chart-title" style="margin-bottom:2px;">Why these three models, specifically</p>
+    <p class="chart-sub" style="margin-bottom:12px;">Each one exists to answer a different question about this dataset — run in order of increasing complexity.</p>
+    <div class="quality-table" style="margin-bottom:24px;">
+      <div class="quality-head" style="grid-template-columns: 1fr 1fr 2fr;"><span>Model</span><span>Role</span><span>Why chosen for this data</span></div>
+      <div class="quality-row" style="grid-template-columns: 1fr 1fr 2fr;">
+        <span>Logistic Regression</span>
+        <span class="status-pill status-green">baseline</span>
+        <span style="color:var(--gray-text); font-size:12.5px;">the target is genuinely binary (readmit or not), and every weight is directly interpretable — sets the floor every other model has to beat</span>
+      </div>
+      <div class="quality-row" style="grid-template-columns: 1fr 1fr 2fr;">
+        <span>Random Forest</span>
+        <span class="status-pill status-amber">non-linear check</span>
+        <span style="color:var(--gray-text); font-size:12.5px;">real patients don't follow straight lines — age and prior visits together can compound beyond what fixed weights capture</span>
+      </div>
+      <div class="quality-row" style="grid-template-columns: 1fr 1fr 2fr;">
+        <span>XGBoost</span>
+        <span class="status-pill status-red">performance ceiling</span>
+        <span style="color:var(--gray-text); font-size:12.5px;">the standard for tabular healthcare data — directly targets the patients earlier models got wrong, instead of treating every case equally</span>
+      </div>
+    </div>
+
+    <div class="callout" style="margin-bottom: 28px;">
+      <span class="dot"></span>
+      <p><strong>What this means for the final decision:</strong> running all three isn't redundant — it's what lets this project claim <strong>XGBoost is the right choice with evidence</strong>, not just picked because it's popular. Because XGBoost won on both AUC (0.672) and recall (58.0%) — the metric that matters most for catching real readmissions — it becomes the model recommended for actual screening use. Logistic Regression stays valuable as the explainable fallback when a clinician needs to see the reasoning in plain weights, not just a score.</p>
+    </div>
+
+    <p class="chart-title" style="margin-bottom:2px;">The three models, in full</p>
+    <p class="chart-sub" style="margin-bottom:16px;">Same 189 input features each time — the general concept behind each model, then how it actually performed on this data.</p>
+
+    <!-- LOGISTIC REGRESSION -->
+    <div class="chart-card" style="margin-bottom: 20px;">
+      <p class="chart-title" style="color:#3C3489;">1. Logistic Regression</p>
+      <p style="font-size:13px; margin:8px 0 10px; color:var(--gray-text);"><strong style="color:var(--black);">The concept:</strong> fit one smooth S-shaped curve that converts any combination of inputs into a probability between 0 and 1 — no matter how extreme the inputs, the output can never leave that range.</p>
+      <p style="font-family:'IBM Plex Mono',monospace; font-size:13px; margin:8px 0 14px; color:var(--black);">P = 1 / (1 + e<sup>&minus;(&beta;&#8320;+&beta;&#8321;x&#8321;+...+&beta;&#8345;x&#8345;)</sup>)</p>
+      <div style="display:grid; grid-template-columns: 60px 1fr; gap:6px 12px; font-size:12.5px; color:var(--gray-text); margin-bottom:14px;">
+        <strong style="color:var(--black);">P</strong><span>readmission probability, forced between 0 and 1 by the sigmoid</span>
+        <strong style="color:var(--black);">&beta;&#8320;</strong><span>intercept — the baseline when every feature is at its average</span>
+        <strong style="color:var(--black);">&beta;&#8321;...&beta;&#8345;</strong><span>learned weight per feature — never assigned by hand</span>
+        <strong style="color:var(--black);">x&#8321;...x&#8345;</strong><span>the 189 input features for one patient</span>
+      </div>
+      <p style="font-size:13px; margin:0 0 14px;"><strong>On this dataset:</strong> <code>class_weight='balanced'</code> (only 11.2% of patients are readmitted, so the minority class gets extra weight) · same 189 features as the other two models.</p>
+
+      <div class="dg-wrap">
+<svg viewBox="0 0 680 380" role="img" style="width:100%;" aria-label="Logistic regression S-curve fit to patient readmission data">
+<desc>Scattered dots represent patients ordered by combined risk score, colored green for not readmitted and red for readmitted, with an S-shaped curve fitted through them, a dashed threshold line at 0.5, an inflection point marker, and one example patient annotated.</desc>
+<defs>
+<linearGradient id="lr-zone" x1="0" y1="0" x2="1" y2="1">
+<stop offset="0%" stop-color="#F09595" stop-opacity="0.22"/>
+<stop offset="100%" stop-color="#97C459" stop-opacity="0.22"/>
+</linearGradient>
+</defs>
+<rect x="70" y="40" width="550" height="280" fill="url(#lr-zone)"/>
+<line x1="70" y1="320" x2="620" y2="320" class="dg-line"/>
+<line x1="70" y1="40" x2="70" y2="320" class="dg-line"/>
+<text class="dg-ts" x="58" y="323" text-anchor="end">0.0</text>
+<text class="dg-ts" x="58" y="183" text-anchor="end">0.5</text>
+<text class="dg-ts" x="58" y="43" text-anchor="end">1.0</text>
+<text class="dg-ts" x="340" y="360" text-anchor="middle">combined risk score (standardized, low &#8594; high)</text>
+<line x1="70" y1="180" x2="620" y2="180" class="dg-line" stroke-dasharray="4 3"/>
+<text class="dg-ts" x="612" y="172" text-anchor="end">threshold = 0.5</text>
+<circle cx="95" cy="60" r="5" fill="#639922"/><circle cx="120" cy="90" r="5" fill="#639922"/><circle cx="150" cy="70" r="5" fill="#639922"/>
+<circle cx="140" cy="110" r="5" fill="#639922"/><circle cx="180" cy="95" r="5" fill="#639922"/><circle cx="200" cy="130" r="5" fill="#639922"/>
+<circle cx="230" cy="115" r="5" fill="#639922"/><circle cx="260" cy="150" r="5" fill="#639922"/><circle cx="250" cy="180" r="5" fill="#E24B4A"/>
+<circle cx="300" cy="170" r="5" fill="#639922"/><circle cx="320" cy="200" r="5" fill="#E24B4A"/><circle cx="340" cy="160" r="5" fill="#639922"/>
+<circle cx="360" cy="220" r="5" fill="#E24B4A"/><circle cx="380" cy="190" r="5" fill="#639922"/><circle cx="400" cy="240" r="5" fill="#E24B4A"/>
+<circle cx="430" cy="210" r="5" fill="#639922"/><circle cx="450" cy="260" r="5" fill="#E24B4A"/><circle cx="470" cy="230" r="5" fill="#E24B4A"/>
+<circle cx="500" cy="270" r="5" fill="#E24B4A"/><circle cx="520" cy="250" r="5" fill="#E24B4A"/><circle cx="550" cy="280" r="5" fill="#E24B4A"/>
+<circle cx="580" cy="290" r="5" fill="#E24B4A"/><circle cx="600" cy="270" r="5" fill="#E24B4A"/>
+<path d="M75,305 Q 260,300 340,180 Q 400,60 605,55" fill="none" stroke="#D85A30" stroke-width="2.5"/>
+<text class="dg-ts" x="250" y="50" text-anchor="middle">z=&minus;0.69 &#8594; example patient P=0.34</text>
+<line x1="250" y1="58" x2="250" y2="176" stroke="var(--gray-text)" stroke-width="0.5" stroke-dasharray="2 2"/>
+<text class="dg-ts" x="460" y="150" text-anchor="start">inflection: P=0.5 at z&#8776;0.1</text>
+<line x1="410" y1="156" x2="345" y2="177" stroke="var(--gray-text)" stroke-width="0.5" stroke-dasharray="2 2"/>
+<circle cx="340" cy="180" r="6" fill="none" stroke="#1A4480" stroke-width="2"/>
+<circle cx="95" cy="335" r="5" fill="#639922"/><text class="dg-ts" x="108" y="339">not readmitted</text>
+<circle cx="230" cy="335" r="5" fill="#E24B4A"/><text class="dg-ts" x="243" y="339">readmitted</text>
+<line x1="380" y1="335" x2="410" y2="335" stroke="#D85A30" stroke-width="2.5"/><text class="dg-ts" x="418" y="339">fitted probability</text>
+</svg>
+      </div>
+      <p style="font-size:12.5px; color:var(--gray-text); margin:10px 0 20px;">Result: 65.5% accuracy · 0.645 AUC · 53.7% recall</p>
+
+      <p style="font-weight:600; font-size:14px; margin:0 0 2px;">Walking through one real patient</p>
+      <p style="font-size:12.5px; color:var(--gray-text); margin:0 0 12px;">A simplified 5-feature version of the formula, applied to an actual patient from the dataset — small enough to follow by hand.</p>
+      <div style="display:grid; grid-template-columns: 1.4fr 1fr 1fr; gap:8px 16px; font-size:13px; margin-bottom:16px;">
+        <strong>Feature</strong><strong>This patient</strong><strong>Weight (&beta;)</strong>
+        <span>Prior inpatient visits</span><span>3</span><span>0.377</span>
+        <span>Length of stay</span><span>6 days</span><span>0.094</span>
+        <span>Medications</span><span>19</span><span>0.055</span>
+        <span>Emergency visits</span><span>0</span><span>0.059</span>
+        <span>Lab procedures</span><span>31</span><span>0.011</span>
+      </div>
+      <p style="font-family:'IBM Plex Mono',monospace; font-size:12px; color:var(--gray-text); margin:0 0 12px;">P = 1 / (1 + e<sup>&minus;(&minus;0.066 + 0.377z&#8321; + 0.094z&#8322; + 0.055z&#8323; + 0.059z&#8324; + 0.011z&#8325;)</sup>) &nbsp;=&nbsp; <strong style="color:var(--black);">0.666</strong></p>
+      <div class="so-what" style="margin-top:0; padding-top:12px;">
+        <span class="dot"></span>
+        <p>Model predicted a <strong>66.6% chance of readmission</strong> for this patient — flagged high-risk. This patient was, in fact, readmitted within 30 days. The dominant driver was the 3 prior inpatient visits, which carried by far the largest weight.</p>
+      </div>
+    </div>
+
+    <!-- RANDOM FOREST -->
+    <div class="chart-card" style="margin-bottom: 20px;">
+      <p class="chart-title" style="color:#085041;">2. Random Forest</p>
+      <p style="font-size:13px; margin:8px 0 10px; color:var(--gray-text);"><strong style="color:var(--black);">The concept:</strong> grow many decision trees independently, each on a random slice of the data, then let them vote — a crowd of imperfect trees averages out to something more reliable than any single tree.</p>
+      <p style="font-family:'IBM Plex Mono',monospace; font-size:13px; margin:8px 0 14px; color:var(--black);">&#375; = mode { T&#8321;(x), T&#8322;(x), ..., T&#8322;&#8320;&#8320;(x) }</p>
+      <div style="display:grid; grid-template-columns: 60px 1fr; gap:6px 12px; font-size:12.5px; color:var(--gray-text); margin-bottom:14px;">
+        <strong style="color:var(--black);">&#375;</strong><span>final prediction — the majority vote across all trees</span>
+        <strong style="color:var(--black);">T&#8321;...T&#8322;&#8320;&#8320;</strong><span>200 independent decision trees, each seeing a random slice of data</span>
+        <strong style="color:var(--black);">mode</strong><span>the most common answer among all 200 trees</span>
+      </div>
+      <p style="font-size:13px; margin:0 0 10px;"><strong>Why chosen for this data:</strong> real patients don't follow straight lines — risk from age and prior visits together can compound beyond what Logistic Regression's fixed weights can capture. Random Forest catches these interactions, and averaging 200 trees resists overfitting to noise.</p>
+      <p style="font-size:13px; margin:0 0 14px;"><strong>On this dataset:</strong> <code>n_estimators=200</code> (number of trees) · <code>max_depth=10</code> (caps how deep each tree can split, preventing memorization) · <code>class_weight='balanced'</code>.</p>
+
+      <div class="dg-wrap">
+<svg viewBox="0 0 680 340" role="img" style="width:100%;" aria-label="Random Forest splitting data into subsets and voting">
+<desc>All 100,244 patient records split into random subsets, each feeding one of 200 independent decision trees limited to depth 10, voting together for a final majority decision.</desc>
+<g class="dgc-green"><rect x="210" y="10" width="260" height="58" rx="8"/>
+<text class="dg-th" x="340" y="28" text-anchor="middle" dominant-baseline="central">all patient data</text>
+<text class="dg-ts" x="340" y="44" text-anchor="middle" dominant-baseline="central">100,244 records &times; 189 features</text>
+<text class="dg-ts" x="340" y="59" text-anchor="middle" dominant-baseline="central">(3 of 200 trees shown below)</text></g>
+<path d="M300,68 L150,94 L150,104" class="dg-arrow" marker-end="url(#pm-arrow)"/>
+<path d="M340,68 L340,104" class="dg-arrow" marker-end="url(#pm-arrow)"/>
+<path d="M380,68 L530,94 L530,104" class="dg-arrow" marker-end="url(#pm-arrow)"/>
+<g class="dgc-teal"><rect x="80" y="106" width="140" height="30" rx="6"/><text class="dg-ts" x="150" y="121" text-anchor="middle" dominant-baseline="central">random sample, tree 1</text></g>
+<g class="dgc-teal"><rect x="270" y="106" width="140" height="30" rx="6"/><text class="dg-ts" x="340" y="121" text-anchor="middle" dominant-baseline="central">random sample, tree 2</text></g>
+<g class="dgc-teal"><rect x="460" y="106" width="140" height="30" rx="6"/><text class="dg-ts" x="530" y="121" text-anchor="middle" dominant-baseline="central">random sample, tree 3</text></g>
+<line x1="150" y1="136" x2="150" y2="150" class="dg-arrow" marker-end="url(#pm-arrow)"/>
+<line x1="340" y1="136" x2="340" y2="150" class="dg-arrow" marker-end="url(#pm-arrow)"/>
+<line x1="530" y1="136" x2="530" y2="150" class="dg-arrow" marker-end="url(#pm-arrow)"/>
+<g stroke="#3C3489" stroke-width="1" fill="none">
+<line x1="150" y1="152" x2="130" y2="172"/><line x1="150" y1="152" x2="170" y2="172"/>
+<line x1="130" y1="172" x2="115" y2="192"/><line x1="130" y1="172" x2="145" y2="192"/><line x1="170" y1="172" x2="185" y2="192"/>
+</g>
+<circle cx="150" cy="152" r="4" fill="#7F77DD"/><circle cx="130" cy="172" r="4" fill="#7F77DD"/><circle cx="170" cy="172" r="4" fill="#7F77DD"/>
+<circle cx="115" cy="192" r="4" fill="#3C3489"/><circle cx="145" cy="192" r="4" fill="#3C3489"/><circle cx="185" cy="192" r="4" fill="#3C3489"/>
+<g stroke="#3C3489" stroke-width="1" fill="none">
+<line x1="340" y1="152" x2="315" y2="172"/><line x1="340" y1="152" x2="365" y2="172"/>
+<line x1="315" y1="172" x2="300" y2="192"/><line x1="315" y1="172" x2="330" y2="192"/><line x1="365" y1="172" x2="350" y2="192"/><line x1="365" y1="172" x2="380" y2="192"/>
+</g>
+<circle cx="340" cy="152" r="4" fill="#7F77DD"/><circle cx="315" cy="172" r="4" fill="#7F77DD"/><circle cx="365" cy="172" r="4" fill="#7F77DD"/>
+<circle cx="300" cy="192" r="4" fill="#3C3489"/><circle cx="330" cy="192" r="4" fill="#3C3489"/><circle cx="350" cy="192" r="4" fill="#3C3489"/><circle cx="380" cy="192" r="4" fill="#3C3489"/>
+<g stroke="#3C3489" stroke-width="1" fill="none">
+<line x1="530" y1="152" x2="510" y2="172"/><line x1="530" y1="152" x2="550" y2="172"/><line x1="510" y1="172" x2="495" y2="192"/><line x1="550" y1="172" x2="565" y2="192"/>
+</g>
+<circle cx="530" cy="152" r="4" fill="#7F77DD"/><circle cx="510" cy="172" r="4" fill="#7F77DD"/><circle cx="550" cy="172" r="4" fill="#7F77DD"/>
+<circle cx="495" cy="192" r="4" fill="#3C3489"/><circle cx="565" cy="192" r="4" fill="#3C3489"/>
+<text class="dg-ts" x="150" y="212" text-anchor="middle">depth &#8804;10, votes: safe</text>
+<text class="dg-ts" x="340" y="212" text-anchor="middle">depth &#8804;10, votes: risk</text>
+<text class="dg-ts" x="530" y="212" text-anchor="middle">depth &#8804;10, votes: safe</text>
+<path d="M150,220 L280,264" class="dg-arrow" marker-end="url(#pm-arrow)"/>
+<path d="M340,220 L340,254" class="dg-arrow" marker-end="url(#pm-arrow)"/>
+<path d="M530,220 L400,264" class="dg-arrow" marker-end="url(#pm-arrow)"/>
+<g class="dgc-amber"><rect x="240" y="266" width="200" height="50" rx="8"/>
+<text class="dg-th" x="340" y="284" text-anchor="middle" dominant-baseline="central">majority of 200 votes: safe</text>
+<text class="dg-ts" x="340" y="301" text-anchor="middle" dominant-baseline="central">accuracy 67.0% &middot; AUC 0.657</text></g>
+</svg>
+      </div>
+
+      <p style="font-weight:600; font-size:14px; margin:16px 0 2px;">Which features carry the most weight</p>
+      <p style="font-size:12.5px; color:var(--gray-text); margin:0 0 12px;">Learned entirely from data during training — not assigned by hand.</p>
+      <div class="quality-table">
+        <div class="quality-head"><span>Feature</span><span>Importance</span><span>Rank</span></div>
+        <div class="quality-row"><span>Prior inpatient visits</span><span class="quality-val">0.211</span><span class="status-pill status-red">#1</span></div>
+        <div class="quality-row"><span>Discharge disposition</span><span class="quality-val">0.097</span><span class="status-pill status-amber">#2</span></div>
+        <div class="quality-row"><span>Number of medications</span><span class="quality-val">0.054</span><span class="status-pill status-amber">#3</span></div>
+        <div class="quality-row"><span>Length of stay</span><span class="quality-val">0.047</span><span class="status-pill status-green">#4</span></div>
+        <div class="quality-row"><span>Emergency visits (prior)</span><span class="quality-val">0.046</span><span class="status-pill status-green">#5</span></div>
+      </div>
+    </div>
+
+    <!-- XGBOOST -->
+    <div class="chart-card" style="margin-bottom: 24px;">
+      <p class="chart-title" style="color:#633806;">3. XGBoost</p>
+      <p style="font-size:13px; margin:8px 0 10px; color:var(--gray-text);"><strong style="color:var(--black);">The concept:</strong> build trees one at a time instead of all at once — each new tree looks specifically at what the previous trees got wrong, and nudges the prediction closer to the truth.</p>
+      <p style="font-family:'IBM Plex Mono',monospace; font-size:13px; margin:8px 0 14px; color:var(--black);">&#375;<sup>(t)</sup> = &#375;<sup>(t&minus;1)</sup> + &eta;&middot;f<sub>t</sub>(x)</p>
+      <div style="display:grid; grid-template-columns: 60px 1fr; gap:6px 12px; font-size:12.5px; color:var(--gray-text); margin-bottom:14px;">
+        <strong style="color:var(--black);">&#375;<sup>(t)</sup></strong><span>prediction after adding the t-th tree</span>
+        <strong style="color:var(--black);">&eta;</strong><span>learning rate — how aggressively each tree corrects</span>
+        <strong style="color:var(--black);">f<sub>t</sub>(x)</strong><span>the new tree, trained specifically on the previous tree's residual errors</span>
+      </div>
+      <p style="font-size:13px; margin:0 0 10px;"><strong>Why chosen for this data:</strong> unlike Random Forest's independent trees, XGBoost directly targets the patients the previous tree got wrong — it's the standard for tabular healthcare data and consistently the strongest performer here.</p>
+      <p style="font-size:13px; margin:0 0 14px;"><strong>On this dataset:</strong> <code>scale_pos_weight</code> (XGBoost's equivalent of class balancing) · same 189 features.</p>
+
+      <div class="dg-wrap">
+<svg viewBox="0 0 680 370" role="img" style="width:100%;" aria-label="XGBoost residual error on readmit_30 shrinking across trees to a final decision">
+<desc>Predicting readmit_30, whether a patient returns within 30 days. For a patient whose actual value is 1, tree 1 predicts 0.30, error 0.70. Tree 2 corrects to 0.50, error 0.50. Tree 3 corrects to 0.68, error 0.32. The final probability crosses the 0.5 threshold, producing a high risk decision that matches the actual outcome.</desc>
+<g class="dgc-teal"><rect x="140" y="10" width="400" height="30" rx="15"/>
+<text class="dg-th" x="340" y="26" text-anchor="middle" dominant-baseline="central">predicting: readmit_30 (returns within 30 days?)</text></g>
+<text class="dg-ts" x="340" y="58" text-anchor="middle">this patient's actual readmit_30 = 1 (yes, they returned)</text>
+<g class="dgc-coral"><rect x="20" y="72" width="150" height="70" rx="10"/>
+<text class="dg-th" x="95" y="92" text-anchor="middle" dominant-baseline="central">tree 1 predicts</text>
+<text class="dg-ts" x="95" y="112" text-anchor="middle" dominant-baseline="central">P(readmit_30)=0.30</text>
+<text class="dg-ts" x="95" y="128" text-anchor="middle" dominant-baseline="central">error = 1 &minus; 0.30 = 0.70</text></g>
+<path d="M170,107 L205,107" class="dg-arrow" marker-end="url(#pm-arrow)"/>
+<g class="dgc-coral"><rect x="210" y="72" width="150" height="70" rx="10"/>
+<text class="dg-th" x="285" y="92" text-anchor="middle" dominant-baseline="central">tree 2 corrects to</text>
+<text class="dg-ts" x="285" y="112" text-anchor="middle" dominant-baseline="central">P(readmit_30)=0.50</text>
+<text class="dg-ts" x="285" y="128" text-anchor="middle" dominant-baseline="central">error = 1 &minus; 0.50 = 0.50</text></g>
+<path d="M360,107 L395,107" class="dg-arrow" marker-end="url(#pm-arrow)"/>
+<g class="dgc-coral"><rect x="400" y="72" width="150" height="70" rx="10"/>
+<text class="dg-th" x="475" y="92" text-anchor="middle" dominant-baseline="central">tree 3 corrects to</text>
+<text class="dg-ts" x="475" y="112" text-anchor="middle" dominant-baseline="central">P(readmit_30)=0.68</text>
+<text class="dg-ts" x="475" y="128" text-anchor="middle" dominant-baseline="central">error = 1 &minus; 0.68 = 0.32</text></g>
+<line x1="95" y1="158" x2="475" y2="158" class="dg-line" stroke-dasharray="4 3"/>
+<text class="dg-ts" x="640" y="154" text-anchor="end">error shrinking &#8594;</text>
+<line x1="95" y1="142" x2="95" y2="172" stroke="#712B13" stroke-width="4"/>
+<line x1="285" y1="142" x2="285" y2="172" stroke="#993C1D" stroke-width="4"/>
+<line x1="475" y1="142" x2="475" y2="172" stroke="#D85A30" stroke-width="4"/>
+<path d="M475,178 L475,218 L340,248 L340,258" class="dg-arrow" marker-end="url(#pm-arrow)"/>
+<line x1="240" y1="263" x2="440" y2="263" class="dg-line" stroke-dasharray="3 3"/>
+<text class="dg-ts" x="440" y="256" text-anchor="start">threshold 0.5</text>
+<g class="dgc-red"><rect x="240" y="278" width="200" height="80" rx="8" stroke-width="1"/>
+<text class="dg-th" x="340" y="298" text-anchor="middle" dominant-baseline="central">final: P(readmit_30)=0.68</text>
+<text class="dg-ts" x="340" y="316" text-anchor="middle" dominant-baseline="central">0.68 &gt; 0.5 &#8594; predicted: HIGH RISK</text>
+<text class="dg-ts" x="340" y="332" text-anchor="middle" dominant-baseline="central">actual readmit_30=1 &mdash; match &#10003;</text></g>
+</svg>
+      </div>
+      <p style="font-size:12.5px; color:var(--gray-text); margin:10px 0 20px;">Result: 66.0% accuracy · <strong>0.672 AUC</strong> · <strong>58.0% recall</strong> — best of the three</p>
+
+      <p style="font-weight:600; font-size:14px; margin:0 0 2px;">Confusion matrix — out of 100 patients</p>
+      <p style="font-size:12.5px; color:var(--gray-text); margin:0 0 12px;">What XGBoost actually gets right and wrong, at the default 0.5 threshold.</p>
+      <div style="display:grid; grid-template-columns: 100px 1fr 1fr; gap:8px; align-items:center;">
+        <div></div>
+        <div style="text-align:center; font-size:11.5px; color:var(--gray-text); font-weight:600;">actually NOT readmitted (~89)</div>
+        <div style="text-align:center; font-size:11.5px; color:var(--gray-text); font-weight:600;">actually readmitted (~11)</div>
+
+        <div style="font-size:12px; font-weight:600; color:var(--gray-text);">model says "safe"</div>
+        <div class="c-green" style="border-radius:12px; padding:14px; text-align:center;">
+          <p style="font-size:22px; font-weight:700; margin:0;">60</p>
+          <p style="font-size:11px; margin:3px 0 0;">correct</p>
+        </div>
+        <div class="c-red" style="border-radius:12px; padding:14px; text-align:center;">
+          <p style="font-size:22px; font-weight:700; margin:0;">5</p>
+          <p style="font-size:11px; margin:3px 0 0;">missed</p>
+        </div>
+
+        <div style="font-size:12px; font-weight:600; color:var(--gray-text);">model says "high risk"</div>
+        <div class="c-amber" style="border-radius:12px; padding:14px; text-align:center;">
+          <p style="font-size:22px; font-weight:700; margin:0;">29</p>
+          <p style="font-size:11px; margin:3px 0 0;">false alarm</p>
+        </div>
+        <div class="c-green" style="border-radius:12px; padding:14px; text-align:center;">
+          <p style="font-size:22px; font-weight:700; margin:0;">6</p>
+          <p style="font-size:11px; margin:3px 0 0;">caught</p>
+        </div>
+      </div>
+      <div class="so-what" style="margin-top:14px; padding-top:12px;">
+        <span class="dot"></span>
+        <p>Of 35 patients flagged "high risk," only 6 actually return — the honest trade-off of prioritizing recall over precision in a screening context.</p>
+      </div>
+    </div>
+
+    <div class="field-card c-coral" style="margin-bottom: 24px;">
+      <p class="field-name" style="margin-bottom:6px;">The limitation worth stating plainly</p>
+      <p class="field-desc">A model can only learn patterns that already exist in its training data — it has no concept of "clinical seriousness," only "statistical pattern in past outcomes." A rare but genuinely dangerous condition with too few past examples may get underweighted, not because it doesn't matter medically, but because the model never saw enough of it to learn the pattern. This is the core difference between a doctor's judgment and a model's prediction.</p>
+    </div>
+
+    <p class="chart-title" style="margin-bottom:2px;">So which model actually won?</p>
+    <div class="quality-table" style="margin-bottom:16px;">
+      <div class="quality-head" style="grid-template-columns: 1.3fr 1fr 1fr 1fr;"><span>Metric</span><span>Logistic Reg.</span><span>Random Forest</span><span>XGBoost</span></div>
+      <div class="quality-row" style="grid-template-columns: 1.3fr 1fr 1fr 1fr;">
+        <span>Accuracy</span><span>65.5%</span><span class="status-pill status-green">67.0%</span><span>66.0%</span>
+      </div>
+      <div class="quality-row" style="grid-template-columns: 1.3fr 1fr 1fr 1fr;">
+        <span>AUC-ROC</span><span>0.645</span><span>0.657</span><span class="status-pill status-green">0.672</span>
+      </div>
+      <div class="quality-row" style="grid-template-columns: 1.3fr 1fr 1fr 1fr;">
+        <span>Recall</span><span>53.7%</span><span>52.8%</span><span class="status-pill status-green">58.0%</span>
+      </div>
+    </div>
+    <div class="callout" style="margin-bottom: 24px;">
+      <span class="dot"></span>
+      <p><strong>XGBoost wins</strong> — not on raw accuracy (Random Forest edges it there), but on AUC and recall, the two metrics that matter most on imbalanced healthcare data like this. Missing a genuinely at-risk patient costs more than a false alarm, and recall is exactly what tracks that. Logistic Regression stays useful as the explainable fallback when a clinician needs to see the reasoning in plain weights.</p>
+    </div>
+
+    <p class="chart-title" style="margin-bottom:2px;">Are these numbers stable, or just a lucky split?</p>
+    <p class="chart-sub" style="margin-bottom:14px;">5-fold cross-validation, run separately to check — full methodology in the Limitations section below.</p>
+
+    <div class="dg-wrap" style="margin-bottom:16px;">
+<svg viewBox="0 0 680 260" role="img" style="width:100%;" aria-label="Range plot comparing single train test split AUC against 5 fold cross validated AUC for all three models, showing they land within 0.005 of each other">
+<desc>Each model shows a diamond marker for its single-split AUC and a circle with error bar for its cross-validated AUC mean plus or minus one standard deviation, all closely overlapping.</desc>
+<line x1="100" y1="40" x2="100" y2="220" class="dg-line"/>
+<line x1="100" y1="220" x2="600" y2="220" class="dg-line"/>
+<text class="dg-ts" x="100" y="235" text-anchor="middle">0.60</text>
+<text class="dg-ts" x="350" y="235" text-anchor="middle">0.65</text>
+<text class="dg-ts" x="600" y="235" text-anchor="middle">0.70</text>
+<text class="dg-ts" x="350" y="252" text-anchor="middle">AUC-ROC</text>
+
+<text class="dg-ts" x="8" y="65" text-anchor="start">Logistic Reg.</text>
+<line x1="275" y1="65" x2="335" y2="65" stroke="var(--gray-text)" stroke-width="1.5"/>
+<circle cx="305" cy="65" r="5" fill="#EEEDFE" stroke="#3C3489" stroke-width="1.5"/>
+<polygon points="325,65 331,59 337,65 331,71" fill="#3C3489"/>
+
+<text class="dg-ts" x="8" y="125" text-anchor="start">Random Forest</text>
+<line x1="345" y1="125" x2="405" y2="125" stroke="var(--gray-text)" stroke-width="1.5"/>
+<circle cx="375" cy="125" r="5" fill="#E1F5EE" stroke="#085041" stroke-width="1.5"/>
+<polygon points="385,125 391,119 397,125 391,131" fill="#085041"/>
+
+<text class="dg-ts" x="8" y="185" text-anchor="start">XGBoost</text>
+<line x1="430" y1="185" x2="480" y2="185" stroke="var(--gray-text)" stroke-width="1.5"/>
+<circle cx="455" cy="185" r="5" fill="#FAEEDA" stroke="#633806" stroke-width="1.5"/>
+<polygon points="460,185 466,179 472,185 466,191" fill="#633806"/>
+
+<circle cx="500" cy="60" r="4" fill="none" stroke="var(--gray-text)" stroke-width="1.5"/>
+<text class="dg-ts" x="512" y="64">5-fold CV mean &plusmn; SD</text>
+<polygon points="500,88 505,82 510,88 505,94" fill="var(--gray-text)"/>
+<text class="dg-ts" x="516" y="94">single-split value</text>
+</svg>
+    </div>
+
+    <div class="quality-table" style="margin-bottom:24px;">
+      <div class="quality-head" style="grid-template-columns: 1.4fr 1fr 1fr 0.8fr;"><span>Model</span><span>Single-split AUC</span><span>5-fold CV AUC</span><span>Flag</span></div>
+      <div class="quality-row" style="grid-template-columns: 1.4fr 1fr 1fr 0.8fr;">
+        <span>Logistic Regression</span><span class="quality-val">0.645</span><span class="quality-val">0.641 ± 0.006</span><span class="status-pill status-green">stable</span>
+      </div>
+      <div class="quality-row" style="grid-template-columns: 1.4fr 1fr 1fr 0.8fr;">
+        <span>Random Forest</span><span class="quality-val">0.657</span><span class="quality-val">0.655 ± 0.006</span><span class="status-pill status-green">stable</span>
+      </div>
+      <div class="quality-row" style="grid-template-columns: 1.4fr 1fr 1fr 0.8fr;">
+        <span>XGBoost</span><span class="quality-val">0.672</span><span class="quality-val">0.671 ± 0.005</span><span class="status-pill status-green">stable</span>
+      </div>
+    </div>
+    <p style="font-size:12.5px; color:var(--gray-text); margin:0 0 24px;">Every model lands within 0.005 of its single-split result — the numbers above weren't a lucky split. Full cross-validation code and methodology are in <strong>Section 09 · Limitations</strong>.</p>
+
+  </div>
+
+  <div class="section">
+    <p class="section-eyebrow">08 · Honesty check</p>
+    <h2 class="section-title">Limitations & honest assessment</h2>
+    <p class="section-desc">The gap between a portfolio-stage analysis and a clinically deployable tool — stated plainly rather than glossed over.</p>
+
+    <p class="chart-title" style="margin-bottom:2px;">High severity — directly affects the reported numbers</p>
+    <div class="quality-table" style="margin-bottom:20px;">
+      <div class="quality-head"><span>Issue</span><span>What it means</span><span>Flag</span></div>
+      <div class="quality-row">
+        <span>Patient-level data leakage</span>
+        <span style="font-size:12.5px; color:var(--gray-text);">16,773 patients had multiple encounters; the split was done by row, not by patient — the same patient could appear in both train and test</span>
+        <span class="status-pill status-red">high</span>
+      </div>
+      <div class="quality-row">
+        <span>Expired / hospice contamination</span>
+        <span style="font-size:12.5px; color:var(--gray-text);">2,423 rows (2.4%) where the patient died or entered hospice are still labeled "not readmitted"</span>
+        <span class="status-pill status-red">high</span>
+      </div>
+    </div>
+
+    <p class="chart-title" style="margin-bottom:2px;">Resolved during this project</p>
+    <p class="chart-sub" style="margin-bottom:12px;">Cross-validation was flagged as missing, then actually run — real numbers, not a caveat.</p>
+    <div class="quality-table" style="margin-bottom:20px;">
+      <div class="quality-head" style="grid-template-columns: 1.4fr 1fr 1fr 0.8fr;"><span>Model</span><span>Single-split AUC</span><span>5-fold CV AUC</span><span>Flag</span></div>
+      <div class="quality-row" style="grid-template-columns: 1.4fr 1fr 1fr 0.8fr;">
+        <span>Logistic Regression</span>
+        <span class="quality-val">0.645</span>
+        <span class="quality-val">0.641 ± 0.006</span>
+        <span class="status-pill status-green">stable</span>
+      </div>
+      <div class="quality-row" style="grid-template-columns: 1.4fr 1fr 1fr 0.8fr;">
+        <span>Random Forest</span>
+        <span class="quality-val">0.657</span>
+        <span class="quality-val">0.655 ± 0.006</span>
+        <span class="status-pill status-green">stable</span>
+      </div>
+      <div class="quality-row" style="grid-template-columns: 1.4fr 1fr 1fr 0.8fr;">
+        <span>XGBoost</span>
+        <span class="quality-val">0.672</span>
+        <span class="quality-val">0.671 ± 0.005</span>
+        <span class="status-pill status-green">stable</span>
+      </div>
+    </div>
+    <div class="callout" style="margin-bottom:20px;">
+      <span class="dot"></span>
+      <p>5-fold stratified cross-validation was run for all three models. Every cross-validated AUC lands within 0.004–0.005 of its single-split counterpart, with low variance (±0.005–0.006) — confirming the original results reflect genuine model performance, not a lucky train/test split. XGBoost remains the strongest model on both AUC and recall (57.2% ± 1.2%) even under cross-validation.</p>
+    </div>
+
+    <p class="chart-title" style="margin-bottom:2px;">Medium severity — affects how far the results generalize</p>
+    <div class="quality-table" style="margin-bottom:20px;">
+      <div class="quality-head"><span>Issue</span><span>What it means</span><span>Flag</span></div>
+      <div class="quality-row">
+        <span>Dataset is 15+ years old</span>
+        <span style="font-size:12.5px; color:var(--gray-text);">1999–2008 — today's diabetes medications and discharge protocols aren't reflected here</span>
+        <span class="status-pill status-amber">medium</span>
+      </div>
+      <div class="quality-row">
+        <span>No calibration check</span>
+        <span style="font-size:12.5px; color:var(--gray-text);">whether a "68% risk" score actually means 68 out of 100 similar patients return was never verified</span>
+        <span class="status-pill status-amber">medium</span>
+      </div>
+      <div class="quality-row">
+        <span>No external hospital validation</span>
+        <span style="font-size:12.5px; color:var(--gray-text);">all training and testing happened inside this same 130-hospital dataset — performance on a genuinely new hospital is untested</span>
+        <span class="status-pill status-amber">medium</span>
+      </div>
+    </div>
+
+    <div class="callout">
+      <span class="dot"></span>
+      <p><strong>Bottom line:</strong> this is a genuine proof-of-concept, not a production-ready or clinically validated tool. Cross-validation has now been verified — that's no longer an open question. The two remaining priorities before any further claims would be excluding expired/hospice patients and re-validating with a patient-level, not row-level, split. Used correctly, this model is a <strong>screening aid</strong> that helps a care team decide who to look at first — not a <strong>diagnostic tool</strong> that makes the call on its own.</p>
+    </div>
+  </div>
+
+</div>
+</body>
+</html>
