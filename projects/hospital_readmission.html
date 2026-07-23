@@ -34,7 +34,7 @@
 
   .crumb {
     font-family: var(--body);
-    font-size: 13px;
+    font-size: 13.5px;
     color: var(--gray-text);
     margin: 0 0 28px;
   }
@@ -69,7 +69,7 @@
 
   .tag-row { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 44px; }
   .tag {
-    font-size: 13px;
+    font-size: 13.5px;
     font-weight: 500;
     padding: 7px 16px;
     border-radius: 999px;
@@ -82,7 +82,7 @@
   .section { margin-bottom: 64px; }
   .section-eyebrow {
     font-family: var(--body);
-    font-size: 12px;
+    font-size: 12.5px;
     font-weight: 600;
     letter-spacing: 0.1em;
     text-transform: uppercase;
@@ -157,7 +157,7 @@
     border-radius: 999px;
     flex-shrink: 0;
   }
-  .field-desc { font-size: 13px; margin: 0; opacity: 0.85; }
+  .field-desc { font-size: 12.5px; margin: 0; opacity: 0.85; }
 
   .c-purple { background: #EEEDFE; color: #3C3489; }
   .c-teal   { background: #E1F5EE; color: #085041; }
@@ -171,8 +171,8 @@
   .dg-wrap svg { min-width: 600px; }
   .dg-line { stroke: var(--gray-text); stroke-width: 0.75; opacity: 0.6; }
   .dg-arrow { stroke: var(--gray-text); fill: none; stroke-width: 1; }
-  .dg-lane-label { font-family: var(--body); font-size: 12px; fill: var(--gray-text); }
-  .dg-phase-label { font-family: var(--body); font-size: 12px; font-weight: 600; fill: var(--pink); }
+  .dg-lane-label { font-family: var(--body); font-size: 12.5px; fill: var(--gray-text); }
+  .dg-phase-label { font-family: var(--body); font-size: 12.5px; font-weight: 600; fill: var(--pink); }
   .dg-th { font-family: var(--body); font-size: 13.5px; font-weight: 600; fill: var(--black); }
   .dg-ts { font-family: var(--body); font-size: 11.5px; fill: var(--gray-text); }
   .dg-box rect, .dg-box polygon { fill: #fff; stroke: var(--border); stroke-width: 0.5; }
@@ -250,14 +250,14 @@
 
   .next-badge {
     display: inline-flex; align-items: center; gap: 6px;
-    font-size: 13px; color: var(--gray-text);
+    font-size: 13.5px; color: var(--gray-text);
     border: 1px dashed var(--border); border-radius: 999px;
     padding: 8px 18px; margin-top: 8px;
   }
 
   @media (max-width: 640px) {
     h1.title { font-size: 30px; }
-    .quality-head, .quality-row { grid-template-columns: 1.6fr 1fr 1fr; font-size: 12px; }
+    .quality-head, .quality-row { grid-template-columns: 1.6fr 1fr 1fr; font-size: 12.5px; }
   }
   .kpi-strip {
     display: grid;
@@ -699,7 +699,7 @@
       <div class="callout-card">
         <p class="chart-title">A null result worth noting</p>
         <p class="chart-sub">A1C blood sugar control test</p>
-        <p style="font-size:13px; margin:0 0 6px;">Normal: <strong>9.7%</strong> readmit &nbsp;·&nbsp; &gt;7: <strong>10.0%</strong> &nbsp;·&nbsp; &gt;8: <strong>9.9%</strong></p>
+        <p style="font-size: 13.5px; margin:0 0 6px;">Normal: <strong>9.7%</strong> readmit &nbsp;·&nbsp; &gt;7: <strong>10.0%</strong> &nbsp;·&nbsp; &gt;8: <strong>9.9%</strong></p>
         <p style="font-size:12.5px; color:var(--gray-text); margin:0;">Practically flat. A clinically important test turns out to carry almost no predictive signal on its own — matching its very low feature importance in the model built later.</p>
       </div>
     </div>
@@ -916,15 +916,15 @@
     <!-- LOGISTIC REGRESSION -->
     <div class="chart-card" style="margin-bottom: 20px;">
       <p class="chart-title" style="color:#3C3489;">1. Logistic Regression</p>
-      <p style="font-size:13px; margin:8px 0 10px; color:var(--gray-text);"><strong style="color:var(--black);">The concept:</strong> fit one smooth S-shaped curve that converts any combination of inputs into a probability between 0 and 1 — no matter how extreme the inputs, the output can never leave that range.</p>
-      <p style="font-family:'IBM Plex Mono',monospace; font-size:13px; margin:8px 0 14px; color:var(--black);">P = 1 / (1 + e<sup>&minus;(&beta;&#8320;+&beta;&#8321;x&#8321;+...+&beta;&#8345;x&#8345;)</sup>)</p>
+      <p style="font-size: 13.5px; margin:8px 0 10px; color:var(--gray-text);"><strong style="color:var(--black);">The concept:</strong> fit one smooth S-shaped curve that converts any combination of inputs into a probability between 0 and 1 — no matter how extreme the inputs, the output can never leave that range.</p>
+      <p style="font-family:'IBM Plex Mono',monospace; font-size: 13.5px; margin:8px 0 14px; color:var(--black);">P = 1 / (1 + e<sup>&minus;(&beta;&#8320;+&beta;&#8321;x&#8321;+...+&beta;&#8345;x&#8345;)</sup>)</p>
       <div style="display:grid; grid-template-columns: 60px 1fr; gap:6px 12px; font-size:12.5px; color:var(--gray-text); margin-bottom:14px;">
         <strong style="color:var(--black);">P</strong><span>readmission probability, forced between 0 and 1 by the sigmoid</span>
         <strong style="color:var(--black);">&beta;&#8320;</strong><span>intercept — the baseline when every feature is at its average</span>
         <strong style="color:var(--black);">&beta;&#8321;...&beta;&#8345;</strong><span>learned weight per feature — never assigned by hand</span>
         <strong style="color:var(--black);">x&#8321;...x&#8345;</strong><span>the 189 input features for one patient</span>
       </div>
-      <p style="font-size:13px; margin:0 0 14px;"><strong>On this dataset:</strong> <code>class_weight='balanced'</code> (only 11.2% of patients are readmitted, so the minority class gets extra weight) · same 189 features as the other two models.</p>
+      <p style="font-size: 13.5px; margin:0 0 14px;"><strong>On this dataset:</strong> <code>class_weight='balanced'</code> (only 11.2% of patients are readmitted, so the minority class gets extra weight) · same 189 features as the other two models.</p>
 
       <div class="dg-wrap">
 <svg viewBox="0 0 680 380" role="img" style="width:100%;" aria-label="Logistic regression S-curve fit to patient readmission data">
@@ -967,7 +967,7 @@
 
       <p style="font-weight:600; font-size:14px; margin:0 0 2px;">Walking through one real patient</p>
       <p style="font-size:12.5px; color:var(--gray-text); margin:0 0 12px;">A simplified 5-feature version of the formula, applied to an actual patient from the dataset — small enough to follow by hand.</p>
-      <div style="display:grid; grid-template-columns: 1.4fr 1fr 1fr; gap:8px 16px; font-size:13px; margin-bottom:16px;">
+      <div style="display:grid; grid-template-columns: 1.4fr 1fr 1fr; gap:8px 16px; font-size: 13.5px; margin-bottom:16px;">
         <strong>Feature</strong><strong>This patient</strong><strong>Weight (&beta;)</strong>
         <span>Prior inpatient visits</span><span>3</span><span>0.377</span>
         <span>Length of stay</span><span>6 days</span><span>0.094</span>
@@ -975,7 +975,7 @@
         <span>Emergency visits</span><span>0</span><span>0.059</span>
         <span>Lab procedures</span><span>31</span><span>0.011</span>
       </div>
-      <p style="font-family:'IBM Plex Mono',monospace; font-size:12px; color:var(--gray-text); margin:0 0 12px;">P = 1 / (1 + e<sup>&minus;(&minus;0.066 + 0.377z&#8321; + 0.094z&#8322; + 0.055z&#8323; + 0.059z&#8324; + 0.011z&#8325;)</sup>) &nbsp;=&nbsp; <strong style="color:var(--black);">0.666</strong></p>
+      <p style="font-family:'IBM Plex Mono',monospace; font-size: 12.5px; color:var(--gray-text); margin:0 0 12px;">P = 1 / (1 + e<sup>&minus;(&minus;0.066 + 0.377z&#8321; + 0.094z&#8322; + 0.055z&#8323; + 0.059z&#8324; + 0.011z&#8325;)</sup>) &nbsp;=&nbsp; <strong style="color:var(--black);">0.666</strong></p>
       <div class="so-what" style="margin-top:0; padding-top:12px;">
         <span class="dot"></span>
         <p>Model predicted a <strong>66.6% chance of readmission</strong> for this patient — flagged high-risk. This patient was, in fact, readmitted within 30 days. The dominant driver was the 3 prior inpatient visits, which carried by far the largest weight.</p>
@@ -985,15 +985,15 @@
     <!-- RANDOM FOREST -->
     <div class="chart-card" style="margin-bottom: 20px;">
       <p class="chart-title" style="color:#085041;">2. Random Forest</p>
-      <p style="font-size:13px; margin:8px 0 10px; color:var(--gray-text);"><strong style="color:var(--black);">The concept:</strong> grow many decision trees independently, each on a random slice of the data, then let them vote — a crowd of imperfect trees averages out to something more reliable than any single tree.</p>
-      <p style="font-family:'IBM Plex Mono',monospace; font-size:13px; margin:8px 0 14px; color:var(--black);">&#375; = mode { T&#8321;(x), T&#8322;(x), ..., T&#8322;&#8320;&#8320;(x) }</p>
+      <p style="font-size: 13.5px; margin:8px 0 10px; color:var(--gray-text);"><strong style="color:var(--black);">The concept:</strong> grow many decision trees independently, each on a random slice of the data, then let them vote — a crowd of imperfect trees averages out to something more reliable than any single tree.</p>
+      <p style="font-family:'IBM Plex Mono',monospace; font-size: 13.5px; margin:8px 0 14px; color:var(--black);">&#375; = mode { T&#8321;(x), T&#8322;(x), ..., T&#8322;&#8320;&#8320;(x) }</p>
       <div style="display:grid; grid-template-columns: 60px 1fr; gap:6px 12px; font-size:12.5px; color:var(--gray-text); margin-bottom:14px;">
         <strong style="color:var(--black);">&#375;</strong><span>final prediction — the majority vote across all trees</span>
         <strong style="color:var(--black);">T&#8321;...T&#8322;&#8320;&#8320;</strong><span>200 independent decision trees, each seeing a random slice of data</span>
         <strong style="color:var(--black);">mode</strong><span>the most common answer among all 200 trees</span>
       </div>
-      <p style="font-size:13px; margin:0 0 10px;"><strong>Why chosen for this data:</strong> real patients don't follow straight lines — risk from age and prior visits together can compound beyond what Logistic Regression's fixed weights can capture. Random Forest catches these interactions, and averaging 200 trees resists overfitting to noise.</p>
-      <p style="font-size:13px; margin:0 0 14px;"><strong>On this dataset:</strong> <code>n_estimators=200</code> (number of trees) · <code>max_depth=10</code> (caps how deep each tree can split, preventing memorization) · <code>class_weight='balanced'</code>.</p>
+      <p style="font-size: 13.5px; margin:0 0 10px;"><strong>Why chosen for this data:</strong> real patients don't follow straight lines — risk from age and prior visits together can compound beyond what Logistic Regression's fixed weights can capture. Random Forest catches these interactions, and averaging 200 trees resists overfitting to noise.</p>
+      <p style="font-size: 13.5px; margin:0 0 14px;"><strong>On this dataset:</strong> <code>n_estimators=200</code> (number of trees) · <code>max_depth=10</code> (caps how deep each tree can split, preventing memorization) · <code>class_weight='balanced'</code>.</p>
 
       <div class="dg-wrap">
 <svg viewBox="0 0 680 340" role="img" style="width:100%;" aria-label="Random Forest splitting data into subsets and voting">
@@ -1055,15 +1055,15 @@
     <!-- XGBOOST -->
     <div class="chart-card" style="margin-bottom: 24px;">
       <p class="chart-title" style="color:#633806;">3. XGBoost</p>
-      <p style="font-size:13px; margin:8px 0 10px; color:var(--gray-text);"><strong style="color:var(--black);">The concept:</strong> build trees one at a time instead of all at once — each new tree looks specifically at what the previous trees got wrong, and nudges the prediction closer to the truth.</p>
-      <p style="font-family:'IBM Plex Mono',monospace; font-size:13px; margin:8px 0 14px; color:var(--black);">&#375;<sup>(t)</sup> = &#375;<sup>(t&minus;1)</sup> + &eta;&middot;f<sub>t</sub>(x)</p>
+      <p style="font-size: 13.5px; margin:8px 0 10px; color:var(--gray-text);"><strong style="color:var(--black);">The concept:</strong> build trees one at a time instead of all at once — each new tree looks specifically at what the previous trees got wrong, and nudges the prediction closer to the truth.</p>
+      <p style="font-family:'IBM Plex Mono',monospace; font-size: 13.5px; margin:8px 0 14px; color:var(--black);">&#375;<sup>(t)</sup> = &#375;<sup>(t&minus;1)</sup> + &eta;&middot;f<sub>t</sub>(x)</p>
       <div style="display:grid; grid-template-columns: 60px 1fr; gap:6px 12px; font-size:12.5px; color:var(--gray-text); margin-bottom:14px;">
         <strong style="color:var(--black);">&#375;<sup>(t)</sup></strong><span>prediction after adding the t-th tree</span>
         <strong style="color:var(--black);">&eta;</strong><span>learning rate — how aggressively each tree corrects</span>
         <strong style="color:var(--black);">f<sub>t</sub>(x)</strong><span>the new tree, trained specifically on the previous tree's residual errors</span>
       </div>
-      <p style="font-size:13px; margin:0 0 10px;"><strong>Why chosen for this data:</strong> unlike Random Forest's independent trees, XGBoost directly targets the patients the previous tree got wrong — it's the standard for tabular healthcare data and consistently the strongest performer here.</p>
-      <p style="font-size:13px; margin:0 0 14px;"><strong>On this dataset:</strong> <code>scale_pos_weight</code> (XGBoost's equivalent of class balancing) · same 189 features.</p>
+      <p style="font-size: 13.5px; margin:0 0 10px;"><strong>Why chosen for this data:</strong> unlike Random Forest's independent trees, XGBoost directly targets the patients the previous tree got wrong — it's the standard for tabular healthcare data and consistently the strongest performer here.</p>
+      <p style="font-size: 13.5px; margin:0 0 14px;"><strong>On this dataset:</strong> <code>scale_pos_weight</code> (XGBoost's equivalent of class balancing) · same 189 features.</p>
 
       <div class="dg-wrap">
 <svg viewBox="0 0 680 370" role="img" style="width:100%;" aria-label="XGBoost residual error on readmit_30 shrinking across trees to a final decision">
@@ -1108,24 +1108,24 @@
         <div style="text-align:center; font-size:11.5px; color:var(--gray-text); font-weight:600;">actually NOT readmitted (~89)</div>
         <div style="text-align:center; font-size:11.5px; color:var(--gray-text); font-weight:600;">actually readmitted (~11)</div>
 
-        <div style="font-size:12px; font-weight:600; color:var(--gray-text);">model says "safe"</div>
+        <div style="font-size: 12.5px; font-weight:600; color:var(--gray-text);">model says "safe"</div>
         <div class="c-green" style="border-radius:12px; padding:14px; text-align:center;">
           <p style="font-size:22px; font-weight:700; margin:0;">60</p>
-          <p style="font-size:11px; margin:3px 0 0;">correct</p>
+          <p style="font-size: 11.5px; margin:3px 0 0;">correct</p>
         </div>
         <div class="c-red" style="border-radius:12px; padding:14px; text-align:center;">
           <p style="font-size:22px; font-weight:700; margin:0;">5</p>
-          <p style="font-size:11px; margin:3px 0 0;">missed</p>
+          <p style="font-size: 11.5px; margin:3px 0 0;">missed</p>
         </div>
 
-        <div style="font-size:12px; font-weight:600; color:var(--gray-text);">model says "high risk"</div>
+        <div style="font-size: 12.5px; font-weight:600; color:var(--gray-text);">model says "high risk"</div>
         <div class="c-amber" style="border-radius:12px; padding:14px; text-align:center;">
           <p style="font-size:22px; font-weight:700; margin:0;">29</p>
-          <p style="font-size:11px; margin:3px 0 0;">false alarm</p>
+          <p style="font-size: 11.5px; margin:3px 0 0;">false alarm</p>
         </div>
         <div class="c-green" style="border-radius:12px; padding:14px; text-align:center;">
           <p style="font-size:22px; font-weight:700; margin:0;">6</p>
-          <p style="font-size:11px; margin:3px 0 0;">caught</p>
+          <p style="font-size: 11.5px; margin:3px 0 0;">caught</p>
         </div>
       </div>
       <div class="so-what" style="margin-top:14px; padding-top:12px;">
