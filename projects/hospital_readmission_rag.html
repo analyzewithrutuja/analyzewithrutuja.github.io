@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Diabetes RAG Assistant — Rutuja Patel</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #f0f0f0;
+  --white: #ffffff;
+  --navy: #190d26;
+  --pink: #e8187a;
+  --pink2: #f9004d;
+  --pink-grad: linear-gradient(135deg, #e8187a, #f9004d);
+  --muted: #7a7a8c;
+  --border: #e0e0e0;
+  --font: 'Poppins', sans-serif;
+  --shadow: 0 4px 24px rgba(25,13,38,0.10);
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+body{background:var(--bg);color:var(--navy);font-family:var(--font);line-height:1.6}
+
+.topnav{
+  display:flex;align-items:center;justify-content:space-between;
+  padding:0 60px;height:70px;background:var(--white);
+  box-shadow:0 2px 12px rgba(0,0,0,0.07);position:sticky;top:0;z-index:100;
+}
+.back-link{font-size:.78rem;color:var(--muted);text-decoration:none;font-weight:500}
+.back-link:hover{color:var(--pink)}
+.nav-cta{
+  background:var(--pink-grad);color:white;border:none;padding:9px 22px;border-radius:5px;
+  font-family:var(--font);font-size:.75rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;
+  text-decoration:none;transition:opacity .2s,transform .2s;
+}
+.nav-cta:hover{opacity:.9;transform:translateY(-1px)}
+
+.container{max-width:1000px;margin:0 auto;padding:0 24px}
+
+.hero{padding:56px 0 32px}
+.hero-tags{display:flex;gap:10px;margin-bottom:16px}
+.hero-tag{font-size:.68rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--pink)}
+h1{font-size:clamp(1.8rem,3.5vw,2.6rem);font-weight:800;color:var(--navy);line-height:1.2;margin-bottom:14px}
+h1 span{background:var(--pink-grad);-webkit-background-clip:text;background-clip:text;color:transparent}
+.hero-lede{font-size:.92rem;color:var(--muted);max-width:640px;line-height:1.8}
+
+.app-frame{
+  border-radius:16px;overflow:hidden;border:1.5px solid var(--border);
+  box-shadow:var(--shadow);margin-bottom:16px;
+}
+.note{font-size:.78rem;color:var(--muted)}
+.note a{color:var(--pink)}
+
+footer{background:var(--navy);color:rgba(255,255,255,.4);padding:28px 60px;text-align:center;font-size:.75rem;margin-top:48px}
+footer .pink{color:var(--pink)}
+footer a{color:rgba(255,255,255,.6)}
+</style>
+</head>
+<body>
+
+<header class="topnav">
+  <a href="https://analyzewithrutuja.github.io/#portfolio" class="back-link">← Back to portfolio</a>
+  <a href="https://hospital-readmission-assistant.streamlit.app/" class="nav-cta" target="_blank">Open in new tab ↗</a>
+</header>
+
+<section class="hero container">
+  <div class="hero-tags"><span class="hero-tag">RAG Application</span></div>
+  <h1>Diabetes Readmission <span>Risk Assistant</span></h1>
+  <p class="hero-lede">
+    A live tool that predicts 30-day readmission risk and answers questions using ADA, WHO, CDC, and
+    Mayo Clinic guidelines. Try it below.
+  </p>
+</section>
+
+<section class="container">
+  <div class="app-frame">
+    <iframe
+      src="https://hospital-readmission-assistant.streamlit.app/?embed=true"
+      style="width:100%;height:900px;border:none;display:block"
+      loading="lazy"
+      title="Diabetes Readmission Risk Assistant — live app">
+    </iframe>
+  </div>
+  <p class="note">
+    The app may take 10–20 seconds to wake up if it hasn't been used recently. If it doesn't load,
+    <a href="https://hospital-readmission-assistant.streamlit.app/" target="_blank">open it directly in a new tab</a>.
+  </p>
+</section>
+
+<footer>
+  <p>Built by <span class="pink">Rutuja Patel</span> · <a href="https://analyzewithrutuja.github.io/#portfolio">← Back to portfolio</a></p>
+</footer>
+
+</body>
+</html>
