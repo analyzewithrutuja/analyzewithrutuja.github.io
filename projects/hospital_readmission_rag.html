@@ -35,7 +35,7 @@ body{background:var(--bg);color:var(--navy);font-family:var(--font);line-height:
 }
 .nav-cta:hover{opacity:.9;transform:translateY(-1px)}
 
-.container{max-width:1000px;margin:0 auto;padding:0 24px}
+.container{max-width:1200px;margin:0 auto;padding:0 24px}
 
 .hero{padding:56px 0 32px}
 .hero-tags{display:flex;gap:10px;margin-bottom:16px}
@@ -47,6 +47,7 @@ h1 span{background:var(--pink-grad);-webkit-background-clip:text;background-clip
 .app-frame{
   border-radius:16px;overflow:hidden;border:1.5px solid var(--border);
   box-shadow:var(--shadow);margin-bottom:16px;
+  resize:vertical;overflow-y:auto;min-height:400px;
 }
 .note{font-size:.78rem;color:var(--muted)}
 .note a{color:var(--pink)}
@@ -76,12 +77,13 @@ footer a{color:rgba(255,255,255,.6)}
   <div class="app-frame">
     <iframe
       src="https://hospital-readmission-assistant.streamlit.app/?embed=true"
-      style="width:100%;height:900px;border:none;display:block"
+      style="width:100%;height:700px;border:none;display:block"
       loading="lazy"
       title="Diabetes Readmission Risk Assistant — live app">
     </iframe>
   </div>
   <p class="note">
+    Drag the bottom-right corner of the box to resize it — useful when expanding the patient details form.
     The app may take 10–20 seconds to wake up if it hasn't been used recently. If it doesn't load,
     <a href="https://hospital-readmission-assistant.streamlit.app/" target="_blank">open it directly in a new tab</a>.
   </p>
