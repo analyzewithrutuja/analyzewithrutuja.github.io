@@ -4,174 +4,200 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Diabetes Readmission Risk Assistant | Rutuja Patel</title>
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@500;600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@500;600;700;800&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@500;600&display=swap" rel="stylesheet">
 <style>
+  /* ============ DESIGN TOKENS ============ */
   :root {
-    --pink: #EC1361;
+    /* Brand — unified with homepage */
+    --pink: #e8187a;
+    --pink-dark: #b91261;
     --pink-tint: #FDE7EF;
     --black: #14131A;
-    --gray-text: #6B7280;
+    --gray-text: #545B6B;      /* darkened for contrast */
+    --gray-text-soft: #6B7280;
     --card-bg: #F4F4F3;
-    --border: #ECECEA;
-    --green: #0F9D58;
-    --green-tint: #E4F6EC;
-    --amber: #B8860B;
-    --amber-tint: #FBF3DE;
-    --red: #D93025;
-    --red-tint: #FCE9E7;
+    --border: #E4E4E2;
+    --white: #FFFFFF;
+
+    /* Semantic status colors — used ONLY for meaning (risk/severity/state) */
+    --green: #0F9D58;    --green-tint: #E4F6EC;
+    --amber: #9A6B00;    --amber-tint: #FBF3DE;
+    --red: #C5221F;      --red-tint: #FCE9E7;
+    --blue: #1A4480;     --blue-tint: #E8F0FE;
+
     --heading: 'Poppins', sans-serif;
+    --mono: 'JetBrains Mono', 'Courier New', monospace;
     --body: 'Inter', -apple-system, sans-serif;
+
+    /* Spacing scale — 8px base */
+    --s1: 8px;  --s2: 16px; --s3: 24px; --s4: 32px;
+    --s5: 40px; --s6: 48px; --s7: 64px; --s8: 80px;
+
+    /* Type scale — 6 sizes only, every text style maps to one of these */
+    --fs-h1: 40px;      /* page title */
+    --fs-h2: 26px;      /* section title */
+    --fs-body: 16px;    /* dek / intro paragraphs */
+    --fs-base: 14px;    /* card titles, body copy, table cells */
+    --fs-small: 13px;   /* descriptions, tags, muted supporting text */
+    --fs-micro: 11px;   /* eyebrows, table headers, pills */
   }
   * { box-sizing: border-box; }
   html { scroll-behavior: smooth; }
+  @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
   body {
     margin: 0;
-    background: #FFFFFF;
+    background: #FAFAF8;
     color: var(--black);
     font-family: var(--body);
     line-height: 1.65;
   }
   a { transition: color .15s ease; }
   :focus-visible { outline: 2px solid var(--pink); outline-offset: 2px; }
-  .wrap { max-width: 1040px; margin: 0 auto; padding: 56px 28px 100px; }
+  .wrap { max-width: 1040px; margin: 0 auto; padding: var(--s7) var(--s3) 100px; position: relative; }
+  .wrap::before {
+    content: '';
+    position: absolute; left: 6px; top: 140px; bottom: 60px; width: 2px;
+    background: linear-gradient(var(--pink), transparent 6%, var(--border) 6%, var(--border) 94%, transparent);
+    opacity: .35;
+  }
+  @media (max-width: 640px) { .wrap::before { display: none; } }
 
+  /* ============ TOP BAR ============ */
   .crumb {
-    font-family: var(--body);
-    font-size: 13.5px;
+    font-size: var(--fs-small);
     color: var(--gray-text);
-    margin: 0 0 28px;
+    margin: 0 0 var(--s4);
     display: flex;
+    flex-wrap: wrap;
     justify-content: space-between;
     align-items: center;
+    gap: var(--s1) var(--s2);
   }
   .crumb a { color: var(--gray-text); text-decoration: none; }
   .crumb a:hover { color: var(--pink); }
-  .crumb .try-link {
-    background: var(--pink); color: #fff; text-decoration: none;
-    font-weight: 600; padding: 8px 18px; border-radius: 999px; font-size: 13px;
-    transition: opacity .15s ease;
-  }
-  .crumb .try-link:hover { opacity: .85; }
+
 
   .eyebrow {
-    font-family: var(--body);
-    font-size: 12.5px;
-    font-weight: 600;
-    letter-spacing: 0.12em;
-    text-transform: uppercase;
-    color: var(--pink);
-    margin: 0 0 10px;
+    font-family: var(--heading); font-size: var(--fs-micro); font-weight: 600; letter-spacing: 0.1em;
+    text-transform: uppercase; color: var(--pink); margin: 0 0 10px;
   }
   h1.title {
-    font-family: var(--heading);
-    font-weight: 800;
-    font-size: 40px;
-    line-height: 1.15;
-    margin: 0 0 16px;
-    max-width: 760px;
+    font-family: var(--heading); font-weight: 800; font-size: var(--fs-h1);
+    line-height: 1.15; margin: 0 0 var(--s2); max-width: 760px;
   }
   h1.title span { color: var(--pink); }
+  .dek { font-size: var(--fs-body); color: var(--gray-text); max-width: 620px; margin: 0 0 var(--s3); }
 
-  .dek {
-    font-size: 16.5px;
-    color: var(--gray-text);
-    max-width: 620px;
-    margin: 0 0 24px;
+  /* ============ STAT STRIP ============ */
+  .stat-strip { display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 12px; margin: 0 0 var(--s5); }
+  .stat-strip > div {
+    background: var(--card-bg); border: 1px solid var(--border); border-radius: 14px;
+    padding: 18px 20px; text-align: center;
   }
+  .stat-strip .stat-num {
+    font-family: var(--mono); font-weight: 600; font-size: 24px; color: var(--black); margin: 0;
+    line-height: 1;
+  }
+  .stat-strip .stat-label { font-size: var(--fs-small); color: var(--gray-text); margin: 8px 0 0; }
 
-  .tag-row { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 36px; }
+  .tag-row { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: var(--s5); }
   .tag {
-    font-size: 13.5px;
-    font-weight: 500;
-    padding: 7px 16px;
-    border-radius: 999px;
-    border: 1px solid var(--border);
-    color: var(--black);
-    background: #fff;
-  }
-  .tag.c-purple, .tag.c-blue, .tag.c-teal, .tag.c-pink2, .tag.c-amber,
-  .tag.c-coral, .tag.c-green, .tag.c-red {
-    border: none;
-    font-weight: 600;
+    font-size: var(--fs-small); font-weight: 500; padding: 7px 16px; border-radius: 999px;
+    border: 1px solid var(--border); color: var(--black); background: #fff;
   }
 
-  /* Live app embed */
+  /* ============ LIVE APP EMBED ============ */
   .app-frame {
-    border-radius: 18px;
-    overflow: hidden;
-    border: 1px solid var(--border);
-    resize: vertical;
-    overflow-y: auto;
-    min-height: 400px;
-    margin-bottom: 10px;
+    border-radius: 18px; overflow: hidden; border: 1px solid var(--border);
+    resize: vertical; overflow-y: auto; min-height: 460px; margin-bottom: var(--s1);
     transition: border-color .15s ease;
   }
   .app-frame:hover { border-color: var(--pink); }
-  .app-note { font-size: 12.5px; color: var(--gray-text); margin: 0 0 56px; }
-  .app-note a { color: var(--pink); }
+  .resize-hint-desktop { display: inline; }
+  .resize-hint-mobile { display: none; }
 
-  .section { margin-bottom: 64px; }
+  .section { margin-bottom: var(--s7); scroll-margin-top: 70px; }
   .section-eyebrow {
-    font-family: var(--body);
-    font-size: 12.5px;
-    font-weight: 600;
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-    color: var(--pink);
-    margin: 0 0 8px;
+    font-family: var(--heading); font-size: var(--fs-micro); font-weight: 600; letter-spacing: 0.08em;
+    text-transform: uppercase; color: var(--pink); margin: 0 0 8px;
   }
-  h2.section-title {
-    font-family: var(--heading);
-    font-weight: 700;
-    font-size: 26px;
-    margin: 0 0 10px;
-  }
-  .section-desc {
-    font-size: 15px;
-    color: var(--gray-text);
-    max-width: 640px;
-    margin: 0 0 28px;
-  }
+  h2.section-title { font-family: var(--heading); font-weight: 700; font-size: var(--fs-h2); margin: 0 0 10px; }
+  .section-desc { font-size: var(--fs-body); color: var(--gray-text); max-width: 640px; margin: 0 0 var(--s4); }
+  .chart-title { font-family: var(--heading); font-weight: 700; font-size: var(--fs-base); margin: 0 0 4px; color: var(--black); }
+  .chart-sub { font-size: var(--fs-small); color: var(--gray-text); margin: 0 0 var(--s2); }
 
+  /* ============ NEUTRAL CARDS (no arbitrary rainbow colors) ============ */
   .field-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(230px, 1fr));
-    gap: 12px;
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)); gap: 12px;
   }
-  .field-card { border-radius: 16px; padding: 14px 18px; }
-  .field-top { display: flex; align-items: center; gap: 10px; margin-bottom: 8px; }
-  .field-icon { width: 34px; height: 34px; border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 17px; background: rgba(255,255,255,0.55); flex-shrink: 0; }
-  .field-name { font-weight: 600; font-size: 14.5px; flex: 1; margin: 0; }
-  .field-desc { font-size: 12.5px; margin: 0; opacity: 0.85; }
+  .field-card {
+    position: relative; overflow: hidden;
+    border-radius: 14px; padding: 16px 18px 16px 21px;
+    background: var(--card-bg); border: 1px solid var(--border);
+  }
+  .field-card::before {
+    content: ''; position: absolute; left: 0; top: 0; bottom: 0; width: 3px;
+    background: var(--pink);
+  }
+  .field-name { font-weight: 700; font-size: var(--fs-base); margin: 0 0 6px; color: var(--black); }
+  .field-desc { font-size: var(--fs-small); color: var(--gray-text); margin: 0; max-width: 46ch; }
   .field-desc ul { margin: 6px 0 0; padding-left: 16px; }
-  .field-desc li { margin-bottom: 3px; }
+  .field-desc li { margin-bottom: 4px; }
 
-  .c-purple { background: #EEEDFE; color: #3C3489; }
-  .c-teal   { background: #E1F5EE; color: #085041; }
-  .c-coral  { background: #FAECE7; color: #712B13; }
-  .c-pink2  { background: #FBEAF0; color: #72243E; }
-  .c-amber  { background: #FAEEDA; color: #633806; }
-  .c-green  { background: #EAF3DE; color: #27500A; }
-  .c-red    { background: #FCEBEB; color: #791F1F; }
-  .c-blue   { background: #E8F0FE; color: #1A4480; }
+  .risk-badge {
+    display: inline-block; font-size: var(--fs-micro); font-weight: 600;
+    padding: 3px 10px; border-radius: 999px; margin-bottom: 8px;
+  }
+  .risk-badge.low  { background: var(--green-tint); color: #27500A; }
+  .risk-badge.med  { background: var(--amber-tint); color: #633806; }
+  .risk-badge.high { background: var(--red-tint);   color: #791F1F; }
 
-  .quality-table { background: var(--card-bg); border-radius: 16px; overflow: hidden; }
-  .quality-head {
-    display: grid; grid-template-columns: 2fr 1fr 1fr; padding: 12px 20px;
-    font-size: 11.5px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em; color: var(--gray-text);
+  /* Length-indicator dots for the question-length examples */
+  .len-dots { display: flex; gap: 4px; margin: 0 0 8px; }
+  .len-dots span {
+    width: 6px; height: 6px; border-radius: 50%; background: var(--border);
   }
-  .quality-row {
-    display: grid; grid-template-columns: 2fr 1fr 1fr; align-items: center;
-    padding: 14px 20px; background: #fff; font-size: 13.5px;
-    border-top: 1px solid var(--border);
-    transition: background .15s ease;
+  .len-dots span.on { background: var(--pink); }
+
+  /* ============ RESPONSIVE DATA TABLES (fixed) ============ */
+  /* Uses CSS Grid with named column-count classes instead of inline styles,
+     so the mobile media query can reliably override them. */
+  .dtable { background: var(--card-bg); border-radius: 16px; overflow: hidden; margin-bottom: var(--s2); }
+  .drow {
+    display: grid; align-items: center; padding: 13px 20px; column-gap: 20px;
+    font-size: var(--fs-base); border-top: 1px solid var(--border);
   }
-  .quality-row:hover { background: var(--card-bg); }
-  .quality-row:first-of-type { border-top-left-radius: 16px; border-top-right-radius: 16px; border-top: none; }
-  .quality-row:last-of-type { border-bottom-left-radius: 16px; border-bottom-right-radius: 16px; }
-  .quality-val { font-weight: 600; }
+  .dhead {
+    display: grid; padding: 12px 20px; column-gap: 20px; font-size: var(--fs-micro); font-weight: 700;
+    text-transform: uppercase; letter-spacing: 0.05em; color: var(--gray-text);
+    border-top: none;
+  }
+  .drow:first-of-type { border-top: none; }
+  .drow { background: #fff; }
+  .drow:hover { background: var(--card-bg); }
+  .drow.hl-red   { background: var(--red-tint); }
+  .drow.hl-amber { background: var(--amber-tint); }
+  .drow.hl-green { background: var(--green-tint); }
+  .dval { font-weight: 700; }
+  .dcell-muted { font-size: var(--fs-small); color: var(--gray-text); }
+  /* Numeric cells: right-align + mono + tabular figures so digits line up for scanning.
+     Combine with .dval for emphasis; use alone for plain counts. */
+  .dnum {
+    font-family: var(--mono); text-align: right; justify-self: end;
+    font-variant-numeric: tabular-nums;
+  }
+
+  .cols-2 { grid-template-columns: 1fr 1fr; }
+  .cols-2b { grid-template-columns: 2fr 1.4fr; }
+  .cols-3b { grid-template-columns: 1.2fr 2.4fr; }
+  .cols-3c { grid-template-columns: 0.6fr 2.4fr 1fr; }
+  .cols-3d { grid-template-columns: 1.4fr 2fr; }
+  .cols-3e { grid-template-columns: 1fr 1.5fr 2fr; }
+  .cols-3f { grid-template-columns: 1.2fr 2.4fr 1fr; }
+  .cols-5  { grid-template-columns: 0.6fr 1fr 1.2fr 1fr 1.6fr; }
+
   .status-pill {
-    font-size: 11.5px; font-weight: 600; padding: 4px 12px; border-radius: 999px;
+    font-size: var(--fs-micro); font-weight: 700; padding: 4px 12px; border-radius: 999px;
     display: inline-block; width: fit-content;
   }
   .status-red { background: var(--red-tint); color: var(--red); }
@@ -180,94 +206,115 @@
   .status-blue { background: var(--card-bg); color: var(--gray-text); }
 
   .callout {
-    display: flex; gap: 10px; align-items: flex-start;
-    background: var(--pink-tint); border-radius: 14px; padding: 14px 18px; margin-top: 20px;
+    display: flex; gap: 10px; align-items: baseline;
+    background: var(--pink-tint); border-radius: 14px; padding: 14px 18px; margin-top: var(--s2);
   }
-  .callout p { font-size: 13.5px; color: var(--black); margin: 0; }
-  .callout .dot { width: 6px; height: 6px; border-radius: 50%; background: var(--pink); margin-top: 7px; flex-shrink: 0; }
+  .callout p { font-size: var(--fs-small); color: var(--black); margin: 0; }
+  .callout .dot {
+    width: 6px; height: 6px; border-radius: 50%; background: var(--pink); flex-shrink: 0;
+    align-self: flex-start; transform: translateY(0.55em); /* centers on first line regardless of font-size */
+  }
+  .callout.neutral { background: var(--card-bg); }
+  .callout.neutral .dot { background: var(--gray-text); }
 
-  .chart-card { background: var(--card-bg); border-radius: 18px; padding: 20px 22px; }
-  .chart-title { font-weight: 700; font-size: 15.5px; margin: 0 0 3px; }
-  .chart-sub { font-size: 12.5px; color: var(--gray-text); margin: 0 0 18px; }
+  .chart-card { background: var(--card-bg); border-radius: 18px; padding: 20px 22px; margin-bottom: var(--s4); }
 
   .code-block {
-    background: var(--black);
-    color: #E8E6DD;
-    font-family: 'Courier New', monospace;
-    font-size: 12.5px;
-    line-height: 1.6;
-    padding: 16px 20px;
-    border-radius: 12px;
-    overflow-x: auto;
-    margin: 0 0 20px;
-    white-space: pre;
+    position: relative;
+    background: var(--black); color: #E8E6DD; font-family: var(--mono);
+    font-size: var(--fs-small); line-height: 1.6; padding: 16px 20px; border-radius: 12px;
+    overflow-x: auto; margin: 0 0 var(--s2); white-space: pre;
+    /* Fade cue on the right edge signals more content when scrollable on mobile */
+    background-image: linear-gradient(var(--black), var(--black)),
+      linear-gradient(to right, transparent, var(--black) 90%);
+    background-repeat: no-repeat;
+    background-size: 100% 100%, 24px 100%;
+    background-position: 0 0, 100% 0;
+    background-attachment: local, scroll;
   }
-  .code-block .cm { color: #8B8A85; }
-  code { font-family: 'Courier New', monospace; background: var(--card-bg); padding: 1px 6px; border-radius: 4px; font-size: 0.92em; }
+  .code-block .cm { color: #9C9B95; }
+  code { font-family: var(--mono); background: var(--card-bg); padding: 1px 6px; border-radius: 4px; font-size: 0.9em; }
 
-  /* Source stat cards */
-  .stat-grid {
-    display: grid;
-    grid-template-columns: repeat(5, 1fr);
-    gap: 8px;
-    margin-bottom: 24px;
-  }
-  .stat-card {
-    border-radius: 10px;
-    padding: 10px 8px;
-    text-align: center;
-  }
-  .stat-num {
-    font-family: var(--heading);
-    font-weight: 800;
-    font-size: 18px;
-    line-height: 1;
-    margin: 0 0 3px;
-  }
-  .stat-label {
-    font-size: 10.5px;
-    font-weight: 600;
-    margin: 0;
-    opacity: 0.85;
-  }
-
-  /* Source role cards */
-  .source-grid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 8px;
-    margin-bottom: 20px;
-  }
+  .source-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-bottom: var(--s3); }
   .source-card {
-    border-radius: 12px;
-    padding: 10px 14px;
+    position: relative; overflow: hidden;
+    border-radius: 12px; padding: 12px 14px 12px 17px; background: var(--card-bg);
+    border: 1px solid var(--border);
   }
-  .source-name { font-weight: 700; font-size: 13px; margin: 0 0 4px; }
-  .source-name .count { font-weight: 500; opacity: 0.75; }
-  .source-role { font-size: 12px; margin: 0; opacity: 0.85; line-height: 1.45; }
+  .source-card::before {
+    content: ''; position: absolute; left: 0; top: 0; bottom: 0; width: 3px;
+    background: var(--pink);
+  }
+  .source-card.problem::before { background: var(--red); }
+  .source-card.problem { background: var(--red-tint); }
+  .source-name { font-weight: 700; font-size: var(--fs-base); margin: 0 0 4px; display: flex; align-items: center; gap: 6px; }
+  .source-role { font-size: var(--fs-small); margin: 0; color: var(--gray-text); line-height: 1.5; }
 
+  /* Back to top */
+  .to-top {
+    position: fixed; bottom: 24px; right: 24px; z-index: 60;
+    width: 44px; height: 44px; border-radius: 50%; background: var(--pink); color: #fff;
+    border: none; display: flex; align-items: center; justify-content: center;
+    font-size: 18px; cursor: pointer; box-shadow: 0 4px 16px rgba(232,24,122,.35);
+    opacity: 0; pointer-events: none; transition: opacity .2s ease, transform .2s ease;
+  }
+  .to-top.show { opacity: 1; pointer-events: auto; }
+  .to-top:hover { transform: translateY(-2px); }
+
+  /* ============ RESPONSIVE — the actual fix ============ */
   @media (max-width: 640px) {
     h1.title { font-size: 30px; }
-    .quality-head, .quality-row { grid-template-columns: 1.6fr 1fr 1fr; font-size: 12.5px; }
-    .stat-grid { grid-template-columns: repeat(2, 1fr); }
+    .wrap { padding-top: var(--s5); }
     .source-grid { grid-template-columns: 1fr; }
+    .app-frame { min-height: 620px; }
+    .resize-hint-desktop { display: none; }
+    .resize-hint-mobile { display: inline; }
+
+    /* Every data-table row collapses to a labelled single column.
+       !important is required here because inline-style specificity
+       previously broke this same breakpoint. */
+    .dhead { display: none !important; }
+    .drow {
+      grid-template-columns: 1fr !important;
+      gap: 4px;
+      padding: 14px 16px;
+    }
+    .drow > span { font-size: 13px; text-align: left; justify-self: start; }
+    .drow > span:not(:first-child)::before {
+      content: attr(data-label);
+      display: block;
+      font-size: 10.5px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: .04em;
+      color: var(--gray-text-soft);
+      margin-top: 4px;
+    }
   }
 </style>
 </head>
 <body>
+
+<button class="to-top" id="toTop" aria-label="Back to top">↑</button>
+
 <div class="wrap">
 
   <p class="crumb">
     <a href="https://analyzewithrutuja.github.io/#portfolio">← Back to portfolio</a>
-    <a href="https://hospital-readmission-assistant.streamlit.app/" class="try-link" target="_blank">Open in new tab</a>
   </p>
 
-  <p class="eyebrow">RAG Application · Applied ML</p>
+  <p class="eyebrow" id="hero">RAG Application · Applied ML</p>
   <h1 class="title">Diabetes Readmission <span>Risk Assistant</span></h1>
   <p class="dek">
     A live tool that predicts 30-day readmission risk and answers care questions using ADA, WHO, CDC, and
     Mayo Clinic guidelines. Try it below, then read how it was built.
   </p>
+
+  <div class="stat-strip">
+    <div><p class="stat-num">46</p><p class="stat-label">source documents</p></div>
+    <div><p class="stat-num">2,456</p><p class="stat-label">retrieval chunks</p></div>
+    <div><p class="stat-num">0.468</p><p class="stat-label">avg. retrieval similarity</p></div>
+  </div>
 
   <div class="tag-row">
     <span class="tag">Python</span>
@@ -278,19 +325,21 @@
     <span class="tag">Streamlit</span>
   </div>
 
-  <div class="app-frame">
+  <div class="app-frame" id="try-it">
     <iframe
       src="https://hospital-readmission-assistant.streamlit.app/?embed=true"
-      style="width:100%;height:560px;border:none;display:block"
-      loading="lazy"
+      style="width:100%;height:100%;min-height:460px;border:none;display:block"
       title="Diabetes Readmission Risk Assistant — live app">
     </iframe>
   </div>
-  <div class="callout" style="margin-top:0; margin-bottom:56px;">
+  <div class="callout" style="margin-top:0; margin-bottom:var(--s7);">
     <span class="dot"></span>
-    <p>Tip: the box may look small once you open "Fill in patient details" inside the app — drag the
-    bottom-right corner to make it bigger. The app may take 10–20 seconds to wake up if it hasn't been
-    used recently. If it doesn't load, <a href="https://hospital-readmission-assistant.streamlit.app/" target="_blank" style="color:var(--pink)">open it directly in a new tab</a>. Press the pink send button to submit your question — pressing Enter on your keyboard won't work.</p>
+    <p>Tip: the box may look small once you open "Fill in patient details" inside the app —
+    <span class="resize-hint-desktop">drag the bottom-right corner to make it bigger</span>
+    <span class="resize-hint-mobile">scroll within the box, or open it full-screen using the button above</span>.
+    The app may take 10–20 seconds to wake up if it hasn't been used recently. If it doesn't load,
+    <a href="https://hospital-readmission-assistant.streamlit.app/" target="_blank">open it directly in a new tab</a>.
+    Press the pink send button to submit your question — pressing Enter on your keyboard won't work.</p>
   </div>
 
   <div class="section">
@@ -298,26 +347,29 @@
     <h2 class="section-title">Try these examples</h2>
     <p class="section-desc">Not sure what to type into the app above? Start with one of these.</p>
 
-    <p class="chart-title" style="margin-bottom:2px;">Example questions — by answer length</p>
-    <p class="section-desc" style="margin-bottom:14px;"></p>
+    <p class="chart-title">Example questions — by answer length</p>
+    <p class="chart-sub">Grouped by how much detail to expect back, not by importance.</p>
 
-    <div class="field-grid" style="margin-bottom:36px;">
-      <div class="field-card c-teal">
-        <p class="field-name" style="margin-bottom:8px;">Short answer</p>
+    <div class="field-grid" style="margin-bottom:var(--s4);">
+      <div class="field-card">
+        <div class="len-dots"><span class="on"></span><span></span><span></span></div>
+        <p class="field-name">Short answer</p>
         <ul class="field-desc">
           <li>"What is the recommended glycemic target range in the hospital?"</li>
           <li>"How often should blood glucose be monitored?"</li>
         </ul>
       </div>
-      <div class="field-card c-blue">
-        <p class="field-name" style="margin-bottom:8px;">Medium answer</p>
+      <div class="field-card">
+        <div class="len-dots"><span class="on"></span><span class="on"></span><span></span></div>
+        <p class="field-name">Medium answer</p>
         <ul class="field-desc">
           <li>"What should be included in a diabetes discharge plan?"</li>
           <li>"What lifestyle changes help prevent readmission?"</li>
         </ul>
       </div>
-      <div class="field-card c-purple">
-        <p class="field-name" style="margin-bottom:8px;">Long answer</p>
+      <div class="field-card">
+        <div class="len-dots"><span class="on"></span><span class="on"></span><span class="on"></span></div>
+        <p class="field-name">Long answer</p>
         <ul class="field-desc">
           <li>"Walk me through a complete discharge plan for a high-risk diabetes patient, including medication, follow-up, and education."</li>
           <li>"What should the care team consider across diet, medication, and monitoring for a patient with poor glycemic control?"</li>
@@ -325,28 +377,31 @@
       </div>
     </div>
 
-    <p class="chart-title" style="margin-bottom:2px;">Example patient details to try</p>
-    <p class="section-desc" style="margin-bottom:14px;"></p>
+    <p class="chart-title">Example patient details to try</p>
+    <p class="chart-sub">Color here tracks risk level on purpose — it's the one place color carries meaning.</p>
 
     <div class="field-grid">
-      <div class="field-card c-green">
-        <p class="field-name" style="margin-bottom:8px;">A lower-risk patient</p>
+      <div class="field-card">
+        <span class="risk-badge low">Lower risk</span>
+        <p class="field-name">A lower-risk patient</p>
         <ul class="field-desc">
           <li>Age band: [40-50), Discharge disposition: Discharged to home</li>
           <li>Time in hospital: 2 days, Number of medications: 5</li>
           <li>Prior inpatient admissions: 0, A1C result: Norm</li>
         </ul>
       </div>
-      <div class="field-card c-amber">
-        <p class="field-name" style="margin-bottom:8px;">A medium-risk patient</p>
+      <div class="field-card">
+        <span class="risk-badge med">Medium risk</span>
+        <p class="field-name">A medium-risk patient</p>
         <ul class="field-desc">
           <li>Age band: [60-70), Discharge disposition: Discharged to home</li>
           <li>Time in hospital: 4 days, Number of medications: 9</li>
           <li>Prior inpatient admissions: 1, A1C result: &gt;7</li>
         </ul>
       </div>
-      <div class="field-card c-red">
-        <p class="field-name" style="margin-bottom:8px;">A higher-risk patient</p>
+      <div class="field-card">
+        <span class="risk-badge high">Higher risk</span>
+        <p class="field-name">A higher-risk patient</p>
         <ul class="field-desc">
           <li>Age band: [70-80), Discharge disposition: Discharged to home</li>
           <li>Time in hospital: 6 days, Number of medications: 14</li>
@@ -356,18 +411,18 @@
     </div>
   </div>
 
-  <div class="section">
+  <div class="section" id="s01">
     <p class="section-eyebrow">01 · Why</p>
     <h2 class="section-title">A risk score alone isn't actionable</h2>
     <p class="section-desc">Two working systems, built separately, that were never actually talking to each other — until this project connected them.</p>
 
     <div class="field-grid">
-      <div class="field-card c-pink2">
-        <p class="field-name" style="margin-bottom:8px;">What the readmission model gives you</p>
+      <div class="field-card">
+        <p class="field-name">What the readmission model gives you</p>
         <p class="field-desc">A number. <strong>"68% risk."</strong> Useful for triage, useless for a discharge nurse who needs to know what to actually do differently for this specific patient in the next ten minutes.</p>
       </div>
-      <div class="field-card c-pink2">
-        <p class="field-name" style="margin-bottom:8px;">What guidelines give you</p>
+      <div class="field-card">
+        <p class="field-name">What guidelines give you</p>
         <p class="field-desc">Hundreds of pages of correct, generic advice — the same page whether the patient is 25 or 85, first admission or fifth. No way to ask "what applies to this patient" without reading it all yourself.</p>
       </div>
     </div>
@@ -378,70 +433,72 @@
     </div>
   </div>
 
-  <div class="section">
+  <div class="section" id="s02">
     <p class="section-eyebrow">02 · Scope</p>
     <h2 class="section-title">Problem statement</h2>
     <p class="section-desc">Defined before any code, to keep the build honest about what it is and isn't.</p>
 
-    <div class="quality-table" style="margin-bottom:20px;">
-      <div class="quality-head" style="grid-template-columns: 1fr 1fr;"><span>In scope</span><span>Out of scope</span></div>
-      <div class="quality-row" style="grid-template-columns: 1fr 1fr;">
-        <span>Diet, exercise, and medication guidance for T2D</span>
-        <span style="font-size:12.5px; color:var(--gray-text);">Diagnosis or treatment decisions</span>
+    <div class="dtable" style="margin-bottom:var(--s3);">
+      <div class="dhead cols-2"><span>In scope</span><span>Out of scope</span></div>
+      <div class="drow cols-2">
+        <span data-label="In scope">Diet, exercise, and medication guidance for T2D</span>
+        <span data-label="Out of scope" class="dcell-muted">Diagnosis or treatment decisions</span>
       </div>
-      <div class="quality-row" style="grid-template-columns: 1fr 1fr;">
-        <span>Discharge planning support using guidelines</span>
-        <span style="font-size:12.5px; color:var(--gray-text);">Real-time clinical emergencies</span>
+      <div class="drow cols-2">
+        <span data-label="In scope">Discharge planning support using guidelines</span>
+        <span data-label="Out of scope" class="dcell-muted">Real-time clinical emergencies</span>
       </div>
-      <div class="quality-row" style="grid-template-columns: 1fr 1fr;">
-        <span>Risk-score-informed, personalized recommendations</span>
-        <span style="font-size:12.5px; color:var(--gray-text);">Prescribing medication directly</span>
+      <div class="drow cols-2">
+        <span data-label="In scope">Risk-score-informed, personalized recommendations</span>
+        <span data-label="Out of scope" class="dcell-muted">Prescribing medication directly</span>
       </div>
     </div>
 
-    <div class="field-card c-teal" style="margin-bottom:12px;">
-      <p class="field-name" style="margin-bottom:5px;">Target user</p>
+    <div class="field-card" style="margin-bottom:12px;">
+      <p class="field-name">Target user</p>
       <p class="field-desc">A care team member preparing a discharge plan — not the patient directly, and not a replacement for clinical judgment.</p>
     </div>
-    <div class="field-card c-amber">
-      <p class="field-name" style="margin-bottom:5px;">Success criteria</p>
+    <div class="field-card">
+      <p class="field-name">Success criteria</p>
       <p class="field-desc">Every answer must be traceable to a specific guideline (no hallucinated advice), must visibly change based on patient context (not a generic template), and must say "not covered" honestly when the guidelines don't address something.</p>
     </div>
   </div>
 
-  <div class="section">
+  <div class="section" id="s03">
     <p class="section-eyebrow">03 · Sources</p>
     <h2 class="section-title">Building the knowledge base</h2>
     <p class="section-desc">46 documents across five organizations — chosen for direct relevance to hospital discharge planning, not just topical overlap.</p>
+    <p class="section-desc">Both peer-reviewed papers use the same UCI Diabetes 130-US Hospitals dataset as the readmission model — chosen deliberately so results could be cross-checked against published benchmarks, not just against themselves.</p>
 
-    <p class="section-desc">
-      Both peer-reviewed papers use the same UCI Diabetes 130-US Hospitals dataset as the readmission model —
-      chosen deliberately so results could be cross-checked against published benchmarks, not just against themselves.
-    </p>
+    <p class="chart-title">What each source actually contributes</p>
+    <p class="chart-sub">Not every source plays the same role — clinical protocol, patient-facing explanation, and statistical benchmark each serve a different purpose in the final answer.</p>
 
-    <p class="chart-title" style="margin-bottom:2px;">What each source actually contributes</p>
-    <p class="section-desc" style="margin-bottom:14px;">Not every source plays the same role — clinical protocol, patient-facing explanation, and statistical benchmark each serve a different purpose in the final answer.</p>
-
-    <div class="source-grid">
-      <div class="source-card c-purple">
-        <p class="source-name">ADA <span class="count">— 30 docs</span></p>
-        <p class="source-role">Detailed clinical guidelines — glycemic targets, medication protocols, hospital discharge care</p>
+    <div class="dtable">
+      <div class="dhead cols-3f"><span>Source</span><span>What it contributes</span><span>Docs</span></div>
+      <div class="drow cols-3f">
+        <span data-label="Source" class="dval">ADA</span>
+        <span data-label="What it contributes" class="dcell-muted">Detailed clinical guidelines — glycemic targets, medication protocols, hospital discharge care</span>
+        <span data-label="Docs" class="dnum">30</span>
       </div>
-      <div class="source-card c-blue">
-        <p class="source-name">WHO <span class="count">— 7 docs</span></p>
-        <p class="source-role">Global health standards, insulin selection guidelines, essential medicines</p>
+      <div class="drow cols-3f">
+        <span data-label="Source" class="dval">WHO</span>
+        <span data-label="What it contributes" class="dcell-muted">Global health standards, insulin selection guidelines, essential medicines</span>
+        <span data-label="Docs" class="dnum">7</span>
       </div>
-      <div class="source-card c-teal">
-        <p class="source-name">CDC <span class="count">— 7 docs</span></p>
-        <p class="source-role">Self-management education (DSMES), prevention programs, clinical guidance</p>
+      <div class="drow cols-3f">
+        <span data-label="Source" class="dval">CDC</span>
+        <span data-label="What it contributes" class="dcell-muted">Self-management education (DSMES), prevention programs, clinical guidance</span>
+        <span data-label="Docs" class="dnum">7</span>
       </div>
-      <div class="source-card c-pink2">
-        <p class="source-name">Mayo Clinic <span class="count">— 9 docs</span></p>
-        <p class="source-role">Patient-facing, easy-to-understand explanations — diet, exercise, symptoms</p>
+      <div class="drow cols-3f">
+        <span data-label="Source" class="dval">Mayo Clinic</span>
+        <span data-label="What it contributes" class="dcell-muted">Patient-facing, easy-to-understand explanations — diet, exercise, symptoms</span>
+        <span data-label="Docs" class="dnum">9</span>
       </div>
-      <div class="source-card c-amber">
-        <p class="source-name">Research Papers <span class="count">— 2 docs</span></p>
-        <p class="source-role">Statistical benchmarks (e.g. "XGBoost AUC 0.667 on a similar dataset") used to cross-check this project's own model results</p>
+      <div class="drow cols-3f">
+        <span data-label="Source" class="dval">Research Papers</span>
+        <span data-label="What it contributes" class="dcell-muted">Statistical benchmarks (e.g. "XGBoost AUC 0.667 on a similar dataset") used to cross-check this project's own model results</span>
+        <span data-label="Docs" class="dnum">2</span>
       </div>
     </div>
 
@@ -450,7 +507,8 @@
       <p>When a query comes in, the system retrieves the relevant chunks from these 46 documents, combines them with the patient's risk score from the ML model, and the LLM generates a personalized, evidence-based answer — cited back to its source (e.g. "Source: ADA Section 16"). Without these documents, the LLM would answer from its own training data alone — generic and unverifiable. With them, every recommendation is traceable to a trusted medical source.</p>
     </div>
   </div>
-  <div class="section">
+
+  <div class="section" id="s04">
     <p class="section-eyebrow">04 · Pipeline</p>
     <h2 class="section-title">How the pieces connect</h2>
     <p class="section-desc">Two tracks run in parallel — one builds the knowledge base, the other assesses the patient — then converge into a single prompt for the LLM.</p>
@@ -458,106 +516,75 @@
     <div class="chart-card">
       <svg width="100%" viewBox="0 0 900 500" role="img" aria-label="Pipeline diagram: document track and patient track converge into a combined prompt sent to the LLM, producing the final answer">
         <defs>
-          <marker id="pf-arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
-            <path d="M2 1L8 5L2 9" fill="none" stroke="#9B9B99" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+          <marker id="pf-arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+            <path d="M2 1L8 5L2 9" fill="none" stroke="#e8187a" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
           </marker>
+          <filter id="pf-shadow" x="-20%" y="-30%" width="140%" height="160%">
+            <feDropShadow dx="0" dy="3" stdDeviation="4" flood-color="#190d26" flood-opacity="0.10"/>
+          </filter>
         </defs>
-        <rect x="60" y="20" width="340" height="64" rx="12" fill="#EEEDFE" stroke="none"/>
-        <text x="230" y="44" text-anchor="middle" font-family="Poppins, sans-serif" font-weight="600" font-size="15" fill="#3C3489">Knowledge base built</text>
-        <text x="230" y="66" text-anchor="middle" font-family="Inter, sans-serif" font-size="12.5" fill="#3C3489">Docs → chunks → embeddings → ChromaDB</text>
-
-        <line x1="230" y1="84" x2="230" y2="112" stroke="#9B9B99" stroke-width="1" marker-end="url(#pf-arrow)"/>
-
-        <rect x="60" y="112" width="340" height="56" rx="12" fill="#EEEDFE" stroke="none"/>
-        <text x="230" y="134" text-anchor="middle" font-family="Poppins, sans-serif" font-weight="600" font-size="15" fill="#3C3489">Retrieval</text>
-        <text x="230" y="154" text-anchor="middle" font-family="Inter, sans-serif" font-size="12.5" fill="#3C3489">Top-5 similar chunks (cosine similarity)</text>
-
-        <rect x="500" y="20" width="340" height="64" rx="12" fill="#E8F0FE" stroke="none"/>
-        <text x="670" y="44" text-anchor="middle" font-family="Poppins, sans-serif" font-weight="600" font-size="15" fill="#1A4480">Patient risk assessed</text>
-        <text x="670" y="66" text-anchor="middle" font-family="Inter, sans-serif" font-size="12.5" fill="#1A4480">Patient row → XGBoost → risk score</text>
-
-        <line x1="670" y1="84" x2="670" y2="112" stroke="#9B9B99" stroke-width="1" marker-end="url(#pf-arrow)"/>
-
-        <rect x="500" y="112" width="340" height="56" rx="12" fill="#E8F0FE" stroke="none"/>
-        <text x="670" y="134" text-anchor="middle" font-family="Poppins, sans-serif" font-weight="600" font-size="15" fill="#1A4480">Personalization flags</text>
-        <text x="670" y="154" text-anchor="middle" font-family="Inter, sans-serif" font-size="12.5" fill="#1A4480">High risk, polypharmacy, discharge rules</text>
-
-        <path d="M230 168 L230 210 L370 210 L440 236" fill="none" stroke="#9B9B99" stroke-width="1" marker-end="url(#pf-arrow)"/>
-        <path d="M670 168 L670 210 L530 210 L460 236" fill="none" stroke="#9B9B99" stroke-width="1" marker-end="url(#pf-arrow)"/>
-
-        <rect x="270" y="238" width="360" height="56" rx="12" fill="#F4F4F3" stroke="none"/>
+        <rect x="60" y="20" width="340" height="64" rx="12" fill="#F4F4F3" stroke="#E4E4E2" filter="url(#pf-shadow)"/>
+        <text x="230" y="44" text-anchor="middle" font-family="Poppins, sans-serif" font-weight="600" font-size="15" fill="#14131A">Knowledge base built</text>
+        <text x="230" y="66" text-anchor="middle" font-family="Inter, sans-serif" font-size="12.5" fill="#545B6B">Docs → chunks → embeddings → ChromaDB</text>
+        <line x1="230" y1="84" x2="230" y2="112" stroke="#e8187a" stroke-width="2" marker-end="url(#pf-arrow)"/>
+        <rect x="60" y="112" width="340" height="56" rx="12" fill="#F4F4F3" stroke="#E4E4E2" filter="url(#pf-shadow)"/>
+        <text x="230" y="134" text-anchor="middle" font-family="Poppins, sans-serif" font-weight="600" font-size="15" fill="#14131A">Retrieval</text>
+        <text x="230" y="154" text-anchor="middle" font-family="Inter, sans-serif" font-size="12.5" fill="#545B6B">Top-5 similar chunks (cosine similarity)</text>
+        <rect x="500" y="20" width="340" height="64" rx="12" fill="#F4F4F3" stroke="#E4E4E2" filter="url(#pf-shadow)"/>
+        <text x="670" y="44" text-anchor="middle" font-family="Poppins, sans-serif" font-weight="600" font-size="15" fill="#14131A">Patient risk assessed</text>
+        <text x="670" y="66" text-anchor="middle" font-family="Inter, sans-serif" font-size="12.5" fill="#545B6B">Patient row → XGBoost → risk score</text>
+        <line x1="670" y1="84" x2="670" y2="112" stroke="#e8187a" stroke-width="2" marker-end="url(#pf-arrow)"/>
+        <rect x="500" y="112" width="340" height="56" rx="12" fill="#F4F4F3" stroke="#E4E4E2" filter="url(#pf-shadow)"/>
+        <text x="670" y="134" text-anchor="middle" font-family="Poppins, sans-serif" font-weight="600" font-size="15" fill="#14131A">Personalization flags</text>
+        <text x="670" y="154" text-anchor="middle" font-family="Inter, sans-serif" font-size="12.5" fill="#545B6B">High risk, polypharmacy, discharge rules</text>
+        <path d="M230 168 L230 210 L370 210 L440 236" fill="none" stroke="#e8187a" stroke-width="2" stroke-linejoin="round" stroke-linecap="round" marker-end="url(#pf-arrow)"/>
+        <path d="M670 168 L670 210 L530 210 L460 236" fill="none" stroke="#e8187a" stroke-width="2" stroke-linejoin="round" stroke-linecap="round" marker-end="url(#pf-arrow)"/>
+        <rect x="270" y="238" width="360" height="56" rx="12" fill="#F4F4F3" stroke="#E4E4E2" filter="url(#pf-shadow)"/>
         <text x="450" y="260" text-anchor="middle" font-family="Poppins, sans-serif" font-weight="600" font-size="15" fill="#14131A">Combine into prompt</text>
-        <text x="450" y="280" text-anchor="middle" font-family="Inter, sans-serif" font-size="12.5"><tspan fill="#534AB7">Retrieved chunks</tspan><tspan fill="#6B7280"> + </tspan><tspan fill="#185FA5">patient context</tspan><tspan fill="#6B7280"> + </tspan><tspan fill="#B8860B">flags</tspan></text>
-
-        <line x1="450" y1="294" x2="450" y2="322" stroke="#9B9B99" stroke-width="1" marker-end="url(#pf-arrow)"/>
-
-        <rect x="270" y="322" width="360" height="56" rx="12" fill="#FDE7EF" stroke="none"/>
-        <text x="450" y="344" text-anchor="middle" font-family="Poppins, sans-serif" font-weight="600" font-size="15" fill="#9E0F49">LLM generation</text>
-        <text x="450" y="364" text-anchor="middle" font-family="Inter, sans-serif" font-size="12.5" fill="#9E0F49">Hugging Face — Llama-3.1-8B-Instruct</text>
-
-        <line x1="450" y1="378" x2="450" y2="406" stroke="#9B9B99" stroke-width="1" marker-end="url(#pf-arrow)"/>
-
-        <rect x="270" y="406" width="360" height="56" rx="12" fill="#EAF3DE" stroke="none"/>
-        <text x="450" y="428" text-anchor="middle" font-family="Poppins, sans-serif" font-weight="600" font-size="15" fill="#27500A">Final answer</text>
-        <text x="450" y="448" text-anchor="middle" font-family="Inter, sans-serif" font-size="12.5" fill="#27500A">Cited, personalized recommendation</text>
+        <text x="450" y="280" text-anchor="middle" font-family="Inter, sans-serif" font-size="12.5" fill="#545B6B">Retrieved chunks + patient context + flags</text>
+        <line x1="450" y1="294" x2="450" y2="322" stroke="#e8187a" stroke-width="2" marker-end="url(#pf-arrow)"/>
+        <rect x="270" y="322" width="360" height="56" rx="12" fill="#F4F4F3" stroke="#E4E4E2" filter="url(#pf-shadow)"/>
+        <text x="450" y="344" text-anchor="middle" font-family="Poppins, sans-serif" font-weight="600" font-size="15" fill="#14131A">LLM generation</text>
+        <text x="450" y="364" text-anchor="middle" font-family="Inter, sans-serif" font-size="12.5" fill="#545B6B">Hugging Face — Llama-3.1-8B-Instruct</text>
+        <line x1="450" y1="378" x2="450" y2="406" stroke="#e8187a" stroke-width="2" marker-end="url(#pf-arrow)"/>
+        <rect x="270" y="406" width="360" height="56" rx="12" fill="#FDE7EF" stroke="none" filter="url(#pf-shadow)"/>
+        <text x="450" y="428" text-anchor="middle" font-family="Poppins, sans-serif" font-weight="600" font-size="15" fill="#b91261">Final answer</text>
+        <text x="450" y="448" text-anchor="middle" font-family="Inter, sans-serif" font-size="12.5" fill="#b91261">Cited, personalized recommendation</text>
       </svg>
     </div>
   </div>
 
-  <div class="section">
+  <div class="section" id="s05">
     <p class="section-eyebrow">05 · Building the Dataset</p>
     <h2 class="section-title">File types & quality checks</h2>
     <p class="section-desc">Two file types are accepted, three bugs were caught before they reached the vector database — none of it by luck.</p>
 
-    <p class="chart-title" style="margin-bottom:2px;">What file types this RAG accepts</p>
-    <p class="section-desc" style="margin-bottom:14px;">The pipeline accepts only <code>.pdf</code> and <code>.txt</code>. Anything else is skipped, not errored on.</p>
-
+    <p class="chart-title">What file types this RAG accepts</p>
+    <p class="chart-sub">The pipeline accepts only <code>.pdf</code> and <code>.txt</code>. Anything else is skipped, not errored on.</p>
     <div class="code-block"><span class="cm">if</span> file_path.suffix.lower() <span class="cm">not in</span> [<span class="cm">".pdf"</span>, <span class="cm">".txt"</span>]:
     <span class="cm">continue</span>  <span class="cm"># skip anything that isn't PDF or TXT</span></div>
 
-    <p class="chart-title" style="margin-bottom:2px;">Why only these two</p>
-    <p class="section-desc" style="margin-bottom:14px;">Every source guideline was already published in one of these formats — no conversion pipeline needed.</p>
-
-    <div class="field-grid" style="margin-bottom:20px;">
-      <div class="field-card c-blue">
-        <p class="field-name" style="margin-bottom:5px;">PDF is the native format</p>
-        <p class="field-desc">ADA, WHO, CDC, and Mayo Clinic all release official documents as PDFs — already the source format, no conversion needed.</p>
-      </div>
-      <div class="field-card c-blue">
-        <p class="field-name" style="margin-bottom:5px;">TXT was a rare fallback</p>
-        <p class="field-desc">Used only once — for a paywalled research paper where just the abstract was saved as plain text.</p>
-      </div>
-      <div class="field-card c-blue">
-        <p class="field-name" style="margin-bottom:5px;">pypdf covers the scope</p>
-        <p class="field-desc">Reliably extracts text without OCR. Supporting images or slide decks would have meant separate pipelines for unnecessary complexity.</p>
-      </div>
-      <div class="field-card c-blue">
-        <p class="field-name" style="margin-bottom:5px;">One process, every document</p>
-        <p class="field-desc">Every file goes through the same extract → chunk process — consistency keeps the pipeline simple and predictable.</p>
-      </div>
+    <p class="chart-title">Why only these two</p>
+    <p class="chart-sub">Every source guideline was already published in one of these formats — no conversion pipeline needed.</p>
+    <div class="field-grid" style="margin-bottom:var(--s3);">
+      <div class="field-card"><p class="field-name">PDF is the native format</p><p class="field-desc">ADA, WHO, CDC, and Mayo Clinic all release official documents as PDFs — already the source format, no conversion needed.</p></div>
+      <div class="field-card"><p class="field-name">TXT was a rare fallback</p><p class="field-desc">Used only once — for a paywalled research paper where just the abstract was saved as plain text.</p></div>
+      <div class="field-card"><p class="field-name">pypdf covers the scope</p><p class="field-desc">Reliably extracts text without OCR. Supporting images or slide decks would have meant separate pipelines for unnecessary complexity.</p></div>
+      <div class="field-card"><p class="field-name">One process, every document</p><p class="field-desc">Every file goes through the same extract → chunk process — consistency keeps the pipeline simple and predictable.</p></div>
     </div>
 
-    <div class="callout" style="margin-bottom:36px;">
+    <div class="callout" style="margin-bottom:var(--s4);">
       <span class="dot"></span>
       <p>This restriction is also what protected the pipeline from one of the bugs below — a file accidentally saved as <code>.jpg</code> instead of <code>.pdf</code> was silently skipped rather than crashing or corrupting the dataset.</p>
     </div>
 
-    <p class="chart-title" style="margin-bottom:2px;">Bugs the pipeline caught before they mattered</p>
-    <p class="section-desc" style="margin-bottom:14px;">A naive pipeline run straight from download to embeddings would have silently included bad data. All three were caught by verification steps built into the process.</p>
+    <p class="chart-title">Bugs the pipeline caught before they mattered</p>
+    <p class="chart-sub">A naive pipeline run straight from download to embeddings would have silently included bad data. All three were caught by verification steps built into the process.</p>
 
-    <div class="source-grid" style="margin-bottom:20px;">
-      <div class="source-card c-red">
-        <p class="source-name">Exact duplicate file</p>
-        <p class="source-role"><code>cdc_ndep.pdf</code> and <code>cdc_national_diabetes_education_program.pdf</code> were the same document under two names. Caught by hashing (MD5) the extracted text of every file — two names, identical hash.</p>
-      </div>
-      <div class="source-card c-red">
-        <p class="source-name">Corrupted file</p>
-        <p class="source-role">A research paper saved as <code>.txt</code> actually held raw unreadable PDF binary. Caught by inspecting sample chunk text — the "chunks" were gibberish. Would have produced 245 chunks of pure noise undetected.</p>
-      </div>
-      <div class="source-card c-red">
-        <p class="source-name">Wrong file format</p>
-        <p class="source-role">A WHO document was saved as a <code>.jpg</code> screenshot instead of a PDF. Caught by checking file sizes — an 18 KB "document" for a multi-page PDF was an obvious red flag.</p>
-      </div>
+    <div class="source-grid">
+      <div class="source-card problem"><p class="source-name">Exact duplicate file</p><p class="source-role"><code>cdc_ndep.pdf</code> and <code>cdc_national_diabetes_education_program.pdf</code> were the same document under two names. Caught by hashing (MD5) the extracted text of every file — two names, identical hash.</p></div>
+      <div class="source-card problem"><p class="source-name">Corrupted file</p><p class="source-role">A research paper saved as <code>.txt</code> actually held raw unreadable PDF binary. Caught by inspecting sample chunk text — the "chunks" were gibberish. Would have produced 245 chunks of pure noise undetected.</p></div>
+      <div class="source-card problem"><p class="source-name">Wrong file format</p><p class="source-role">A WHO document was saved as a <code>.jpg</code> screenshot instead of a PDF. Caught by checking file sizes — an 18 KB "document" for a multi-page PDF was an obvious red flag.</p></div>
     </div>
 
     <div class="callout">
@@ -566,78 +593,55 @@
     </div>
   </div>
 
-  <div class="section">
+  <div class="section" id="s06">
     <p class="section-eyebrow">06 · Preprocessing</p>
     <h2 class="section-title">Recursive chunking</h2>
     <p class="section-desc">Splitting on paragraph boundaries first, falling back to sentences only when needed — never cutting a clinical value mid-number.</p>
 
-    <p class="chart-title" style="margin-bottom:2px;">What is chunking, and why does the type matter</p>
-    <p class="section-desc" style="margin-bottom:14px;">A fixed-length split (cut every N words, regardless of what's there) risks separating a threshold from its unit — "180" on one side of a cut, "mg/dL" on the other. Recursive chunking tries the most natural boundary first and only falls back to a smaller one if the piece is still too large:</p>
-
+    <p class="chart-title">What is chunking, and why does the type matter</p>
+    <p class="chart-sub">A fixed-length split (cut every N words, regardless of what's there) risks separating a threshold from its unit — "180" on one side of a cut, "mg/dL" on the other. Recursive chunking tries the most natural boundary first and only falls back to a smaller one if the piece is still too large:</p>
     <div class="code-block">separators = [<span class="cm">"\n\n", "\n", ". ", " ", ""</span>]  <span class="cm"># tried in this order</span>
 chunk_size = <span class="cm">350 words</span>   overlap = <span class="cm">60 words</span></div>
 
-    <p class="chart-title" style="margin-bottom:2px;">Other chunking approaches — and why they weren't the right fit</p>
-    <p class="section-desc" style="margin-bottom:14px;">Four ways to split text into chunks, and the tradeoff each one makes.</p>
-
-    <div class="quality-table" style="margin-bottom:36px;">
-      <div class="quality-head" style="grid-template-columns: 1fr 1.5fr 2fr;"><span>Type</span><span>What it does</span><span>Why it wasn't chosen</span></div>
-      <div class="quality-row" style="grid-template-columns: 1fr 1.5fr 2fr;">
-        <span>Fixed-size</span>
-        <span style="font-size:12.5px; color:var(--gray-text);">Cuts every N words regardless of content</span>
-        <span style="font-size:12.5px; color:var(--gray-text);">Risks splitting medical values (e.g. "140-180 mg/dL") mid-cut — clinically risky</span>
+    <p class="chart-title">Other chunking approaches — and why they weren't the right fit</p>
+    <p class="chart-sub">Four ways to split text into chunks, and the tradeoff each one makes.</p>
+    <div class="dtable" style="margin-bottom:var(--s4);">
+      <div class="dhead cols-3e"><span>Type</span><span>What it does</span><span>Why it wasn't chosen</span></div>
+      <div class="drow cols-3e">
+        <span data-label="Type">Fixed-size</span>
+        <span data-label="What it does" class="dcell-muted">Cuts every N words regardless of content</span>
+        <span data-label="Why it wasn't chosen" class="dcell-muted">Risks splitting medical values (e.g. "140-180 mg/dL") mid-cut — clinically risky</span>
       </div>
-      <div class="quality-row" style="grid-template-columns: 1fr 1.5fr 2fr;">
-        <span>Semantic chunking</span>
-        <span style="font-size:12.5px; color:var(--gray-text);">An embedding model decides topic boundaries</span>
-        <span style="font-size:12.5px; color:var(--gray-text);">Compute-heavy; these documents are already well-structured, making it overkill</span>
+      <div class="drow cols-3e">
+        <span data-label="Type">Semantic chunking</span>
+        <span data-label="What it does" class="dcell-muted">An embedding model decides topic boundaries</span>
+        <span data-label="Why it wasn't chosen" class="dcell-muted">Compute-heavy; these documents are already well-structured, making it overkill</span>
       </div>
-      <div class="quality-row" style="grid-template-columns: 1fr 1.5fr 2fr;">
-        <span>Document-structure-based</span>
-        <span style="font-size:12.5px; color:var(--gray-text);">Splits only on headings/sections</span>
-        <span style="font-size:12.5px; color:var(--gray-text);">Some sections (e.g. ADA Section 16) are too long alone — still need further splitting</span>
+      <div class="drow cols-3e">
+        <span data-label="Type">Document-structure-based</span>
+        <span data-label="What it does" class="dcell-muted">Splits only on headings/sections</span>
+        <span data-label="Why it wasn't chosen" class="dcell-muted">Some sections (e.g. ADA Section 16) are too long alone — still need further splitting</span>
       </div>
-      <div class="quality-row" style="grid-template-columns: 1fr 1.5fr 2fr; background: var(--green-tint);">
-        <span class="quality-val">Recursive chunking <span class="status-pill status-green" style="margin-left:6px;">Used</span></span>
-        <span style="font-size:12.5px; color:var(--black);">Tries paragraph → sentence → word, in that order</span>
-        <span style="font-size:12.5px; color:var(--black);">Best of both — respects natural boundaries, with a reliable fallback</span>
-      </div>
-    </div>
-
-    <p class="chart-title" style="margin-bottom:2px;">Why this matters specifically for retrieval</p>
-    <p class="section-desc" style="margin-bottom:14px;">Retrieval's entire job is finding chunks whose meaning matches a query. That depends on two things:</p>
-
-    <div class="field-grid" style="margin-bottom:36px;">
-      <div class="field-card c-teal">
-        <p class="field-name" style="margin-bottom:8px;">One complete idea per chunk</p>
-        <p class="field-desc">Poor chunking splits an idea across two chunks, and retrieval returns incomplete context.</p>
-      </div>
-      <div class="field-card c-teal">
-        <p class="field-name" style="margin-bottom:8px;">Not too small, not too large</p>
-        <p class="field-desc">Too small loses context; too large dilutes the similarity score by mixing in unrelated sub-topics — seen earlier when a 350-word chunk scored lower similarity because it covered multiple sub-points.</p>
+      <div class="drow cols-3e hl-green">
+        <span data-label="Type" class="dval">Recursive chunking <span class="status-pill status-green" style="margin-left:6px;">Used</span></span>
+        <span data-label="What it does">Tries paragraph → sentence → word, in that order</span>
+        <span data-label="Why it wasn't chosen">Best of both — respects natural boundaries, with a reliable fallback</span>
       </div>
     </div>
 
-    <p class="chart-title" style="margin-bottom:2px;">Why recursive chunking specifically fit this project</p>
-    <p class="section-desc" style="margin-bottom:14px;"></p>
+    <p class="chart-title">Why this matters specifically for retrieval</p>
+    <p class="chart-sub">Retrieval's entire job is finding chunks whose meaning matches a query. That depends on two things:</p>
+    <div class="field-grid" style="margin-bottom:var(--s4);">
+      <div class="field-card"><p class="field-name">One complete idea per chunk</p><p class="field-desc">Poor chunking splits an idea across two chunks, and retrieval returns incomplete context.</p></div>
+      <div class="field-card"><p class="field-name">Not too small, not too large</p><p class="field-desc">Too small loses context; too large dilutes the similarity score by mixing in unrelated sub-topics — seen earlier when a 350-word chunk scored lower similarity because it covered multiple sub-points.</p></div>
+    </div>
 
-    <div class="field-grid" style="margin-bottom:20px;">
-      <div class="field-card c-purple">
-        <p class="field-name" style="margin-bottom:8px;">Medical accuracy is non-negotiable</p>
-        <p class="field-desc">Recursive chunking guarantees no clinical value or threshold gets cut mid-number, unlike fixed-size splitting.</p>
-      </div>
-      <div class="field-card c-purple">
-        <p class="field-name" style="margin-bottom:8px;">Source documents are already well-structured</p>
-        <p class="field-desc">ADA/WHO/CDC/Mayo guidelines have clear paragraph structure, so the "paragraph-first" approach fits naturally without extra AI processing.</p>
-      </div>
-      <div class="field-card c-purple">
-        <p class="field-name" style="margin-bottom:8px;">Compatible with the free embedding model's limits</p>
-        <p class="field-desc"><code>all-MiniLM-L6-v2</code> has a bounded input size; recursive chunking reliably keeps chunks within it, without the overhead semantic chunking would add.</p>
-      </div>
-      <div class="field-card c-purple">
-        <p class="field-name" style="margin-bottom:8px;">Predictable and easy to debug</p>
-        <p class="field-desc">When the data-quality bugs (Section 05) were being tracked down, reading sample chunks was straightforward because the chunking logic was simple and traceable.</p>
-      </div>
+    <p class="chart-title">Why recursive chunking specifically fit this project</p>
+    <div class="field-grid" style="margin-bottom:var(--s3);">
+      <div class="field-card"><p class="field-name">Medical accuracy is non-negotiable</p><p class="field-desc">Recursive chunking guarantees no clinical value or threshold gets cut mid-number, unlike fixed-size splitting.</p></div>
+      <div class="field-card"><p class="field-name">Source documents are already well-structured</p><p class="field-desc">ADA/WHO/CDC/Mayo guidelines have clear paragraph structure, so the "paragraph-first" approach fits naturally without extra AI processing.</p></div>
+      <div class="field-card"><p class="field-name">Compatible with the free embedding model's limits</p><p class="field-desc"><code>all-MiniLM-L6-v2</code> has a bounded input size; recursive chunking reliably keeps chunks within it, without the overhead semantic chunking would add.</p></div>
+      <div class="field-card"><p class="field-name">Predictable and easy to debug</p><p class="field-desc">When the data-quality bugs (Section 05) were being tracked down, reading sample chunks was straightforward because the chunking logic was simple and traceable.</p></div>
     </div>
 
     <div class="callout">
@@ -646,238 +650,179 @@ chunk_size = <span class="cm">350 words</span>   overlap = <span class="cm">60 w
     </div>
   </div>
 
-  <div class="section">
+  <div class="section" id="s07">
     <p class="section-eyebrow">07 · Embeddings & Retrieval</p>
     <h2 class="section-title">Meaning as numbers</h2>
     <p class="section-desc"><code>all-MiniLM-L6-v2</code> converts each chunk into a 384-number vector, positioned so that semantically similar text ends up numerically close — regardless of exact wording.</p>
 
-    <p class="chart-title" style="margin-bottom:8px;">The math behind retrieval</p>
+    <p class="chart-title">The math behind retrieval</p>
     <div class="code-block">cosine_similarity(A, B) = (A · B) / (|A| × |B|)</div>
 
-    <p class="chart-title" style="margin-bottom:2px;">Worked example — actual numbers</p>
-    <p class="section-desc" style="margin-bottom:14px;">Using 3 numbers per vector to keep the math visible (real embeddings use 384, same formula):</p>
+    <p class="chart-title">Worked example — actual numbers</p>
+    <p class="chart-sub">Using 3 numbers per vector to keep the math visible (real embeddings use 384, same formula):</p>
     <div class="code-block">"high blood sugar"  → [0.8, 0.6, 0.1]
 "hyperglycemia"      → [0.75, 0.65, 0.05]
 "chocolate cake"     → [-0.3, 0.2, 0.9]</div>
 
-    <div class="quality-table" style="margin-bottom:36px;">
-      <div class="quality-head" style="grid-template-columns: 2.2fr 1fr 1.6fr;"><span>Comparison</span><span>Similarity</span><span>Meaning</span></div>
-      <div class="quality-row" style="grid-template-columns: 2.2fr 1fr 1.6fr;">
-        <span>"high blood sugar" ↔ "hyperglycemia"</span>
-        <span class="quality-val">0.996</span>
-        <span style="font-size:12.5px; color:var(--gray-text);">Near-identical meaning, zero shared words</span>
+    <div class="dtable" style="margin-bottom:var(--s4);">
+      <div class="dhead cols-3e" style="grid-template-columns:2.2fr 1fr 1.6fr"><span>Comparison</span><span>Similarity</span><span>Meaning</span></div>
+      <div class="drow" style="grid-template-columns:2.2fr 1fr 1.6fr">
+        <span data-label="Comparison">"high blood sugar" ↔ "hyperglycemia"</span>
+        <span data-label="Similarity" class="dval dnum">0.996</span>
+        <span data-label="Meaning" class="dcell-muted">Near-identical meaning, zero shared words</span>
       </div>
-      <div class="quality-row" style="grid-template-columns: 2.2fr 1fr 1.6fr;">
-        <span>"high blood sugar" ↔ "chocolate cake"</span>
-        <span class="quality-val">-0.031</span>
-        <span style="font-size:12.5px; color:var(--gray-text);">Unrelated</span>
+      <div class="drow" style="grid-template-columns:2.2fr 1fr 1.6fr">
+        <span data-label="Comparison">"high blood sugar" ↔ "chocolate cake"</span>
+        <span data-label="Similarity" class="dval dnum">-0.031</span>
+        <span data-label="Meaning" class="dcell-muted">Unrelated</span>
       </div>
     </div>
 
-    <div class="callout" style="margin-bottom:36px;">
+    <div class="callout neutral" style="margin-bottom:var(--s4);">
       <span class="dot"></span>
       <p>How the model learned this: it was never told which words are related. It trained on masked-word prediction across millions of sentences — words that consistently appear in similar contexts (like "high blood sugar" and "hyperglycemia," both near "insulin," "diabetes," "levels") end up with similar number patterns, discovered from context alone.</p>
     </div>
 
-    <p class="chart-title" style="margin-bottom:2px;">What our actual retrieval returned</p>
-    <p class="section-desc" style="margin-bottom:14px;">Query tested: "What should be included in a discharge plan for a high-risk diabetes patient?"</p>
+    <p class="chart-title">What our actual retrieval returned</p>
+    <p class="chart-sub">Query tested: "What should be included in a discharge plan for a high-risk diabetes patient?"</p>
+    <div class="dtable" style="margin-bottom:var(--s2);">
+      <div class="dhead cols-3c"><span>Rank</span><span>Source</span><span>Similarity</span></div>
+      <div class="drow cols-3c"><span data-label="Rank">1</span><span data-label="Source">ADA — Section 16, Diabetes Care in the Hospital</span><span data-label="Similarity" class="dval dnum">0.468</span></div>
+      <div class="drow cols-3c"><span data-label="Rank">2</span><span data-label="Source">ADA — Diabetes Care in Hospital</span><span data-label="Similarity" class="dval dnum">0.464</span></div>
+      <div class="drow cols-3c"><span data-label="Rank">3</span><span data-label="Source">ADA — Diabetes Care in Hospital</span><span data-label="Similarity" class="dval dnum">0.327</span></div>
+      <div class="drow cols-3c"><span data-label="Rank">4</span><span data-label="Source">ADA — Diabetes Care in Hospital</span><span data-label="Similarity" class="dval dnum">0.318</span></div>
+      <div class="drow cols-3c"><span data-label="Rank">5</span><span data-label="Source">ADA — Diabetes Care in Hospital</span><span data-label="Similarity" class="dval dnum">0.276</span></div>
+    </div>
+    <p class="section-desc" style="margin-bottom:var(--s4);">Rank 1 covered hospital-to-outpatient transition guidance; Rank 2 covered medication reconciliation. All 5 results came from ADA specifically — the source most directly focused on hospital discharge protocol.</p>
 
-    <div class="quality-table" style="margin-bottom:16px;">
-      <div class="quality-head" style="grid-template-columns: 0.6fr 2.4fr 1fr;"><span>Rank</span><span>Source</span><span>Similarity</span></div>
-      <div class="quality-row" style="grid-template-columns: 0.6fr 2.4fr 1fr;">
-        <span>1</span>
-        <span>ADA — Section 16, Diabetes Care in the Hospital</span>
-        <span class="quality-val">0.468</span>
-      </div>
-      <div class="quality-row" style="grid-template-columns: 0.6fr 2.4fr 1fr;">
-        <span>2</span>
-        <span>ADA — Diabetes Care in Hospital</span>
-        <span class="quality-val">0.464</span>
-      </div>
-      <div class="quality-row" style="grid-template-columns: 0.6fr 2.4fr 1fr;">
-        <span>3</span>
-        <span>ADA — Diabetes Care in Hospital</span>
-        <span class="quality-val">0.327</span>
-      </div>
-      <div class="quality-row" style="grid-template-columns: 0.6fr 2.4fr 1fr;">
-        <span>4</span>
-        <span>ADA — Diabetes Care in Hospital</span>
-        <span class="quality-val">0.318</span>
-      </div>
-      <div class="quality-row" style="grid-template-columns: 0.6fr 2.4fr 1fr;">
-        <span>5</span>
-        <span>ADA — Diabetes Care in Hospital</span>
-        <span class="quality-val">0.276</span>
-      </div>
+    <p class="chart-title">Why 0.468, not 0.9+ like the worked example above</p>
+    <p class="chart-sub">Two genuine reasons — not a bug:</p>
+    <div class="field-grid" style="margin-bottom:var(--s3);">
+      <div class="field-card"><p class="field-name">1. Length and topic dilution</p><p class="field-desc">The worked example compared two short, single-topic phrases. A real chunk is a 350-word paragraph covering multiple sub-aspects of discharge planning at once. An embedding averages across every token in the chunk, so when only part of a chunk directly matches the query, the surrounding context spreads the vector rather than keeping it tightly focused. It's topic diversity, not word count, that dilutes the score — a 350-word chunk repeating one single idea would still score high.</p></div>
+      <div class="field-card"><p class="field-name">2. Query vs. chunk structure mismatch</p><p class="field-desc">A question ("What should be included...?") and a paragraph of instructions ("Tailor a structured discharge plan...") have different grammatical shapes. The extra question-words in the query don't have counterparts in the chunk, nudging the vectors slightly apart even when the underlying meaning matches well.</p></div>
     </div>
 
-    <p class="section-desc" style="margin-bottom:36px;">Rank 1 covered hospital-to-outpatient transition guidance; Rank 2 covered medication reconciliation. All 5 results came from ADA specifically — the source most directly focused on hospital discharge protocol.</p>
-
-    <p class="chart-title" style="margin-bottom:2px;">Why 0.468, not 0.9+ like the worked example above</p>
-    <p class="section-desc" style="margin-bottom:14px;">Two genuine reasons — not a bug:</p>
-
-    <div class="field-grid" style="margin-bottom:20px;">
-      <div class="field-card c-amber">
-        <p class="field-name" style="margin-bottom:8px;">1. Length and topic dilution</p>
-        <p class="field-desc">The worked example compared two short, single-topic phrases. A real chunk is a 350-word paragraph covering multiple sub-aspects of discharge planning at once. An embedding averages across every token in the chunk, so when only part of a chunk directly matches the query, the surrounding context spreads the vector rather than keeping it tightly focused. It's topic diversity, not word count, that dilutes the score — a 350-word chunk repeating one single idea would still score high.</p>
-      </div>
-      <div class="field-card c-amber">
-        <p class="field-name" style="margin-bottom:8px;">2. Query vs. chunk structure mismatch</p>
-        <p class="field-desc">A question ("What should be included...?") and a paragraph of instructions ("Tailor a structured discharge plan...") have different grammatical shapes. The extra question-words in the query don't have counterparts in the chunk, nudging the vectors slightly apart even when the underlying meaning matches well.</p>
-      </div>
-    </div>
-
-    <div class="callout" style="margin-bottom:36px;">
+    <div class="callout neutral" style="margin-bottom:var(--s4);">
       <span class="dot"></span>
       <p>A larger, paid embedding model would normalize this gap better and likely show higher absolute numbers for the same match — but the ranking (which chunk is most relevant) would stay the same.</p>
     </div>
 
-    <div class="quality-table" style="margin-bottom:16px;">
-      <div class="quality-head" style="grid-template-columns: 1.2fr 2.4fr;"><span>Similarity range</span><span>What it typically means</span></div>
-      <div class="quality-row" style="grid-template-columns: 1.2fr 2.4fr;">
-        <span class="quality-val">0.7+</span>
-        <span style="font-size:12.5px; color:var(--gray-text);">Very strong match — rare, near-identical wording</span>
-      </div>
-      <div class="quality-row" style="grid-template-columns: 1.2fr 2.4fr; background: var(--green-tint);">
-        <span class="quality-val">0.4 – 0.6</span>
-        <span style="font-size:12.5px; color:var(--black);">Genuinely relevant — normal range for real document retrieval</span>
-      </div>
-      <div class="quality-row" style="grid-template-columns: 1.2fr 2.4fr;">
-        <span class="quality-val">0.2 – 0.4</span>
-        <span style="font-size:12.5px; color:var(--gray-text);">Weak or tangential relation</span>
-      </div>
-      <div class="quality-row" style="grid-template-columns: 1.2fr 2.4fr;">
-        <span class="quality-val">Below 0</span>
-        <span style="font-size:12.5px; color:var(--gray-text);">Unrelated</span>
-      </div>
+    <div class="dtable" style="margin-bottom:var(--s2);">
+      <div class="dhead cols-3b"><span>Similarity range</span><span>What it typically means</span></div>
+      <div class="drow cols-3b"><span data-label="Similarity range" class="dval dnum">0.7+</span><span data-label="Meaning" class="dcell-muted">Very strong match — rare, near-identical wording</span></div>
+      <div class="drow cols-3b hl-green"><span data-label="Similarity range" class="dval dnum">0.4 – 0.6</span><span data-label="Meaning">Genuinely relevant — normal range for real document retrieval</span></div>
+      <div class="drow cols-3b"><span data-label="Similarity range" class="dval dnum">0.2 – 0.4</span><span data-label="Meaning" class="dcell-muted">Weak or tangential relation</span></div>
+      <div class="drow cols-3b"><span data-label="Similarity range" class="dval dnum">Below 0</span><span data-label="Meaning" class="dcell-muted">Unrelated</span></div>
     </div>
+    <p class="section-desc" style="margin-bottom:var(--s4);">0.468 sits squarely in the "genuinely relevant" range — production RAG systems commonly treat 0.3–0.5 as good retrieval when queries are short and source documents are long paragraphs.</p>
 
-    <p class="section-desc" style="margin-bottom:36px;">0.468 sits squarely in the "genuinely relevant" range — production RAG systems commonly treat 0.3–0.5 as good retrieval when queries are short and source documents are long paragraphs.</p>
-
-    <div class="callout">
+    <div class="callout neutral">
       <span class="dot"></span>
       <p>Verifying it wasn't a retrieval failure: chunk embeddings were reduced to 2D (PCA) and the actual top-5 retrieved chunks were plotted against the query point. They clustered tightly around it regardless of source — confirming the lower scores were expected model behavior, not a bug.</p>
     </div>
   </div>
 
-  <div class="section">
+  <div class="section" id="s08">
     <p class="section-eyebrow">08 · Personalization Layer</p>
     <h2 class="section-title">Connecting the two projects</h2>
     <p class="section-desc">The XGBoost readmission model's own output becomes retrieval context — not a separate, disconnected number sitting next to the chatbot.</p>
 
-    <p class="chart-title" style="margin-bottom:8px;">The flow</p>
-    <div class="chart-card" style="margin-bottom:36px; text-align:center;">
-      <p style="font-size:14px; font-weight:600; margin:0; color:var(--black);">Real patient row → XGBoost predicts risk_score → Rule-based flags → Injected into LLM prompt</p>
+    <p class="chart-title">The flow</p>
+    <div class="chart-card">
+      <svg width="100%" viewBox="0 0 900 80" role="img" aria-label="Flow diagram: real patient row goes to XGBoost which predicts risk score, then rule-based flags are applied, then injected into the LLM prompt">
+        <defs>
+          <marker id="ff-arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+            <path d="M2 1L8 5L2 9" fill="none" stroke="#e8187a" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+          </marker>
+          <filter id="ff-shadow" x="-20%" y="-40%" width="140%" height="180%">
+            <feDropShadow dx="0" dy="2" stdDeviation="3" flood-color="#190d26" flood-opacity="0.09"/>
+          </filter>
+        </defs>
+        <rect x="8" y="10" width="152" height="60" rx="10" fill="#F4F4F3" stroke="#E4E4E2" filter="url(#ff-shadow)"/>
+        <text x="84" y="45" text-anchor="middle" font-family="Poppins, sans-serif" font-weight="600" font-size="13" fill="#14131A">Real patient row</text>
+        <line x1="164" y1="40" x2="194" y2="40" stroke="#e8187a" stroke-width="2" marker-end="url(#ff-arrow)"/>
+
+        <rect x="198" y="10" width="222" height="60" rx="10" fill="#F4F4F3" stroke="#E4E4E2" filter="url(#ff-shadow)"/>
+        <text x="309" y="45" text-anchor="middle" font-family="Poppins, sans-serif" font-weight="600" font-size="13" fill="#14131A">XGBoost predicts <tspan font-family="'JetBrains Mono', monospace" font-weight="500" font-size="11.5">risk_score</tspan></text>
+        <line x1="424" y1="40" x2="454" y2="40" stroke="#e8187a" stroke-width="2" marker-end="url(#ff-arrow)"/>
+
+        <rect x="458" y="10" width="152" height="60" rx="10" fill="#F4F4F3" stroke="#E4E4E2" filter="url(#ff-shadow)"/>
+        <text x="534" y="45" text-anchor="middle" font-family="Poppins, sans-serif" font-weight="600" font-size="13" fill="#14131A">Rule-based flags</text>
+        <line x1="614" y1="40" x2="644" y2="40" stroke="#e8187a" stroke-width="2" marker-end="url(#ff-arrow)"/>
+
+        <rect x="648" y="10" width="212" height="60" rx="10" fill="#FDE7EF" stroke="none" filter="url(#ff-shadow)"/>
+        <text x="754" y="45" text-anchor="middle" font-family="Poppins, sans-serif" font-weight="600" font-size="13" fill="#b91261">Injected into LLM prompt</text>
+      </svg>
     </div>
 
-    <p class="chart-title" style="margin-bottom:2px;">What the model actually looks at</p>
-    <div class="callout" style="margin-bottom:36px; background: var(--card-bg);">
+    <p class="chart-title">What the model actually looks at</p>
+    <div class="callout neutral" style="margin-bottom:var(--s4);">
       <span class="dot"></span>
       <p>The model draws on ~40+ columns from the patient record — prior hospital usage (admissions, emergency visits, outpatient visits), current admission details (time in hospital, discharge disposition), clinical utilization (lab procedures, medication count, diagnoses), diagnosis category, lab results, and the status of 23 individual diabetes medications. Race and gender were deliberately excluded during training to avoid the model learning demographic bias — it decides based on clinical and utilization history alone. The strongest predictors: prior inpatient admissions, discharge disposition, medication count, and length of stay.</p>
     </div>
 
-    <p class="chart-title" style="margin-bottom:2px;">Rule-based flags</p>
-    <p class="section-desc" style="margin-bottom:14px;">A small set of rules converts raw model output into explicit priority flags — deliberately rule-based rather than left to the LLM's judgment, since consistency matters more than nuance for safety-relevant triggers.</p>
-
-    <div class="quality-table" style="margin-bottom:36px;">
-      <div class="quality-head" style="grid-template-columns: 1.4fr 2fr;"><span>Condition</span><span>Flag raised</span></div>
-      <div class="quality-row" style="grid-template-columns: 1.4fr 2fr;">
-        <span>risk_score ≥ 0.6</span>
-        <span style="font-size:12.5px; color:var(--gray-text);">High readmission risk — early follow-up within 7 days</span>
-      </div>
-      <div class="quality-row" style="grid-template-columns: 1.4fr 2fr;">
-        <span>medications &gt; 10</span>
-        <span style="font-size:12.5px; color:var(--gray-text);">Polypharmacy — medication reconciliation critical</span>
-      </div>
-      <div class="quality-row" style="grid-template-columns: 1.4fr 2fr;">
-        <span>discharged home + prior admissions &gt; 2</span>
-        <span style="font-size:12.5px; color:var(--gray-text);">Consider home health referral</span>
-      </div>
-      <div class="quality-row" style="grid-template-columns: 1.4fr 2fr;">
-        <span>A1C &gt; 7</span>
-        <span style="font-size:12.5px; color:var(--gray-text);">Poor glycemic control — reinforce self-management education</span>
-      </div>
+    <p class="chart-title">Rule-based flags</p>
+    <p class="chart-sub">A small set of rules converts raw model output into explicit priority flags — deliberately rule-based rather than left to the LLM's judgment, since consistency matters more than nuance for safety-relevant triggers.</p>
+    <div class="dtable" style="margin-bottom:var(--s4);">
+      <div class="dhead cols-3d"><span>Condition</span><span>Flag raised</span></div>
+      <div class="drow cols-3d"><span data-label="Condition">risk_score ≥ 0.6</span><span data-label="Flag raised" class="dcell-muted">High readmission risk — early follow-up within 7 days</span></div>
+      <div class="drow cols-3d"><span data-label="Condition">medications &gt; 10</span><span data-label="Flag raised" class="dcell-muted">Polypharmacy — medication reconciliation critical</span></div>
+      <div class="drow cols-3d"><span data-label="Condition">discharged home + prior admissions &gt; 2</span><span data-label="Flag raised" class="dcell-muted">Consider home health referral</span></div>
+      <div class="drow cols-3d"><span data-label="Condition">A1C &gt; 7</span><span data-label="Flag raised" class="dcell-muted">Poor glycemic control — reinforce self-management education</span></div>
     </div>
 
-    <p class="chart-title" style="margin-bottom:2px;">Why preprocessing has to happen again for every new patient</p>
-    <p class="section-desc" style="margin-bottom:14px;">A trained model doesn't remember the data it was trained on — a <code>.pkl</code> file stores only learned weights, not a memory of past inputs. The same filtering rule used during training (dropping rows with missing diagnosis codes) has to be reapplied every time a new patient is scored:</p>
-
+    <p class="chart-title">Why preprocessing has to happen again for every new patient</p>
+    <p class="chart-sub">A trained model doesn't remember the data it was trained on — a <code>.pkl</code> file stores only learned weights, not a memory of past inputs. The same filtering rule used during training (dropping rows with missing diagnosis codes) has to be reapplied every time a new patient is scored:</p>
     <div class="code-block"><span class="cm"># Training (once): raw data → filter/clean → train model → save</span>
 <span class="cm"># Prediction (every time): new patient → SAME filter/clean → trained model → prediction</span></div>
 
-    <p class="chart-title" style="margin-bottom:2px;">Why diagnosis codes specifically, and not other missing fields</p>
+    <p class="chart-title">Why diagnosis codes specifically, and not other missing fields</p>
     <div class="code-block"><span class="cm"># Filled with a placeholder category</span>
 df[<span class="cm">'payer_code'</span>] = df[<span class="cm">'payer_code'</span>].fillna(<span class="cm">'Unknown'</span>)
 
 <span class="cm"># Rows dropped entirely if missing</span>
 df = df.dropna(subset=[<span class="cm">'diag_1', 'diag_2', 'diag_3'</span>])</div>
+    <p class="section-desc" style="margin-bottom:var(--s4);">For fields like <code>payer_code</code>, "Unknown" is a genuinely valid category. A missing diagnosis code can't be meaningfully filled — it's the core clinical signal driving readmission risk, and training followed the same drop-if-missing rule.</p>
 
-    <p class="section-desc" style="margin-bottom:36px;">For fields like <code>payer_code</code>, "Unknown" is a genuinely valid category. A missing diagnosis code can't be meaningfully filled — it's the core clinical signal driving readmission risk, and training followed the same drop-if-missing rule.</p>
-
-    <p class="chart-title" style="margin-bottom:2px;">One extra step needed here that training didn't require</p>
+    <p class="chart-title">One extra step needed here that training didn't require</p>
     <div class="code-block">df_encoded = df_encoded.reindex(columns=model_columns, fill_value=<span class="cm">0</span>)</div>
+    <p class="section-desc" style="margin-bottom:var(--s4);">Training one-hot encoded all 101,766 rows together, so every possible category naturally became a column. Encoding a single patient row at a time means a rare category the patient doesn't have simply won't get created — even though the trained model still expects that column to exist. <code>reindex()</code> fills in any missing expected columns with 0, keeping the input format identical to what the model was trained on.</p>
 
-    <p class="section-desc" style="margin-bottom:36px;">Training one-hot encoded all 101,766 rows together, so every possible category naturally became a column. Encoding a single patient row at a time means a rare category the patient doesn't have simply won't get created — even though the trained model still expects that column to exist. <code>reindex()</code> fills in any missing expected columns with 0, keeping the input format identical to what the model was trained on.</p>
-
-    <p class="chart-title" style="margin-bottom:2px;">A bug that caught itself</p>
-    <p class="section-desc" style="margin-bottom:14px;">Filtering out rows with missing diagnosis codes broke the alignment between a row's label (its original ID) and its position (1st, 2nd, 3rd... remaining row after filtering). The first version of the test function used <code>.iloc</code>, which selects by position:</p>
-
+    <p class="chart-title">A bug that caught itself</p>
+    <p class="chart-sub">Filtering out rows with missing diagnosis codes broke the alignment between a row's label (its original ID) and its position (1st, 2nd, 3rd... remaining row after filtering). The first version of the test function used <code>.iloc</code>, which selects by position:</p>
     <div class="code-block">sample_patient_raw = valid_rows.iloc[[38790]]  <span class="cm"># BUG: treats 38790 as a position, not a label</span></div>
+    <p class="section-desc">This silently returned a different patient. No error, no crash — the code ran fine.</p>
+    <p class="section-desc" style="margin-bottom:var(--s2);">How it was caught: the same patient's risk score, computed two different ways, didn't match.</p>
 
-    <p class="section-desc" style="margin-bottom:20px;">This silently returned a different patient. No error, no crash — the code ran fine.</p>
-
-    <p class="section-desc" style="margin-bottom:14px;">How it was caught: the same patient's risk score, computed two different ways, didn't match.</p>
-
-    <div class="quality-table" style="margin-bottom:20px;">
-      <div class="quality-head" style="grid-template-columns: 2fr 1.4fr;"><span>Method</span><span>Risk score</span></div>
-      <div class="quality-row" style="grid-template-columns: 2fr 1.4fr;">
-        <span>Batch scoring (correct patient)</span>
-        <span class="quality-val">70.7%</span>
-      </div>
-      <div class="quality-row" style="grid-template-columns: 2fr 1.4fr; background: var(--red-tint);">
-        <span>Individual test with <code>.iloc</code> (wrong patient)</span>
-        <span class="quality-val" style="color:var(--red);">16.8%</span>
-      </div>
+    <div class="dtable" style="margin-bottom:var(--s2);">
+      <div class="dhead cols-2b"><span>Method</span><span>Risk score</span></div>
+      <div class="drow cols-2b"><span data-label="Method">Batch scoring (correct patient)</span><span data-label="Risk score" class="dval dnum">70.7%</span></div>
+      <div class="drow cols-2b hl-red"><span data-label="Method">Individual test with <code>.iloc</code> (wrong patient)</span><span data-label="Risk score" class="dval dnum" style="color:var(--red);">16.8%</span></div>
     </div>
 
-    <p class="chart-title" style="margin-bottom:2px;">The fix</p>
+    <p class="chart-title">The fix</p>
     <div class="code-block">sample_patient_raw = valid_rows.loc[[38790]]  <span class="cm"># FIX: selects by actual row label</span></div>
+    <p class="section-desc" style="margin-bottom:var(--s4);">After the fix, patient 38790's risk score came out consistently at 55.4%.</p>
 
-    <p class="section-desc" style="margin-bottom:36px;">After the fix, patient 38790's risk score came out consistently at 55.4%.</p>
-
-    <p class="chart-title" style="margin-bottom:2px;">Validation — real patients, real difference</p>
-    <p class="section-desc" style="margin-bottom:14px;">The low-risk patient triggered minimal flags; the high-risk patient triggered both polypharmacy and home-health flags — confirming the personalization layer responds to actual patient data, not a fixed template.</p>
-
-    <div class="quality-table">
-      <div class="quality-head" style="grid-template-columns: 0.6fr 1fr 1.2fr 1fr 1.6fr;"><span>Patient</span><span>Risk score</span><span>Prior admissions</span><span>Medications</span><span>Flags triggered</span></div>
-      <div class="quality-row" style="grid-template-columns: 0.6fr 1fr 1.2fr 1fr 1.6fr;">
-        <span>A</span>
-        <span class="quality-val">12.6%</span>
-        <span>0</span>
-        <span>11</span>
-        <span style="font-size:12.5px; color:var(--gray-text);">Polypharmacy only</span>
-      </div>
-      <div class="quality-row" style="grid-template-columns: 0.6fr 1fr 1.2fr 1fr 1.6fr; background: var(--amber-tint);">
-        <span>B</span>
-        <span class="quality-val">55.4%</span>
-        <span>4</span>
-        <span>13</span>
-        <span style="font-size:12.5px; color:var(--black);">Polypharmacy + Home health referral</span>
-      </div>
+    <p class="chart-title">Validation — real patients, real difference</p>
+    <p class="chart-sub">The low-risk patient triggered minimal flags; the high-risk patient triggered both polypharmacy and home-health flags — confirming the personalization layer responds to actual patient data, not a fixed template.</p>
+    <div class="dtable">
+      <div class="dhead cols-5"><span>Patient</span><span>Risk score</span><span>Prior admissions</span><span>Medications</span><span>Flags triggered</span></div>
+      <div class="drow cols-5"><span data-label="Patient">A</span><span data-label="Risk score" class="dval dnum">12.6%</span><span data-label="Prior admissions" class="dnum">0</span><span data-label="Medications" class="dnum">11</span><span data-label="Flags triggered" class="dcell-muted">Polypharmacy only</span></div>
+      <div class="drow cols-5 hl-amber"><span data-label="Patient">B</span><span data-label="Risk score" class="dval dnum">55.4%</span><span data-label="Prior admissions" class="dnum">4</span><span data-label="Medications" class="dnum">13</span><span data-label="Flags triggered">Polypharmacy + Home health referral</span></div>
     </div>
   </div>
 
-  <div class="section">
+  <div class="section" id="s09">
     <p class="section-eyebrow">09 · Output</p>
     <h2 class="section-title">Generation</h2>
     <p class="section-desc">Same question, two real patients from the dataset — same guideline sources, genuinely different answers.</p>
 
-    <p class="chart-title" style="margin-bottom:2px;">Low risk vs high risk, side by side</p>
-    <p class="section-desc" style="margin-bottom:14px;"></p>
-
-    <div class="field-grid" style="margin-bottom:20px;">
-      <div class="field-card c-teal">
-        <p class="field-name" style="margin-bottom:8px;">Low risk (12.6%)</p>
+    <p class="chart-title">Low risk vs high risk, side by side</p>
+    <div class="field-grid" style="margin-bottom:var(--s3);">
+      <div class="field-card">
+        <span class="risk-badge low">Low risk · <span style="font-family:var(--mono)">12.6%</span></span>
+        <p class="field-name">Standard-care recommendations</p>
         <ul class="field-desc">
           <li>Standard medication reconciliation</li>
           <li>Structured discharge communication</li>
@@ -885,8 +830,9 @@ df = df.dropna(subset=[<span class="cm">'diag_1', 'diag_2', 'diag_3'</span>])</d
           <li>No urgency language</li>
         </ul>
       </div>
-      <div class="field-card c-amber">
-        <p class="field-name" style="margin-bottom:8px;">Moderate-high risk (55.4%)</p>
+      <div class="field-card">
+        <span class="risk-badge med">Moderate-high risk · <span style="font-family:var(--mono)">55.4%</span></span>
+        <p class="field-name">Escalated recommendations</p>
         <ul class="field-desc">
           <li>Same base recommendations, plus:</li>
           <li><strong>Home health referral</strong> — explicitly flagged</li>
@@ -896,151 +842,107 @@ df = df.dropna(subset=[<span class="cm">'diag_1', 'diag_2', 'diag_3'</span>])</d
       </div>
     </div>
 
-    <div class="callout" style="margin-bottom:36px;">
+    <div class="callout" style="margin-bottom:var(--s4);">
       <span class="dot"></span>
       <p>Every recommendation carries a source citation (organization + filename), and the prompt explicitly instructs the model to say when guidelines don't cover something rather than filling the gap — plus a standing disclaimer that output is decision support, not a replacement for clinical judgment.</p>
     </div>
 
-    <p class="chart-title" style="margin-bottom:2px;">Getting an LLM connected wasn't the easy part</p>
-    <p class="section-desc" style="margin-bottom:14px;">Four API providers were tried before one actually worked for free:</p>
-
-    <div class="quality-table" style="margin-bottom:20px;">
-      <div class="quality-head" style="grid-template-columns: 1.2fr 2.4fr;"><span>Provider</span><span>What happened</span></div>
-      <div class="quality-row" style="grid-template-columns: 1.2fr 2.4fr;">
-        <span>Anthropic Console</span>
-        <span style="font-size:12.5px; color:var(--gray-text);">Blocked signup — university-managed email domain restriction</span>
-      </div>
-      <div class="quality-row" style="grid-template-columns: 1.2fr 2.4fr;">
-        <span>Google AI Studio</span>
-        <span style="font-size:12.5px; color:var(--gray-text);">Same issue — blocked by university Google Workspace domain</span>
-      </div>
-      <div class="quality-row" style="grid-template-columns: 1.2fr 2.4fr;">
-        <span>OpenAI</span>
-        <span style="font-size:12.5px; color:var(--gray-text);">Signup worked, but hit insufficient_quota (no free trial credits by default anymore)</span>
-      </div>
-      <div class="quality-row" style="grid-template-columns: 1.2fr 2.4fr;">
-        <span>Groq</span>
-        <span style="font-size:12.5px; color:var(--gray-text);">Signup errored out mid-flow</span>
-      </div>
-      <div class="quality-row" style="grid-template-columns: 1.2fr 2.4fr; background: var(--green-tint);">
-        <span class="quality-val">Hugging Face <span class="status-pill status-green" style="margin-left:6px;">Used</span></span>
-        <span style="font-size:12.5px; color:var(--black);">Free Inference API worked end-to-end, no billing required</span>
-      </div>
-    </div>
-
-    <p class="section-desc">Model used: <code>meta-llama/Llama-3.1-8B-Instruct</code></p>
+    <p class="chart-title">Choosing an LLM provider</p>
+    <p class="section-desc">The final choice was Hugging Face's free Inference API (<code>meta-llama/Llama-3.1-8B-Instruct</code>) — selected after a few other providers hit signup or billing roadblocks, since it worked end-to-end without requiring a paid plan.</p>
   </div>
 
-  <div class="section">
+  <div class="section" id="s10">
     <p class="section-eyebrow">10 · Shipping It</p>
     <h2 class="section-title">From notebook to live app</h2>
     <p class="section-desc">Streamlit Community Cloud, with the entire pipeline — retrieval, personalization, generation — running behind one page.</p>
 
-    <p class="chart-title" style="margin-bottom:8px;">Architecture</p>
-    <div class="chart-card" style="margin-bottom:36px;">
+    <p class="chart-title">Architecture</p>
+    <div class="chart-card">
       <svg width="100%" viewBox="0 0 900 540" role="img" aria-label="Architecture diagram: patient intake form leads to XGBoost risk prediction, which feeds ChromaDB retrieval and personalization flags in parallel, both combining into the Hugging Face LLM, producing the cited personalized answer">
         <defs>
-          <marker id="af-arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
-            <path d="M2 1L8 5L2 9" fill="none" stroke="#9B9B99" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+          <marker id="af-arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+            <path d="M2 1L8 5L2 9" fill="none" stroke="#e8187a" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
           </marker>
+          <filter id="af-shadow" x="-20%" y="-30%" width="140%" height="160%">
+            <feDropShadow dx="0" dy="3" stdDeviation="4" flood-color="#190d26" flood-opacity="0.10"/>
+          </filter>
         </defs>
-
-        <rect x="270" y="20" width="360" height="60" rx="12" fill="#F4F4F3" stroke="none"/>
+        <rect x="270" y="20" width="360" height="60" rx="12" fill="#F4F4F3" stroke="#E4E4E2" filter="url(#af-shadow)"/>
         <text x="450" y="42" text-anchor="middle" font-family="Poppins, sans-serif" font-weight="600" font-size="15" fill="#14131A">Patient intake form</text>
-        <text x="450" y="62" text-anchor="middle" font-family="Inter, sans-serif" font-size="12.5" fill="#6B7280">Streamlit form, all diabetic_data fields</text>
-
-        <line x1="450" y1="80" x2="450" y2="108" stroke="#9B9B99" stroke-width="1" marker-end="url(#af-arrow)"/>
-
-        <rect x="270" y="108" width="360" height="60" rx="12" fill="#E8F0FE" stroke="none"/>
-        <text x="450" y="130" text-anchor="middle" font-family="Poppins, sans-serif" font-weight="600" font-size="15" fill="#1A4480">XGBoost risk prediction</text>
-        <text x="450" y="150" text-anchor="middle" font-family="Inter, sans-serif" font-size="12.5" fill="#1A4480">Predicts 30-day readmission risk</text>
-
-        <path d="M450 168 L450 198 L235 198 L235 220" fill="none" stroke="#9B9B99" stroke-width="1" marker-end="url(#af-arrow)"/>
-        <path d="M450 168 L450 198 L665 198 L665 220" fill="none" stroke="#9B9B99" stroke-width="1" marker-end="url(#af-arrow)"/>
-
-        <rect x="55" y="220" width="360" height="60" rx="12" fill="#EEEDFE" stroke="none"/>
-        <text x="235" y="242" text-anchor="middle" font-family="Poppins, sans-serif" font-weight="600" font-size="15" fill="#3C3489">ChromaDB retrieval</text>
-        <text x="235" y="262" text-anchor="middle" font-family="Inter, sans-serif" font-size="12.5" fill="#3C3489">Top-5 similar guideline chunks</text>
-
-        <rect x="485" y="220" width="360" height="60" rx="12" fill="#E8F0FE" stroke="none"/>
-        <text x="665" y="242" text-anchor="middle" font-family="Poppins, sans-serif" font-weight="600" font-size="15" fill="#1A4480">Personalization flags</text>
-        <text x="665" y="262" text-anchor="middle" font-family="Inter, sans-serif" font-size="12.5" fill="#1A4480">Rule-based priority flags</text>
-
-        <path d="M235 280 L235 316 L370 316 L440 342" fill="none" stroke="#9B9B99" stroke-width="1" marker-end="url(#af-arrow)"/>
-        <path d="M665 280 L665 316 L530 316 L460 342" fill="none" stroke="#9B9B99" stroke-width="1" marker-end="url(#af-arrow)"/>
-
-        <rect x="270" y="344" width="360" height="60" rx="12" fill="#FDE7EF" stroke="none"/>
-        <text x="450" y="366" text-anchor="middle" font-family="Poppins, sans-serif" font-weight="600" font-size="15" fill="#9E0F49">Hugging Face LLM</text>
-        <text x="450" y="386" text-anchor="middle" font-family="Inter, sans-serif" font-size="12.5" fill="#9E0F49">Llama-3.1-8B-Instruct</text>
-
-        <line x1="450" y1="404" x2="450" y2="432" stroke="#9B9B99" stroke-width="1" marker-end="url(#af-arrow)"/>
-
-        <rect x="270" y="432" width="360" height="60" rx="12" fill="#EAF3DE" stroke="none"/>
-        <text x="450" y="454" text-anchor="middle" font-family="Poppins, sans-serif" font-weight="600" font-size="15" fill="#27500A">Cited, personalized answer</text>
-        <text x="450" y="474" text-anchor="middle" font-family="Inter, sans-serif" font-size="12.5" fill="#27500A">Traceable to guideline source</text>
+        <text x="450" y="62" text-anchor="middle" font-family="Inter, sans-serif" font-size="12.5" fill="#545B6B">Streamlit form, all diabetic_data fields</text>
+        <line x1="450" y1="80" x2="450" y2="108" stroke="#e8187a" stroke-width="2" marker-end="url(#af-arrow)"/>
+        <rect x="270" y="108" width="360" height="60" rx="12" fill="#F4F4F3" stroke="#E4E4E2" filter="url(#af-shadow)"/>
+        <text x="450" y="130" text-anchor="middle" font-family="Poppins, sans-serif" font-weight="600" font-size="15" fill="#14131A">XGBoost risk prediction</text>
+        <text x="450" y="150" text-anchor="middle" font-family="Inter, sans-serif" font-size="12.5" fill="#545B6B">Predicts 30-day readmission risk</text>
+        <path d="M450 168 L450 198 L235 198 L235 220" fill="none" stroke="#e8187a" stroke-width="2" stroke-linejoin="round" stroke-linecap="round" marker-end="url(#af-arrow)"/>
+        <path d="M450 168 L450 198 L665 198 L665 220" fill="none" stroke="#e8187a" stroke-width="2" stroke-linejoin="round" stroke-linecap="round" marker-end="url(#af-arrow)"/>
+        <rect x="55" y="220" width="360" height="60" rx="12" fill="#F4F4F3" stroke="#E4E4E2" filter="url(#af-shadow)"/>
+        <text x="235" y="242" text-anchor="middle" font-family="Poppins, sans-serif" font-weight="600" font-size="15" fill="#14131A">ChromaDB retrieval</text>
+        <text x="235" y="262" text-anchor="middle" font-family="Inter, sans-serif" font-size="12.5" fill="#545B6B">Top-5 similar guideline chunks</text>
+        <rect x="485" y="220" width="360" height="60" rx="12" fill="#F4F4F3" stroke="#E4E4E2" filter="url(#af-shadow)"/>
+        <text x="665" y="242" text-anchor="middle" font-family="Poppins, sans-serif" font-weight="600" font-size="15" fill="#14131A">Personalization flags</text>
+        <text x="665" y="262" text-anchor="middle" font-family="Inter, sans-serif" font-size="12.5" fill="#545B6B">Rule-based priority flags</text>
+        <path d="M235 280 L235 316 L370 316 L440 342" fill="none" stroke="#e8187a" stroke-width="2" stroke-linejoin="round" stroke-linecap="round" marker-end="url(#af-arrow)"/>
+        <path d="M665 280 L665 316 L530 316 L460 342" fill="none" stroke="#e8187a" stroke-width="2" stroke-linejoin="round" stroke-linecap="round" marker-end="url(#af-arrow)"/>
+        <rect x="270" y="344" width="360" height="60" rx="12" fill="#F4F4F3" stroke="#E4E4E2" filter="url(#af-shadow)"/>
+        <text x="450" y="366" text-anchor="middle" font-family="Poppins, sans-serif" font-weight="600" font-size="15" fill="#14131A">Hugging Face LLM</text>
+        <text x="450" y="386" text-anchor="middle" font-family="Inter, sans-serif" font-size="12.5" fill="#545B6B">Llama-3.1-8B-Instruct</text>
+        <line x1="450" y1="404" x2="450" y2="432" stroke="#e8187a" stroke-width="2" marker-end="url(#af-arrow)"/>
+        <rect x="270" y="432" width="360" height="60" rx="12" fill="#FDE7EF" stroke="none" filter="url(#af-shadow)"/>
+        <text x="450" y="454" text-anchor="middle" font-family="Poppins, sans-serif" font-weight="600" font-size="15" fill="#b91261">Cited, personalized answer</text>
+        <text x="450" y="474" text-anchor="middle" font-family="Inter, sans-serif" font-size="12.5" fill="#b91261">Traceable to guideline source</text>
       </svg>
     </div>
 
-    <p class="chart-title" style="margin-bottom:2px;">Deployment issues, in order</p>
-    <p class="section-desc" style="margin-bottom:14px;"></p>
-
-    <div class="source-grid" style="margin-bottom:36px;">
-      <div class="source-card c-red">
-        <p class="source-name">1. Missing dependencies</p>
-        <p class="source-role">First deploy crashed with <code>ModuleNotFoundError</code> for <code>xgboost</code>, since the pickled model needs the library installed to unpickle, not just to train. <strong>Fix:</strong> added <code>xgboost</code> and <code>scikit-learn</code> to <code>requirements.txt</code>.</p>
-      </div>
-      <div class="source-card c-red">
-        <p class="source-name">2. Hidden dependency</p>
-        <p class="source-role">A second crash surfaced <code>No module named 'torchvision'</code>, pulled in internally by <code>sentence-transformers</code> even though the app never touches images. <strong>Fix:</strong> added <code>torchvision</code> to <code>requirements.txt</code>.</p>
-      </div>
-      <div class="source-card c-red">
-        <p class="source-name">3. Public repo, private token</p>
-        <p class="source-role">The Hugging Face token couldn't be hardcoded (repo is public on GitHub) or asked from every visitor (adds friction). <strong>Fix:</strong> moved to Streamlit Cloud's encrypted Secrets store (<code>st.secrets["HF_TOKEN"]</code>) — never exposed in the repo or shown in the UI.</p>
-      </div>
+    <p class="chart-title">Deployment issues, in order</p>
+    <div class="source-grid">
+      <div class="source-card problem"><p class="source-name">1. Missing dependencies</p><p class="source-role">First deploy crashed with <code>ModuleNotFoundError</code> for <code>xgboost</code>, since the pickled model needs the library installed to unpickle, not just to train. <strong>Fix:</strong> added <code>xgboost</code> and <code>scikit-learn</code> to <code>requirements.txt</code>.</p></div>
+      <div class="source-card problem"><p class="source-name">2. Hidden dependency</p><p class="source-role">A second crash surfaced <code>No module named 'torchvision'</code>, pulled in internally by <code>sentence-transformers</code> even though the app never touches images. <strong>Fix:</strong> added <code>torchvision</code> to <code>requirements.txt</code>.</p></div>
+      <div class="source-card problem"><p class="source-name">3. Public repo, private token</p><p class="source-role">The Hugging Face token couldn't be hardcoded (repo is public on GitHub) or asked from every visitor (adds friction). <strong>Fix:</strong> moved to Streamlit Cloud's encrypted Secrets store (<code>st.secrets["HF_TOKEN"]</code>) — never exposed in the repo or shown in the UI.</p></div>
     </div>
 
-    <p class="chart-title" style="margin-bottom:2px;">A CSS lesson worth keeping</p>
-    <div class="callout" style="margin-bottom:12px;">
+    <p class="chart-title">A CSS lesson worth keeping</p>
+    <div class="callout neutral" style="margin-bottom:12px;">
       <span class="dot"></span>
       <p>Several rounds of styling the send button used the modern <code>:has()</code> CSS selector. It looked correct and produced no errors — it just silently did nothing, because <code>:has()</code> isn't universally supported across browser versions, and an unsupported selector doesn't fail loudly, it's just ignored. Switching to <code>:focus-within</code> and <code>:last-child</code> (both universally supported) fixed what multiple rounds of pixel-tweaking couldn't.</p>
     </div>
-    <p class="section-desc" style="margin-bottom:36px;">Separately, Streamlit's official <code>key=</code> parameter (which generates a stable <code>.st-key-&lt;name&gt;</code> CSS class) turned out to be far more reliable for custom styling than guessing at Streamlit's internal DOM structure.</p>
+    <p class="section-desc" style="margin-bottom:var(--s4);">Separately, Streamlit's official <code>key=</code> parameter (which generates a stable <code>.st-key-&lt;name&gt;</code> CSS class) turned out to be far more reliable for custom styling than guessing at Streamlit's internal DOM structure.</p>
 
-    <p class="chart-title" style="margin-bottom:2px;">Why an iframe embed, not a rebuild</p>
+    <p class="chart-title">Why an iframe embed, not a rebuild</p>
     <p class="section-desc">The live app is embedded on this page via <code>&lt;iframe src="...?embed=true"&gt;</code> — Streamlit's officially supported embed method — rather than rebuilding the UI in plain HTML. True auto-resizing isn't possible across origins without the embedded site sending a resize signal, which Community Cloud embeds don't do — so the box is manually resizable instead (drag the corner) as a practical compromise.</p>
   </div>
 
-  <div class="section">
+  <div class="section" id="s11">
     <p class="section-eyebrow">11 · Honesty Check</p>
     <h2 class="section-title">Limitations</h2>
     <p class="section-desc">Same standard applied here as in the readmission model — state the gaps rather than gloss over them.</p>
 
-    <div class="quality-table" style="margin-bottom:36px;">
-      <div class="quality-head" style="grid-template-columns: 1.3fr 2.5fr 0.8fr;"><span>Limitation</span><span>What it means</span><span>Severity</span></div>
-      <div class="quality-row" style="grid-template-columns: 1.3fr 2.5fr 0.8fr;">
-        <span>Free embedding model</span>
-        <span style="font-size:12.5px; color:var(--gray-text);">Smaller, less precise than paid alternatives — retrieval ranking stays correct, but similarity scores read lower (~0.4–0.6, not 0.9+) than a larger model would produce for the same match</span>
-        <span class="status-pill status-amber">Medium</span>
+    <div class="dtable" style="margin-bottom:var(--s4);">
+      <div class="dhead cols-3f"><span>Limitation</span><span>What it means</span><span>Severity</span></div>
+      <div class="drow cols-3f">
+        <span data-label="Limitation">Free embedding model</span>
+        <span data-label="What it means" class="dcell-muted">Smaller, less precise than paid alternatives — retrieval ranking stays correct, but similarity scores read lower (~0.4–0.6, not 0.9+) than a larger model would produce for the same match</span>
+        <span data-label="Severity"><span class="status-pill status-amber">Medium</span></span>
       </div>
-      <div class="quality-row" style="grid-template-columns: 1.3fr 2.5fr 0.8fr;">
-        <span>Free-tier LLM</span>
-        <span style="font-size:12.5px; color:var(--gray-text);">Runs on Hugging Face's free inference (Llama-3.1-8B-Instruct); a paid frontier model would likely improve reasoning quality and reduce occasional wording ambiguity</span>
-        <span class="status-pill status-amber">Medium</span>
+      <div class="drow cols-3f">
+        <span data-label="Limitation">Free-tier LLM</span>
+        <span data-label="What it means" class="dcell-muted">Runs on Hugging Face's free inference (Llama-3.1-8B-Instruct); a paid frontier model would likely improve reasoning quality and reduce occasional wording ambiguity</span>
+        <span data-label="Severity"><span class="status-pill status-amber">Medium</span></span>
       </div>
-      <div class="quality-row" style="grid-template-columns: 1.3fr 2.5fr 0.8fr;">
-        <span>Guidelines are ADA/WHO/CDC/Mayo only</span>
-        <span style="font-size:12.5px; color:var(--gray-text);">No hospital-specific protocols or medication formularies — general guidance, not a substitute for local clinical policy</span>
-        <span class="status-pill status-blue">By design</span>
+      <div class="drow cols-3f">
+        <span data-label="Limitation">Guidelines are ADA/WHO/CDC/Mayo only</span>
+        <span data-label="What it means" class="dcell-muted">No hospital-specific protocols or medication formularies — general guidance, not a substitute for local clinical policy</span>
+        <span data-label="Severity"><span class="status-pill status-blue">By design</span></span>
       </div>
-      <div class="quality-row" style="grid-template-columns: 1.3fr 2.5fr 0.8fr; background: var(--red-tint);">
-        <span>Inherits the base model's caveats</span>
-        <span style="font-size:12.5px; color:var(--black);">Patient-level leakage and dataset age (see the original readmission project) apply here too, since risk scores feed directly into this system</span>
-        <span class="status-pill status-red">High</span>
+      <div class="drow cols-3f hl-red">
+        <span data-label="Limitation">Inherits the base model's caveats</span>
+        <span data-label="What it means">Patient-level leakage and dataset age (see the original readmission project) apply here too, since risk scores feed directly into this system</span>
+        <span data-label="Severity"><span class="status-pill status-red">High</span></span>
       </div>
-      <div class="quality-row" style="grid-template-columns: 1.3fr 2.5fr 0.8fr;">
-        <span>No auto-resizing embed</span>
-        <span style="font-size:12.5px; color:var(--gray-text);">The embedded app box on this page can't automatically grow when the patient form expands — a cross-origin browser restriction, not a bug — visitors can drag-resize it manually</span>
-        <span class="status-pill status-blue">By design</span>
+      <div class="drow cols-3f">
+        <span data-label="Limitation">No auto-resizing embed</span>
+        <span data-label="What it means" class="dcell-muted">The embedded app box on this page can't automatically grow when the patient form expands — a cross-origin browser restriction, not a bug — visitors can drag-resize it manually</span>
+        <span data-label="Severity"><span class="status-pill status-blue">By design</span></span>
       </div>
     </div>
 
@@ -1051,5 +953,14 @@ df = df.dropna(subset=[<span class="cm">'diag_1', 'diag_2', 'diag_3'</span>])</d
   </div>
 
 </div>
+
+<script>
+  const toTopBtn = document.getElementById('toTop');
+  window.addEventListener('scroll', () => {
+    toTopBtn.classList.toggle('show', window.scrollY > 600);
+  }, { passive: true });
+  toTopBtn.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
+</script>
+
 </body>
 </html>
