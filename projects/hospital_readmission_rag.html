@@ -194,6 +194,7 @@
   .cols-3d { grid-template-columns: 1.4fr 2fr; }
   .cols-3e { grid-template-columns: 1fr 1.5fr 2fr; }
   .cols-3f { grid-template-columns: 1.2fr 2.4fr 1fr; }
+  .cols-3g { grid-template-columns: 0.8fr 2.8fr 0.4fr; }
   .cols-5  { grid-template-columns: 0.6fr 1fr 1.2fr 1fr 1.6fr; }
 
   .status-pill {
@@ -454,13 +455,15 @@
       </div>
     </div>
 
-    <div class="field-card" style="margin-bottom:12px;">
-      <p class="field-name">Target user</p>
-      <p class="field-desc">A care team member preparing a discharge plan — not the patient directly, and not a replacement for clinical judgment.</p>
-    </div>
-    <div class="field-card">
-      <p class="field-name">Success criteria</p>
-      <p class="field-desc">Every answer must be traceable to a specific guideline (no hallucinated advice), must visibly change based on patient context (not a generic template), and must say "not covered" honestly when the guidelines don't address something.</p>
+    <div class="field-grid">
+      <div class="field-card">
+        <p class="field-name">Target user</p>
+        <p class="field-desc">A care team member preparing a discharge plan — not the patient directly, and not a replacement for clinical judgment.</p>
+      </div>
+      <div class="field-card">
+        <p class="field-name">Success criteria</p>
+        <p class="field-desc">Every answer must be traceable to a specific guideline (no hallucinated advice), must visibly change based on patient context (not a generic template), and must say "not covered" honestly when the guidelines don't address something.</p>
+      </div>
     </div>
   </div>
 
@@ -474,28 +477,28 @@
     <p class="chart-sub">Not every source plays the same role — clinical protocol, patient-facing explanation, and statistical benchmark each serve a different purpose in the final answer.</p>
 
     <div class="dtable">
-      <div class="dhead cols-3f"><span>Source</span><span>What it contributes</span><span>Docs</span></div>
-      <div class="drow cols-3f">
+      <div class="dhead cols-3g"><span>Source</span><span>What it contributes</span><span>Docs</span></div>
+      <div class="drow cols-3g">
         <span data-label="Source" class="dval">ADA</span>
         <span data-label="What it contributes" class="dcell-muted">Detailed clinical guidelines — glycemic targets, medication protocols, hospital discharge care</span>
         <span data-label="Docs" class="dnum">30</span>
       </div>
-      <div class="drow cols-3f">
+      <div class="drow cols-3g">
         <span data-label="Source" class="dval">WHO</span>
         <span data-label="What it contributes" class="dcell-muted">Global health standards, insulin selection guidelines, essential medicines</span>
         <span data-label="Docs" class="dnum">7</span>
       </div>
-      <div class="drow cols-3f">
+      <div class="drow cols-3g">
         <span data-label="Source" class="dval">CDC</span>
         <span data-label="What it contributes" class="dcell-muted">Self-management education (DSMES), prevention programs, clinical guidance</span>
         <span data-label="Docs" class="dnum">7</span>
       </div>
-      <div class="drow cols-3f">
+      <div class="drow cols-3g">
         <span data-label="Source" class="dval">Mayo Clinic</span>
         <span data-label="What it contributes" class="dcell-muted">Patient-facing, easy-to-understand explanations — diet, exercise, symptoms</span>
         <span data-label="Docs" class="dnum">9</span>
       </div>
-      <div class="drow cols-3f">
+      <div class="drow cols-3g">
         <span data-label="Source" class="dval">Research Papers</span>
         <span data-label="What it contributes" class="dcell-muted">Statistical benchmarks (e.g. "XGBoost AUC 0.667 on a similar dataset") used to cross-check this project's own model results</span>
         <span data-label="Docs" class="dnum">2</span>
