@@ -4,10 +4,10 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Hospital Readmission of Diabetic Patients | Rutuja Patel</title>
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@500;600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@500;600;700;800&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@500;600&display=swap" rel="stylesheet">
 <style>
   :root {
-    --pink: #EC1361;
+    --pink: #e8187a;
     --pink-tint: #FDE7EF;
     --black: #14131A;
     --gray-text: #6B7280;
@@ -127,26 +127,22 @@
 
   .field-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(230px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
     gap: 12px;
   }
   .field-card {
+    background: var(--card-bg);
     border-radius: 16px;
     padding: 18px 20px;
   }
+  .field-card.highlight { background: var(--pink-tint); }
+  .field-card.highlight .field-name { color: #9E0F49; }
+  .field-card.highlight .field-count { background: rgba(236,19,97,0.15); color: #9E0F49; }
   .field-top {
     display: flex;
     align-items: center;
     gap: 10px;
     margin-bottom: 8px;
-  }
-  .field-icon {
-    width: 34px; height: 34px;
-    border-radius: 10px;
-    display: flex; align-items: center; justify-content: center;
-    font-size: 17px;
-    background: rgba(255,255,255,0.55);
-    flex-shrink: 0;
   }
   .field-name { font-weight: 600; font-size: 14.5px; flex: 1; }
   .field-count {
@@ -161,35 +157,51 @@
 
   .c-purple { background: #EEEDFE; color: #3C3489; }
   .c-teal   { background: #E1F5EE; color: #085041; }
+  .c-teal2  { background: #C3EDDC; color: #04342C; }
   .c-coral  { background: #FAECE7; color: #712B13; }
   .c-pink2  { background: #FBEAF0; color: #72243E; }
   .c-amber  { background: #FAEEDA; color: #633806; }
   .c-green  { background: #EAF3DE; color: #27500A; }
   .c-red    { background: #FCEBEB; color: #791F1F; }
+  .c-blue   { background: #E8F0FE; color: #1A4480; }
 
   .dg-wrap { overflow-x: auto; margin-bottom: 8px; }
   .dg-wrap svg { min-width: 600px; }
   .dg-line { stroke: var(--gray-text); stroke-width: 0.75; opacity: 0.6; }
-  .dg-arrow { stroke: var(--gray-text); fill: none; stroke-width: 1; }
+  .dg-arrow { stroke: var(--gray-text); fill: none; stroke-width: 1; stroke-linejoin: round; stroke-linecap: round; }
   .dg-lane-label { font-family: var(--body); font-size: 12.5px; fill: var(--gray-text); }
   .dg-phase-label { font-family: var(--body); font-size: 12.5px; font-weight: 600; fill: var(--pink); }
   .dg-th { font-family: var(--body); font-size: 13.5px; font-weight: 600; fill: var(--black); }
   .dg-ts { font-family: var(--body); font-size: 11.5px; fill: var(--gray-text); }
-  .dg-box rect, .dg-box polygon { fill: #fff; stroke: var(--border); stroke-width: 0.5; }
+  /* Shared subtle drop-shadow on every diagram box, applied once via CSS
+     rather than per-element, so all boxes across every diagram get it. */
+  .dg-box rect, .dg-box polygon, .dg-box circle,
+  .dgc-blue rect, .dgc-blue polygon, .dgc-blue circle,
+  .dgc-teal rect, .dgc-teal polygon, .dgc-teal circle,
+  .dgc-purple rect, .dgc-purple polygon, .dgc-purple circle,
+  .dgc-coral rect, .dgc-coral polygon, .dgc-coral circle,
+  .dgc-amber rect, .dgc-amber polygon, .dgc-amber circle,
+  .dgc-green rect, .dgc-green polygon, .dgc-green circle,
+  .dgc-red rect, .dgc-red polygon, .dgc-red circle {
+    filter: drop-shadow(0 2px 3px rgba(20,19,26,0.10));
+  }
+  .dg-box rect, .dg-box polygon, .dg-box circle { fill: #fff; stroke: var(--border); stroke-width: 0.5; }
   .dg-box .dg-th { fill: var(--black); }
-  .dgc-blue rect, .dgc-blue polygon { fill: #E8F0FE; stroke: #1A4480; }
+  .dgc-blue rect, .dgc-blue polygon, .dgc-blue circle { fill: #E8F0FE; stroke: #1A4480; }
   .dgc-blue .dg-th, .dgc-blue .dg-ts { fill: #1A4480; }
-  .dgc-teal rect, .dgc-teal polygon { fill: #E1F5EE; stroke: #085041; }
+  .dgc-teal rect, .dgc-teal polygon, .dgc-teal circle { fill: #E1F5EE; stroke: #085041; }
   .dgc-teal .dg-th, .dgc-teal .dg-ts { fill: #085041; }
+  .dgc-teal2 rect, .dgc-teal2 polygon, .dgc-teal2 circle { fill: #9FE1CB; stroke: #085041; filter: drop-shadow(0 2px 3px rgba(20,19,26,0.10)); }
+  .dgc-teal2 .dg-th, .dgc-teal2 .dg-ts { fill: #04342C; }
   .dgc-purple rect, .dgc-purple polygon, .dgc-purple circle { fill: #EEEDFE; stroke: #3C3489; }
   .dgc-purple .dg-th, .dgc-purple .dg-ts { fill: #3C3489; }
-  .dgc-coral rect, .dgc-coral polygon { fill: #FAECE7; stroke: #712B13; }
+  .dgc-coral rect, .dgc-coral polygon, .dgc-coral circle { fill: #FAECE7; stroke: #712B13; }
   .dgc-coral .dg-th, .dgc-coral .dg-ts { fill: #712B13; }
-  .dgc-amber rect, .dgc-amber polygon { fill: #FAEEDA; stroke: #633806; }
+  .dgc-amber rect, .dgc-amber polygon, .dgc-amber circle { fill: #FAEEDA; stroke: #633806; }
   .dgc-amber .dg-th, .dgc-amber .dg-ts { fill: #633806; }
-  .dgc-green rect, .dgc-green polygon { fill: #EAF3DE; stroke: #27500A; }
+  .dgc-green rect, .dgc-green polygon, .dgc-green circle { fill: #EAF3DE; stroke: #27500A; }
   .dgc-green .dg-th, .dgc-green .dg-ts { fill: #27500A; }
-  .dgc-red rect, .dgc-red polygon { fill: #FCEBEB; stroke: #791F1F; stroke-width: 1; }
+  .dgc-red rect, .dgc-red polygon, .dgc-red circle { fill: #FCEBEB; stroke: #791F1F; stroke-width: 1; }
   .dgc-red .dg-th, .dgc-red .dg-ts { fill: #791F1F; }
   .dg-note rect { fill: #fff; stroke: var(--border); }
   .dg-note text { fill: var(--gray-text); }
@@ -203,6 +215,7 @@
   .quality-head {
     display: grid;
     grid-template-columns: 2fr 1fr 1fr;
+    column-gap: 20px;
     padding: 12px 20px;
     font-size: 11.5px;
     font-weight: 600;
@@ -213,6 +226,7 @@
   .quality-row {
     display: grid;
     grid-template-columns: 2fr 1fr 1fr;
+    column-gap: 20px;
     align-items: center;
     padding: 14px 20px;
     background: #fff;
@@ -257,7 +271,27 @@
 
   @media (max-width: 640px) {
     h1.title { font-size: 30px; }
-    .quality-head, .quality-row { grid-template-columns: 1.6fr 1fr 1fr; font-size: 12.5px; }
+    /* !important is required here because many quality-row/quality-head
+       instances set their own column count via inline style, which would
+       otherwise beat this breakpoint and squish content on narrow screens —
+       same root cause bug found and fixed on the RAG assistant page. */
+    .quality-head { display: none !important; }
+    .quality-row {
+      grid-template-columns: 1fr !important;
+      row-gap: 4px;
+      font-size: 12.5px;
+    }
+    .field-grid { grid-template-columns: 1fr !important; }
+  }
+  /* Scroll-cue: fades the right edge of any horizontally-scrollable diagram
+     so it's visible there's more content to scroll to, on any screen width
+     narrower than the diagram itself. */
+  .dg-wrap { position: relative; }
+  .dg-wrap::after {
+    content: '';
+    position: absolute; top: 0; right: 0; bottom: 8px; width: 28px;
+    background: linear-gradient(to right, transparent, rgba(255,255,255,0.95));
+    pointer-events: none;
   }
   .kpi-strip {
     display: grid;
@@ -307,9 +341,20 @@
   }
   .so-what .dot { width: 5px; height: 5px; border-radius: 50%; background: var(--pink); margin-top: 6px; flex-shrink: 0; }
   .so-what p { font-size: 12.5px; color: var(--black); margin: 0; }
+
+  .to-top {
+    position: fixed; bottom: 24px; right: 24px; z-index: 60;
+    width: 44px; height: 44px; border-radius: 50%; background: var(--pink); color: #fff;
+    border: none; display: flex; align-items: center; justify-content: center;
+    font-size: 18px; cursor: pointer; box-shadow: 0 4px 16px rgba(232,24,122,.35);
+    opacity: 0; pointer-events: none; transition: opacity .2s ease, transform .2s ease;
+  }
+  .to-top.show { opacity: 1; pointer-events: auto; }
+  .to-top:hover { transform: translateY(-2px); }
 </style>
 </head>
 <body>
+<button class="to-top" id="toTop" aria-label="Back to top">↑</button>
 <div class="wrap">
 
   <p class="crumb"><a href="https://analyzewithrutuja.github.io/#portfolio">← Back to portfolio</a></p>
@@ -519,31 +564,31 @@
 
     <div class="field-grid">
       <div class="field-card c-purple">
-        <div class="field-top"><span class="field-icon">👤</span><span class="field-name">Demographics</span><span class="field-count">4</span></div>
+        <div class="field-top"><span class="field-name">Demographics</span><span class="field-count">4</span></div>
         <p class="field-desc">Race, gender, age band, weight</p>
       </div>
-      <div class="field-card c-teal">
-        <div class="field-top"><span class="field-icon">🏥</span><span class="field-name">Admission details</span><span class="field-count">4</span></div>
+      <div class="field-card c-purple">
+        <div class="field-top"><span class="field-name">Admission details</span><span class="field-count">4</span></div>
         <p class="field-desc">Type, discharge disposition, source, length of stay</p>
       </div>
-      <div class="field-card c-coral">
-        <div class="field-top"><span class="field-icon">📈</span><span class="field-name">Clinical utilization</span><span class="field-count">7</span></div>
+      <div class="field-card c-teal">
+        <div class="field-top"><span class="field-name">Clinical utilization</span><span class="field-count">7</span></div>
         <p class="field-desc">Prior visits, procedures, medication count, diagnoses</p>
       </div>
-      <div class="field-card c-pink2">
-        <div class="field-top"><span class="field-icon">🩺</span><span class="field-name">Diagnosis codes</span><span class="field-count">3</span></div>
+      <div class="field-card c-teal">
+        <div class="field-top"><span class="field-name">Diagnosis codes</span><span class="field-count">3</span></div>
         <p class="field-desc">ICD-9 codes, later grouped into clinical categories</p>
       </div>
-      <div class="field-card c-amber">
-        <div class="field-top"><span class="field-icon">💧</span><span class="field-name">Lab results</span><span class="field-count">2</span></div>
+      <div class="field-card c-teal">
+        <div class="field-top"><span class="field-name">Lab results</span><span class="field-count">2</span></div>
         <p class="field-desc">Glucose serum test, A1C blood sugar control</p>
       </div>
-      <div class="field-card c-green">
-        <div class="field-top"><span class="field-icon">💊</span><span class="field-name">Medications</span><span class="field-count">23</span></div>
+      <div class="field-card c-teal">
+        <div class="field-top"><span class="field-name">Medications</span><span class="field-count">23</span></div>
         <p class="field-desc">One column per diabetes drug — steady, up, down, none</p>
       </div>
       <div class="field-card c-red">
-        <div class="field-top"><span class="field-icon">🎯</span><span class="field-name">Outcome (target)</span><span class="field-count">1</span></div>
+        <div class="field-top"><span class="field-name">Outcome (target)</span><span class="field-count">1</span></div>
         <p class="field-desc">Readmitted — no, after 30 days, within 30 days</p>
       </div>
     </div>
@@ -780,12 +825,12 @@
     </div>
 
     <div class="field-grid" style="margin-bottom: 20px;">
-      <div class="field-card c-purple">
+      <div class="field-card c-teal">
         <p class="field-name" style="margin-bottom:6px;">Chi-square test</p>
         <p class="field-desc" style="font-family:'IBM Plex Mono',monospace; font-size:12.5px;">&Chi;&sup2; = &Sigma; (O&minus;E)&sup2; / E</p>
         <p class="field-desc">O = observed count, E = expected count if no relationship existed</p>
       </div>
-      <div class="field-card c-teal">
+      <div class="field-card c-teal2">
         <p class="field-name" style="margin-bottom:6px;">T-test (Welch's)</p>
         <p class="field-desc" style="font-family:'IBM Plex Mono',monospace; font-size:12.5px;">t = (x&#772;&#8321; &minus; x&#772;&#8322;) / &radic;(s&#178;&#8321;/n&#8321; + s&#178;&#8322;/n&#8322;)</p>
         <p class="field-desc">compares the average of a number between two groups</p>
@@ -816,11 +861,11 @@
         <p class="field-name" style="margin-bottom:6px;">Age — what it means clinically</p>
         <p class="field-desc">Age is a proxy for slower recovery, more comorbidities, and less support at home. Elderly patients need thorough discharge planning, not just medical clearance.</p>
       </div>
-      <div class="field-card c-coral">
+      <div class="field-card c-amber">
         <p class="field-name" style="margin-bottom:6px;">Diabetes meds — what it means clinically</p>
         <p class="field-desc">Medication management quality after discharge genuinely affects outcomes. Discharge counseling on proper use isn't a formality — it measurably matters.</p>
       </div>
-      <div class="field-card c-pink2">
+      <div class="field-card c-amber">
         <p class="field-name" style="margin-bottom:6px;">Length of stay — what it means clinically</p>
         <p class="field-desc">A longer-than-expected stay is itself an early warning sign — a signal for extra discharge attention, not just a scheduling detail.</p>
       </div>
@@ -842,7 +887,7 @@
       <p><strong>Why this matters for this dataset specifically:</strong> knowing "age is statistically associated with readmission" doesn't tell a care team what to do with the patient in front of them right now. A predictive model turns dozens of individual signals into a single risk score for one specific person — which is what actually makes a screening tool usable.</p>
     </div>
 
-    <div class="field-card c-blue" style="margin-bottom: 28px; background:#E8F0FE;">
+    <div class="field-card c-blue" style="margin-bottom: 28px;">
       <p class="field-name" style="margin-bottom:8px; color:#1A4480;">How does the model actually learn this — is it told what's medically important?</p>
       <p class="field-desc" style="opacity:1; color:#1A4480; margin-bottom:10px;">
         No. Nothing is told to the model about which factors are clinically important. It only works because
@@ -998,7 +1043,7 @@
       <div class="dg-wrap">
 <svg viewBox="0 0 680 340" role="img" style="width:100%;" aria-label="Random Forest splitting data into subsets and voting">
 <desc>All 100,244 patient records split into random subsets, each feeding one of 200 independent decision trees limited to depth 10, voting together for a final majority decision.</desc>
-<g class="dgc-green"><rect x="210" y="10" width="260" height="58" rx="8"/>
+<g class="dgc-teal2"><rect x="210" y="10" width="260" height="58" rx="8"/>
 <text class="dg-th" x="340" y="28" text-anchor="middle" dominant-baseline="central">all patient data</text>
 <text class="dg-ts" x="340" y="44" text-anchor="middle" dominant-baseline="central">100,244 records &times; 189 features</text>
 <text class="dg-ts" x="340" y="59" text-anchor="middle" dominant-baseline="central">(3 of 200 trees shown below)</text></g>
@@ -1034,7 +1079,7 @@
 <path d="M150,220 L280,264" class="dg-arrow" marker-end="url(#pm-arrow)"/>
 <path d="M340,220 L340,254" class="dg-arrow" marker-end="url(#pm-arrow)"/>
 <path d="M530,220 L400,264" class="dg-arrow" marker-end="url(#pm-arrow)"/>
-<g class="dgc-amber"><rect x="240" y="266" width="200" height="50" rx="8"/>
+<g class="dgc-teal2"><rect x="240" y="266" width="200" height="50" rx="8"/>
 <text class="dg-th" x="340" y="284" text-anchor="middle" dominant-baseline="central">majority of 200 votes: safe</text>
 <text class="dg-ts" x="340" y="301" text-anchor="middle" dominant-baseline="central">accuracy 67.0% &middot; AUC 0.657</text></g>
 </svg>
@@ -1068,7 +1113,7 @@
       <div class="dg-wrap">
 <svg viewBox="0 0 680 370" role="img" style="width:100%;" aria-label="XGBoost residual error on readmit_30 shrinking across trees to a final decision">
 <desc>Predicting readmit_30, whether a patient returns within 30 days. For a patient whose actual value is 1, tree 1 predicts 0.30, error 0.70. Tree 2 corrects to 0.50, error 0.50. Tree 3 corrects to 0.68, error 0.32. The final probability crosses the 0.5 threshold, producing a high risk decision that matches the actual outcome.</desc>
-<g class="dgc-teal"><rect x="140" y="10" width="400" height="30" rx="15"/>
+<g class="dgc-amber"><rect x="140" y="10" width="400" height="30" rx="15"/>
 <text class="dg-th" x="340" y="26" text-anchor="middle" dominant-baseline="central">predicting: readmit_30 (returns within 30 days?)</text></g>
 <text class="dg-ts" x="340" y="58" text-anchor="middle">this patient's actual readmit_30 = 1 (yes, they returned)</text>
 <g class="dgc-coral"><rect x="20" y="72" width="150" height="70" rx="10"/>
@@ -1283,5 +1328,13 @@
   </div>
 
 </div>
+
+<script>
+  const toTopBtn = document.getElementById('toTop');
+  window.addEventListener('scroll', () => {
+    toTopBtn.classList.toggle('show', window.scrollY > 600);
+  }, { passive: true });
+  toTopBtn.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
+</script>
 </body>
 </html>
