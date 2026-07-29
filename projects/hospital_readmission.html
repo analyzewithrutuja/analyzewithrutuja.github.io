@@ -102,6 +102,23 @@
     margin: 0 0 28px;
   }
 
+  /* Comic strip section — matches the card / rounded-corner language used
+     everywhere else on this page. Narrow centered column so it reads like
+     an actual comic strip rather than stretching edge to edge. */
+  .comic-strip {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    max-width: 640px;
+    margin: 0 auto 8px;
+  }
+  .comic-strip img {
+    width: 100%;
+    height: auto;
+    border-radius: 16px;
+    display: block;
+  }
+
   .stat-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
@@ -375,6 +392,30 @@
     <span class="tag">Statistics</span>
     <span class="tag">Healthcare Analytics</span>
   </div>
+
+  <!-- ===== COMIC SECTION ===== -->
+  <div class="section">
+    <p class="section-eyebrow">00 · The idea, first</p>
+    <h2 class="section-title">Why does this hospital rank #1?</h2>
+    <p class="section-desc">Before any dataset, model, or chart — here's the core idea behind this whole project, told as a conversation. "Feature importance" is really just what an experienced doctor already does by instinct.</p>
+
+    <div class="comic-strip">
+      <img src="comic_1.png" alt="Dr. Karen has spent 30 years treating patients at St. Mercy Hospital, ranked number one in the region for Type 2 Diabetes care">
+      <img src="comic_2.png" alt="An intern asks Dr. Karen what actually makes the hospital number one">
+      <img src="comic_3.png" alt="Dr. Karen explains that she reads a patient's entire record, calling it the patient fingerprint">
+      <img src="comic_4.png" alt="Dr. Karen says prior hospital admissions are the single strongest signal she looks at">
+      <img src="comic_5A.png" alt="Dr. Karen describes her hierarchy: discharge location, then medications, then age">
+      <img src="comic_5B.png" alt="An intern notes the patient data shows the same hierarchy without being told">
+      <img src="comic_6.png" alt="Dr. Karen explains that data science surfaces high-risk cases when multiple emergencies happen at once">
+      <img src="comic_7.png" alt="Dr. Karen concludes that data science doesn't replace judgment, it just helps make the same call sooner">
+    </div>
+
+    <div class="callout">
+      <span class="dot"></span>
+      <p>The rest of this page shows exactly how that intuition gets tested, measured, and turned into an actual model — starting with the manual process below.</p>
+    </div>
+  </div>
+  <!-- ===== END COMIC SECTION ===== -->
 
   <div class="section">
     <p class="section-eyebrow">01 · Before data science</p>
