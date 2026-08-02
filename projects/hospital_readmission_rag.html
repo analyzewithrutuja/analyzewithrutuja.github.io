@@ -105,6 +105,12 @@
     font-size: var(--fs-small); font-weight: 500; padding: 7px 16px; border-radius: 999px;
     border: 1px solid var(--border); color: var(--black); background: #fff;
   }
+  .tag-github {
+    display: inline-flex; align-items: center; gap: 6px;
+    font-size: var(--fs-small); font-weight: 600; padding: 7px 16px; border-radius: 999px;
+    background: var(--black); color: #fff; text-decoration: none; border: 1px solid var(--black);
+  }
+  .tag-github:hover { background: var(--pink); border-color: var(--pink); color: #fff; }
 
   /* ============ LIVE APP EMBED ============ */
   .app-frame {
@@ -318,6 +324,7 @@
   </div>
 
   <div class="tag-row">
+    <a class="tag-github" href="https://github.com/analyzewithrutuja/diabetes-rag-app" target="_blank" rel="noopener">View code on GitHub</a>
     <span class="tag">Python</span>
     <span class="tag">Sentence-Transformers</span>
     <span class="tag">ChromaDB</span>
