@@ -78,6 +78,12 @@
     background: #fff;
   }
   .tag.filled { background: var(--pink); color: #fff; border-color: var(--pink); }
+  .tag-github {
+    display: inline-flex; align-items: center; gap: 6px;
+    font-size: 13.5px; font-weight: 600; padding: 7px 16px; border-radius: 999px;
+    background: var(--black); color: #fff; text-decoration: none; border: 1px solid var(--black);
+  }
+  .tag-github:hover { background: var(--pink); border-color: var(--pink); color: #fff; }
 
   .section { margin-bottom: 64px; }
   .section-eyebrow {
@@ -384,6 +390,7 @@
   </p>
 
   <div class="tag-row">
+    <a class="tag-github" href="https://github.com/analyzewithrutuja/hospital_readmission_type2_diabetes" target="_blank" rel="noopener">View code on GitHub</a>
     <span class="tag">Python</span>
     <span class="tag">scikit-learn</span>
     <span class="tag">XGBoost</span>
