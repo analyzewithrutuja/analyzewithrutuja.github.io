@@ -79,7 +79,7 @@ body{background:var(--bg);color:var(--text);font-family:var(--font);overflow-x:h
   background:radial-gradient(ellipse at 70% 50%,rgba(232,24,122,.04) 0%,transparent 60%);
   pointer-events:none;
 }
-.hero-content{flex:1;max-width:540px;padding-right:40px}
+.hero-content{flex:1;max-width:540px;padding-right:40px;position:relative;z-index:1}
 .hero-eyebrow{
   font-size:.7rem;letter-spacing:.2em;text-transform:uppercase;
   color:var(--muted);margin-bottom:18px;
@@ -385,6 +385,7 @@ footer .pink{color:var(--pink)}
 
 <!-- HERO -->
 <section id="hero">
+  <canvas id="heroDotCanvas" style="position:absolute;inset:0;width:100%;height:100%;pointer-events:none;z-index:0;"></canvas>
   <div class="hero-content">
     <div class="hero-eyebrow">Welcome to my world</div>
     <h1 class="hero-heading">Hi, I'm <span class="pink">Rutuja Patel</span></h1>
@@ -880,6 +881,60 @@ footer .pink{color:var(--pink)}
   <span style="color:rgba(255,255,255,.25)">Made with ❤️ and excessive amounts of <span class="pink">coffee.</span></span>
   <span>Console.log("Hire me!")</span>
 </footer>
+
+<script>
+(function(){
+  var canvas = document.getElementById('heroDotCanvas');
+  var section = document.getElementById('hero');
+  var ctx = canvas.getContext('2d');
+  var dpr = window.devicePixelRatio || 1;
+  var w, h;
+  var mouse = { x: -999, y: -999 };
+  var spacing = 26;
+  var radius = 160;
+
+  function resize(){
+    w = section.clientWidth;
+    h = section.clientHeight;
+    canvas.width = w * dpr;
+    canvas.height = h * dpr;
+    ctx.setTransform(1,0,0,1,0,0);
+    ctx.scale(dpr, dpr);
+  }
+  resize();
+  window.addEventListener('resize', resize);
+
+  section.addEventListener('mousemove', function(e){
+    var rect = section.getBoundingClientRect();
+    mouse.x = e.clientX - rect.left;
+    mouse.y = e.clientY - rect.top;
+  });
+  section.addEventListener('mouseleave', function(){
+    mouse.x = -999; mouse.y = -999;
+  });
+
+  function draw(){
+    ctx.clearRect(0, 0, w, h);
+    for(var y = spacing; y < h; y += spacing){
+      for(var x = spacing; x < w; x += spacing){
+        var dx = mouse.x - x, dy = mouse.y - y;
+        var dist = Math.sqrt(dx*dx + dy*dy);
+        var infl = Math.max(0, 1 - dist / radius);
+        if(infl < 0.03) continue;
+        var px = x - (dx/(dist||1)) * infl * 8;
+        var py = y - (dy/(dist||1)) * infl * 8;
+        var r = 1.2 + infl * 2;
+        ctx.beginPath();
+        ctx.arc(px, py, r, 0, Math.PI * 2);
+        ctx.fillStyle = 'rgba(232,24,122,' + (infl * 0.85) + ')';
+        ctx.fill();
+      }
+    }
+    requestAnimationFrame(draw);
+  }
+  draw();
+})();
+</script>
 
 <script>
 function switchTab(id,btn){
