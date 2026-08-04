@@ -3,33 +3,22 @@
 <head>
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<title>Statistical Analysis Skills | Rutuja Patel</title>
+<title>Deep Learning Skills | Rutuja Patel</title>
 <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0%25' y1='0%25' x2='100%25' y2='100%25'%3E%3Cstop offset='0%25' stop-color='%23e8187a'/%3E%3Cstop offset='100%25' stop-color='%23f9004d'/%3E%3C/linearGradient%3E%3C/defs%3E%3Ccircle cx='32' cy='32' r='32' fill='url(%23g)'/%3E%3Ctext x='32' y='42' font-family='Poppins, Arial, sans-serif' font-weight='800' font-size='26' fill='white' text-anchor='middle'%3ERP%3C/text%3E%3C/svg%3E">
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet"/>
 <style>
-:root{--pk:#e8187a;--pka:rgba(232,24,122,.1);--pkb:rgba(232,24,122,.2);--pkc:rgba(232,24,122,.5);--bg:#f8f7f5;--bg2:#ffffff;--bg3:#f2f1ef;--border:rgba(0,0,0,0.08);--border2:rgba(232,24,122,.25);--text:#1a1a1a;--muted:#6b6b6b;--dim:#aaaaaa;--mono:'JetBrains Mono',monospace;--sans:'Inter',sans-serif;--r:16px;--rl:22px}
+:root{--pk:#e8187a;--pka:rgba(232,24,122,.1);--pkb:rgba(232,24,122,.2);--pkc:rgba(232,24,122,.5);--bg:#f8f7f5;--bg2:#ffffff;--bg3:#f2f1ef;--border:rgba(0,0,0,0.08);--border2:rgba(232,24,122,.25);--text:#1a1a1a;--muted:#6b6b6b;--dim:#aaaaaa;--navy:#190d26;--mono:'JetBrains Mono',monospace;--sans:'Inter',sans-serif;--r:16px;--rl:22px}
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 html{scroll-behavior:smooth}
 body{background:var(--bg);color:var(--text);font-family:var(--sans);font-size:15px;line-height:1.7}
-nav{position:sticky;top:0;z-index:100;background:rgba(248,247,245,.95);backdrop-filter:blur(12px);border-bottom:1px solid var(--border);padding:0 5%;display:flex;align-items:center;justify-content:space-between;height:60px}
-.logo{font-family:var(--mono);font-size:.83rem;color:var(--muted);text-decoration:none}
-.logo span{color:var(--pk)}
-.nav-links{display:flex;gap:28px}
-.nav-links a{text-decoration:none;color:var(--muted);font-size:.8rem;font-weight:500;transition:color .2s}
-.nav-links a:hover{color:var(--pk)}
-.back-link{display:block;max-width:900px;margin:0 auto;padding:24px 5% 0;font-family:var(--mono);font-size:.8rem}
-.back-link a{color:var(--pk);text-decoration:none}
-.back-link a:hover{text-decoration:underline}
-.hero{max-width:900px;margin:0 auto;padding:40px 5% 32px;text-align:center}
+.backlink{display:block;max-width:900px;margin:0 auto;padding:24px 5% 0;font-family:var(--mono);font-size:.72rem}
+.backlink a{color:var(--pk);text-decoration:none}
+.backlink a:hover{text-decoration:underline}
+.hero{max-width:900px;margin:0 auto;padding:24px 5% 32px;text-align:center}
 .eyebrow{font-family:var(--mono);font-size:.68rem;letter-spacing:.14em;text-transform:uppercase;color:var(--pk);margin-bottom:14px;font-weight:500}
 .hero h1{font-size:clamp(1.6rem,4vw,2.4rem);font-weight:700;line-height:1.15;letter-spacing:-.025em;color:var(--text);margin-bottom:8px}
 .hero-sub{font-size:.95rem;color:var(--muted);max-width:480px;margin:0 auto 40px}
-
-.hstat{flex:1;min-width:120px;padding:20px 16px;text-align:center;border-right:1px solid var(--border)}
-.hstat:last-child{border-right:none}
-.hstat-num{font-family:var(--mono);font-size:1.5rem;font-weight:700;color:var(--pk);line-height:1}
-.hstat-lbl{font-size:.68rem;color:var(--dim);letter-spacing:.05em;margin-top:4px}
-.page{max-width:900px;margin:0 auto;padding:32px 5% 40px}
+.page{max-width:900px;margin:0 auto;padding:32px 5% 80px}
 .sec{margin-bottom:56px}
 .sec-head{display:flex;align-items:center;gap:14px;margin-bottom:8px}
 .sec-num{font-family:var(--mono);font-size:.68rem;color:var(--pk);font-weight:500}
@@ -45,179 +34,217 @@ nav{position:sticky;top:0;z-index:100;background:rgba(248,247,245,.95);backdrop-
 .formula{background:var(--bg3);border:1px solid var(--border);border-left:3px solid var(--pk);border-radius:0 var(--r) var(--r) 0;padding:12px 16px;font-family:var(--mono);font-size:.75rem;color:#555;margin:12px 0;line-height:2}
 .formula .c{color:var(--dim)}
 .formula .k{color:var(--pk)}
-.wgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:14px}
-.wcard{background:var(--bg2);border:1px solid var(--border);border-radius:var(--rl);padding:20px;transition:border-color .2s,box-shadow .2s}
-.wcard:hover{border-color:var(--pkb);box-shadow:0 4px 20px rgba(232,24,122,.08)}
-.wcard-top{display:flex;align-items:center;gap:12px;margin-bottom:10px}
-.wcard-icon{width:36px;height:36px;border-radius:10px;background:var(--pka);border:1px solid var(--pkb);display:flex;align-items:center;justify-content:center;flex-shrink:0}
-.wcard-icon svg{width:17px;height:17px;stroke:var(--pk);fill:none;stroke-width:1.6;stroke-linecap:round}
-.wcard-title{font-size:.88rem;font-weight:700;color:var(--text)}
-.wcard-desc{font-size:.78rem;color:var(--muted);line-height:1.65}
-.wcard-pills{display:flex;flex-wrap:wrap;gap:6px;margin-top:12px}
-.pill{font-family:var(--mono);font-size:.63rem;color:var(--muted);background:var(--bg3);border:1px solid var(--border);border-radius:5px;padding:2px 7px}
-footer{border-top:1px solid var(--border);padding:28px 5%;display:flex;align-items:center;justify-content:space-between;font-family:var(--mono);font-size:.7rem;color:var(--dim)}
+
+/* neural net signature panel */
+.tree-panel{background:var(--navy);border-radius:var(--rl);padding:28px clamp(8px,3vw,32px) 18px;margin:20px 0}
+.tree-panel svg{display:block;width:100%;height:auto}
+.tree-caption{text-align:center;font-size:.75rem;color:rgba(255,255,255,.45);font-family:var(--mono);margin-top:8px}
+.tree-legend{display:flex;flex-wrap:wrap;justify-content:center;gap:20px;padding:16px 6px 4px;font-size:.7rem;color:rgba(255,255,255,.5);font-family:var(--mono)}
+.tree-legend span{display:inline-flex;align-items:center;gap:6px}
+.tdot{width:10px;height:10px;border-radius:50%;display:inline-block;flex:none}
+.tdot.node{background:#3a3a46}
+.tdot.yes{background:var(--pk)}
+.tdot.no{background:transparent;border:2px solid var(--pk)}
+
+footer{border-top:1px solid var(--border);padding:28px 5%;display:flex;align-items:center;justify-content:space-between;font-family:var(--mono);font-size:.7rem;color:var(--dim);max-width:900px;margin:0 auto}
 footer span{color:var(--pk)}
-@media(max-width:600px){.grid{grid-template-columns:repeat(2,1fr)}.nav-links{gap:14px}.hstat{min-width:80px}}
+footer a{color:var(--pk);text-decoration:none}
+@media(max-width:600px){.grid{grid-template-columns:repeat(2,1fr)}}
 </style>
 </head>
 <body>
 
-<div class="back-link"><a href="https://analyzewithrutuja.github.io/#portfolio">&larr; Back to portfolio</a></div>
+<div class="backlink"><a href="../index.html#features">&larr; Back to portfolio</a></div>
 
 <div class="hero">
-  <h1>Statistical Analysis</h1>
-  <p style="font-size:.95rem;color:var(--muted);max-width:520px;margin:0 auto;line-height:1.7;">Skills that translate data into decisions.</p>
+  <h1>Deep Learning</h1>
+  <p class="hero-sub">From a single neuron to networks that see, listen, and generate — the architectures behind modern AI.</p>
 </div>
 
 <div class="page">
 
+<!-- 01 NEURAL NETWORK FUNDAMENTALS -->
 <div class="sec">
-  <div class="sec-head"><span class="sec-num">01</span><div class="sec-title">Descriptive Statistics</div><div class="sec-line"></div></div>
-  <p class="sec-desc">Summarising data before drawing any conclusions — the foundation of every analysis.</p>
+  <div class="sec-head"><span class="sec-num">01</span><div class="sec-title">Neural Network Fundamentals</div><div class="sec-line"></div></div>
+  <p class="sec-desc">Every deep network is built from the same core loop — a signal passes forward, an error is measured, and it flows backward to update the weights.</p>
   <div class="grid">
-    <div class="card"><div class="chart-wrap"><canvas id="d1" role="img" aria-label="Center measures bar chart">Center</canvas></div><div class="card-label">Measures of Center</div><div class="card-tag">mean · median · mode</div></div>
-    <div class="card"><div class="chart-wrap"><canvas id="d2" role="img" aria-label="Spread visualization">Spread</canvas></div><div class="card-label">Measures of Spread</div><div class="card-tag">SD · variance · IQR</div></div>
-    <div class="card"><div class="chart-wrap"><canvas id="d3" role="img" aria-label="Z-score on bell curve">Z-score</canvas></div><div class="card-label">Z-Score & Position</div><div class="card-tag">z = (x−μ)/σ</div></div>
-    <div class="card"><div class="chart-wrap"><canvas id="d4" role="img" aria-label="Empirical rule chart">68-95-99</canvas></div><div class="card-label">Empirical Rule</div><div class="card-tag">68 · 95 · 99.7%</div></div>
-    <div class="card"><div class="chart-wrap"><canvas id="d5" role="img" aria-label="Skewness shapes">Skew</canvas></div><div class="card-label">Shape & Skewness</div><div class="card-tag">left · right · normal</div></div>
+    <div class="card"><div class="chart-wrap"><canvas id="nf1" role="img" aria-label="Perceptron decision boundary separating two classes">Perceptron</canvas></div><div class="card-label">Perceptron</div><div class="card-tag">w·x + b</div></div>
+    <div class="card"><div class="chart-wrap"><canvas id="nf2" role="img" aria-label="Sigmoid, tanh and ReLU activation curves">Activations</canvas></div><div class="card-label">Activation Functions</div><div class="card-tag">σ · tanh · ReLU</div></div>
+    <div class="card"><div class="chart-wrap"><canvas id="nf3" role="img" aria-label="Signal strengthening as it passes through layers">Forward</canvas></div><div class="card-label">Forward Propagation</div><div class="card-tag">layer by layer</div></div>
+    <div class="card"><div class="chart-wrap"><canvas id="nf4" role="img" aria-label="Error shrinking across training epochs">Backprop</canvas></div><div class="card-label">Backpropagation</div><div class="card-tag">∂L/∂w</div></div>
+    <div class="card"><div class="chart-wrap"><canvas id="nf5" role="img" aria-label="MSE versus cross entropy loss bars">Loss</canvas></div><div class="card-label">Loss Functions</div><div class="card-tag">MSE · Cross-Entropy</div></div>
+    <div class="card"><div class="chart-wrap"><canvas id="nf6" role="img" aria-label="Gradient descent converging toward a minimum">Descent</canvas></div><div class="card-label">Gradient Descent</div><div class="card-tag">θ = θ − α∇J</div></div>
+    <div class="card"><div class="chart-wrap"><canvas id="nf7" role="img" aria-label="Weight variance balanced across layers">Init</canvas></div><div class="card-label">Weight Initialization</div><div class="card-tag">Xavier · He</div></div>
   </div>
+  <div class="formula">a = <span class="k">σ(Wx + b)</span> <span class="c">← forward pass, then minimize</span> <span class="k">L(y, ŷ)</span> <span class="c">via backprop</span></div>
 </div>
 
+<!-- 02 OPTIMIZATION & REGULARIZATION -->
 <div class="sec">
-  <div class="sec-head"><span class="sec-num">02</span><div class="sec-title">Probability</div><div class="sec-line"></div></div>
-  <p class="sec-desc">Quantifying uncertainty and building the backbone for statistical inference.</p>
+  <div class="sec-head"><span class="sec-num">02</span><div class="sec-title">Optimization &amp; Regularization</div><div class="sec-line"></div></div>
+  <p class="sec-desc">Getting a network to actually converge — and to generalize once it does — is its own discipline of tricks and safeguards.</p>
   <div class="grid">
-    <div class="card"><div class="chart-wrap"><canvas id="p1" role="img" aria-label="AND OR NOT probability bars">Rules</canvas></div><div class="card-label">Basic Rules</div><div class="card-tag">AND · OR · NOT</div></div>
-    <div class="card"><div class="chart-wrap"><canvas id="p2" role="img" aria-label="Conditional probability">Conditional</canvas></div><div class="card-label">Conditional Probability</div><div class="card-tag">P(A|B)</div></div>
-    <div class="card"><div class="chart-wrap"><canvas id="p3" role="img" aria-label="Prior to posterior update">Prior→Post</canvas></div><div class="card-label">Bayesian Updating</div><div class="card-tag">prior → posterior</div></div>
-    <div class="card"><div class="chart-wrap"><canvas id="bay2" role="img" aria-label="Types of priors">Priors</canvas></div><div class="card-label">Types of Priors</div><div class="card-tag">informative · uniform · Jeffreys</div></div>
-    <div class="card"><div class="chart-wrap"><canvas id="bay3" role="img" aria-label="Conjugate prior beta binomial">Conjugate</canvas></div><div class="card-label">Conjugate Priors</div><div class="card-tag">Beta-Binomial · Normal-Normal</div></div>
-    <div class="card"><div class="chart-wrap"><canvas id="bay4" role="img" aria-label="Likelihood function">Likelihood</canvas></div><div class="card-label">Likelihood Function</div><div class="card-tag">P(Data|θ)</div></div>
-    <div class="card"><div class="chart-wrap"><canvas id="bay5" role="img" aria-label="Bayes vs Frequentist">Freq vs Bay</canvas></div><div class="card-label">Frequentist vs Bayesian</div><div class="card-tag">fixed param · uncertain param</div></div>
-    <div class="card"><div class="chart-wrap"><canvas id="p4" role="img" aria-label="At least one complement">Complement</canvas></div><div class="card-label">At Least One</div><div class="card-tag">1 − P(none)</div></div>
+    <div class="card"><div class="chart-wrap"><canvas id="op1" role="img" aria-label="Adam converging faster than plain SGD">Optimizers</canvas></div><div class="card-label">Optimizers</div><div class="card-tag">SGD · RMSprop · Adam</div></div>
+    <div class="card"><div class="chart-wrap"><canvas id="op2" role="img" aria-label="Learning rate decaying in steps">LR Schedule</canvas></div><div class="card-label">Learning Rate Scheduling</div><div class="card-tag">step · cosine decay</div></div>
+    <div class="card"><div class="chart-wrap"><canvas id="op3" role="img" aria-label="Some neurons randomly deactivated">Dropout</canvas></div><div class="card-label">Dropout</div><div class="card-tag">p = 0.2–0.5</div></div>
+    <div class="card"><div class="chart-wrap"><canvas id="op4" role="img" aria-label="Activations rescaled to a stable range">BatchNorm</canvas></div><div class="card-label">Batch Normalization</div><div class="card-tag">μ = 0, σ = 1</div></div>
+    <div class="card"><div class="chart-wrap"><canvas id="op5" role="img" aria-label="L1 and L2 penalties shrinking weights">Reg</canvas></div><div class="card-label">L1 / L2 Regularization</div><div class="card-tag">λΣ|w| · λΣw²</div></div>
+    <div class="card"><div class="chart-wrap"><canvas id="op6" role="img" aria-label="Gradient magnitude shrinking across deeper layers">Vanishing</canvas></div><div class="card-label">Vanishing / Exploding Gradients</div><div class="card-tag">depth vs ∇</div></div>
   </div>
-  <div class="formula"><span class="c"># Bayes Rule</span><br/>P(A|B) = <span class="k">P(B|A) × P(A)</span> / P(B)</div>
+  <div class="formula">θ = θ − α · <span class="k">m̂ / (√v̂ + ε)</span> <span class="c">← Adam update rule</span></div>
 </div>
 
+<!-- 03 CNN -->
 <div class="sec">
-  <div class="sec-head"><span class="sec-num">03</span><div class="sec-title">Probability Distributions</div><div class="sec-line"></div></div>
-  <p class="sec-desc">Modelling how data and outcomes are distributed — from coin flips to continuous measurements.</p>
+  <div class="sec-head"><span class="sec-num">03</span><div class="sec-title">Convolutional Neural Networks</div><div class="sec-line"></div></div>
+  <p class="sec-desc">Sliding filters that learn to detect edges, textures, and shapes — the backbone of modern computer vision.</p>
   <div class="grid">
-    <div class="card"><div class="chart-wrap"><canvas id="dist1" role="img" aria-label="Normal bell curve">Normal</canvas></div><div class="card-label">Normal Distribution</div><div class="card-tag">μ · σ</div></div>
-    <div class="card"><div class="chart-wrap"><canvas id="dist2" role="img" aria-label="Binomial bars">Binomial</canvas></div><div class="card-label">Binomial</div><div class="card-tag">n · p · q</div></div>
-    <div class="card"><div class="chart-wrap"><canvas id="dist3" role="img" aria-label="Poisson bars">Poisson</canvas></div><div class="card-label">Poisson</div><div class="card-tag">λ = rate</div></div>
-    <div class="card"><div class="chart-wrap"><canvas id="dist4" role="img" aria-label="Beta distribution">Beta</canvas></div><div class="card-label">Beta Distribution</div><div class="card-tag">α · β</div></div>
-    <div class="card"><div class="chart-wrap"><canvas id="dist5" role="img" aria-label="Normal approximation">Approx</canvas></div><div class="card-label">Normal Approximation</div><div class="card-tag">np≥10 · nq≥10</div></div>
+    <div class="card"><div class="chart-wrap"><canvas id="cn1" role="img" aria-label="A filter sliding across an image grid">Conv</canvas></div><div class="card-label">Convolution Operation</div><div class="card-tag">kernel · filter</div></div>
+    <div class="card"><div class="chart-wrap"><canvas id="cn2" role="img" aria-label="A feature map downsampled by pooling">Pooling</canvas></div><div class="card-label">Pooling (Max / Avg)</div><div class="card-tag">downsample</div></div>
+    <div class="card"><div class="chart-wrap"><canvas id="cn3" role="img" aria-label="Output size changing with padding and stride">Stride</canvas></div><div class="card-label">Padding &amp; Stride</div><div class="card-tag">(W−F+2P)/S+1</div></div>
+    <div class="card"><div class="chart-wrap"><canvas id="cn4" role="img" aria-label="Multiple stacked feature map channels">Feature Maps</canvas></div><div class="card-label">Feature Maps</div><div class="card-tag">channels</div></div>
+    <div class="card"><div class="chart-wrap"><canvas id="cn5" role="img" aria-label="Accuracy improving across deeper architectures">Architectures</canvas></div><div class="card-label">LeNet · VGG · ResNet · Inception</div><div class="card-tag">depth vs accuracy</div></div>
+    <div class="card"><div class="chart-wrap"><canvas id="cn6" role="img" aria-label="Frozen early layers and fine-tuned later layers">Transfer</canvas></div><div class="card-label">Transfer Learning</div><div class="card-tag">freeze · fine-tune</div></div>
+    <div class="card"><div class="chart-wrap"><canvas id="cn7" role="img" aria-label="Bounding boxes around detected objects">Detection</canvas></div><div class="card-label">Image Classification &amp; Object Detection</div><div class="card-tag">bounding box</div></div>
   </div>
+  <div class="formula">output size = <span class="k">(W − F + 2P) / S + 1</span> <span class="c">← per convolution or pooling layer</span></div>
 </div>
 
+<!-- 04 RNN / SEQUENCE MODELS -->
 <div class="sec">
-  <div class="sec-head"><span class="sec-num">04</span><div class="sec-title">Sampling & CLT</div><div class="sec-line"></div></div>
-  <p class="sec-desc">Using samples to make inferences about populations — and why averages are always normal.</p>
+  <div class="sec-head"><span class="sec-num">04</span><div class="sec-title">Recurrent Networks &amp; Sequence Models</div><div class="sec-line"></div></div>
+  <p class="sec-desc">Carrying memory forward through time — for text, speech, and anything else that unfolds in order.</p>
   <div class="grid">
-    <div class="card"><div class="chart-wrap"><canvas id="s1" role="img" aria-label="CLT narrowing bell">CLT</canvas></div><div class="card-label">Central Limit Theorem</div><div class="card-tag">n ≥ 30</div></div>
-    <div class="card"><div class="chart-wrap"><canvas id="s2" role="img" aria-label="SE decreasing with n">SE</canvas></div><div class="card-label">Standard Error</div><div class="card-tag">SE = σ/√n</div></div>
-    <div class="card"><div class="chart-wrap"><canvas id="s3" role="img" aria-label="LLN convergence">LLN</canvas></div><div class="card-label">Law of Large Numbers</div><div class="card-tag">x̄ → μ</div></div>
-    <div class="card"><div class="chart-wrap"><canvas id="s4" role="img" aria-label="Sampling methods comparison">Methods</canvas></div><div class="card-label">Sampling Methods</div><div class="card-tag">SRS · stratified</div></div>
-    <div class="card"><div class="chart-wrap"><canvas id="s5" role="img" aria-label="Bias and chance error">Bias</canvas></div><div class="card-label">Bias & Chance Error</div><div class="card-tag">systematic · random</div></div>
+    <div class="card"><div class="chart-wrap"><canvas id="rn1" role="img" aria-label="Hidden state passed forward across time steps">RNN</canvas></div><div class="card-label">Recurrent Neural Network (RNN)</div><div class="card-tag">hₜ = f(hₜ₋₁, xₜ)</div></div>
+    <div class="card"><div class="chart-wrap"><canvas id="rn2" role="img" aria-label="Forget, input and output gate activations">LSTM</canvas></div><div class="card-label">LSTM</div><div class="card-tag">forget · input · output gate</div></div>
+    <div class="card"><div class="chart-wrap"><canvas id="rn3" role="img" aria-label="Reset and update gate activations">GRU</canvas></div><div class="card-label">GRU</div><div class="card-tag">reset · update gate</div></div>
+    <div class="card"><div class="chart-wrap"><canvas id="rn4" role="img" aria-label="Information flowing both forward and backward">BiLSTM</canvas></div><div class="card-label">Bidirectional RNN / LSTM</div><div class="card-tag">forward + backward</div></div>
+    <div class="card"><div class="chart-wrap"><canvas id="rn5" role="img" aria-label="Encoder compressing a sequence into a decoder">Seq2Seq</canvas></div><div class="card-label">Sequence-to-Sequence</div><div class="card-tag">encoder → decoder</div></div>
+    <div class="card"><div class="chart-wrap"><canvas id="rn6" role="img" aria-label="Predicted values tracking an actual time series">Forecast</canvas></div><div class="card-label">Time Series Forecasting</div><div class="card-tag">predicted vs actual</div></div>
   </div>
-  <div class="formula">SE(mean) = σ/√n <span class="c">← decreases with n</span><br/>SE(sum)&nbsp; = σ·√n <span class="c">← increases with n</span></div>
+  <div class="formula">hₜ = <span class="k">tanh(Wₕhₜ₋₁ + Wₓxₜ + b)</span> <span class="c">← hidden state update</span></div>
 </div>
 
+<!-- 05 ATTENTION & TRANSFORMERS -->
 <div class="sec">
-  <div class="sec-head"><span class="sec-num">05</span><div class="sec-title">Inferential Statistics</div><div class="sec-line"></div></div>
-  <p class="sec-desc">Drawing conclusions about populations from sample data — the engine of data-driven decisions.</p>
+  <div class="sec-head"><span class="sec-num">05</span><div class="sec-title">Attention &amp; Transformers</div><div class="sec-line"></div></div>
+  <p class="sec-desc">Letting a model decide what to focus on, in parallel rather than step-by-step — the architecture behind every modern LLM.</p>
   <div class="grid">
-    <div class="card"><div class="chart-wrap"><canvas id="i1" role="img" aria-label="Confidence interval">CI</canvas></div><div class="card-label">Confidence Intervals</div><div class="card-tag">x̄ ± Z·SE</div></div>
-    <div class="card"><div class="chart-wrap"><canvas id="i2" role="img" aria-label="P-value under curve">P-value</canvas></div><div class="card-label">Hypothesis Testing</div><div class="card-tag">H₀ · H₁ · α</div></div>
-    <div class="card"><div class="chart-wrap"><canvas id="i3a" role="img" aria-label="One sample t-test">One-Sample</canvas></div><div class="card-label">One-Sample T-Test</div><div class="card-tag">x̄ vs μ₀</div></div>
-    <div class="card"><div class="chart-wrap"><canvas id="i3b" role="img" aria-label="Independent t-test">Independent</canvas></div><div class="card-label">Independent T-Test</div><div class="card-tag">μ₁ vs μ₂ · σ unknown</div></div>
-    <div class="card"><div class="chart-wrap"><canvas id="i3c" role="img" aria-label="Paired t-test">Paired</canvas></div><div class="card-label">Paired Sample T-Test</div><div class="card-tag">before vs after</div></div>
-    <div class="card"><div class="chart-wrap"><canvas id="i4" role="img" aria-label="Two sample comparison">Z-test</canvas></div><div class="card-label">Two-Sample Z-Test</div><div class="card-tag">μ₁ vs μ₂</div></div>
-    <div class="card"><div class="chart-wrap"><canvas id="i5" role="img" aria-label="Effect size dumbbell">Effect</canvas></div><div class="card-label">Effect Size</div><div class="card-tag">Cohen's d · power</div></div>
-    <div class="card"><div class="chart-wrap"><canvas id="i6" role="img" aria-label="Matched pairs">Pairs</canvas></div><div class="card-label">Matched Pairs</div><div class="card-tag">d̄ / (sd/√n)</div></div>
+    <div class="card"><div class="chart-wrap"><canvas id="at1" role="img" aria-label="Attention weights highlighting relevant tokens">Attention</canvas></div><div class="card-label">Attention Mechanism</div><div class="card-tag">weighted focus</div></div>
+    <div class="card"><div class="chart-wrap"><canvas id="at2" role="img" aria-label="A grid of token to token attention scores">Self-Attn</canvas></div><div class="card-label">Self-Attention</div><div class="card-tag">token ↔ token</div></div>
+    <div class="card"><div class="chart-wrap"><canvas id="at3" role="img" aria-label="Multiple attention heads attending differently">Multi-Head</canvas></div><div class="card-label">Multi-Head Attention</div><div class="card-tag">h parallel heads</div></div>
+    <div class="card"><div class="chart-wrap"><canvas id="at4" role="img" aria-label="Sine and cosine waves encoding position">PosEnc</canvas></div><div class="card-label">Positional Encoding</div><div class="card-tag">sin · cos</div></div>
+    <div class="card"><div class="chart-wrap"><canvas id="at5" role="img" aria-label="Stacked encoder and decoder blocks">Stack</canvas></div><div class="card-label">Transformer Architecture</div><div class="card-tag">N stacked blocks</div></div>
+    <div class="card"><div class="chart-wrap"><canvas id="at6" role="img" aria-label="Encoder output feeding a decoder">Enc-Dec</canvas></div><div class="card-label">Encoder–Decoder</div><div class="card-tag">context vector</div></div>
   </div>
-  <div class="formula">Z = (x̄₁ − x̄₂) / √(<span class="k">σ₁²/n₁ + σ₂²/n₂</span>) <span class="c">← reject H₀ if |Z| > 1.96</span></div>
-</div>
 
-<div class="sec">
-  <div class="sec-head"><span class="sec-num">06</span><div class="sec-title">Correlation & Regression</div><div class="sec-line"></div></div>
-  <p class="sec-desc">Measuring relationships between variables and building predictive models.</p>
-  <div class="grid">
-    <div class="card"><div class="chart-wrap"><canvas id="r1" role="img" aria-label="Scatter plot correlation">Scatter</canvas></div><div class="card-label">Correlation</div><div class="card-tag">r = −1 to +1</div></div>
-    <div class="card"><div class="chart-wrap"><canvas id="r2" role="img" aria-label="Regression line">Line</canvas></div><div class="card-label">Linear Regression</div><div class="card-tag">Y = a + bX</div></div>
-    <div class="card"><div class="chart-wrap"><canvas id="r3" role="img" aria-label="Residual plot">Residuals</canvas></div><div class="card-label">Residual Diagnostics</div><div class="card-tag">y − ŷ</div></div>
-    <div class="card"><div class="chart-wrap"><canvas id="r4" role="img" aria-label="R-squared bar">R²</canvas></div><div class="card-label">R² & Model Fit</div><div class="card-tag">SST · SSR · SSE</div></div>
-    <div class="card"><div class="chart-wrap"><canvas id="r5" role="img" aria-label="RTM convergence">RTM</canvas></div><div class="card-label">Regression to Mean</div><div class="card-tag">extreme → average</div></div>
-    <div class="card"><div class="chart-wrap"><canvas id="r6" role="img" aria-label="Influential point">Leverage</canvas></div><div class="card-label">Outliers & Leverage</div><div class="card-tag">Cook's D · hᵢᵢ</div></div>
-    <div class="card"><div class="chart-wrap"><canvas id="r7" role="img" aria-label="Multiple regression">Multiple</canvas></div><div class="card-label">Multiple Linear Regression</div><div class="card-tag">Y = a + b₁X₁ + b₂X₂</div></div>
-    <div class="card"><div class="chart-wrap"><canvas id="r8" role="img" aria-label="Logistic sigmoid">Logistic</canvas></div><div class="card-label">Logistic Regression</div><div class="card-tag">0 or 1 · sigmoid</div></div>
-    <div class="card"><div class="chart-wrap"><canvas id="r9" role="img" aria-label="VIF multicollinearity">VIF</canvas></div><div class="card-label">Multicollinearity</div><div class="card-tag">VIF · corr matrix</div></div>
-    <div class="card"><div class="chart-wrap"><canvas id="r10" role="img" aria-label="Normality of errors">Errors</canvas></div><div class="card-label">Normality of Errors</div><div class="card-tag">e ~ N(0, σ²)</div></div>
-  </div>
-  <div class="formula">b = r · (sy/sx) <span class="c">← slope</span>&nbsp;&nbsp;&nbsp;a = ȳ − b·x̄ <span class="c">← intercept</span><br/>R² = 1 − SSR/SST <span class="c">← proportion explained</span></div>
-</div>
+  <div class="tree-panel">
+    <svg viewBox="0 0 1000 460" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="A feedforward neural network with an input layer of three nodes, a hidden layer of four nodes, and an output layer of two nodes, fully connected">
+      <g stroke="#4a4a5c" stroke-width="1.2" opacity="0.55">
+        <line x1="180" y1="110" x2="430" y2="90"></line>
+        <line x1="180" y1="110" x2="430" y2="185"></line>
+        <line x1="180" y1="110" x2="430" y2="280"></line>
+        <line x1="180" y1="110" x2="430" y2="375"></line>
+        <line x1="180" y1="230" x2="430" y2="90"></line>
+        <line x1="180" y1="230" x2="430" y2="185"></line>
+        <line x1="180" y1="230" x2="430" y2="280"></line>
+        <line x1="180" y1="230" x2="430" y2="375"></line>
+        <line x1="180" y1="350" x2="430" y2="90"></line>
+        <line x1="180" y1="350" x2="430" y2="185"></line>
+        <line x1="180" y1="350" x2="430" y2="280"></line>
+        <line x1="180" y1="350" x2="430" y2="375"></line>
+        <line x1="430" y1="90" x2="680" y2="140"></line>
+        <line x1="430" y1="90" x2="680" y2="330"></line>
+        <line x1="430" y1="185" x2="680" y2="140"></line>
+        <line x1="430" y1="185" x2="680" y2="330"></line>
+        <line x1="430" y1="280" x2="680" y2="140"></line>
+        <line x1="430" y1="280" x2="680" y2="330"></line>
+        <line x1="430" y1="375" x2="680" y2="140"></line>
+        <line x1="430" y1="375" x2="680" y2="330"></line>
+      </g>
+      <line x1="680" y1="140" x2="890" y2="235" stroke="#e8187a" stroke-width="2"></line>
+      <line x1="680" y1="330" x2="890" y2="235" stroke="#e8187a" stroke-width="2"></line>
 
-<div class="sec">
-  <div class="sec-head"><span class="sec-num">07</span><div class="sec-title">Bootstrap & Simulation</div><div class="sec-line"></div></div>
-  <p class="sec-desc">Estimating uncertainty without assumptions — using data itself as the population.</p>
-  <div class="grid">
-    <div class="card"><div class="chart-wrap"><canvas id="b1" role="img" aria-label="Bootstrap distribution">Bootstrap</canvas></div><div class="card-label">Bootstrap SE</div><div class="card-tag">resample · SD</div></div>
-    <div class="card"><div class="chart-wrap"><canvas id="b2" role="img" aria-label="Percentile CI">Percentile CI</canvas></div><div class="card-label">Bootstrap CI</div><div class="card-tag">2.5th · 97.5th %ile</div></div>
-    <div class="card"><div class="chart-wrap"><canvas id="b3" role="img" aria-label="Monte Carlo scatter">Monte Carlo</canvas></div><div class="card-label">Monte Carlo</div><div class="card-tag">simulate · estimate</div></div>
-    <div class="card"><div class="chart-wrap"><canvas id="b4" role="img" aria-label="Plug-in comparison">Plug-in</canvas></div><div class="card-label">Plug-in Principle</div><div class="card-tag">μ≈x̄ · σ≈s</div></div>
-  </div>
-</div>
+      <circle cx="180" cy="110" r="24" fill="#2a2735"></circle>
+      <circle cx="180" cy="230" r="24" fill="#2a2735"></circle>
+      <circle cx="180" cy="350" r="24" fill="#2a2735"></circle>
+      <circle cx="430" cy="90" r="22" fill="#e8187a" opacity="0.9"></circle>
+      <circle cx="430" cy="185" r="22" fill="#e8187a"></circle>
+      <circle cx="430" cy="280" r="22" fill="#e8187a" opacity="0.75"></circle>
+      <circle cx="430" cy="375" r="22" fill="#e8187a" opacity="0.9"></circle>
+      <circle cx="680" cy="140" r="22" fill="#e8187a" opacity="0.85"></circle>
+      <circle cx="680" cy="330" r="22" fill="#e8187a" opacity="0.6"></circle>
+      <circle cx="890" cy="235" r="26" fill="#190d26" stroke="#e8187a" stroke-width="3"></circle>
 
-<div class="sec">
-  <div class="sec-head"><span class="sec-num">08</span><div class="sec-title">Categorical Data Analysis</div><div class="sec-line"></div></div>
-  <p class="sec-desc">Analysing relationships between non-numeric variables using contingency tables and chi-square tests.</p>
-  <div class="grid">
-    <div class="card"><div class="chart-wrap"><canvas id="cat1" role="img" aria-label="Contingency table heatmap">Table</canvas></div><div class="card-label">Contingency Tables</div><div class="card-tag">joint · marginal</div></div>
-    <div class="card"><div class="chart-wrap"><canvas id="cat2" role="img" aria-label="Chi-square O vs E">Chi²</canvas></div><div class="card-label">Chi-Square Test</div><div class="card-tag">χ² = Σ(O−E)²/E</div></div>
-    <div class="card"><div class="chart-wrap"><canvas id="cat3" role="img" aria-label="Goodness of fit">GoF</canvas></div><div class="card-label">Goodness of Fit</div><div class="card-tag">observed vs claimed</div></div>
-    <div class="card"><div class="chart-wrap"><canvas id="cat4" role="img" aria-label="ANOVA group comparison">ANOVA</canvas></div><div class="card-label">ANOVA</div><div class="card-tag">F = MSB/MSW</div></div>
-    <div class="card"><div class="chart-wrap"><canvas id="cat5" role="img" aria-label="One-way ANOVA">One-Way</canvas></div><div class="card-label">One-Way ANOVA</div><div class="card-tag">1 factor · F-test</div></div>
-    <div class="card"><div class="chart-wrap"><canvas id="cat6" role="img" aria-label="Two-way ANOVA">Two-Way</canvas></div><div class="card-label">Two-Way ANOVA</div><div class="card-tag">2 factors · interaction</div></div>
-    <div class="card"><div class="chart-wrap"><canvas id="cat9" role="img" aria-label="Repeated Measures ANOVA">Repeated</canvas></div><div class="card-label">Repeated Measures ANOVA</div><div class="card-tag">same subject · time</div></div>
-    <div class="card"><div class="chart-wrap"><canvas id="cat10" role="img" aria-label="Mixed Model ANOVA">Mixed</canvas></div><div class="card-label">Mixed Model ANOVA</div><div class="card-tag">between + within</div></div>
-    <div class="card"><div class="chart-wrap"><canvas id="cat7" role="img" aria-label="Post-hoc Tukey">Post-hoc</canvas></div><div class="card-label">Post-Hoc Test</div><div class="card-tag">Tukey's HSD</div></div>
-    <div class="card"><div class="chart-wrap"><canvas id="cat8" role="img" aria-label="Homogeneity test">Homog.</canvas></div><div class="card-label">Chi-Square Homogeneity</div><div class="card-tag">multiple populations</div></div>
-  </div>
-  <div class="formula">χ² = Σ(O−E)²/E <span class="c">← E = row×col/N</span>&nbsp;&nbsp;&nbsp;F = MSB/MSW <span class="c">← between/within</span></div>
-</div>
-
-<div class="sec">
-  <div class="sec-head"><span class="sec-num">09</span><div class="sec-title">Research Methods</div><div class="sec-line"></div></div>
-  <p class="sec-desc">Designing rigorous experiments and avoiding the pitfalls that make findings unreliable.</p>
-  <div class="wgrid">
-    <div class="wcard">
-      <div class="wcard-top"><div class="wcard-icon"><svg viewBox="0 0 24 24"><path d="M12 2L2 7l10 5 10-5-10-5M2 17l10 5 10-5M2 12l10 5 10-5"/></svg></div><div class="wcard-title">RCT Design</div></div>
-      <div class="wcard-desc">Random assignment eliminates confounding. Blind and double-blind variants control placebo effects.</div>
-      <div class="wcard-pills"><span class="pill">randomisation</span><span class="pill">control group</span><span class="pill">placebo</span><span class="pill">double blind</span></div>
-    </div>
-    <div class="wcard">
-      <div class="wcard-top"><div class="wcard-icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 8v4l3 3"/></svg></div><div class="wcard-title">Confounding</div></div>
-      <div class="wcard-desc">A third variable affecting both X and Y. Controlled via randomisation in experiments or regression in observational studies.</div>
-      <div class="wcard-pills"><span class="pill">X ← C → Y</span><span class="pill">third variable</span><span class="pill">adjustment</span></div>
-    </div>
-    <div class="wcard">
-      <div class="wcard-top"><div class="wcard-icon"><svg viewBox="0 0 24 24"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg></div><div class="wcard-title">Reproducibility</div></div>
-      <div class="wcard-desc">Data snooping, multiple testing fallacy, p-hacking, and publication bias — knowing them separates rigorous analysis from noise.</div>
-      <div class="wcard-pills"><span class="pill">p-hacking</span><span class="pill">Bonferroni</span><span class="pill">pre-registration</span></div>
+      <g font-family="Inter, sans-serif" font-size="12" fill="rgba(255,255,255,.55)" text-anchor="middle">
+        <text x="180" y="415">Input layer</text>
+        <text x="430" y="415">Hidden layer 1</text>
+        <text x="680" y="415">Hidden layer 2</text>
+        <text x="890" y="285">Output</text>
+      </g>
+    </svg>
+    <div class="tree-caption">A fully connected feedforward network — input passes forward, error flows backward</div>
+    <div class="tree-legend">
+      <span><i class="tdot node"></i>Input neuron</span>
+      <span><i class="tdot yes"></i>Hidden / active neuron</span>
+      <span><i class="tdot no"></i>Output neuron</span>
     </div>
   </div>
+
+  <div class="formula">Attention(Q,K,V) = <span class="k">softmax(QKᵀ / √dₖ) · V</span></div>
+</div>
+
+<!-- 06 GENERATIVE MODELS -->
+<div class="sec">
+  <div class="sec-head"><span class="sec-num">06</span><div class="sec-title">Generative Models</div><div class="sec-line"></div></div>
+  <p class="sec-desc">Networks that don't just recognize patterns but produce new data that follows them.</p>
+  <div class="grid">
+    <div class="card"><div class="chart-wrap"><canvas id="gn1" role="img" aria-label="Reconstruction error shrinking as an autoencoder trains">Autoenc.</canvas></div><div class="card-label">Autoencoders</div><div class="card-tag">encode → decode</div></div>
+    <div class="card"><div class="chart-wrap"><canvas id="gn2" role="img" aria-label="Latent points sampled from a smooth distribution">VAE</canvas></div><div class="card-label">Variational Autoencoders</div><div class="card-tag">latent distribution</div></div>
+    <div class="card"><div class="chart-wrap"><canvas id="gn3" role="img" aria-label="Generator loss decreasing over training">GAN-G</canvas></div><div class="card-label">GAN — Generator</div><div class="card-tag">fool the discriminator</div></div>
+    <div class="card"><div class="chart-wrap"><canvas id="gn4" role="img" aria-label="Discriminator loss oscillating during adversarial training">GAN-D</canvas></div><div class="card-label">GAN — Discriminator</div><div class="card-tag">real vs fake</div></div>
+    <div class="card"><div class="chart-wrap"><canvas id="gn5" role="img" aria-label="Clusters forming in a learned latent space">Latent</canvas></div><div class="card-label">Latent Space</div><div class="card-tag">compressed representation</div></div>
+    <div class="card"><div class="chart-wrap"><canvas id="gn6" role="img" aria-label="Noise gradually removed across denoising steps">Diffusion</canvas></div><div class="card-label">Diffusion Models</div><div class="card-tag">noise → signal</div></div>
+  </div>
+  <div class="formula">min<span class="c">_G</span> max<span class="c">_D</span> <span class="k">E[log D(x)] + E[log(1 − D(G(z)))]</span></div>
+</div>
+
+<!-- 07 TRAINING & EVALUATION -->
+<div class="sec">
+  <div class="sec-head"><span class="sec-num">07</span><div class="sec-title">Model Training &amp; Evaluation</div><div class="sec-line"></div></div>
+  <p class="sec-desc">Knowing when a network has actually learned something useful — and stopping before it starts memorizing noise.</p>
+  <div class="grid">
+    <div class="card"><div class="chart-wrap"><canvas id="tr1" role="img" aria-label="Data split into train validation and test bars">Split</canvas></div><div class="card-label">Train / Val / Test Split</div><div class="card-tag">70 · 15 · 15</div></div>
+    <div class="card"><div class="chart-wrap"><canvas id="tr2" role="img" aria-label="Loss decreasing across training epochs in mini-batches">Epochs</canvas></div><div class="card-label">Epochs &amp; Batch Size</div><div class="card-tag">mini-batch training</div></div>
+    <div class="card"><div class="chart-wrap"><canvas id="tr3" role="img" aria-label="Validation loss stopping before it rises again">Early Stop</canvas></div><div class="card-label">Early Stopping</div><div class="card-tag">min val loss</div></div>
+    <div class="card"><div class="chart-wrap"><canvas id="tr4" role="img" aria-label="Training and validation curves converging">Curves</canvas></div><div class="card-label">Learning Curves</div><div class="card-tag">train vs val</div></div>
+    <div class="card"><div class="chart-wrap"><canvas id="tr5" role="img" aria-label="An image transformed by flips rotations and crops">Augment</canvas></div><div class="card-label">Data Augmentation</div><div class="card-tag">flip · rotate · crop</div></div>
+    <div class="card"><div class="chart-wrap"><canvas id="tr6" role="img" aria-label="Grid search points with the best configuration highlighted">Tuning</canvas></div><div class="card-label">Hyperparameter Tuning</div><div class="card-tag">lr · batch · layers</div></div>
+  </div>
+  <div class="formula">stop when <span class="k">val_loss</span> stops improving <span class="c">← patience epochs</span></div>
+</div>
+
+<!-- 08 FRAMEWORKS & DEPLOYMENT -->
+<div class="sec">
+  <div class="sec-head"><span class="sec-num">08</span><div class="sec-title">Frameworks &amp; Deployment</div><div class="sec-line"></div></div>
+  <p class="sec-desc">Turning an architecture on paper into a trained, running model that serves real predictions.</p>
+  <div class="grid">
+    <div class="card"><div class="chart-wrap"><canvas id="fw1" role="img" aria-label="A computation graph of connected operations">TensorFlow</canvas></div><div class="card-label">TensorFlow</div><div class="card-tag">graph execution</div></div>
+    <div class="card"><div class="chart-wrap"><canvas id="fw2" role="img" aria-label="Stacked layers building a model quickly">Keras</canvas></div><div class="card-label">Keras</div><div class="card-tag">high-level API</div></div>
+    <div class="card"><div class="chart-wrap"><canvas id="fw3" role="img" aria-label="A dynamic computation graph built on the fly">PyTorch</canvas></div><div class="card-label">PyTorch</div><div class="card-tag">dynamic graph</div></div>
+  </div>
+  <div class="formula">.fit(X, y) <span class="c">→ train</span> · .predict(X) <span class="c">→ infer</span> · .save() <span class="c">→ deploy</span></div>
 </div>
 
 </div>
 
-<div style="max-width:900px;margin:40px auto 0;padding:0 5%;border-top:1px solid var(--border);"></div>
-<div style="max-width:900px;margin:0 auto;padding:24px 5% 8px;">
+<div style="max-width:900px;margin:40px auto 0;padding:20px 5% 0;border-top:1px solid var(--border);">
   <p style="font-size:.85rem;color:var(--text);margin:0;">That's a wrap — if you scrolled this far without skimming, you deserve a <span style="color:var(--pk); font-weight:700;">snack 🍪</span>.</p>
 </div>
-<div style="max-width:900px;margin:0 auto;padding:0 5% 32px;">
-  <a href="https://analyzewithrutuja.github.io/#portfolio" style="font-family:var(--mono);font-size:.8rem;color:var(--pk);text-decoration:none;">&larr; Back to portfolio</a>
-</div>
+
+<footer style="justify-content:flex-start;border-top:none;">
+  <a href="../index.html">&larr; Back to portfolio</a>
+</footer>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
 <script>
@@ -226,76 +253,95 @@ const base={responsive:true,maintainAspectRatio:false,animation:{duration:600},p
 function ln(id,data,fill=true){new Chart(document.getElementById(id),{type:'line',data:{labels:data.map((_,i)=>i),datasets:[{data,borderColor:PK,borderWidth:2,pointRadius:0,fill,backgroundColor:fill?PKA:false,tension:.4}]},options:{...base}})}
 function br(id,labels,data,colors){new Chart(document.getElementById(id),{type:'bar',data:{labels,datasets:[{data,backgroundColor:colors,borderRadius:4,borderSkipped:false}]},options:{...base}})}
 
-// ===== 01 Descriptive =====
-br('d1',['Mean','Med','Mode'],[70,65,68],[PK,PKA,PKB]);
-(()=>{const xs=[...Array(41).keys()],g=(s,a)=>xs.map(x=>a*Math.exp(-Math.pow((x-20)/s,2)/2)),wide=g(11,0.34),med=g(6,0.6),narrow=g(3,1);new Chart(document.getElementById('d2'),{type:'line',data:{labels:xs,datasets:[{data:wide,borderColor:PKB,borderWidth:1.5,pointRadius:0,fill:false,tension:.4},{data:med,borderColor:PKC,borderWidth:1.5,pointRadius:0,fill:false,tension:.4},{data:narrow,borderColor:PK,borderWidth:2,pointRadius:0,fill:true,backgroundColor:PKA,tension:.4}]},options:{...base,scales:{x:{display:false},y:{display:false,min:0,max:1.05}}}})})();
-(()=>{const b=[0.5,2,8,20,34,20,8,2,0.5];new Chart(document.getElementById('d3'),{type:'line',data:{labels:b.map((_,i)=>i),datasets:[{data:b,borderColor:PK,borderWidth:2,pointRadius:0,fill:true,backgroundColor:PKA,tension:.4},{data:b.map((v,i)=>i===6?v:null),type:'scatter',pointRadius:7,pointBackgroundColor:PK,pointBorderColor:'#fff',pointBorderWidth:2}]},options:{...base}})})();
-(()=>{const b=[0.4,1,2.5,6,12,20,26,20,12,6,2.5,1,0.4];const col=i=>{const d=Math.abs(i-6);return d<=1?PK:d<=2?PKC:d<=3?PKB:PKA;};br('d4',b.map((_,i)=>i),b,b.map((_,i)=>col(i)))})();
-(()=>{const l=[4,6,5,8,7,5,4],r=[1,2,5,12,8,3,1];new Chart(document.getElementById('d5'),{type:'line',data:{labels:l.map((_,i)=>i),datasets:[{data:l,borderColor:PK,borderWidth:2,pointRadius:0,fill:false,tension:.4},{data:r,borderColor:PKB,borderWidth:1.5,pointRadius:0,fill:false,tension:.4,borderDash:[3,3]}]},options:{...base}})})();
+/* ===== 01 Neural Network Fundamentals ===== */
+(()=>{new Chart(document.getElementById('nf1'),{type:'scatter',data:{datasets:[
+  {data:[{x:1,y:1.5},{x:1.5,y:3},{x:2.2,y:1},{x:1.3,y:2.3}],backgroundColor:PK,pointRadius:4},
+  {data:[{x:5,y:5},{x:5.5,y:6.2},{x:6,y:4.4},{x:5.2,y:6.8}],backgroundColor:PKA,pointRadius:4,pointBorderColor:PK,pointBorderWidth:1.2},
+  {data:[{x:0,y:0.5},{x:7,y:7}],type:'line',borderColor:'#1a1a1a',borderWidth:2,pointRadius:0,showLine:true}
+]},options:{...base,scales:{x:{display:false,min:0,max:7},y:{display:false,min:0,max:8}}}})})();
+(()=>{const x=[...Array(24).keys()].map(i=>i/3-4);const sig=x.map(v=>1/(1+Math.exp(-v)));const relu=x.map(v=>Math.max(0,v)/4+0.05);new Chart(document.getElementById('nf2'),{type:'line',data:{labels:x,datasets:[
+  {data:sig,borderColor:PK,borderWidth:2,pointRadius:0,fill:false,tension:.4},
+  {data:relu,borderColor:PKB,borderWidth:1.5,pointRadius:0,fill:false,tension:0}
+]},options:{...base}})})();
+br('nf3',['L1','L2','L3','out'],[3,5,7,9],[PKA,PKB,PK,PK]);
+ln('nf4',[9,7,5.4,4,2.9,2,1.4,1,0.7],false);
+br('nf5',['MSE','Cross-Ent'],[0.42,0.28],[PKB,PK]);
+ln('nf6',[8.5,6.6,5.1,4,3.2,2.6,2.2,1.9,1.8],false);
+(()=>{new Chart(document.getElementById('nf7'),{type:'bar',data:{labels:['L1','L2','L3','L4'],datasets:[{data:[4.2,4,4.3,3.9],backgroundColor:[PK,PKB,PK,PKB],borderRadius:4}]},options:{...base,scales:{x:{display:false},y:{display:false,min:0,max:6}}}})})();
 
-// ===== 02 Probability & Bayesian =====
-br('p1',['P(A)','P(B)','P(A∩B)'],[0.4,0.35,0.15],[PK,PKA,PKB]);
-(()=>{new Chart(document.getElementById('p2'),{type:'bubble',data:{datasets:[{data:[{x:2.4,y:3,r:17}],backgroundColor:'rgba(232,24,122,0.22)',borderColor:PK,borderWidth:1.5},{data:[{x:3.6,y:3,r:17}],backgroundColor:'rgba(0,0,0,0.05)',borderColor:'rgba(0,0,0,0.25)',borderWidth:1.5}]},options:{...base,scales:{x:{display:false,min:0,max:6},y:{display:false,min:0,max:6}}}})})();
-ln('p3',[1,2,4,9,14,17,16,15]);
-(()=>{new Chart(document.getElementById('bay2'),{type:'bar',data:{labels:['Informative','Uniform','Jeffreys'],datasets:[{data:[8,5,6],backgroundColor:[PK,PKB,PKA],borderRadius:4}]},options:{...base,scales:{x:{display:false},y:{display:false,min:0,max:10}}}})})();
-(()=>{const prior=[2,4,6,8,9,8,6,4,2],post=[1,2,5,10,16,14,9,4,1];new Chart(document.getElementById('bay3'),{type:'line',data:{labels:prior.map((_,i)=>i),datasets:[{data:prior,borderColor:PKB,borderWidth:1.5,pointRadius:0,fill:false,tension:.4,borderDash:[3,3]},{data:post,borderColor:PK,borderWidth:2,pointRadius:0,fill:true,backgroundColor:PKA,tension:.4}]},options:{...base}})})();
-(()=>{const like=[0.5,1,3,8,16,22,18,10,4,1.5,0.5];new Chart(document.getElementById('bay4'),{type:'line',data:{labels:like.map((_,i)=>i),datasets:[{data:like,borderColor:PK,borderWidth:2,pointRadius:0,fill:true,backgroundColor:PKA,tension:.4}]},options:{...base}})})();
-(()=>{new Chart(document.getElementById('bay5'),{type:'bar',data:{labels:['Freq','Bayes'],datasets:[{data:[7,9],backgroundColor:[PKA,PK],borderRadius:6,categoryPercentage:.5}]},options:{...base,scales:{x:{display:false},y:{display:false,min:0,max:10}}}})})();
-ln('p4',[1,0.65,0.42,0.28,0.18,0.11,0.07]);
+/* ===== 02 Optimization & Regularization ===== */
+(()=>{const x=[...Array(9).keys()];const sgd=[9,7.6,6.6,5.8,5.2,4.7,4.3,4,3.7];const adam=[9,5.8,3.6,2.2,1.4,0.9,0.6,0.45,0.35];new Chart(document.getElementById('op1'),{type:'line',data:{labels:x,datasets:[
+  {data:sgd,borderColor:PKB,borderWidth:1.5,pointRadius:0,fill:false,tension:.4},
+  {data:adam,borderColor:PK,borderWidth:2,pointRadius:0,fill:false,tension:.4}
+]},options:{...base}})})();
+(()=>{new Chart(document.getElementById('op2'),{type:'line',data:{labels:[...Array(9).keys()],datasets:[{data:[9,9,6,6,4,4,2.4,2.4,1.5],borderColor:PK,borderWidth:2,pointRadius:0,fill:false,stepped:true}]},options:{...base,scales:{x:{display:false},y:{display:false,min:0,max:10}}}})})();
+(()=>{new Chart(document.getElementById('op3'),{type:'scatter',data:{datasets:[
+  {data:[{x:1,y:1},{x:2,y:2},{x:3,y:1},{x:2,y:0}],backgroundColor:PK,pointRadius:5},
+  {data:[{x:1,y:2},{x:3,y:2},{x:0.5,y:1.4},{x:3.5,y:0.6}],backgroundColor:'rgba(0,0,0,0.12)',pointRadius:5,pointStyle:'crossRot'}
+]},options:{...base,scales:{x:{display:false,min:0,max:4},y:{display:false,min:0,max:3}}}})})();
+br('op4',['pre-norm','post-norm'],[7,3],[PKA,PK]);
+br('op5',['w1','w2','w3','w4'],[6,0,3.4,0.6],[PK,PKA,PKB,PKA]);
+(()=>{const g=[9,6.5,4.4,2.8,1.6,0.8,0.35,0.12];new Chart(document.getElementById('op6'),{type:'bar',data:{labels:g.map((_,i)=>i),datasets:[{data:g,backgroundColor:g.map((_,i)=>i<3?PK:i<5?PKB:PKA),borderRadius:3}]},options:{...base,scales:{x:{display:false},y:{display:false,min:0,max:10}}}})})();
 
-// ===== 03 Distributions =====
-(()=>{const b=[0.5,2,8,20,34,20,8,2,0.5];new Chart(document.getElementById('dist1'),{type:'line',data:{labels:b.map((_,i)=>i),datasets:[{data:b,borderColor:PK,borderWidth:2,pointRadius:0,fill:true,backgroundColor:PKA,tension:.4}]},options:{...base}})})();
-(()=>{const d=[1,8,28,56,70,56,28,8,1].map(v=>v/70*34);br('dist2',d.map((_,i)=>i),d,d.map((_,i)=>i===4?PK:PKA))})();
-(()=>{const d=[7,16,22,22,17,10,5,2,1];br('dist3',d.map((_,i)=>i),d,d.map((_,i)=>i===2?PK:PKA))})();
-(()=>{const d=[0.1,1,3,7,12,14,12,8,4,1.5,0.5];new Chart(document.getElementById('dist4'),{type:'line',data:{labels:d.map((_,i)=>i),datasets:[{data:d,borderColor:PK,borderWidth:2,pointRadius:0,fill:true,backgroundColor:PKA,tension:.4}]},options:{...base}})})();
-(()=>{const bins=[1,3,7,13,20,28,33,28,20,13,7,3,1],curve=[2,5,10,17,24,30,33,30,24,17,10,5,2];new Chart(document.getElementById('dist5'),{type:'bar',data:{labels:bins.map((_,i)=>i),datasets:[{data:bins,backgroundColor:PKA,borderColor:PKB,borderWidth:1,borderRadius:2,order:2},{type:'line',data:curve,borderColor:PK,borderWidth:2,pointRadius:0,fill:false,tension:.45,order:1}]},options:{...base}})})();
+/* ===== 03 CNN ===== */
+(()=>{new Chart(document.getElementById('cn1'),{type:'bar',data:{labels:['1','2','3','4','5'],datasets:[{data:[3,7,9,7,3],backgroundColor:[PKA,PKB,PK,PKB,PKA],borderRadius:3}]},options:{...base,scales:{x:{display:false},y:{display:false,min:0,max:10}}}})})();
+(()=>{new Chart(document.getElementById('cn2'),{type:'bar',data:{labels:['a','b','c','d','e','f','g','h'],datasets:[{data:[4,7,3,8,5,2,6,9],backgroundColor:PKA,borderRadius:2,barPercentage:1,categoryPercentage:1},{data:[7,0,8,0,5,0,9,0],backgroundColor:PK,borderRadius:2,barPercentage:1,categoryPercentage:1}]},options:{...base,scales:{x:{display:false},y:{display:false,min:0,max:10}}}})})();
+br('cn3',['P=0','P=1','P=2'],[4,6,8],[PKA,PKB,PK]);
+(()=>{new Chart(document.getElementById('cn4'),{type:'bar',data:{labels:['ch1','ch2','ch3','ch4','ch5'],datasets:[{data:[6,8,5,9,7],backgroundColor:[PKA,PK,PKB,PK,PKA],borderRadius:4}]},options:{...base,scales:{x:{display:false},y:{display:false,min:0,max:10}}}})})();
+br('cn5',['LeNet','VGG','ResNet','Inception'],[5,7,9,8.5],[PKA,PKB,PK,PK]);
+br('cn6',['frozen','fine-tuned'],[8,3],[PKA,PK]);
+(()=>{new Chart(document.getElementById('cn7'),{type:'scatter',data:{datasets:[
+  {data:[{x:1,y:1},{x:1,y:4},{x:4,y:4},{x:4,y:1},{x:1,y:1}],type:'line',borderColor:PK,borderWidth:2,pointRadius:0,showLine:true,fill:false},
+  {data:[{x:4.5,y:2},{x:4.5,y:5.5},{x:6.5,y:5.5},{x:6.5,y:2},{x:4.5,y:2}],type:'line',borderColor:PKB,borderWidth:2,pointRadius:0,showLine:true,fill:false}
+]},options:{...base,scales:{x:{display:false,min:0,max:7},y:{display:false,min:0,max:6.5}}}})})();
 
-// ===== 04 Sampling & CLT =====
-(()=>{const w=[2,5,10,16,20,16,10,5,2],n=[1,2,6,18,30,18,6,2,1];new Chart(document.getElementById('s1'),{type:'line',data:{labels:w.map((_,i)=>i),datasets:[{data:w,borderColor:PKB,borderWidth:1.5,pointRadius:0,fill:false,tension:.4,borderDash:[3,3]},{data:n,borderColor:PK,borderWidth:2,pointRadius:0,fill:true,backgroundColor:PKA,tension:.4}]},options:{...base}})})();
-ln('s2',[50,35,25,18,14,11,9,7,6],true);
-(()=>{const d=[0.92,0.18,0.61,0.38,0.57,0.45,0.53,0.485,0.515,0.498,0.502,0.5],t=d.map(()=>0.5);new Chart(document.getElementById('s3'),{type:'line',data:{labels:d.map((_,i)=>i),datasets:[{data:t,borderColor:PKB,borderWidth:1.5,pointRadius:0,fill:false,borderDash:[4,3]},{data:d,borderColor:PK,borderWidth:2,pointRadius:0,fill:false,tension:.3}]},options:{...base,scales:{x:{display:false},y:{display:false,min:0,max:1}}}})})();
-(()=>{const pop=[{x:0.8,y:4.5},{x:1.6,y:2.1},{x:2.2,y:5},{x:1.1,y:3.2},{x:2.8,y:1.5},{x:3.4,y:4.2},{x:0.6,y:1.8},{x:2,y:3.6},{x:3.1,y:2.8},{x:1.4,y:5.2},{x:3.7,y:3.4},{x:0.9,y:2.6},{x:2.6,y:4.7},{x:1.9,y:1.2},{x:3.3,y:5.3}],samp=[{x:5,y:2},{x:5,y:3},{x:5,y:4}];new Chart(document.getElementById('s4'),{type:'scatter',data:{datasets:[{data:pop,backgroundColor:PKA,pointRadius:3.5},{data:samp,backgroundColor:PK,pointRadius:5,pointBorderColor:'#fff',pointBorderWidth:1}]},options:{...base,scales:{x:{display:false,min:0,max:6},y:{display:false,min:0,max:6.5}}}})})();
-(()=>{const x=[...Array(10).keys()],bias=[9,6,4.2,2.9,2,1.4,1,0.75,0.6,0.5],vari=[0.5,0.7,1,1.5,2.2,3.1,4.2,5.5,7,8.7],tot=bias.map((b,i)=>b+vari[i]);new Chart(document.getElementById('s5'),{type:'line',data:{labels:x,datasets:[{data:tot,borderColor:'#1a1a1a',borderWidth:2,pointRadius:0,fill:false,tension:.4},{data:bias,borderColor:PKC,borderWidth:1.5,pointRadius:0,fill:false,tension:.4},{data:vari,borderColor:PK,borderWidth:1.5,pointRadius:0,fill:false,tension:.4}]},options:{...base,scales:{x:{display:false},y:{display:false,min:0,max:11}}}})})();
+/* ===== 04 RNN / Sequence Models ===== */
+(()=>{new Chart(document.getElementById('rn1'),{type:'line',data:{labels:[...Array(8).keys()],datasets:[{data:[2,3.5,3,4.5,4,5.5,5,6.5],borderColor:PK,borderWidth:2,pointRadius:3,pointBackgroundColor:PK,fill:false,tension:.3}]},options:{...base}})})();
+br('rn2',['forget','input','output'],[0.3,0.8,0.6],[PKA,PK,PKB]);
+br('rn3',['reset','update'],[0.45,0.75],[PKB,PK]);
+(()=>{new Chart(document.getElementById('rn4'),{type:'line',data:{labels:[...Array(8).keys()],datasets:[
+  {data:[1,2,2.6,3.4,4,4.8,5.4,6],borderColor:PK,borderWidth:2,pointRadius:0,fill:false,tension:.3},
+  {data:[6,5.2,4.6,3.8,3.2,2.4,1.8,1],borderColor:PKB,borderWidth:1.5,pointRadius:0,fill:false,tension:.3}
+]},options:{...base}})})();
+br('rn5',['encoder','context','decoder'],[7,9,7],[PKB,PK,PKB]);
+(()=>{const actual=[3,4,3.6,5,4.6,6,5.6,7],pred=[3.2,3.8,3.9,4.7,4.9,5.7,5.9,6.7];new Chart(document.getElementById('rn6'),{type:'line',data:{labels:actual.map((_,i)=>i),datasets:[
+  {data:actual,borderColor:PKB,borderWidth:1.5,pointRadius:0,fill:false,tension:.3},
+  {data:pred,borderColor:PK,borderWidth:2,pointRadius:0,fill:false,tension:.3,borderDash:[4,3]}
+]},options:{...base}})})();
 
-// ===== 05 Inferential =====
-(()=>{new Chart(document.getElementById('i1'),{type:'bar',data:{labels:['Low','','Mid','','High'],datasets:[{data:[null,3,5,3,null],backgroundColor:PKA,borderColor:PK,borderWidth:1.5,borderRadius:4}]},options:{...base,indexAxis:'y'}})})();
-(()=>{const b=[0.5,1.5,4,10,18,24,18,10,4,1.5,0.5];br('i2',b.map((_,i)=>i),b,b.map((_,i)=>i>=8?PK:PKA))})();
-(()=>{const b=[0.5,1.5,4,10,18,24,18,10,4,1.5,0.5];new Chart(document.getElementById('i3a'),{type:'line',data:{labels:b.map((_,i)=>i),datasets:[{data:b,borderColor:PK,borderWidth:2,pointRadius:0,fill:true,backgroundColor:PKA,tension:.4},{data:b.map((v,i)=>i>=8?v:null),borderColor:PK,borderWidth:0,fill:true,backgroundColor:PKB,tension:.4}]},options:{...base}})})();
-(()=>{new Chart(document.getElementById('i3b'),{type:'bar',data:{labels:['G1','G2'],datasets:[{data:[72,65],backgroundColor:[PK,PKA],borderRadius:6,categoryPercentage:.5}]},options:{...base,scales:{x:{display:false},y:{display:false,min:55,max:80}}}})})();
-(()=>{new Chart(document.getElementById('i3c'),{type:'scatter',data:{datasets:[{data:[{x:1,y:80},{x:2,y:75},{x:3,y:90},{x:4,y:85}],backgroundColor:PKB,pointRadius:5,pointBorderColor:PK,pointBorderWidth:1.5},{data:[{x:1,y:74},{x:2,y:68},{x:3,y:83},{x:4,y:77}],backgroundColor:PK,pointRadius:5}]},options:{...base,scales:{x:{display:false,min:0,max:5},y:{display:false,min:60,max:95}}}})})();
-(()=>{new Chart(document.getElementById('i4'),{type:'bar',data:{labels:['G1','G2'],datasets:[{data:[72,68],backgroundColor:[PK,PKA],borderRadius:6,categoryPercentage:.5}]},options:{...base,scales:{x:{display:false},y:{display:false,min:60,max:78}}}})})();
-(()=>{new Chart(document.getElementById('i5'),{type:'scatter',data:{datasets:[{data:[{x:1,y:1.5},{x:4.5,y:1.5}],type:'line',borderColor:PK,borderWidth:2.5,pointRadius:6,pointBackgroundColor:PK,showLine:true},{data:[{x:1,y:2.5},{x:3.2,y:2.5}],type:'line',borderColor:PKB,borderWidth:2,pointRadius:5,pointBackgroundColor:PKB,showLine:true}]},options:{...base,scales:{x:{display:false,min:0,max:6},y:{display:false,min:0,max:4}}}})})();
-(()=>{new Chart(document.getElementById('i6'),{type:'scatter',data:{datasets:[{data:[{x:1,y:80},{x:2,y:75},{x:3,y:90},{x:4,y:85},{x:5,y:70}],backgroundColor:PKA,pointRadius:5,pointBorderColor:PK,pointBorderWidth:1.5},{data:[{x:1,y:75},{x:2,y:70},{x:3,y:85},{x:4,y:79},{x:5,y:66}],backgroundColor:PK,pointRadius:5}]},options:{...base,scales:{x:{display:false,min:0,max:6},y:{display:false,min:60,max:95}}}})})();
+/* ===== 05 Attention & Transformers ===== */
+br('at1',['t1','t2','t3','t4','t5'],[2,3,9,4,2],[PKA,PKA,PK,PKB,PKA]);
+(()=>{new Chart(document.getElementById('at2'),{type:'bar',data:{labels:['a','b','c','d','e','f','g','h','i'],datasets:[{data:[7,2,4,3,9,3,2,5,7],backgroundColor:(ctx)=>{const v=ctx.parsed?.y||ctx.raw;return v>7?PK:v>4?PKB:PKA},borderRadius:2,barPercentage:1,categoryPercentage:1}]},options:{...base,scales:{x:{display:false},y:{display:false,min:0,max:10}}}})})();
+br('at3',['h1','h2','h3','h4'],[6,9,4,7],[PKB,PK,PKA,PKB]);
+(()=>{const x=[...Array(30).keys()];const sin=x.map(i=>4+3*Math.sin(i/2.2));new Chart(document.getElementById('at4'),{type:'line',data:{labels:x,datasets:[{data:sin,borderColor:PK,borderWidth:2,pointRadius:0,fill:false,tension:.4}]},options:{...base}})})();
+br('at5',['enc 1','enc 2','dec 1','dec 2'],[6,7,6.5,8],[PKA,PKB,PKB,PK]);
+br('at6',['encoder out','decoder in'],[8,8],[PKB,PK]);
 
-// ===== 06 Correlation & Regression =====
-(()=>{new Chart(document.getElementById('r1'),{type:'scatter',data:{datasets:[{data:[{x:1,y:2},{x:2,y:3.5},{x:3,y:4.2},{x:4,y:5.5},{x:5,y:6.2},{x:2.5,y:3.2},{x:3.5,y:4.8}],backgroundColor:PK,pointRadius:4}]},options:{...base,scales:{x:{display:false,min:0,max:6},y:{display:false,min:0,max:8}}}})})();
-(()=>{new Chart(document.getElementById('r2'),{type:'scatter',data:{datasets:[{data:[{x:1,y:2},{x:2,y:3.5},{x:3,y:4.2},{x:4,y:5.5},{x:5,y:6.2}],backgroundColor:PKA,pointRadius:4,pointBorderColor:PK,pointBorderWidth:1.5},{data:[{x:0,y:1},{x:6,y:7}],type:'line',borderColor:PK,borderWidth:2,pointRadius:0,showLine:true}]},options:{...base,scales:{x:{display:false,min:0,max:6},y:{display:false,min:0,max:8}}}})})();
-(()=>{new Chart(document.getElementById('r3'),{type:'scatter',data:{datasets:[{data:[{x:1,y:3},{x:2,y:-2},{x:3,y:1.5},{x:4,y:-1},{x:5,y:2},{x:6,y:-2.5}],backgroundColor:PK,pointRadius:4},{data:[{x:0,y:0},{x:7,y:0}],type:'line',borderColor:PKB,borderWidth:1.5,pointRadius:0,showLine:true,borderDash:[4,3]}]},options:{...base,scales:{x:{display:false,min:0,max:7},y:{display:false,min:-5,max:5}}}})})();
-(()=>{new Chart(document.getElementById('r4'),{type:'bar',data:{labels:[''],datasets:[{data:[0.82],backgroundColor:PK,borderRadius:4,borderSkipped:false,categoryPercentage:.4},{data:[0.18],backgroundColor:PKA,borderRadius:0}]},options:{...base,indexAxis:'y',scales:{x:{display:false,stacked:true,max:1},y:{display:false,stacked:true}}}})})();
-ln('r5',[8,6.8,5.8,5.2,4.8,4.6,4.5],false);
-(()=>{new Chart(document.getElementById('r6'),{type:'scatter',data:{datasets:[{data:[{x:2,y:4},{x:3,y:5.5},{x:4,y:6},{x:5,y:7}],backgroundColor:PKA,pointRadius:4,pointBorderColor:PK,pointBorderWidth:1},{data:[{x:13,y:3}],backgroundColor:PK,pointRadius:9,pointStyle:'star'},{data:[{x:0,y:2.5},{x:8,y:8}],type:'line',borderColor:PKA,borderWidth:1.5,pointRadius:0,showLine:true,borderDash:[3,3]},{data:[{x:0,y:3},{x:14,y:3.3}],type:'line',borderColor:PK,borderWidth:2,pointRadius:0,showLine:true}]},options:{...base,scales:{x:{display:false,min:0,max:15},y:{display:false,min:0,max:10}}}})})();
-(()=>{new Chart(document.getElementById('r7'),{type:'bar',data:{labels:['X₁','X₂','X₃'],datasets:[{data:[0.6,0.3,0.45],backgroundColor:[PK,PKB,PKA],borderRadius:4}]},options:{...base,scales:{x:{display:false},y:{display:false,min:0,max:0.8}}}})})();
-(()=>{const x=[...Array(30).keys()].map(i=>i/3);const sig=x.map(v=>1/(1+Math.exp(-(v-4.5))));new Chart(document.getElementById('r8'),{type:'line',data:{labels:x,datasets:[{data:sig,borderColor:PK,borderWidth:2,pointRadius:0,fill:true,backgroundColor:PKA,tension:.4}]},options:{...base}})})();
-br('r9',['X₁','X₂','X₃'],[1.2,8.4,2.1],[PKA,PK,PKA]);
-(()=>{const b=[0.5,2,8,20,34,20,8,2,0.5];new Chart(document.getElementById('r10'),{type:'line',data:{labels:b.map((_,i)=>i),datasets:[{data:b,borderColor:PK,borderWidth:2,pointRadius:0,fill:true,backgroundColor:PKA,tension:.4}]},options:{...base}})})();
+/* ===== 06 Generative Models ===== */
+ln('gn1',[8,5.5,3.6,2.3,1.4,0.8,0.4],false);
+(()=>{const pts=[];for(let i=0;i<24;i++){pts.push({x:3.5+Math.cos(i)*1.6+Math.random()*0.4,y:3.5+Math.sin(i*1.3)*1.4+Math.random()*0.4})}new Chart(document.getElementById('gn2'),{type:'scatter',data:{datasets:[{data:pts,backgroundColor:PKA,pointRadius:3},{data:[{x:3.5,y:3.5}],backgroundColor:PK,pointRadius:6,pointStyle:'star'}]},options:{...base,scales:{x:{display:false,min:0,max:7},y:{display:false,min:0,max:7}}}})})();
+ln('gn3',[9,7.5,6.4,5.4,4.6,4,3.5,3.1],false);
+(()=>{new Chart(document.getElementById('gn4'),{type:'line',data:{labels:[...Array(8).keys()],datasets:[{data:[5,6.4,5.2,6.8,5.6,7,5.8,6.2],borderColor:PK,borderWidth:2,pointRadius:0,fill:false,tension:.4}]},options:{...base,scales:{x:{display:false},y:{display:false,min:0,max:9}}}})})();
+(()=>{new Chart(document.getElementById('gn5'),{type:'scatter',data:{datasets:[
+  {data:[{x:1,y:1.2},{x:1.4,y:1.8},{x:1.8,y:1}],backgroundColor:'rgba(232,24,122,0.75)',pointRadius:4},
+  {data:[{x:4.5,y:4.8},{x:5,y:5.4},{x:5.4,y:4.5}],backgroundColor:'rgba(232,24,122,0.35)',pointRadius:4},
+  {data:[{x:2,y:5.5},{x:2.4,y:6},{x:1.6,y:6.2}],backgroundColor:'rgba(0,0,0,0.25)',pointRadius:4}
+]},options:{...base,scales:{x:{display:false,min:0,max:7},y:{display:false,min:0,max:7}}}})})();
+(()=>{const n=[9,7.6,6,4.4,3,1.8,0.9,0.3];new Chart(document.getElementById('gn6'),{type:'bar',data:{labels:n.map((_,i)=>i),datasets:[{data:n,backgroundColor:n.map((_,i)=>i<3?PKA:i<6?PKB:PK),borderRadius:3}]},options:{...base,scales:{x:{display:false},y:{display:false,min:0,max:10}}}})})();
 
-// ===== 07 Bootstrap & Simulation =====
-(()=>{const d=[3,7,13,20,25,22,14,8,4];br('b1',d.map((_,i)=>i),d,d.map(()=>PK))})();
-(()=>{const d=[...Array(16).keys()].map(i=>i>2&&i<13?20:5);br('b2',d.map((_,i)=>i),d,d.map((v,i)=>i>2&&i<13?PK:PKA))})();
-(()=>{const p=[];for(let i=0;i<35;i++)p.push({x:Math.random()*10,y:Math.random()*10});new Chart(document.getElementById('b3'),{type:'scatter',data:{datasets:[{data:p.filter(d=>Math.pow(d.x-5,2)+Math.pow(d.y-5,2)<16),backgroundColor:PK,pointRadius:3},{data:p.filter(d=>Math.pow(d.x-5,2)+Math.pow(d.y-5,2)>=16),backgroundColor:PKA,pointRadius:2}]},options:{...base,scales:{x:{display:false,min:0,max:10},y:{display:false,min:0,max:10}}}})})();
-br('b4',['σ','s','p','p̂'],[8,7.8,6,6.1],[PKA,PK,PKA,PK]);
+/* ===== 07 Training & Evaluation ===== */
+(()=>{new Chart(document.getElementById('tr1'),{type:'bar',data:{labels:['train','val','test'],datasets:[{data:[70,15,15],backgroundColor:[PK,PKB,PKA],borderRadius:4}]},options:{...base,scales:{x:{display:false},y:{display:false,min:0,max:80}}}})})();
+ln('tr2',[9,6.6,5,3.8,3,2.4,2,1.7,1.5],false);
+(()=>{const val=[9,6.8,5.2,4.2,3.7,3.4,3.5,3.9,4.6];new Chart(document.getElementById('tr3'),{type:'line',data:{labels:val.map((_,i)=>i),datasets:[{data:val,borderColor:PK,borderWidth:2,pointRadius:val.map((_,i)=>i===5?6:0),pointBackgroundColor:'#1a1a1a',fill:false,tension:.35}]},options:{...base}})})();
+(()=>{const train=[7.5,5,3.4,2.2,1.5,1,0.7],val=[9,6.8,5.2,4.2,3.7,3.4,3.3];new Chart(document.getElementById('tr4'),{type:'line',data:{labels:train.map((_,i)=>i),datasets:[{data:val,borderColor:PK,borderWidth:2,pointRadius:0,fill:false,tension:.35},{data:train,borderColor:PKB,borderWidth:1.5,pointRadius:0,fill:false,tension:.35}]},options:{...base,scales:{x:{display:false},y:{display:false,min:0,max:10}}}})})();
+br('tr5',['orig','flip','rotate','crop'],[6,6,6,6],[PK,PKB,PKB,PKB]);
+(()=>{const pts=[];for(let i=0;i<20;i++)pts.push({x:Math.random()*7,y:Math.random()*7});new Chart(document.getElementById('tr6'),{type:'scatter',data:{datasets:[{data:pts,backgroundColor:PKA,pointRadius:3},{data:[{x:4.8,y:5.4}],backgroundColor:'#1a1a1a',pointRadius:7,pointStyle:'star'}]},options:{...base,scales:{x:{display:false,min:0,max:7},y:{display:false,min:0,max:7}}}})})();
 
-// ===== 08 Categorical & ANOVA =====
-br('cat1',['A·M','B·M','C·M','A·F','B·F','C·F'],[30,40,30,40,35,25],['rgba(232,24,122,.9)','rgba(232,24,122,.65)','rgba(232,24,122,.35)','rgba(232,24,122,.9)','rgba(232,24,122,.65)','rgba(232,24,122,.35)']);
-br('cat2',['O₁','E₁','O₂','E₂','O₃','E₃'],[40,35,60,62,25,28],[PK,PKA,PK,PKA,PK,PKA]);
-br('cat3',['R','O','Y','G','B','Br'],[10,22,12,18,28,10],[PKA,PK,PKA,PKA,PK,PKA]);
-(()=>{new Chart(document.getElementById('cat4'),{type:'bar',data:{labels:['A','B','C'],datasets:[{data:[70,85,65],backgroundColor:[PKA,PK,PKA],borderRadius:5},{data:[70,70,70],type:'line',borderColor:'rgba(0,0,0,0.2)',borderWidth:1,pointRadius:0,borderDash:[4,3]}]},options:{...base,scales:{x:{display:false},y:{display:false,min:50,max:100}}}})})();
-(()=>{new Chart(document.getElementById('cat5'),{type:'bar',data:{labels:['A','B','C'],datasets:[{data:[70,85,65],backgroundColor:[PKA,PK,PKA],borderRadius:5},{data:[70,70,70],type:'line',borderColor:'rgba(0,0,0,0.15)',borderWidth:1.5,pointRadius:0,borderDash:[4,3]}]},options:{...base,scales:{x:{display:false},y:{display:false,min:50,max:100}}}})})();
-(()=>{new Chart(document.getElementById('cat6'),{type:'bar',data:{labels:['A·M','A·F','B·M','B·F'],datasets:[{data:[80,72,65,60],backgroundColor:[PK,PKC,PKB,PKA],borderRadius:4}]},options:{...base,scales:{x:{display:false},y:{display:false,min:50,max:90}}}})})();
-(()=>{new Chart(document.getElementById('cat9'),{type:'line',data:{labels:[1,2,3,4,5,6],datasets:[{data:[60,65,70,74,77,79],borderColor:PK,borderWidth:2,pointRadius:3,pointBackgroundColor:PK,fill:false,tension:.3},{data:[58,56,55,57,56,55],borderColor:PKC,borderWidth:2,pointRadius:3,pointBackgroundColor:PKC,fill:false,tension:.3,borderDash:[3,3]}]},options:{...base,scales:{x:{display:false},y:{display:false,min:50,max:85}}}})})();
-(()=>{new Chart(document.getElementById('cat10'),{type:'bar',data:{labels:['G1·T1','G1·T2','G2·T1','G2·T2'],datasets:[{data:[70,75,65,72],backgroundColor:['rgba(232,24,122,0.9)','rgba(232,24,122,0.6)','rgba(232,24,122,0.4)','rgba(232,24,122,0.2)'],borderRadius:4}]},options:{...base,scales:{x:{display:false},y:{display:false,min:55,max:82}}}})})();
-(()=>{new Chart(document.getElementById('cat7'),{type:'bar',data:{labels:['A-B','A-C','B-C'],datasets:[{data:[15,5,10],backgroundColor:[PK,PKA,PKB],borderRadius:4}]},options:{...base,scales:{x:{display:false},y:{display:false,min:0,max:20}}}})})();
-(()=>{new Chart(document.getElementById('cat8'),{type:'bar',data:{labels:['Pop1','Pop2','Pop3'],datasets:[{data:[3,5,4],backgroundColor:PK,borderRadius:3,stack:'s'},{data:[4,3,5],backgroundColor:PKB,borderRadius:3,stack:'s'},{data:[2,4,3],backgroundColor:PKA,borderRadius:3,stack:'s'}]},options:{...base,scales:{x:{display:false,stacked:true},y:{display:false,stacked:true}}}})})();
+/* ===== 08 Frameworks & Deployment ===== */
+br('fw1',['op1','op2','op3','op4'],[5,7,4,8],[PKA,PKB,PKA,PK]);
+br('fw2',['layer1','layer2','layer3'],[5,7,9],[PKA,PKB,PK]);
+(()=>{new Chart(document.getElementById('fw3'),{type:'scatter',data:{datasets:[{data:[{x:1,y:2},{x:2,y:4},{x:3,y:3},{x:4,y:5.5}],type:'line',borderColor:PK,borderWidth:2,pointRadius:4,pointBackgroundColor:PK,fill:false,tension:.4}]},options:{...base,scales:{x:{display:false,min:0,max:5},y:{display:false,min:0,max:6}}}})})();
+
 </script>
 </body>
 </html>
