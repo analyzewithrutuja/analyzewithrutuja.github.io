@@ -34,7 +34,7 @@
 html{scroll-behavior:smooth}
 body{background:var(--bg);color:var(--text);font-family:var(--font);overflow-x:hidden}
 
-/* ── TOPNAV ── */
+/* -- TOPNAV -- */
 .topnav{
   display:flex;align-items:center;justify-content:space-between;
   padding:0 60px;height:70px;
@@ -66,7 +66,7 @@ body{background:var(--bg);color:var(--text);font-family:var(--font);overflow-x:h
 }
 .nav-cta:hover{opacity:.9;transform:translateY(-1px)}
 
-/* ── HERO ── */
+/* -- HERO -- */
 #hero{
   background:var(--white);
   min-height:calc(100vh - 70px);
@@ -166,7 +166,7 @@ h1.hero-heading .pink{color:var(--pink);font-weight:900}
   box-shadow:var(--shadow);
 }
 
-/* ── SECTIONS ── */
+/* -- SECTIONS -- */
 .section{padding:80px 60px;background:var(--bg)}
 .section.white{background:var(--white)}
 .section-eyebrow{
@@ -180,7 +180,7 @@ h1.hero-heading .pink{color:var(--pink);font-weight:900}
 .section-title span{color:var(--pink)}
 .section-sub{font-size:.85rem;color:var(--muted);line-height:1.75;max-width:500px;margin-bottom:50px}
 
-/* ── WHAT I DO ── */
+/* -- WHAT I DO -- */
 .services-grid{
   display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:24px;
 }
@@ -200,7 +200,7 @@ h1.hero-heading .pink{color:var(--pink);font-weight:900}
 .service-title{font-size:.95rem;font-weight:700;color:var(--navy);margin-bottom:8px}
 .service-desc{font-size:.78rem;color:var(--muted);line-height:1.7}
 
-/* ── PORTFOLIO ── */
+/* -- PORTFOLIO -- */
 .portfolio-filter{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:36px}
 .filter-btn{
   padding:7px 20px;border-radius:25px;border:1.5px solid var(--border);
@@ -234,7 +234,7 @@ h1.hero-heading .pink{color:var(--pink);font-weight:900}
 .portfolio-link{font-size:.72rem;color:var(--pink);text-decoration:none;font-weight:700}
 .portfolio-link:hover{color:var(--pink2)}
 
-/* ── RESUME ── */
+/* -- RESUME -- */
 .resume-tabs{
   display:flex;gap:0;border-bottom:2px solid var(--border);margin-bottom:40px;overflow-x:auto;
 }
@@ -285,7 +285,7 @@ h1.hero-heading .pink{color:var(--pink);font-weight:900}
 .skill-fill{height:100%;border-radius:3px;background:var(--pink-grad);width:0%;transition:width 1.3s cubic-bezier(.4,0,.2,1)}
 .skill-pct{font-size:.68rem;color:var(--muted);min-width:32px;text-align:right;font-weight:600}
 
-/* ── CONTACT ── */
+/* -- CONTACT -- */
 .contact-wrap{display:grid;grid-template-columns:1fr 1.4fr;gap:40px}
 .contact-info{background:var(--navy);border-radius:20px;padding:36px;color:white;position:relative;overflow:hidden}
 .contact-info::after{
@@ -320,7 +320,7 @@ textarea.form-input{resize:vertical;min-height:110px}
 }
 .btn-send:hover{opacity:.9;transform:translateY(-2px);box-shadow:0 6px 20px rgba(232,24,122,.4)}
 
-/* ── FOOTER ── */
+/* -- FOOTER -- */
 footer{
   background:var(--navy);color:rgba(255,255,255,.4);
   padding:28px 60px;display:flex;align-items:center;justify-content:space-between;
@@ -328,7 +328,7 @@ footer{
 }
 footer .pink{color:var(--pink)}
 
-/* ── ANIMATIONS ── */
+/* -- ANIMATIONS -- */
 .anim{opacity:0;transform:translateY(24px);transition:opacity .65s,transform .65s}
 .anim.in{opacity:1;transform:translateY(0)}
 @keyframes fadeUp{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
@@ -340,7 +340,7 @@ footer .pink{color:var(--pink)}
 .hero-content .hero-social-wrap{animation-delay:.6s}
 .hero-photo-area{opacity:0;animation:fadeUp .8s .4s forwards}
 
-/* ── RESPONSIVE ── */
+/* -- RESPONSIVE -- */
 @media(max-width:960px){
   .topnav{padding:0 24px}
   .nav-links{display:none}
@@ -410,9 +410,9 @@ footer .pink{color:var(--pink)}
       <div class="hero-social-group">
         <div class="hero-social-label">Best skill on</div>
         <div class="social-icons">
-          <div class="skill-icon" title="LinkedIn">💼</div>
-          <div class="skill-icon" title="Figma">🎨</div>
-          <div class="skill-icon" title="Framer">⚡</div>
+          <div class="skill-icon" title="LinkedIn">-</div>
+          <div class="skill-icon" title="Figma">-</div>
+          <div class="skill-icon" title="Framer">-</div>
         </div>
       </div>
       -->
@@ -539,7 +539,7 @@ footer .pink{color:var(--pink)}
       </div>
       <div class="service-title">Unstructured Data Analytics</div>
       <p class="service-desc" style="flex:1">Extracting insight from text, language, and other unstructured data — through NLP, sentiment analysis, topic modeling, and retrieval-based techniques.</p>
-      <!-- <a href="#portfolio" class="portfolio-link" style="display:block;margin-top:16px;font-size:.72rem;text-align:right;">View →</a> -->
+      <a href="Skills/analytics_of_unstructured_data.html" class="portfolio-link" style="display:block;margin-top:16px;font-size:.72rem;text-align:right;">View →</a>
     </div>
 
     <!-- 7. Power BI & Tableau -->
@@ -701,7 +701,7 @@ footer .pink{color:var(--pink)}
     <div class="portfolio-card anim" data-cat="optimization">
       <div class="portfolio-thumb" style="background:#f5f5f5;flex-direction:column;gap:6px;">
         <div class="thumb-cat">Optimization</div>
-        <span style="font-size:.72rem;color:#aaa;font-family:'Poppins',sans-serif;text-align:center;padding:0 20px">📸 Documentation in progress — image coming soon</span>
+        <span style="font-size:.72rem;color:#aaa;font-family:'Poppins',sans-serif;text-align:center;padding:0 20px">Documentation in progress — image coming soon</span>
       </div>
       <div class="portfolio-body">
         <div class="portfolio-title">Inventory Optimization using Computer Vision</div>
@@ -720,7 +720,7 @@ footer .pink{color:var(--pink)}
     <div class="portfolio-card anim" data-cat="visualization">
       <div class="portfolio-thumb" style="background:#f5f5f5;flex-direction:column;gap:6px;">
         <div class="thumb-cat">Visualization</div>
-        <span style="font-size:.72rem;color:#aaa;font-family:'Poppins',sans-serif;text-align:center;padding:0 20px">📸 Documentation in progress — image coming soon</span>
+        <span style="font-size:.72rem;color:#aaa;font-family:'Poppins',sans-serif;text-align:center;padding:0 20px">Documentation in progress — image coming soon</span>
       </div>
       <div class="portfolio-body">
         <div class="portfolio-title">Housing Eviction Trends in Arizona</div>
@@ -739,7 +739,7 @@ footer .pink{color:var(--pink)}
     <div class="portfolio-card anim" data-cat="analysis">
       <div class="portfolio-thumb" style="background:#f5f5f5;flex-direction:column;gap:6px;">
         <div class="thumb-cat">Data Analysis</div>
-        <span style="font-size:.72rem;color:#aaa;font-family:'Poppins',sans-serif;text-align:center;padding:0 20px">📸 Documentation in progress — image coming soon</span>
+        <span style="font-size:.72rem;color:#aaa;font-family:'Poppins',sans-serif;text-align:center;padding:0 20px">Documentation in progress — image coming soon</span>
       </div>
       <div class="portfolio-body">
         <div class="portfolio-title">Phoenix Crime Data Analytics</div>
@@ -758,7 +758,7 @@ footer .pink{color:var(--pink)}
     <div class="portfolio-card anim" data-cat="analysis">
       <div class="portfolio-thumb" style="background:#f5f5f5;flex-direction:column;gap:6px;">
         <div class="thumb-cat">Data Analysis</div>
-        <span style="font-size:.72rem;color:#aaa;font-family:'Poppins',sans-serif;text-align:center;padding:0 20px">📸 Documentation in progress — image coming soon</span>
+        <span style="font-size:.72rem;color:#aaa;font-family:'Poppins',sans-serif;text-align:center;padding:0 20px">Documentation in progress — image coming soon</span>
       </div>
       <div class="portfolio-body">
         <div class="portfolio-title">Fashion vs Fast Fashion</div>
@@ -791,7 +791,7 @@ footer .pink{color:var(--pink)}
   <div class="tab-pane active" id="tab-education">
     <div class="resume-grid">
       <div>
-        <div class="resume-block-title">🎓 <span>Education Quality</span></div>
+        <div class="resume-block-title">Education Quality</div>
         <div class="timeline">
           <div class="timeline-item anim">
             <span class="timeline-date">2024 — 2025</span>
@@ -807,7 +807,7 @@ footer .pink{color:var(--pink)}
         </div>
       </div>
       <div>
-        <div class="resume-block-title">💼 <span>Job Experience</span></div>
+        <div class="resume-block-title">Job Experience</div>
         <div class="timeline">
           <div class="timeline-item anim">
             <span class="timeline-date">2025 — 2026</span>
@@ -845,7 +845,7 @@ footer .pink{color:var(--pink)}
   <div class="tab-pane" id="tab-experience">
     <div class="skills-grid2">
       <div class="anim">
-        <div class="skill-group-title">Analytics &amp; BI</div>
+        <div class="skill-group-title">Analytics & BI</div>
         <div class="skill-item"><span class="skill-name">SQL</span><div class="skill-track"><div class="skill-fill" data-w="90"></div></div><span class="skill-pct">90%</span></div>
         <div class="skill-item"><span class="skill-name">Tableau</span><div class="skill-track"><div class="skill-fill" data-w="80"></div></div><span class="skill-pct">80%</span></div>
         <div class="skill-item"><span class="skill-name">Power BI</span><div class="skill-track"><div class="skill-fill" data-w="70"></div></div><span class="skill-pct">70%</span></div>
@@ -922,8 +922,8 @@ footer .pink{color:var(--pink)}
     <div class="contact-info anim">
       <h3>Drop a <span style="color: #e91e63;">Line</span></h3>
       <p>Open to conversations about data, models, or how I can add value to your team.</p>
-      <div class="c-detail"><div class="c-icon">✉️</div><div><span class="c-label">Email</span><span class="c-value">rpate226@asu.edu</span></div></div>
-      <div class="c-detail"><div class="c-icon">📍</div><div><span class="c-label">Address</span><span class="c-value">USA</span></div></div>
+      <div class="c-detail"><div class="c-icon">@</div><div><span class="c-label">Email</span><span class="c-value">rpate226@asu.edu</span></div></div>
+      <div class="c-detail"><div class="c-icon">•</div><div><span class="c-label">Address</span><span class="c-value">USA</span></div></div>
     </div>
       <form class="contact-form anim" action="https://formspree.io/f/xdawvpgz" method="POST">
         <div class="form-row"><label class="form-label">Your Name</label><input type="text" name="name" class="form-input" placeholder="Variable: Your_Name" required></div>
@@ -937,7 +937,7 @@ footer .pink{color:var(--pink)}
 
 <footer>
   <span>localhost:Rutuja</span>
-  <span style="color:rgba(255,255,255,.25)">Made with ❤️ and excessive amounts of <span class="pink">coffee.</span></span>
+  <span style="color:rgba(255,255,255,.25)">Made with excessive amounts of <span class="pink">coffee.</span></span>
   <span>Console.log("Hire me!")</span>
 </footer>
 

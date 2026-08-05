@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Analytics of Unstructured Data | Rutuja Patel</title>
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0%25' y1='0%25' x2='100%25' y2='100%25'%3E%3Cstop offset='0%25' stop-color='%23e8187a'/%3E%3Cstop offset='100%25' stop-color='%23f9004d'/%3E%3C/linearGradient%3E%3C/defs%3E%3Ccircle cx='32' cy='32' r='32' fill='url(%23g)'/%3E%3Ctext x='32' y='42' font-family='Poppins, Arial, sans-serif' font-weight='800' font-size='26' fill='white' text-anchor='middle'%3ERP%3C/text%3E%3C/svg%3E">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet"/>
+<style>
+:root{--pk:#e8187a;--pka:rgba(232,24,122,.08);--pkb:rgba(232,24,122,.25);--pkc:rgba(232,24,122,.5);--bg:#f8f7f5;--bg2:#ffffff;--bg3:#f2f1ef;--border:rgba(0,0,0,0.08);--border2:rgba(232,24,122,.25);--text:#1a1a1a;--muted:#6b6b6b;--dim:#aaaaaa;--navy:#190d26;--mono:'JetBrains Mono',monospace;--sans:'Inter',sans-serif;--r:16px;--rl:22px}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--text);font-family:var(--sans);font-size:15px;line-height:1.7}
+.backlink{display:block;max-width:900px;margin:0 auto;padding:24px 5% 0;font-family:var(--mono);font-size:.72rem}
+.backlink a{color:var(--pk);text-decoration:none}
+.backlink a:hover{text-decoration:underline}
+.hero{max-width:900px;margin:0 auto;padding:24px 5% 32px;text-align:center}
+.hero h1{font-size:clamp(1.6rem,4vw,2.4rem);font-weight:700;line-height:1.15;letter-spacing:-.025em;color:var(--text);margin-bottom:8px}
+.hero-sub{font-size:.95rem;color:var(--muted);max-width:480px;margin:0 auto 40px}
+.page{max-width:900px;margin:0 auto;padding:32px 5% 80px}
+.sec{margin-bottom:56px}
+.sec-head{display:flex;align-items:center;gap:14px;margin-bottom:8px}
+.sec-num{font-family:var(--mono);font-size:.68rem;color:var(--pk);font-weight:500}
+.sec-title{font-size:1.1rem;font-weight:700;color:var(--text);letter-spacing:-.01em}
+.sec-line{flex:1;height:1px;background:var(--border)}
+.sec-desc{font-size:.83rem;color:var(--muted);margin-bottom:20px;padding-left:42px}
+.formula{background:var(--bg3);border:1px solid var(--border);border-left:3px solid var(--pk);border-radius:0 var(--r) var(--r) 0;padding:12px 16px;font-family:var(--mono);font-size:.75rem;color:#555;margin:16px 0 0;line-height:2}
+.formula .c{color:var(--dim)}
+.formula .k{color:var(--pk)}
+
+.ex-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:12px}
+.ex-card{background:var(--bg2);border:1px solid var(--border);border-radius:16px;padding:16px;transition:border-color .2s,box-shadow .2s}
+.ex-card:hover{border-color:var(--pkb);box-shadow:0 4px 20px rgba(232,24,122,.08)}
+.ex-label{font-size:12.5px;font-weight:600;color:var(--text);margin-bottom:10px}
+.ex-line{display:flex;align-items:center;gap:8px;font-family:var(--mono);font-size:12px;flex-wrap:wrap}
+.ex-multiline{font-family:var(--mono);font-size:11.5px;line-height:1.8}
+.ex-in{color:var(--muted)}
+.ex-arrow{color:var(--pk)}
+.ex-out{color:var(--pk);font-weight:600}
+.ex-chip{background:var(--pka);color:var(--pk);border-radius:4px;padding:1px 5px;margin:0 1px}
+.ex-pill{background:var(--pka);color:var(--pk);border-radius:20px;padding:2px 9px;font-weight:600}
+.chip-row{display:flex;flex-wrap:wrap;gap:6px;margin-top:8px}
+.chip{background:var(--pka);color:var(--pk);border:1px solid var(--pkb);border-radius:20px;padding:3px 9px;font-family:var(--mono);font-size:11px}
+
+.tag-box{background:var(--bg3);border:1px solid var(--border);border-radius:16px;padding:18px 20px}
+.tag-list{display:flex;flex-wrap:wrap;gap:8px}
+.tag-pill{font-size:11.5px;color:var(--pk);background:var(--pka);border:1px solid var(--pkb);border-radius:20px;padding:5px 12px;font-family:var(--mono)}
+
+.tree-panel{background:var(--navy);border-radius:var(--rl);padding:28px clamp(8px,3vw,32px) 18px;margin:20px 0}
+.tree-panel svg{display:block;width:100%;height:auto}
+.tree-caption{text-align:center;font-size:.75rem;color:rgba(255,255,255,.45);font-family:var(--mono);margin-top:8px}
+.tree-legend{display:flex;flex-wrap:wrap;justify-content:center;gap:20px;padding:16px 6px 4px;font-size:.7rem;color:rgba(255,255,255,.5);font-family:var(--mono)}
+.tree-legend span{display:inline-flex;align-items:center;gap:6px}
+.tdot{width:10px;height:10px;border-radius:50%;display:inline-block;flex:none}
+.tdot.node{background:#3a3a46}
+.tdot.yes{background:var(--pk)}
+.tdot.no{background:transparent;border:2px solid var(--pk)}
+
+footer{border-top:1px solid var(--border);padding:28px 5%;display:flex;align-items:center;justify-content:space-between;font-family:var(--mono);font-size:.7rem;color:var(--dim);max-width:900px;margin:0 auto}
+footer a{color:var(--pk);text-decoration:none}
+@media(max-width:600px){.ex-grid{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+
+<div class="backlink"><a href="../index.html#features">&larr; Back to portfolio</a></div>
+
+<div class="hero">
+  <p style="font-family:var(--mono);font-size:.68rem;letter-spacing:.14em;text-transform:uppercase;color:var(--pk);margin-bottom:14px;font-weight:500">Focus: Natural Language Processing</p>
+  <h1>Analytics of Unstructured Data</h1>
+  <p class="hero-sub">From raw text to meaning — the pipeline that lets machines read, structure, and generate human language.</p>
+</div>
+
+<div class="page">
+
+<!-- 00 ROADMAP -->
+<div class="sec">
+  <div class="sec-head"><span class="sec-num">00</span><div class="sec-title">Roadmap of NLP</div><div class="sec-line"></div></div>
+  <p class="sec-desc">Every level below builds on the one beneath it — from raw text cleanup to transformer-based language models, feeding into Machine Learning and Deep Learning.</p>
+
+  <div class="tree-panel">
+    <svg viewBox="0 0 1000 780" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="A stepped pyramid roadmap of NLP, from Level 1 text preprocessing at the base, through vectorization, embeddings, ANN fundamentals, sequence models, up to Transformers and BERT at the top, feeding into Machine Learning and Deep Learning">
+      <g font-family="JetBrains Mono, monospace" font-size="13" fill="rgba(255,255,255,.55)">
+        <line x1="700" y1="40" x2="760" y2="40" stroke="rgba(255,255,255,.35)" stroke-width="1.5"></line>
+        <line x1="760" y1="40" x2="760" y2="20" stroke="rgba(255,255,255,.35)" stroke-width="1.5"></line>
+        <line x1="760" y1="60" x2="760" y2="40" stroke="rgba(255,255,255,.35)" stroke-width="1.5"></line>
+        <text x="770" y="24">→ Machine Learning</text>
+        <text x="770" y="64">→ Deep Learning</text>
+      </g>
+      <rect x="400" y="84" width="200" height="56" rx="10" fill="none" stroke="#5fd97a" stroke-width="2"></rect>
+      <text x="500" y="118" text-anchor="middle" font-family="Inter, sans-serif" font-weight="700" font-size="16" fill="#5fd97a">BERT</text>
+      <rect x="360" y="156" width="280" height="56" rx="10" fill="none" stroke="#5fd97a" stroke-width="2"></rect>
+      <text x="500" y="190" text-anchor="middle" font-family="Inter, sans-serif" font-weight="700" font-size="16" fill="#5fd97a">Transformers</text>
+      <g font-family="JetBrains Mono, monospace" font-size="12" fill="#5fd97a">
+        <path d="M 645 100 Q 675 100 675 130 Q 675 160 705 160" fill="none" stroke="#5fd97a" stroke-width="1.3" opacity="0.7"></path>
+        <text x="712" y="164">Hugging Face</text>
+      </g>
+      <rect x="330" y="228" width="340" height="56" rx="10" fill="none" stroke="#f2994a" stroke-width="2"></rect>
+      <text x="500" y="256" text-anchor="middle" font-family="Inter, sans-serif" font-weight="700" font-size="15" fill="#f2994a">RNN · LSTM · Attention</text>
+      <g font-family="JetBrains Mono, monospace" font-size="12" fill="rgba(242,153,74,.75)">
+        <line x1="690" y1="256" x2="730" y2="256" stroke="rgba(242,153,74,.5)" stroke-width="1.3"></line>
+        <text x="748" y="260">TensorFlow · PyTorch</text>
+      </g>
+      <rect x="300" y="300" width="400" height="56" rx="10" fill="none" stroke="#f2c94c" stroke-width="2"></rect>
+      <text x="500" y="334" text-anchor="middle" font-family="Inter, sans-serif" font-weight="700" font-size="15" fill="#f2c94c">Level 6 — Embedding Layers → Word2Vec</text>
+      <rect x="270" y="372" width="460" height="56" rx="10" fill="none" stroke="#e5e5e5" stroke-width="2"></rect>
+      <text x="500" y="406" text-anchor="middle" font-family="Inter, sans-serif" font-weight="700" font-size="15" fill="#e5e5e5">Level 5 — Understand ANN, Loss, Optimizers</text>
+      <g font-family="JetBrains Mono, monospace" font-size="12" fill="rgba(229,229,229,.7)">
+        <line x1="730" y1="400" x2="765" y2="400" stroke="rgba(229,229,229,.4)" stroke-width="1.3"></line>
+        <text x="785" y="404">NLTK · spaCy</text>
+      </g>
+      <rect x="220" y="444" width="560" height="56" rx="10" fill="none" stroke="#5fd97a" stroke-width="2"></rect>
+      <text x="500" y="478" text-anchor="middle" font-family="Inter, sans-serif" font-weight="700" font-size="15" fill="#5fd97a">Level 4 — Solve ML Use Cases</text>
+      <rect x="170" y="516" width="660" height="56" rx="10" fill="none" stroke="#f2c94c" stroke-width="2"></rect>
+      <text x="500" y="542" text-anchor="middle" font-family="Inter, sans-serif" font-weight="700" font-size="15" fill="#f2c94c">Level 3 — Text Preprocessing</text>
+      <text x="500" y="560" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="11.5" fill="rgba(242,201,76,.7)">Word2Vec · Gensim · CBOW · Skip-gram</text>
+      <rect x="120" y="588" width="760" height="56" rx="10" fill="none" stroke="#f2994a" stroke-width="2"></rect>
+      <text x="500" y="614" text-anchor="middle" font-family="Inter, sans-serif" font-weight="700" font-size="15" fill="#f2994a">Level 2 — Text Preprocessing</text>
+      <text x="500" y="632" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="11.5" fill="rgba(242,153,74,.7)">Bag of Words · One-Hot · TF-IDF · N-grams</text>
+      <!-- widths now taper strictly: 860,760,660,560,460,400,340,280,200 -->
+
+      <rect x="70" y="660" width="860" height="56" rx="10" fill="none" stroke="#e5e5e5" stroke-width="2"></rect>
+      <text x="500" y="686" text-anchor="middle" font-family="Inter, sans-serif" font-weight="700" font-size="15" fill="#e5e5e5">Level 1 — Text Preprocessing</text>
+      <text x="500" y="704" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="11.5" fill="rgba(229,229,229,.7)">Tokenization · Lemmatization · Stopwords · Stemming</text>
+      <line x1="500" y1="140" x2="500" y2="156" stroke="rgba(255,255,255,.2)" stroke-width="1.5"></line>
+      <line x1="500" y1="212" x2="500" y2="228" stroke="rgba(255,255,255,.2)" stroke-width="1.5"></line>
+      <line x1="500" y1="284" x2="500" y2="300" stroke="rgba(255,255,255,.2)" stroke-width="1.5"></line>
+      <line x1="500" y1="356" x2="500" y2="372" stroke="rgba(255,255,255,.2)" stroke-width="1.5"></line>
+      <line x1="500" y1="428" x2="500" y2="444" stroke="rgba(255,255,255,.2)" stroke-width="1.5"></line>
+      <line x1="500" y1="500" x2="500" y2="516" stroke="rgba(255,255,255,.2)" stroke-width="1.5"></line>
+      <line x1="500" y1="572" x2="500" y2="588" stroke="rgba(255,255,255,.2)" stroke-width="1.5"></line>
+      <line x1="500" y1="644" x2="500" y2="660" stroke="rgba(255,255,255,.2)" stroke-width="1.5"></line>
+    </svg>
+    <div class="tree-caption">Level 1 → Level 6, then sequence models, Transformers, and BERT</div>
+    <div class="tree-legend">
+      <span><i class="tdot" style="background:#e5e5e5"></i>Text preprocessing</span>
+      <span><i class="tdot" style="background:#f2994a"></i>Vectorization &amp; sequence</span>
+      <span><i class="tdot" style="background:#f2c94c"></i>Embeddings</span>
+      <span><i class="tdot" style="background:#5fd97a"></i>Transformer era</span>
+    </div>
+  </div>
+</div>
+
+<!-- 01 TEXT PREPROCESSING -->
+<div class="sec">
+  <div class="sec-head"><span class="sec-num">01</span><div class="sec-title">Text Preprocessing Fundamentals</div><div class="sec-line"></div></div>
+  <p class="sec-desc">Raw text is messy — every NLP pipeline starts by breaking it down, cleaning it, and normalizing it into a consistent form.</p>
+  <div class="ex-grid">
+    <div class="ex-card"><div class="ex-label">Tokenization</div><div class="ex-line"><span class="ex-in">"Tokenization is essential"</span></div><div class="chip-row"><span class="chip">Tokenization</span><span class="chip">is</span><span class="chip">essential</span></div></div>
+    <div class="ex-card"><div class="ex-label">Stopword removal</div><div class="ex-line"><span class="ex-in">the cat sat on the mat</span></div><div class="ex-line" style="margin-top:8px"><span class="ex-arrow">→</span><span class="ex-out">cat sat mat</span></div></div>
+    <div class="ex-card"><div class="ex-label">Stemming</div><div class="ex-line"><span class="ex-in">running</span><span class="ex-arrow">→</span><span class="ex-out">run</span></div></div>
+    <div class="ex-card"><div class="ex-label">Lemmatization</div><div class="ex-line"><span class="ex-in">better</span><span class="ex-arrow">→</span><span class="ex-out">good</span></div></div>
+    <div class="ex-card"><div class="ex-label">Parts of speech tagging</div><div class="ex-multiline"><span class="ex-chip">The</span><span class="ex-in">/DET </span><span class="ex-chip">fox</span><span class="ex-in">/NOUN </span><span class="ex-chip">runs</span><span class="ex-in">/VERB</span></div></div>
+    <div class="ex-card"><div class="ex-label">Text normalization</div><div class="ex-line"><span class="ex-in">Hi!! / HI / hi</span><span class="ex-arrow">→</span><span class="ex-out">hi</span></div></div>
+  </div>
+  <div class="formula">text → <span class="k">tokens → lowercase → remove stopwords → stem / lemma</span> <span class="c">← preprocessing pipeline</span></div>
+</div>
+
+<!-- 02 FEATURE ENCODING -->
+<div class="sec">
+  <div class="sec-head"><span class="sec-num">02</span><div class="sec-title">Text Representation &amp; Encoding</div><div class="sec-line"></div></div>
+  <p class="sec-desc">Models need numbers, not words — turning cleaned text into vectors that capture frequency and importance.</p>
+  <div class="ex-grid">
+    <div class="ex-card"><div class="ex-label">One-hot encoding</div><div class="ex-line"><span class="ex-in">"cat"</span><span class="ex-arrow">→</span><span class="ex-out">[0,0,1,0,0]</span></div></div>
+    <div class="ex-card"><div class="ex-label">Bag of words</div><div class="ex-line"><span class="ex-in">the cat sat the mat</span></div><div class="ex-line" style="margin-top:8px"><span class="ex-arrow">→</span><span class="ex-out">{the: 2, cat: 1, sat: 1, mat: 1}</span></div></div>
+    <div class="ex-card"><div class="ex-label">N-grams</div><div class="ex-line"><span class="ex-in">the cat sat</span></div><div class="chip-row"><span class="chip">the cat</span><span class="chip">cat sat</span></div></div>
+    <div class="ex-card"><div class="ex-label">TF-IDF</div><div class="ex-line"><span class="ex-in">"rare"</span><span class="ex-arrow">→</span><span class="ex-out">weight 0.82</span></div><div class="ex-line"><span class="ex-in">"the"</span><span class="ex-arrow">→</span><span class="ex-out" style="color:var(--dim)">weight 0.02</span></div></div>
+  </div>
+  <div class="formula">TF-IDF(t,d) = <span class="k">tf(t,d) × log(N / df(t))</span></div>
+</div>
+
+<!-- 03 WORD EMBEDDINGS -->
+<div class="sec">
+  <div class="sec-head"><span class="sec-num">03</span><div class="sec-title">Word Embeddings</div><div class="sec-line"></div></div>
+  <p class="sec-desc">Instead of counting words, embeddings place them in a continuous space where meaning and context shape the geometry.</p>
+  <div class="ex-grid">
+    <div class="ex-card"><div class="ex-label">Embedding space (vector arithmetic)</div><div class="ex-multiline"><span class="ex-chip">king</span> − <span class="ex-chip">man</span> + <span class="ex-chip">woman</span> <span class="ex-arrow">≈</span> <span class="ex-out">queen</span></div></div>
+    <div class="ex-card"><div class="ex-label">Word2Vec — CBOW</div><div class="ex-line"><span class="ex-in">the ___ sat</span><span class="ex-arrow">→</span><span class="ex-out">cat</span></div></div>
+    <div class="ex-card"><div class="ex-label">Word2Vec — Skip-gram</div><div class="ex-line"><span class="ex-in">cat</span><span class="ex-arrow">→</span><span class="ex-out">the, sat</span></div></div>
+    <div class="ex-card"><div class="ex-label">Cosine similarity</div><div class="ex-line"><span class="ex-in">cos(king, queen)</span><span class="ex-arrow">=</span><span class="ex-out">0.82</span></div><div class="ex-line"><span class="ex-in">cos(king, banana)</span><span class="ex-arrow">=</span><span class="ex-out" style="color:var(--dim)">0.05</span></div></div>
+    <div class="ex-card"><div class="ex-label">GloVe</div><div class="ex-line"><span class="ex-in">co-occurs(ice, cold)</span><span class="ex-arrow">→</span><span class="ex-out">high</span></div></div>
+  </div>
+  <div class="formula">cos(θ) = <span class="k">(A · B) / (‖A‖ ‖B‖)</span> <span class="c">← word similarity</span></div>
+</div>
+
+<!-- 04 LANGUAGE MODELING -->
+<div class="sec">
+  <div class="sec-head"><span class="sec-num">04</span><div class="sec-title">Language Modeling &amp; Sequence Tasks</div><div class="sec-line"></div></div>
+  <p class="sec-desc">Predicting what comes next — the backbone of autocomplete, translation, and text generation.</p>
+  <div class="ex-grid">
+    <div class="ex-card"><div class="ex-label">N-gram language model</div><div class="ex-line"><span class="ex-in">"the cat ___"</span><span class="ex-arrow">→</span><span class="ex-out">sat (highest P)</span></div></div>
+    <div class="ex-card"><div class="ex-label">Sequence-to-sequence</div><div class="ex-line"><span class="ex-in">"I am fine" (EN)</span></div><div class="ex-line" style="margin-top:8px"><span class="ex-arrow">→</span><span class="ex-out">"मैं ठीक हूँ" (HI)</span></div></div>
+    <div class="ex-card"><div class="ex-label">Text generation</div><div class="ex-line"><span class="ex-in">"Once upon a"</span><span class="ex-arrow">→</span><span class="ex-out">"time..."</span></div></div>
+    <div class="ex-card"><div class="ex-label">Perplexity</div><div class="ex-line"><span class="ex-in">model A: 12.4</span></div><div class="ex-line"><span class="ex-out">model B: 6.1 (better)</span></div></div>
+  </div>
+  <div class="formula">Perplexity = <span class="k">2^(−1/N Σ log₂ P(wᵢ))</span></div>
+</div>
+
+<!-- 05 INFORMATION EXTRACTION -->
+<div class="sec">
+  <div class="sec-head"><span class="sec-num">05</span><div class="sec-title">Information Extraction</div><div class="sec-line"></div></div>
+  <p class="sec-desc">Pulling structured facts — people, places, relationships — out of unstructured sentences.</p>
+  <div class="ex-grid">
+    <div class="ex-card"><div class="ex-label">Named entity recognition</div><div class="ex-multiline"><span class="ex-chip">Elon</span><span class="ex-in">ᴘᴇʀ founded </span><span class="ex-chip">SpaceX</span><span class="ex-in">ᴏʀɢ</span></div></div>
+    <div class="ex-card"><div class="ex-label">Chunking</div><div class="ex-line"><span class="ex-in">the cat sat down</span></div><div class="ex-line" style="margin-top:8px"><span class="ex-arrow">→</span><span class="ex-out">[NP the cat] [VP sat down]</span></div></div>
+    <div class="ex-card"><div class="ex-label">Dependency parsing</div><div class="ex-line"><span class="ex-in">The cat sat</span></div><div class="ex-line" style="margin-top:8px"><span class="ex-arrow">→</span><span class="ex-out">subj(cat, sat)</span></div></div>
+    <div class="ex-card"><div class="ex-label">Coreference resolution</div><div class="ex-line"><span class="ex-in">Maria said </span><span class="ex-chip">she</span><span class="ex-in"> is happy</span></div><div class="ex-line" style="margin-top:8px"><span class="ex-arrow">→</span><span class="ex-out">she = Maria</span></div></div>
+  </div>
+  <div class="formula">B-PER I-PER O O <span class="k">B-ORG</span> O <span class="c">← BIO tagging scheme</span></div>
+</div>
+
+<!-- 06 CLASSIFICATION & SENTIMENT -->
+<div class="sec">
+  <div class="sec-head"><span class="sec-num">06</span><div class="sec-title">Text Classification &amp; Sentiment</div><div class="sec-line"></div></div>
+  <p class="sec-desc">Turning a block of text into a label — spam or not, positive or negative, this topic or that one.</p>
+  <div class="ex-grid">
+    <div class="ex-card"><div class="ex-label">Naive Bayes classifier</div><div class="ex-line"><span class="ex-in">"free money now"</span></div><div class="ex-line" style="margin-top:8px"><span class="ex-arrow">→</span><span class="ex-out">spam (98%)</span></div></div>
+    <div class="ex-card"><div class="ex-label">Sentiment analysis</div><div class="ex-line"><span class="ex-in">"loved this!"</span><span class="ex-arrow">→</span><span class="ex-pill">positive</span></div></div>
+    <div class="ex-card"><div class="ex-label">Spam detection</div><div class="ex-line"><span class="ex-in">"click to win $$$"</span></div><div class="ex-line" style="margin-top:8px"><span class="ex-arrow">→</span><span class="ex-out">spam</span></div></div>
+    <div class="ex-card"><div class="ex-label">Topic modeling (LDA)</div><div class="ex-line"><span class="ex-in">doc</span><span class="ex-arrow">→</span></div><div class="chip-row"><span class="chip">sports 60%</span><span class="chip">politics 25%</span></div></div>
+  </div>
+  <div class="formula">P(class | doc) = <span class="k">P(doc | class) × P(class) / P(doc)</span></div>
+</div>
+
+<!-- 07 ATTENTION & TRANSFORMERS -->
+<div class="sec">
+  <div class="sec-head"><span class="sec-num">07</span><div class="sec-title">Attention &amp; Transformer-based NLP</div><div class="sec-line"></div></div>
+  <p class="sec-desc">Letting a model weigh every word against every other word at once — the shift that produced modern language models.</p>
+  <div class="ex-grid">
+    <div class="ex-card"><div class="ex-label">Attention mechanism</div><div class="ex-multiline">"The animal didn't cross the street because <span class="ex-chip">it</span> was tired" — <span class="ex-out">it → animal</span></div></div>
+    <div class="ex-card"><div class="ex-label">Self-attention</div><div class="ex-line"><span class="ex-in">every word</span><span class="ex-arrow">↔</span><span class="ex-out">every other word</span></div></div>
+    <div class="ex-card"><div class="ex-label">BERT &amp; transfer learning</div><div class="ex-line"><span class="ex-in">pretrained on Wikipedia</span></div><div class="ex-line" style="margin-top:8px"><span class="ex-arrow">→</span><span class="ex-out">fine-tuned for sentiment</span></div></div>
+    <div class="ex-card"><div class="ex-label">Multi-head attention</div><div class="ex-line"><span class="ex-in">head 1: syntax</span></div><div class="ex-line"><span class="ex-in">head 2: coreference</span></div></div>
+  </div>
+
+  <div class="formula">Attention(Q,K,V) = <span class="k">softmax(QKᵀ / √dₖ) · V</span></div>
+</div>
+
+<!-- 08 TOOLS & LIBRARIES -->
+<div class="sec">
+  <div class="sec-head"><span class="sec-num">08</span><div class="sec-title">Tools &amp; Libraries</div><div class="sec-line"></div></div>
+  <p class="sec-desc">The ecosystem that turns these concepts into working pipelines, from classic text processing to modern transformer models.</p>
+  <div class="tag-box">
+    <div class="tag-list">
+      <span class="tag-pill">NLTK</span>
+      <span class="tag-pill">spaCy</span>
+      <span class="tag-pill">Gensim</span>
+      <span class="tag-pill">Hugging Face Transformers</span>
+      <span class="tag-pill">TensorFlow</span>
+      <span class="tag-pill">PyTorch</span>
+      <span class="tag-pill">scikit-learn</span>
+      <span class="tag-pill">Word2Vec</span>
+    </div>
+  </div>
+  <div class="formula">nlp(text) <span class="c">→ tokens</span> · model.encode(text) <span class="c">→ vector</span> · model.predict() <span class="c">→ label</span></div>
+</div>
+
+</div>
+
+<div style="max-width:900px;margin:40px auto 0;padding:20px 5% 0;border-top:1px solid var(--border);">
+  <p style="font-size:.85rem;color:var(--text);margin:0;">That's a wrap — if you scrolled this far without skimming, you deserve a <span style="color:var(--pk); font-weight:700;">snack 🍪</span>.</p>
+</div>
+
+<footer style="justify-content:flex-start;border-top:none;">
+  <a href="../index.html">&larr; Back to portfolio</a>
+</footer>
+
+</body>
+</html>
