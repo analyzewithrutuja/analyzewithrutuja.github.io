@@ -46,6 +46,20 @@
 
   .comic-strip { margin: 0 0 8px; }
   .comic-strip img { width: 100%; height: auto; border-radius: 16px; display: block; }
+
+  .tc-wrap { position: relative; margin-top: 50px; }
+  .tc-row { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; margin-bottom: 8px; position: relative; z-index: 1; }
+  .tc-card { border-radius: 14px; padding: 18px 20px; }
+  .tc-label { font-size: 12.5px; margin: 0 0 10px; font-weight: 600; }
+  .tc-num { font-family: var(--heading); font-weight: 700; font-size: 22px; margin: 0 0 2px; }
+  .tc-sub { font-size: 11.5px; margin: 0 0 10px; }
+  .tc-badge { display: inline-block; font-size: 10.5px; font-weight: 700; padding: 3px 10px; border-radius: 999px; color: #fff; margin-left: 8px; vertical-align: 2px; }
+  .tc-ex-row { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 10px; }
+  .tc-ex-tag { font-size: 11px; background: #fff; border: 1px solid var(--border); padding: 3px 9px; border-radius: 999px; }
+  .tc-spark { display: block; margin: 2px 0 8px; }
+  @media (max-width: 640px) {
+    .tc-row { grid-template-columns: 1fr !important; }
+  }
   .tag { font-size: 13.5px; font-weight: 500; padding: 7px 16px; border-radius: 999px; border: 1px solid var(--border); color: var(--black); background: #fff; }
   .tag.filled { background: var(--pink); color: #fff; border-color: var(--pink); }
 
@@ -180,7 +194,7 @@
   <p class="crumb"><a href="https://analyzewithrutuja.github.io/#portfolio">← Back to portfolio</a></p>
 
   <p class="eyebrow">Data Analysis · Retail &amp; Consumer Behavior</p>
-  <h1 class="title">Fast Fashion vs. <span>Slow Fashion</span></h1>
+  <h1 class="title">Fast Fashion vs. Slow Fashion: <span>Who's Actually Winning?</span></h1>
   <p class="dek">
     "Fast fashion" is everywhere in headlines — cheap, disposable, unstoppable. This project checks that story
     against 65,729 real Yelp reviews and tips across 3,100 U.S. clothing businesses. The answer isn't what the
@@ -567,6 +581,43 @@
     <p class="section-desc">Measuring each group's <em>share</em> of total review volume per year — not raw counts,
     since raw counts simply grow as Yelp itself grew. Share isolates the actual shift in relative attention.</p>
 
+    <div class="tc-wrap">
+      <svg width="100%" height="56" viewBox="0 0 900 56" style="position:absolute; top:-56px; left:0; z-index:0;">
+        <path d="M 150 14 Q 450 -18 620 14" fill="none" stroke="#C9A0A8" stroke-width="2" stroke-dasharray="5 4"/>
+        <polygon points="612,6 622,14 610,18" fill="#C9A0A8"/>
+        <text x="450" y="-8" text-anchor="middle" font-family="Inter,sans-serif" font-size="11" fill="#9E8085">14.8 pts moved from fast to slow</text>
+      </svg>
+
+      <div class="tc-row">
+        <div class="tc-card" style="background:#E8F0FE;">
+          <p class="tc-label" style="color:#1A4480;">Fast Fashion</p>
+          <p class="tc-num" style="color:#1A4480;">70.2% <span style="font-size:14px;">&rarr;</span> 55.4%<span class="tc-badge" style="background:#1A4480;">&darr; 14.8</span></p>
+          <svg class="tc-spark" width="70" height="20" viewBox="0 0 70 20"><polyline points="2,4 68,16" fill="none" stroke="#1A4480" stroke-width="2.5" stroke-linecap="round"/><circle cx="68" cy="16" r="3" fill="#1A4480"/></svg>
+          <p class="tc-sub" style="color:#1A4480;">2010 to 2021</p>
+          <div class="tc-ex-row"><span class="tc-ex-tag">Old Navy</span><span class="tc-ex-tag">Forever 21</span><span class="tc-ex-tag">H&amp;M</span><span class="tc-ex-tag">Banana Republic</span></div>
+        </div>
+
+        <div class="tc-card" style="background:#FAECE7;">
+          <p class="tc-label" style="color:#712B13;">Slow Fashion</p>
+          <p class="tc-num" style="color:#712B13;">14.5% <span style="font-size:14px;">&rarr;</span> 31.2%<span class="tc-badge" style="background:#712B13;">&uarr; 16.7</span></p>
+          <svg class="tc-spark" width="70" height="20" viewBox="0 0 70 20"><polyline points="2,16 68,4" fill="none" stroke="#712B13" stroke-width="2.5" stroke-linecap="round"/><circle cx="68" cy="4" r="3" fill="#712B13"/></svg>
+          <p class="tc-sub" style="color:#712B13;">2010 to 2021</p>
+          <div class="tc-ex-row"><span class="tc-ex-tag">Men's Wearhouse</span><span class="tc-ex-tag">Jos A Bank</span><span class="tc-ex-tag">David's Bridal</span></div>
+        </div>
+
+        <div class="tc-card" style="background:#E1F5EE;">
+          <p class="tc-label" style="color:#085041;">Mixed Retail</p>
+          <p class="tc-num" style="color:#085041;">15.2% <span style="font-size:14px;">&rarr;</span> 13.4%<span class="tc-badge" style="background:#085041;">&darr; 1.8</span></p>
+          <svg class="tc-spark" width="70" height="20" viewBox="0 0 70 20"><polyline points="2,9 68,11" fill="none" stroke="#085041" stroke-width="2.5" stroke-linecap="round"/><circle cx="68" cy="11" r="3" fill="#085041"/></svg>
+          <p class="tc-sub" style="color:#085041;">2010 to 2021 &mdash; roughly flat</p>
+          <div class="tc-ex-row"><span class="tc-ex-tag">Ross Dress for Less</span><span class="tc-ex-tag">Kohl's</span><span class="tc-ex-tag">Macy's</span></div>
+        </div>
+      </div>
+
+      <p style="font-size:12px; color:var(--gray-text); margin:18px 0 0;">Fast Fashion's drop (14.8 pts) is almost exactly Slow Fashion's gain (16.7 pts) &mdash; Mixed Retail barely moved. This reads as a direct transfer from fast to slow, not a general fashion-industry decline.</p>
+    </div>
+
+    <p class="chart-title" style="margin-top:32px; margin-bottom:2px;">The full decade, year by year</p>
     <div class="dg-wrap">
 <svg viewBox="0 0 680 380" role="img" style="width:100%;" aria-label="Line chart of Fast Fashion, Slow Fashion, and Mixed Retail share of review volume from 2010 to 2021">
 <desc>Fast Fashion's share of review volume declines from about 70 percent in 2010 to about 55 percent in 2021. Slow Fashion's share rises from about 15 percent to about 31 percent over the same period. Mixed Retail stays roughly flat around 13 to 19 percent.</desc>
