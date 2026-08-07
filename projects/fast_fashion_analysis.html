@@ -384,12 +384,26 @@
       </div>
 
       <p class="chart-title" style="margin-bottom:2px;">Step 3 — merge into one table</p>
-      <p class="chart-sub" style="margin-bottom:12px;">The 5 filtered files above still live separately — one last step joins them.</p>
+      <p class="chart-sub" style="margin-bottom:12px;">The 5 filtered files above still live separately — one last step joins 4 of them. <code>clothing_checkins.csv</code> stays out, kept separate for later footfall analysis.</p>
+      <div class="quality-table" style="margin-bottom:16px;">
+        <div class="quality-head" style="grid-template-columns:1.3fr 1.7fr;"><span>File(s)</span><span>How it's combined</span></div>
+        <div class="quality-row" style="grid-template-columns:1.3fr 1.7fr;">
+          <span style="font-size:12.5px;"><code>clothing_reviews.csv</code> + <code>clothing_tips.csv</code></span>
+          <span style="font-size:12.5px; color:var(--gray-text);">Stacked together — no key, just combined, with a <code>source</code> column</span>
+        </div>
+        <div class="quality-row" style="grid-template-columns:1.3fr 1.7fr;">
+          <span style="font-size:12.5px;"><code>clothing_businesses.csv</code></span>
+          <span style="font-size:12.5px; color:var(--gray-text);">Joined on <strong style="color:var(--black);">business_id</strong></span>
+        </div>
+        <div class="quality-row" style="grid-template-columns:1.3fr 1.7fr;">
+          <span style="font-size:12.5px;"><code>clothing_users.csv</code></span>
+          <span style="font-size:12.5px; color:var(--gray-text);">Joined on <strong style="color:var(--black);">user_id</strong></span>
+        </div>
+      </div>
       <div class="callout" style="margin-top:0; margin-bottom:28px;">
         <span class="dot"></span>
-        <p>The 5 filtered files join on <code>business_id</code> and <code>user_id</code> into <strong>one final
-        table — 65,729 rows, 18 columns</strong> — <code>fashion_analysis.csv</code>. Every analysis on the rest of
-        this page runs on this one table.</p>
+        <p>Result: <strong>one final table — 65,729 rows, 18 columns</strong> —
+        <code>fashion_analysis.csv</code>. Every analysis on the rest of this page runs on this one table.</p>
       </div>
 
       <p class="chart-title" style="margin-bottom:2px;">Step 4 — fix what the data got wrong</p>
