@@ -59,7 +59,24 @@
   .tc-spark { display: block; margin: 2px 0 8px; }
   @media (max-width: 640px) {
     .tc-row { grid-template-columns: 1fr !important; }
+    .tf-row { grid-template-columns: 1fr !important; }
+    .tf-mid { flex-direction: row; justify-content: center; padding: 8px 0; }
+    .tf-line { display: none; }
   }
+
+  .tf-row { display: grid; grid-template-columns: 1.25fr 0.7fr 1.25fr; align-items: center; margin-bottom: 4px; }
+  .tf-box { border-radius: 12px; padding: 12px 14px; display: flex; align-items: center; gap: 10px; }
+  .tf-raw { background: var(--card-bg); }
+  .tf-clean { background: #E1F5EE; }
+  .tf-icon { width: 30px; height: 30px; border-radius: 8px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+  .tf-icon-raw { background: #E4E4E1; }
+  .tf-icon-clean { background: #B9E3D2; }
+  .tf-fname { font-family: 'IBM Plex Mono', monospace; font-size: 11.5px; font-weight: 600; color: var(--black); margin: 0 0 2px; }
+  .tf-stat { font-size: 10px; color: var(--gray-text); margin: 0; }
+  .tf-mid { display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 2px; }
+  .tf-pct { font-family: var(--heading); font-weight: 700; font-size: 13px; color: var(--pink); }
+  .tf-line { width: 100%; height: 1.5px; background: linear-gradient(to right, #C9A0A8, #8FCBAF); margin: 2px 0; }
+  .tf-pill { display: inline-block; background: var(--pink-tint); color: #9E0F49; font-family: var(--heading); font-weight: 700; font-size: 15px; padding: 10px 24px; border-radius: 999px; }
   .tag { font-size: 13.5px; font-weight: 500; padding: 7px 16px; border-radius: 999px; border: 1px solid var(--border); color: var(--black); background: #fff; }
   .tag.filled { background: var(--pink); color: #fff; border-color: var(--pink); }
 
@@ -228,215 +245,204 @@
   </div>
   <!-- ===== END COMIC ===== -->
 
-  <!-- ===== 01 THE QUESTION ===== -->
+  <!-- ===== 01 DATASET ===== -->
   <div class="section">
-    <p class="section-eyebrow">01 · What Aisha found</p>
-    <h2 class="section-title">Is fast fashion actually winning?</h2>
+    <p class="section-eyebrow">01 · Intake</p>
+    <h2 class="section-title">Dataset</h2>
     <p class="section-desc">
-      Every retail headline says yes — H&amp;M, Zara, and Shein are supposedly eating the clothing industry alive,
-      while bespoke tailors and bridal boutiques fade into irrelevance. That's the story Aisha started with too.
-      Here are the four numbers that made her stop and check further — the rest of this page is how she checked them.
+      This project uses the <strong>Yelp Academic Dataset</strong> — five raw files (<code>business.json</code>,
+      <code>review.json</code>, <code>tip.json</code>, <code>checkin.json</code>, <code>user.json</code>), spanning
+      every Yelp business category, not just clothing. None of them come with a "fast fashion" label already
+      attached — that had to be built from scratch, below.
     </p>
 
-    <div class="kpi-strip">
-      <div class="kpi-card"><p class="kpi-num">3,100</p><p class="kpi-label">clothing businesses analyzed</p></div>
-      <div class="kpi-card"><p class="kpi-num">65,729</p><p class="kpi-label">reviews &amp; tips</p></div>
-      <div class="kpi-card"><p class="kpi-num">3.77★</p><p class="kpi-label">Slow Fashion's rating &gt; Fast Fashion's</p></div>
-      <div class="kpi-card"><p class="kpi-num">70%→55%</p><p class="kpi-label">Fast Fashion's review share, 2010→2021</p></div>
-    </div>
+    <div style="border-top:1px solid var(--border); padding-top:32px; margin-top:8px;">
+      <p style="font-family:var(--heading); font-weight:700; font-size:19px; margin:0 0 6px; color:var(--pink);">Data Cleaning &amp; Preparation</p>
+      <p class="section-desc" style="margin-bottom:24px;">How the raw files became one clean, classified, joined table — every step, in order.</p>
 
-    <div class="callout">
-      <span class="dot"></span>
-      <p>Spoiler: Fast Fashion still dominates by volume — but its <em>relative</em> share of customer attention has
-      been shrinking for over a decade, while the "Slow Fashion" segment (bespoke, bridal, formal wear) has more
-      than doubled its share. This is the number that changed Aisha's mind — the rest of this page shows exactly how
-      it was built, and what else the data says.</p>
-    </div>
-  </div>
-
-  <!-- ===== 02 THE DATA ===== -->
-  <div class="section">
-    <p class="section-eyebrow">02 · Intake</p>
-    <h2 class="section-title">The data</h2>
-    <p class="section-desc">
-      This project uses the <strong>Yelp Academic Dataset</strong> — five linked files, none of which come with a
-      "fast fashion" label already attached. That label had to be built from scratch (Section 03).
-    </p>
-
-    <div class="stat-grid">
-      <div class="stat-card"><p class="stat-num">114 MB</p><p class="stat-label">business.json — name, location, categories</p></div>
-      <div class="stat-card"><p class="stat-num">5 GB</p><p class="stat-label">review.json — full reviews + star ratings</p></div>
-      <div class="stat-card"><p class="stat-num">173 MB</p><p class="stat-label">tip.json — short tips, no rating</p></div>
-      <div class="stat-card"><p class="stat-num">274 MB</p><p class="stat-label">checkin.json — visit timestamps</p></div>
-      <div class="stat-card"><p class="stat-num">3.2 GB</p><p class="stat-label">user.json — reviewer profiles</p></div>
-    </div>
-
-    <div class="field-grid">
-      <div class="field-card c-purple">
-        <div class="field-top"><p class="field-name">business_id</p><span class="field-count">key</span></div>
-        <p class="field-desc">Links business.json to review.json, tip.json, and checkin.json</p>
+      <p class="chart-title" style="margin-bottom:16px;">Step 1 — filter</p>
+      <div style="text-align:center; margin-bottom:22px;">
+        <span class="tf-pill">Filtered the entire dataset for clothing &amp; fashion</span>
       </div>
-      <div class="field-card c-purple">
-        <div class="field-top"><p class="field-name">user_id</p><span class="field-count">key</span></div>
-        <p class="field-desc">Links review.json / tip.json to user.json — reviewer profile, elite status</p>
-      </div>
-      <div class="field-card c-teal">
-        <div class="field-top"><p class="field-name">categories</p><span class="field-count">business</span></div>
-        <p class="field-desc">Comma-separated Yelp tags — the raw material used to build fashion_type</p>
-      </div>
-      <div class="field-card c-teal">
-        <div class="field-top"><p class="field-name">stars, text, date</p><span class="field-count">review</span></div>
-        <p class="field-desc">Rating, full review text, and timestamp — the core feedback signal</p>
-      </div>
-      <div class="field-card c-teal">
-        <div class="field-top"><p class="field-name">hours</p><span class="field-count">business</span></div>
-        <p class="field-desc">Per-day open/close times — used for the operating-hours comparison</p>
-      </div>
-      <div class="field-card c-red">
-        <div class="field-top"><p class="field-name">fashion_type</p><span class="field-count">derived</span></div>
-        <p class="field-desc">Fast Fashion / Slow Fashion / Mixed Retail — doesn't exist in the raw data, built in Section 03</p>
-      </div>
-    </div>
 
-    <div class="so-what">
-      <span class="dot"></span>
-      <p>Nothing in this data says "fast fashion" anywhere — <code>fashion_type</code> is the only red card above
-      because it's the only field that had to be <strong>built</strong>, not read off a column. Every finding on
-      this page rests on how that one field gets constructed — which is exactly what Section 03 does next.</p>
-    </div>
-  </div>
+      <div class="tf-row">
+        <div class="tf-box tf-raw"><div class="tf-icon tf-icon-raw"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#6B7280" stroke-width="2"><path d="M3 21h18M5 21V9l7-5 7 5v12M9 21v-6h6v6"/></svg></div><div><p class="tf-fname">business.json</p><p class="tf-stat">150,346 &times; 14</p></div></div>
+        <div class="tf-mid"><div class="tf-line"></div><span class="tf-pct">2.1%</span><span style="font-size:9px; color:#9E9C97;">kept</span></div>
+        <div class="tf-box tf-clean"><div class="tf-icon tf-icon-clean"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#085041" stroke-width="2"><path d="M3 21h18M5 21V9l7-5 7 5v12M9 21v-6h6v6"/></svg></div><div><p class="tf-fname">clothing_businesses.csv</p><p class="tf-stat">3,100 &times; 10</p></div></div>
+      </div>
 
-  <!-- ===== 03 SCOPE & METHOD ===== -->
-  <div class="section">
-    <p class="section-eyebrow">03 · Method</p>
-    <h2 class="section-title">Building a label that doesn't exist in the data</h2>
-    <p class="section-desc">
-      Yelp has no "fast fashion" field. Every business only has a messy, comma-separated <code>categories</code>
-      string like <em>"Women's Clothing, Accessories, Shopping, Fashion."</em> The whole classification had to be
-      built from that string — deliberately, not guessed.
-    </p>
+      <div class="tf-row">
+        <div class="tf-box tf-raw"><div class="tf-icon tf-icon-raw"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#6B7280" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg></div><div><p class="tf-fname">review.json</p><p class="tf-stat">6,990,280 &times; 9</p></div></div>
+        <div class="tf-mid"><div class="tf-line"></div><span class="tf-pct">0.8%</span><span style="font-size:9px; color:#9E9C97;">kept</span></div>
+        <div class="tf-box tf-clean"><div class="tf-icon tf-icon-clean"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#085041" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg></div><div><p class="tf-fname">clothing_reviews.csv</p><p class="tf-stat">58,890 &times; 9</p></div></div>
+      </div>
 
-    <p class="chart-title" style="margin-bottom:2px;">Step 1 — scope to clothing only</p>
-    <p class="chart-sub" style="margin-bottom:12px;">Shoes, jewelry, and accessories were deliberately excluded — a
-    standalone jewelry store isn't a fast-fashion signal just because it shares a mall with one.</p>
-    <div class="callout" style="margin-top:0; margin-bottom:24px;">
-      <span class="dot"></span>
-      <p>Filtered on 6 category keywords: <strong>Women's Clothing, Men's Clothing, Children's Clothing, Bespoke
-      Clothing, Bridal, Formal Wear</strong>. A business qualifies if <em>any</em> keyword appears — 3,100 businesses
-      matched, out of the full multi-industry Yelp dataset.</p>
-    </div>
+      <div class="tf-row">
+        <div class="tf-box tf-raw"><div class="tf-icon tf-icon-raw"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#6B7280" stroke-width="2"><path d="M14 3v4a1 1 0 0 0 1 1h4"/><path d="M17 21H7a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h7l5 5v11a2 2 0 0 1-2 2z"/></svg></div><div><p class="tf-fname">tip.json</p><p class="tf-stat">908,915 &times; 5</p></div></div>
+        <div class="tf-mid"><div class="tf-line"></div><span class="tf-pct">0.8%</span><span style="font-size:9px; color:#9E9C97;">kept</span></div>
+        <div class="tf-box tf-clean"><div class="tf-icon tf-icon-clean"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#085041" stroke-width="2"><path d="M14 3v4a1 1 0 0 0 1 1h4"/><path d="M17 21H7a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h7l5 5v11a2 2 0 0 1-2 2z"/></svg></div><div><p class="tf-fname">clothing_tips.csv</p><p class="tf-stat">6,839 &times; 5</p></div></div>
+      </div>
 
-    <p class="chart-title" style="margin-bottom:2px;">Step 2 — classify each business's model</p>
-    <p class="chart-sub" style="margin-bottom:14px;">Store-level, not product-level — Yelp has no per-item data, so
-    the label describes a store's overall business model, not every single thing it sells. Every business shown here
-    already passed Step 1, so a "no" all the way down still lands on Fast Fashion — never an unclassified dead end.</p>
+      <div class="tf-row">
+        <div class="tf-box tf-raw"><div class="tf-icon tf-icon-raw"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#6B7280" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg></div><div><p class="tf-fname">checkin.json</p><p class="tf-stat">131,930 &times; 2</p></div></div>
+        <div class="tf-mid"><div class="tf-line"></div><span class="tf-pct">2.2%</span><span style="font-size:9px; color:#9E9C97;">kept</span></div>
+        <div class="tf-box tf-clean"><div class="tf-icon tf-icon-clean"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#085041" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg></div><div><p class="tf-fname">clothing_checkins.csv</p><p class="tf-stat">2,909 &times; 2</p></div></div>
+      </div>
 
-    <div class="dg-wrap">
-<svg viewBox="0 0 680 300" role="img" style="width:100%;" aria-label="Decision flow classifying each business into Fast Fashion, Slow Fashion, or Mixed Retail based on its Yelp categories">
+      <div class="tf-row" style="margin-bottom:0;">
+        <div class="tf-box tf-raw"><div class="tf-icon tf-icon-raw"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#6B7280" stroke-width="2"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 4-6 8-6s8 2 8 6"/></svg></div><div><p class="tf-fname">user.json</p><p class="tf-stat">1,987,897 &times; 22</p></div></div>
+        <div class="tf-mid"><div class="tf-line"></div><span class="tf-pct">2.3%</span><span style="font-size:9px; color:#9E9C97;">kept</span></div>
+        <div class="tf-box tf-clean"><div class="tf-icon tf-icon-clean"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#085041" stroke-width="2"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 4-6 8-6s8 2 8 6"/></svg></div><div><p class="tf-fname">clothing_users.csv</p><p class="tf-stat">46,236 &times; 7</p></div></div>
+      </div>
+
+      <p class="chart-title" style="margin-top:24px; margin-bottom:8px;">How the filter actually worked</p>
+      <p style="font-size:12.5px; color:var(--gray-text); line-height:1.7; margin:0 0 8px;"><strong style="color:var(--black);">business.json:</strong> kept only businesses whose <code>categories</code> field matched one of 6 keywords — Women's/Men's/Children's Clothing, Bespoke Clothing, Bridal, Formal Wear. This is the only file filtered by content.</p>
+      <p style="font-size:12.5px; color:var(--gray-text); line-height:1.7; margin:0 0 8px;"><strong style="color:var(--black);">review.json, tip.json, checkin.json:</strong> kept only rows whose <code>business_id</code> appeared among the 3,100 matched businesses. No text matching — if the business qualifies, every one of its reviews/tips/checkins comes along, regardless of what the review text says.</p>
+      <p style="font-size:12.5px; color:var(--gray-text); line-height:1.7; margin:0 0 24px;"><strong style="color:var(--black);">user.json:</strong> kept only rows whose <code>user_id</code> appeared among the reviewers/tippers collected above.</p>
+
+      <p class="chart-title" style="margin-bottom:2px;">Step 2 — classify each business's model</p>
+      <p class="chart-sub" style="margin-bottom:14px;">Store-level, not product-level — Yelp has no per-item data, so
+      the label describes a store's overall business model, not every single thing it sells. Every business shown here
+      already passed Step 1, so a "no" all the way down still lands on Fast Fashion — never an unclassified dead end.</p>
+
+      <div class="dg-wrap">
+<svg viewBox="0 0 680 330" role="img" style="width:100%;" aria-label="Decision flow classifying each business into Fast Fashion, Slow Fashion, or Mixed Retail based on its Yelp categories">
 <desc>A business's categories string is checked in order: if it contains Department Stores, it is classified Mixed Retail. Otherwise if it contains Bespoke Clothing, Bridal, or Formal Wear, it is classified Slow Fashion. Otherwise if it contains Women's, Men's, or Children's Clothing, it is classified Fast Fashion.</desc>
 <defs><marker id="fc-arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M2 1L8 5L2 9" fill="none" stroke="context-stroke" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></marker></defs>
 
-<g class="dg-box"><rect x="20" y="20" width="180" height="54" rx="10"/>
-<text class="dg-th" x="110" y="40" text-anchor="middle" dominant-baseline="central">business.categories</text>
-<text class="dg-ts" x="110" y="58" text-anchor="middle" dominant-baseline="central">e.g. "Women's Clothing, Shopping"</text></g>
-<line x1="200" y1="47" x2="240" y2="47" class="dg-arrow" marker-end="url(#fc-arrow)"/>
+<path d="M 20 20 L 155 20 L 180 33 L 180 74 L 20 74 Z" fill="#fff" stroke="var(--border)" stroke-width="0.75"/>
+<path d="M 155 20 L 155 33 L 180 33 Z" fill="var(--card-bg)" stroke="var(--border)" stroke-width="0.75"/>
+<text class="dg-th" x="100" y="43" text-anchor="middle" dominant-baseline="central">business.categories</text>
+<text class="dg-ts" x="100" y="60" text-anchor="middle" dominant-baseline="central">e.g. "Women's Clothing"</text>
 
-<g class="dgc-amber"><polygon points="330,20 430,47 330,74 230,47"/>
-<text class="dg-th" x="330" y="41" text-anchor="middle" dominant-baseline="central">has "Department</text>
-<text class="dg-th" x="330" y="55" text-anchor="middle" dominant-baseline="central">Stores"?</text></g>
+<line x1="180" y1="47" x2="215" y2="47" class="dg-arrow" marker-end="url(#fc-arrow)"/>
 
-<path d="M430,47 L470,47" class="dg-arrow" marker-end="url(#fc-arrow)"/>
-<text class="dg-ts" x="450" y="38" text-anchor="middle">yes</text>
-<g class="dgc-teal"><rect x="475" y="20" width="180" height="54" rx="10"/>
-<text class="dg-th" x="565" y="41" text-anchor="middle" dominant-baseline="central">Mixed Retail</text>
-<text class="dg-ts" x="565" y="58" text-anchor="middle" dominant-baseline="central">408 businesses</text></g>
+<polygon points="335,10 455,47 335,84 215,47" fill="var(--pink-tint)" stroke="var(--pink)" stroke-width="1"/>
+<text x="335" y="41" text-anchor="middle" font-family="var(--heading)" font-weight="600" font-size="13" fill="#9E0F49">Department</text>
+<text x="335" y="57" text-anchor="middle" font-family="var(--heading)" font-weight="600" font-size="13" fill="#9E0F49">Stores?</text>
 
-<path d="M330,74 L330,130" class="dg-arrow" marker-end="url(#fc-arrow)"/>
-<text class="dg-ts" x="340" y="105" text-anchor="start">no</text>
+<path d="M455,47 L490,47" class="dg-arrow" marker-end="url(#fc-arrow)"/>
+<text class="dg-ts" x="472" y="38" text-anchor="middle">yes</text>
+<g class="dgc-teal"><rect x="495" y="20" width="165" height="54" rx="10"/>
+<text class="dg-th" x="577" y="41" text-anchor="middle" dominant-baseline="central">Mixed Retail</text>
+<text class="dg-ts" x="577" y="58" text-anchor="middle" dominant-baseline="central">408 businesses</text></g>
 
-<g class="dgc-coral"><polygon points="330,103 445,140 330,177 215,140"/>
-<text class="dg-th" x="330" y="132" text-anchor="middle" dominant-baseline="central">has Bespoke /</text>
-<text class="dg-th" x="330" y="148" text-anchor="middle" dominant-baseline="central">Bridal / Formal?</text></g>
+<path d="M335,84 L335,138" class="dg-arrow" marker-end="url(#fc-arrow)"/>
+<text class="dg-ts" x="345" y="112" text-anchor="start">no</text>
 
-<path d="M445,140 L485,140" class="dg-arrow" marker-end="url(#fc-arrow)"/>
-<text class="dg-ts" x="465" y="131" text-anchor="middle">yes</text>
-<g class="dgc-coral"><rect x="490" y="113" width="165" height="54" rx="10"/>
-<text class="dg-th" x="572" y="134" text-anchor="middle" dominant-baseline="central">Slow Fashion</text>
-<text class="dg-ts" x="572" y="151" text-anchor="middle" dominant-baseline="central">718 businesses</text></g>
+<polygon points="335,140 475,180 335,220 195,180" fill="var(--pink-tint)" stroke="var(--pink)" stroke-width="1"/>
+<text x="335" y="174" text-anchor="middle" font-family="var(--heading)" font-weight="600" font-size="13" fill="#9E0F49">Bespoke / Bridal /</text>
+<text x="335" y="190" text-anchor="middle" font-family="var(--heading)" font-weight="600" font-size="13" fill="#9E0F49">Formal?</text>
 
-<path d="M330,177 L330,213" class="dg-arrow" marker-end="url(#fc-arrow)"/>
-<text class="dg-ts" x="340" y="198" text-anchor="start">no</text>
+<path d="M475,180 L510,180" class="dg-arrow" marker-end="url(#fc-arrow)"/>
+<text class="dg-ts" x="492" y="171" text-anchor="middle">yes</text>
+<g class="dgc-coral"><rect x="515" y="153" width="155" height="54" rx="10"/>
+<text class="dg-th" x="592" y="174" text-anchor="middle" dominant-baseline="central">Slow Fashion</text>
+<text class="dg-ts" x="592" y="191" text-anchor="middle" dominant-baseline="central">718 businesses</text></g>
 
-<g class="dgc-blue"><rect x="235" y="216" width="190" height="54" rx="10"/>
-<text class="dg-th" x="330" y="237" text-anchor="middle" dominant-baseline="central">Fast Fashion</text>
-<text class="dg-ts" x="330" y="254" text-anchor="middle" dominant-baseline="central">1,974 businesses</text></g>
+<path d="M335,220 L335,254" class="dg-arrow" marker-end="url(#fc-arrow)"/>
+<text class="dg-ts" x="345" y="240" text-anchor="start">no</text>
+
+<g class="dgc-blue"><rect x="240" y="256" width="190" height="54" rx="10"/>
+<text class="dg-th" x="335" y="277" text-anchor="middle" dominant-baseline="central">Fast Fashion</text>
+<text class="dg-ts" x="335" y="294" text-anchor="middle" dominant-baseline="central">1,974 businesses</text></g>
+
+<g transform="translate(500,290)">
+<rect x="0" y="0" width="10" height="10" fill="var(--pink-tint)" stroke="var(--pink)" stroke-width="1"/>
+<text x="16" y="9" class="dg-ts" text-anchor="start">decision point</text>
+<rect x="115" y="0" width="10" height="10" class="dgc-blue" style="fill:#E8F0FE; stroke:#1A4480; stroke-width:0.75;"/>
+<text x="131" y="9" class="dg-ts" text-anchor="start">final category</text>
+</g>
 </svg>
     </div>
 
-    <div class="callout" style="margin-top:16px;">
-      <span class="dot"></span>
-      <p><strong>Why "Mixed Retail" is separate:</strong> department stores (Macy's, Kohl's, Dillard's) carry both
-      fast-fashion lines and premium brands under one roof — labeling them "Fast Fashion" would misrepresent their
-      inventory. <strong>Why "Slow Fashion" instead of a generic "Other":</strong> it's the recognized industry term
-      that directly opposes Fast Fashion — custom-made, made-to-order, low turnover — and it's a term this analysis
-      can defend, not one it invented.</p>
+      <div class="callout" style="margin-top:16px;">
+        <span class="dot"></span>
+        <p><strong>Why "Mixed Retail" is separate:</strong> department stores (Macy's, Kohl's, Dillard's) carry both
+        fast-fashion lines and premium brands under one roof — labeling them "Fast Fashion" would misrepresent their
+        inventory. <strong>Why "Slow Fashion" instead of a generic "Other":</strong> it's the recognized industry term
+        that directly opposes Fast Fashion — custom-made, made-to-order, low turnover — and it's a term this analysis
+        can defend, not one it invented.</p>
+      </div>
+
+      <p class="chart-title" style="margin-top:28px; margin-bottom:2px;">The result — what each category actually looks like</p>
+      <p class="chart-sub" style="margin-bottom:12px;">Real businesses from this dataset, by category.</p>
+      <div class="quality-table" style="margin-bottom:24px;">
+        <div class="quality-head" style="grid-template-columns:0.9fr 0.6fr 0.5fr 1.8fr;"><span>Category</span><span>Stores</span><span>%</span><span>Examples</span></div>
+        <div class="quality-row" style="grid-template-columns:0.9fr 0.6fr 0.5fr 1.8fr;">
+          <span>Fast Fashion</span><span class="quality-val">1,974</span><span class="quality-val">63.7%</span>
+          <span style="font-size:12.5px; color:var(--gray-text);">Old Navy, Forever 21, H&amp;M, Banana Republic</span>
+        </div>
+        <div class="quality-row" style="grid-template-columns:0.9fr 0.6fr 0.5fr 1.8fr;">
+          <span>Slow Fashion</span><span class="quality-val">718</span><span class="quality-val">23.2%</span>
+          <span style="font-size:12.5px; color:var(--gray-text);">Men's Wearhouse, Jos A Bank, David's Bridal, Bella Bridesmaids</span>
+        </div>
+        <div class="quality-row" style="grid-template-columns:0.9fr 0.6fr 0.5fr 1.8fr;">
+          <span>Mixed Retail</span><span class="quality-val">408</span><span class="quality-val">13.2%</span>
+          <span style="font-size:12.5px; color:var(--gray-text);">Ross Dress for Less, Kohl's, Macy's, Dillard's</span>
+        </div>
+      </div>
+
+      <p class="chart-title" style="margin-bottom:2px;">Step 3 — merge into one table</p>
+      <p class="chart-sub" style="margin-bottom:12px;">The 5 filtered files above still live separately — one last step joins them.</p>
+      <div class="callout" style="margin-top:0; margin-bottom:28px;">
+        <span class="dot"></span>
+        <p>The 5 filtered files join on <code>business_id</code> and <code>user_id</code> into <strong>one final
+        table — 65,729 rows, 18 columns</strong> — <code>fashion_analysis.csv</code>. Every analysis on the rest of
+        this page runs on this one table.</p>
+      </div>
+
+      <p class="chart-title" style="margin-bottom:2px;">Step 4 — fix what the data got wrong</p>
+      <p class="chart-sub" style="margin-bottom:12px;">Every analysis on this page accounts for these three issues — found by checking the data, not assumed away.</p>
+      <div class="quality-table">
+        <div class="quality-head"><span>Issue found</span><span>What it means</span><span>Flag</span></div>
+        <div class="quality-row">
+          <span>28 hair/beauty salons misclassified</span>
+          <span class="quality-val">tagged "Bridal" only, no clothing</span>
+          <span class="status-pill status-red">fixed</span>
+        </div>
+        <div class="quality-row">
+          <span>Single-review accounts skew extreme</span>
+          <span class="quality-val">39.1% give 1★ vs. 18.7% for regulars</span>
+          <span class="status-pill status-amber">flagged</span>
+        </div>
+        <div class="quality-row">
+          <span>Dataset covers 11 fixed metro areas</span>
+          <span class="quality-val">not a random national sample</span>
+          <span class="status-pill status-amber">caveat</span>
+        </div>
+      </div>
+
+      <p class="chart-title" style="margin-bottom:2px; margin-top:24px;">The salon fix — a topic-modeling side effect</p>
+      <p class="chart-sub" style="margin-bottom:14px;">This wasn't found by accident — an LDA topic model on "Slow Fashion" reviews surfaced unexpected words: "hair," "salon," "cut." That was the tell.</p>
+      <div class="callout" style="margin-top:0;">
+        <span class="dot"></span>
+        <p>28 businesses (like a "Medspa" and a "Blonde Salon &amp; Spa") had qualified only because they offer bridal
+        hair &amp; makeup — not clothing. They were excluded, and the entire pipeline was re-run. Result barely moved
+        (Slow Fashion sentiment 0.634 → 0.629) — confirming the earlier numbers were already solid, but the dataset is
+        now more defensible.</p>
+      </div>
+
+      <p class="chart-title" style="margin-bottom:2px; margin-top:24px;">Are the ratings even trustworthy?</p>
+      <p class="chart-sub" style="margin-bottom:12px;">Checked whether fake or emotional one-off reviews could be
+      distorting the numbers.</p>
+      <div class="quality-table">
+        <div class="quality-head"><span>Reviewer type</span><span>1★ rate</span><span>Middle (2–3★) rate</span></div>
+        <div class="quality-row"><span>Single-review accounts (~6% of data)</span><span class="quality-val">39.1%</span><span class="quality-val">7.6%</span></div>
+        <div class="quality-row"><span>Experienced reviewers</span><span class="quality-val">18.7%</span><span class="quality-val">16.1%</span></div>
+      </div>
+      <div class="callout">
+        <span class="dot"></span>
+        <p>Single-review accounts are more polarized — but they're only 6% of the data, so excluding them moves average
+        ratings by just <strong>+0.03 to +0.04 stars</strong>. Real signal, small magnitude — worth flagging, not enough
+        to discard.</p>
+      </div>
     </div>
   </div>
 
-  <!-- ===== 04 DATA QUALITY ===== -->
+  <!-- ===== 02 RATING & SENTIMENT ===== -->
   <div class="section">
-    <p class="section-eyebrow">04 · Quality check</p>
-    <h2 class="section-title">What had to be fixed before trusting any number</h2>
-    <p class="section-desc">Every analysis on this page accounts for these three issues — found by checking the data, not assumed away.</p>
-
-    <div class="quality-table">
-      <div class="quality-head"><span>Issue found</span><span>What it means</span><span>Flag</span></div>
-      <div class="quality-row">
-        <span>28 hair/beauty salons misclassified</span>
-        <span class="quality-val">tagged "Bridal" only, no clothing</span>
-        <span class="status-pill status-red">fixed</span>
-      </div>
-      <div class="quality-row">
-        <span>Single-review accounts skew extreme</span>
-        <span class="quality-val">39.1% give 1★ vs. 18.7% for regulars</span>
-        <span class="status-pill status-amber">flagged</span>
-      </div>
-      <div class="quality-row">
-        <span>Dataset covers 11 fixed metro areas</span>
-        <span class="quality-val">not a random national sample</span>
-        <span class="status-pill status-amber">caveat</span>
-      </div>
-    </div>
-
-    <p class="chart-title" style="margin-bottom:2px; margin-top:24px;">The salon fix — a topic-modeling side effect</p>
-    <p class="chart-sub" style="margin-bottom:14px;">This wasn't found by accident — an LDA topic model on "Slow Fashion" reviews surfaced unexpected words: "hair," "salon," "cut." That was the tell.</p>
-    <div class="callout" style="margin-top:0;">
-      <span class="dot"></span>
-      <p>28 businesses (like a "Medspa" and a "Blonde Salon &amp; Spa") had qualified only because they offer bridal
-      hair &amp; makeup — not clothing. They were excluded, and the entire pipeline was re-run. Result barely moved
-      (Slow Fashion sentiment 0.634 → 0.629) — confirming the earlier numbers were already solid, but the dataset is
-      now more defensible.</p>
-    </div>
-
-    <p class="chart-title" style="margin-bottom:2px; margin-top:24px;">Are the ratings even trustworthy?</p>
-    <p class="chart-sub" style="margin-bottom:12px;">Checked whether fake or emotional one-off reviews could be
-    distorting the numbers.</p>
-    <div class="quality-table">
-      <div class="quality-head"><span>Reviewer type</span><span>1★ rate</span><span>Middle (2–3★) rate</span></div>
-      <div class="quality-row"><span>Single-review accounts (~6% of data)</span><span class="quality-val">39.1%</span><span class="quality-val">7.6%</span></div>
-      <div class="quality-row"><span>Experienced reviewers</span><span class="quality-val">18.7%</span><span class="quality-val">16.1%</span></div>
-    </div>
-    <div class="callout">
-      <span class="dot"></span>
-      <p>Single-review accounts are more polarized — but they're only 6% of the data, so excluding them moves average
-      ratings by just <strong>+0.03 to +0.04 stars</strong>. Real signal, small magnitude — worth flagging, not enough
-      to discard.</p>
-    </div>
-  </div>
-
-  <!-- ===== 05 RATING & SENTIMENT ===== -->
-  <div class="section">
-    <p class="section-eyebrow">05 · Exploration</p>
+    <p class="section-eyebrow">02 · Exploration</p>
     <h2 class="section-title">Who's actually more satisfied?</h2>
     <p class="section-desc">Two independent signals — the star rating customers give, and the sentiment of what they
     actually wrote — checked separately to see if they agree.</p>
@@ -458,7 +464,7 @@
         <strong style="color:var(--black);">&alpha;</strong><span>normalization constant (=15) — squashes the raw sum smoothly into &minus;1 to +1, no hard cutoff</span>
         <strong style="color:var(--black);">compound</strong><span>the single final score used everywhere on this page</span>
       </div>
-      <p style="font-size: 13.5px; margin:0 0 14px;"><strong>Why VADER for this dataset:</strong> Yelp reviews are short, informal, and punctuation-heavy — exactly the text VADER was built and validated on (it was originally designed for social media, not literature). No training data or GPU needed — the same lexicon runs on all 65,729 reviews and tips in seconds. The tradeoff is covered honestly in Section 12 — see below.</p>
+      <p style="font-size: 13.5px; margin:0 0 14px;"><strong>Why VADER for this dataset:</strong> Yelp reviews are short, informal, and punctuation-heavy — exactly the text VADER was built and validated on (it was originally designed for social media, not literature). No training data or GPU needed — the same lexicon runs on all 65,729 reviews and tips in seconds. The tradeoff is covered honestly in Section 09 — see below.</p>
 
       <p style="font-weight:600; font-size:14px; margin:16px 0 2px;">Walking through one real review</p>
       <p style="font-size:12.5px; color:var(--gray-text); margin:0 0 12px;">An actual Fast Fashion review from the dataset — deliberately mixed in tone, to show the negation and "but" rules actually firing.</p>
@@ -475,7 +481,7 @@
       <p style="font-size: 13.5px; margin:0 0 12px;">Result: <strong>13.9% positive</strong> words, <strong>4.6% negative</strong>, 81.5% neutral (mostly filler words like "the," "in," "for") &nbsp;→&nbsp; <strong style="color:var(--black);">compound = 0.551</strong></p>
       <div class="so-what" style="margin-top:0; padding-top:12px;">
         <span class="dot"></span>
-        <p>Labeled <strong>positive</strong> (compound &ge; 0.05 is the positive threshold used throughout this project; &le; &minus;0.05 is negative; anything between is neutral). VADER correctly read "isn't my favorite... but I do like" as net positive — catching both the negation and the contrastive "but" without ever being trained on this dataset. What it can't do: infer meaning outside its ruleset — sarcasm, or industry phrases like "cheaply made" vs. "cheap price," are exactly where a contextual model would do better. That tradeoff is addressed directly in Section 12.</p>
+        <p>Labeled <strong>positive</strong> (compound &ge; 0.05 is the positive threshold used throughout this project; &le; &minus;0.05 is negative; anything between is neutral). VADER correctly read "isn't my favorite... but I do like" as net positive — catching both the negation and the contrastive "but" without ever being trained on this dataset. What it can't do: infer meaning outside its ruleset — sarcasm, or industry phrases like "cheaply made" vs. "cheap price," are exactly where a contextual model would do better. That tradeoff is addressed directly in Section 09.</p>
       </div>
     </div>
     <!-- ===== END VADER LOGIC DEEP DIVE ===== -->
@@ -525,7 +531,7 @@
 
   <!-- ===== 06 WHAT CUSTOMERS SAY ===== -->
   <div class="section">
-    <p class="section-eyebrow">06 · Text mining</p>
+    <p class="section-eyebrow">03 · Text mining</p>
     <h2 class="section-title">What customers actually talk about</h2>
     <p class="section-desc">TF-IDF surfaced the words each group's reviews use disproportionately more than the
     others' — the vocabulary itself tells a story before any complaint is even categorized.</p>
@@ -576,7 +582,7 @@
 
   <!-- ===== 07 TIME TREND ===== -->
   <div class="section">
-    <p class="section-eyebrow">07 · The headline finding</p>
+    <p class="section-eyebrow">04 · The headline finding</p>
     <h2 class="section-title">A decade of Fast Fashion losing relative ground</h2>
     <p class="section-desc">Measuring each group's <em>share</em> of total review volume per year — not raw counts,
     since raw counts simply grow as Yelp itself grew. Share isolates the actual shift in relative attention.</p>
@@ -674,7 +680,7 @@
 
   <!-- ===== 08 GEOGRAPHY ===== -->
   <div class="section">
-    <p class="section-eyebrow">08 · Geography</p>
+    <p class="section-eyebrow">05 · Geography</p>
     <h2 class="section-title">Where each type dominates</h2>
     <p class="section-desc">
       Slow Fashion's share of clothing businesses, state by state. Caveat: the Yelp dataset covers a fixed set of
@@ -1041,7 +1047,7 @@ Place this code in the empty space below. */
 
   <!-- ===== 09 ELITE VS REGULAR ===== -->
   <div class="section">
-    <p class="section-eyebrow">09 · Reviewer profile</p>
+    <p class="section-eyebrow">06 · Reviewer profile</p>
     <h2 class="section-title">Who's happier — loyal reviewers, or casual ones?</h2>
     <p class="section-desc">Split every review by whether the reviewer had Yelp Elite status in at least one year.
     The common assumption is that experienced reviewers are pickier. The data says the opposite.</p>
@@ -1074,7 +1080,7 @@ Place this code in the empty space below. */
 
   <!-- ===== 10 OPERATING HOURS ===== -->
   <div class="section">
-    <p class="section-eyebrow">10 · Operations</p>
+    <p class="section-eyebrow">07 · Operations</p>
     <h2 class="section-title">When are these stores actually open?</h2>
     <p class="section-desc">Parsed the <code>hours</code> field from 2,772 businesses (89% of the dataset) into total
     weekly open hours.</p>
@@ -1091,13 +1097,13 @@ Place this code in the empty space below. */
       <span class="dot"></span>
       <p>Spread is nearly identical across all three (standard deviation ≈18 hours in every group) — no group runs a
       meaningfully more or less predictable schedule than another. Long hours (Mixed Retail) also aren't converting to
-      satisfaction — see Section 05. It's not an access problem, it's an in-store experience problem.</p>
+      satisfaction — see Section 02. It's not an access problem, it's an in-store experience problem.</p>
     </div>
   </div>
 
   <!-- ===== 11 RECOMMENDATIONS ===== -->
   <div class="section">
-    <p class="section-eyebrow">11 · So what</p>
+    <p class="section-eyebrow">08 · So what</p>
     <h2 class="section-title">What this means for the business</h2>
     <p class="section-desc">Everything above, turned into an actual answer for each audience.</p>
 
@@ -1133,7 +1139,7 @@ Place this code in the empty space below. */
 
   <!-- ===== 12 LIMITATIONS ===== -->
   <div class="section">
-    <p class="section-eyebrow">12 · Honesty check</p>
+    <p class="section-eyebrow">09 · Honesty check</p>
     <h2 class="section-title">Limitations &amp; honest assessment</h2>
     <p class="section-desc">Stated plainly rather than glossed over.</p>
 
@@ -1161,7 +1167,7 @@ Place this code in the empty space below. */
       </div>
       <div class="quality-row">
         <span>Single-review account noise</span>
-        <span style="font-size:12.5px; color:var(--gray-text);">quantified in Section 04 — moves averages by only 0.03–0.04★</span>
+        <span style="font-size:12.5px; color:var(--gray-text);">quantified in Section 01 — moves averages by only 0.03–0.04★</span>
         <span class="status-pill status-green">quantified</span>
       </div>
     </div>
