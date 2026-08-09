@@ -73,7 +73,9 @@
   .tf-icon-clean { background: #B9E3D2; }
   .tf-fname { font-family: 'IBM Plex Mono', monospace; font-size: 11.5px; font-weight: 600; color: var(--black); margin: 0 0 2px; }
   .tf-stat { font-size: 10px; color: var(--gray-text); margin: 0; }
-  .tf-mid { display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 2px; }
+  .tf-mid { position: relative; display: flex; align-items: center; justify-content: center; min-height: 40px; }
+  .tf-line { position: absolute; left: 0; right: 0; top: 50%; transform: translateY(-50%); margin: 0; }
+  .tf-label { position: relative; background: #fff; padding: 2px 10px; border-radius: 8px; display: flex; flex-direction: column; align-items: center; gap: 1px; }
   .tf-pct { font-family: var(--heading); font-weight: 700; font-size: 13px; color: var(--pink); }
   .tf-line { width: 100%; height: 1.5px; background: linear-gradient(to right, #C9A0A8, #8FCBAF); margin: 2px 0; }
   .tf-pill { display: inline-block; background: var(--pink-tint); color: #9E0F49; font-family: var(--heading); font-weight: 700; font-size: 15px; padding: 10px 24px; border-radius: 999px; }
@@ -138,6 +140,10 @@
   .dgc-purple .dg-th, .dgc-purple .dg-ts { fill: #3C3489; }
   .dgc-amber rect, .dgc-amber polygon, .dgc-amber circle { fill: #FAEEDA; stroke: #633806; }
   .dgc-amber .dg-th, .dgc-amber .dg-ts { fill: #633806; }
+  .dgc-pink rect, .dgc-pink polygon, .dgc-pink circle { fill: var(--pink-tint); stroke: var(--pink); }
+  .dgc-pink .dg-th, .dgc-pink .dg-ts { fill: #9E0F49; }
+  .dgc-rose rect, .dgc-rose polygon, .dgc-rose circle { fill: #FBEAF0; stroke: #993556; }
+  .dgc-rose .dg-th, .dgc-rose .dg-ts { fill: #72243E; }
   .dg-note rect { fill: #fff; stroke: var(--border); }
   .dg-note text { fill: var(--gray-text); }
   .dg-dashed { fill: none; stroke: var(--gray-text); stroke-width: 0.5; stroke-dasharray: 4 3; }
@@ -221,6 +227,7 @@
     <span class="tag filled">Python</span>
     <span class="tag">pandas</span>
     <span class="tag">VADER Sentiment</span>
+    <span class="tag">DistilBERT</span>
     <span class="tag">TF-IDF &amp; LDA</span>
     <span class="tag">Statistical Analysis</span>
     <span class="tag">Consumer Analytics</span>
@@ -267,31 +274,31 @@
 
       <div class="tf-row">
         <div class="tf-box tf-raw"><div class="tf-icon tf-icon-raw"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#6B7280" stroke-width="2"><path d="M3 21h18M5 21V9l7-5 7 5v12M9 21v-6h6v6"/></svg></div><div><p class="tf-fname">business.json</p><p class="tf-stat">150,346 &times; 14</p></div></div>
-        <div class="tf-mid"><div class="tf-line"></div><span class="tf-pct">2.1%</span><span style="font-size:9px; color:#9E9C97;">kept</span></div>
+        <div class="tf-mid"><div class="tf-line"></div><div class="tf-label"><span class="tf-pct">2.1%</span><span style="font-size:9px; color:#9E9C97;">kept</span></div></div>
         <div class="tf-box tf-clean"><div class="tf-icon tf-icon-clean"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#085041" stroke-width="2"><path d="M3 21h18M5 21V9l7-5 7 5v12M9 21v-6h6v6"/></svg></div><div><p class="tf-fname">clothing_businesses.csv</p><p class="tf-stat">3,100 &times; 10</p></div></div>
       </div>
 
       <div class="tf-row">
         <div class="tf-box tf-raw"><div class="tf-icon tf-icon-raw"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#6B7280" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg></div><div><p class="tf-fname">review.json</p><p class="tf-stat">6,990,280 &times; 9</p></div></div>
-        <div class="tf-mid"><div class="tf-line"></div><span class="tf-pct">0.8%</span><span style="font-size:9px; color:#9E9C97;">kept</span></div>
+        <div class="tf-mid"><div class="tf-line"></div><div class="tf-label"><span class="tf-pct">0.8%</span><span style="font-size:9px; color:#9E9C97;">kept</span></div></div>
         <div class="tf-box tf-clean"><div class="tf-icon tf-icon-clean"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#085041" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg></div><div><p class="tf-fname">clothing_reviews.csv</p><p class="tf-stat">58,890 &times; 9</p></div></div>
       </div>
 
       <div class="tf-row">
         <div class="tf-box tf-raw"><div class="tf-icon tf-icon-raw"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#6B7280" stroke-width="2"><path d="M14 3v4a1 1 0 0 0 1 1h4"/><path d="M17 21H7a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h7l5 5v11a2 2 0 0 1-2 2z"/></svg></div><div><p class="tf-fname">tip.json</p><p class="tf-stat">908,915 &times; 5</p></div></div>
-        <div class="tf-mid"><div class="tf-line"></div><span class="tf-pct">0.8%</span><span style="font-size:9px; color:#9E9C97;">kept</span></div>
+        <div class="tf-mid"><div class="tf-line"></div><div class="tf-label"><span class="tf-pct">0.8%</span><span style="font-size:9px; color:#9E9C97;">kept</span></div></div>
         <div class="tf-box tf-clean"><div class="tf-icon tf-icon-clean"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#085041" stroke-width="2"><path d="M14 3v4a1 1 0 0 0 1 1h4"/><path d="M17 21H7a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h7l5 5v11a2 2 0 0 1-2 2z"/></svg></div><div><p class="tf-fname">clothing_tips.csv</p><p class="tf-stat">6,839 &times; 5</p></div></div>
       </div>
 
       <div class="tf-row">
         <div class="tf-box tf-raw"><div class="tf-icon tf-icon-raw"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#6B7280" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg></div><div><p class="tf-fname">checkin.json</p><p class="tf-stat">131,930 &times; 2</p></div></div>
-        <div class="tf-mid"><div class="tf-line"></div><span class="tf-pct">2.2%</span><span style="font-size:9px; color:#9E9C97;">kept</span></div>
+        <div class="tf-mid"><div class="tf-line"></div><div class="tf-label"><span class="tf-pct">2.2%</span><span style="font-size:9px; color:#9E9C97;">kept</span></div></div>
         <div class="tf-box tf-clean"><div class="tf-icon tf-icon-clean"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#085041" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg></div><div><p class="tf-fname">clothing_checkins.csv</p><p class="tf-stat">2,909 &times; 2</p></div></div>
       </div>
 
       <div class="tf-row" style="margin-bottom:0;">
         <div class="tf-box tf-raw"><div class="tf-icon tf-icon-raw"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#6B7280" stroke-width="2"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 4-6 8-6s8 2 8 6"/></svg></div><div><p class="tf-fname">user.json</p><p class="tf-stat">1,987,897 &times; 22</p></div></div>
-        <div class="tf-mid"><div class="tf-line"></div><span class="tf-pct">2.3%</span><span style="font-size:9px; color:#9E9C97;">kept</span></div>
+        <div class="tf-mid"><div class="tf-line"></div><div class="tf-label"><span class="tf-pct">2.3%</span><span style="font-size:9px; color:#9E9C97;">kept</span></div></div>
         <div class="tf-box tf-clean"><div class="tf-icon tf-icon-clean"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#085041" stroke-width="2"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 4-6 8-6s8 2 8 6"/></svg></div><div><p class="tf-fname">clothing_users.csv</p><p class="tf-stat">46,236 &times; 7</p></div></div>
       </div>
 
@@ -317,33 +324,37 @@
 
 <line x1="180" y1="47" x2="215" y2="47" class="dg-arrow" marker-end="url(#fc-arrow)"/>
 
-<polygon points="335,10 455,47 335,84 215,47" fill="var(--pink-tint)" stroke="var(--pink)" stroke-width="1"/>
+<path d="M 319.7,14.7 Q 335.0,10.0 350.3,14.7 L 439.7,42.3 Q 455.0,47.0 439.7,51.7 L 350.3,79.3 Q 335.0,84.0 319.7,79.3 L 230.3,51.7 Q 215.0,47.0 230.3,42.3 L 319.7,14.7 Z" fill="var(--pink-tint)" stroke="var(--pink)" stroke-width="1" stroke-linejoin="round"/>
 <text x="335" y="41" text-anchor="middle" font-family="var(--heading)" font-weight="600" font-size="13" fill="#9E0F49">Department</text>
 <text x="335" y="57" text-anchor="middle" font-family="var(--heading)" font-weight="600" font-size="13" fill="#9E0F49">Stores?</text>
 
 <path d="M455,47 L490,47" class="dg-arrow" marker-end="url(#fc-arrow)"/>
-<text class="dg-ts" x="472" y="38" text-anchor="middle">yes</text>
-<g class="dgc-teal"><rect x="495" y="20" width="165" height="54" rx="10"/>
+<rect x="462" y="40" width="21" height="14" fill="#fff"/>
+<text class="dg-ts" x="472" y="47" text-anchor="middle" dominant-baseline="central">yes</text>
+<g class="dgc-teal"><rect x="495" y="20" width="165" height="54" rx="10" style="fill:#fff; stroke:#085041; stroke-width:1.25;"/>
 <text class="dg-th" x="577" y="41" text-anchor="middle" dominant-baseline="central">Mixed Retail</text>
 <text class="dg-ts" x="577" y="58" text-anchor="middle" dominant-baseline="central">408 businesses</text></g>
 
 <path d="M335,84 L335,138" class="dg-arrow" marker-end="url(#fc-arrow)"/>
-<text class="dg-ts" x="345" y="112" text-anchor="start">no</text>
+<rect x="323" y="104" width="24" height="14" fill="#fff"/>
+<text class="dg-ts" x="335" y="111" text-anchor="middle" dominant-baseline="central">no</text>
 
-<polygon points="335,140 475,180 335,220 195,180" fill="var(--pink-tint)" stroke="var(--pink)" stroke-width="1"/>
+<path d="M 319.6,144.4 Q 335.0,140.0 350.4,144.4 L 459.6,175.6 Q 475.0,180.0 459.6,184.4 L 350.4,215.6 Q 335.0,220.0 319.6,215.6 L 210.4,184.4 Q 195.0,180.0 210.4,175.6 L 319.6,144.4 Z" fill="var(--pink-tint)" stroke="var(--pink)" stroke-width="1" stroke-linejoin="round"/>
 <text x="335" y="174" text-anchor="middle" font-family="var(--heading)" font-weight="600" font-size="13" fill="#9E0F49">Bespoke / Bridal /</text>
 <text x="335" y="190" text-anchor="middle" font-family="var(--heading)" font-weight="600" font-size="13" fill="#9E0F49">Formal?</text>
 
 <path d="M475,180 L510,180" class="dg-arrow" marker-end="url(#fc-arrow)"/>
-<text class="dg-ts" x="492" y="171" text-anchor="middle">yes</text>
-<g class="dgc-coral"><rect x="515" y="153" width="155" height="54" rx="10"/>
+<rect x="482" y="173" width="21" height="14" fill="#fff"/>
+<text class="dg-ts" x="492" y="180" text-anchor="middle" dominant-baseline="central">yes</text>
+<g class="dgc-coral"><rect x="515" y="153" width="155" height="54" rx="10" style="fill:#fff; stroke:#712B13; stroke-width:1.25;"/>
 <text class="dg-th" x="592" y="174" text-anchor="middle" dominant-baseline="central">Slow Fashion</text>
 <text class="dg-ts" x="592" y="191" text-anchor="middle" dominant-baseline="central">718 businesses</text></g>
 
 <path d="M335,220 L335,254" class="dg-arrow" marker-end="url(#fc-arrow)"/>
-<text class="dg-ts" x="345" y="240" text-anchor="start">no</text>
+<rect x="323" y="230" width="24" height="14" fill="#fff"/>
+<text class="dg-ts" x="335" y="237" text-anchor="middle" dominant-baseline="central">no</text>
 
-<g class="dgc-blue"><rect x="240" y="256" width="190" height="54" rx="10"/>
+<g class="dgc-blue"><rect x="240" y="256" width="190" height="54" rx="10" style="fill:#fff; stroke:#1A4480; stroke-width:1.25;"/>
 <text class="dg-th" x="335" y="277" text-anchor="middle" dominant-baseline="central">Fast Fashion</text>
 <text class="dg-ts" x="335" y="294" text-anchor="middle" dominant-baseline="central">1,974 businesses</text></g>
 
@@ -471,7 +482,36 @@
         <strong style="color:var(--black);">&alpha;</strong><span>normalization constant (=15) — squashes the raw sum smoothly into &minus;1 to +1, no hard cutoff</span>
         <strong style="color:var(--black);">compound</strong><span>the single final score used everywhere on this page</span>
       </div>
-      <p style="font-size: 13.5px; margin:0 0 14px;"><strong>Why VADER for this dataset:</strong> Yelp reviews are short, informal, and punctuation-heavy — exactly the text VADER was built and validated on (it was originally designed for social media, not literature). No training data or GPU needed — the same lexicon runs on all 65,729 reviews and tips in seconds. The tradeoff is covered honestly in Section 09 — see below.</p>
+      <p style="font-size: 13.5px; margin:0 0 14px;"><strong>Why VADER for this dataset:</strong> Yelp reviews are short, informal, and punctuation-heavy — the kind of text VADER was built and validated on (tweets, short product/movie reviews — not Yelp specifically, but the same style). No training data or GPU needed — the same lexicon runs on all 65,729 reviews and tips in seconds. The tradeoff is covered honestly in Section 09 — see below.</p>
+
+      <p class="chart-title" style="margin:20px 0 2px;">The pipeline</p>
+      <p class="chart-sub" style="margin-bottom:10px;">Five steps, no training involved — the same fixed dictionary and rules run on every review.</p>
+      <div class="dg-wrap">
+<svg viewBox="0 0 700 140" role="img" style="width:100%;" aria-label="VADER pipeline: review text goes through lexicon lookup, then rule adjustments for negation and degree, then normalization into a compound score, producing a positive, neutral, or negative label">
+<desc>Review text is looked up word-by-word against a ~7,500-word valence lexicon. Grammar-aware rules then adjust the scores for negation, degree modifiers, and contrastive conjunctions. The adjusted scores are summed and normalized into a compound score from -1 to 1, which is thresholded into a positive, neutral, or negative label.</desc>
+<defs><marker id="vd-arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M2 1L8 5L2 9" fill="none" stroke="context-stroke" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></marker></defs>
+<g class="dg-box"><rect x="6" y="32" width="122" height="66" rx="10"/>
+<text class="dg-th" x="67" y="55" text-anchor="middle" dominant-baseline="central">Review text</text>
+<text class="dg-ts" x="67" y="75" text-anchor="middle" dominant-baseline="central" style="font-size:10.5px;">raw string</text></g>
+<path d="M128,65 L148,65" class="dg-arrow" marker-end="url(#vd-arrow)"/>
+<g class="dgc-pink"><rect x="148" y="32" width="122" height="66" rx="10"/>
+<text class="dg-th" x="209" y="55" text-anchor="middle" dominant-baseline="central">Lexicon lookup</text>
+<text class="dg-ts" x="209" y="75" text-anchor="middle" dominant-baseline="central" style="font-size:10.5px;">~7,500 word scores</text></g>
+<path d="M270,65 L290,65" class="dg-arrow" marker-end="url(#vd-arrow)"/>
+<g class="dgc-pink"><rect x="290" y="32" width="122" height="66" rx="10"/>
+<text class="dg-th" x="351" y="51" text-anchor="middle" dominant-baseline="central">Rule adjustments</text>
+<text class="dg-ts" x="351" y="66" text-anchor="middle" dominant-baseline="central" style="font-size:10.5px;">negation, degree,</text>
+<text class="dg-ts" x="351" y="82" text-anchor="middle" dominant-baseline="central" style="font-size:10.5px;">"but" clauses</text></g>
+<path d="M412,65 L432,65" class="dg-arrow" marker-end="url(#vd-arrow)"/>
+<g class="dgc-pink"><rect x="432" y="32" width="122" height="66" rx="10"/>
+<text class="dg-th" x="493" y="55" text-anchor="middle" dominant-baseline="central">Normalize</text>
+<text class="dg-ts" x="493" y="75" text-anchor="middle" dominant-baseline="central" style="font-size:10.5px;">compound formula</text></g>
+<path d="M554,65 L574,65" class="dg-arrow" marker-end="url(#vd-arrow)"/>
+<g class="dgc-pink"><rect x="574" y="32" width="122" height="66" rx="10"/>
+<text class="dg-th" x="635" y="55" text-anchor="middle" dominant-baseline="central">Label</text>
+<text class="dg-ts" x="635" y="75" text-anchor="middle" dominant-baseline="central" style="font-size:10.5px;">pos / neu / neg</text></g>
+</svg>
+      </div>
 
       <p style="font-weight:600; font-size:14px; margin:16px 0 2px;">Walking through one real review</p>
       <p style="font-size:12.5px; color:var(--gray-text); margin:0 0 12px;">An actual Fast Fashion review from the dataset — deliberately mixed in tone, to show the negation and "but" rules actually firing.</p>
@@ -534,12 +574,111 @@
       is measurably less satisfying than dedicated clothing stores of either speed, on both a 5-star scale and in the
       actual words customers write.</p>
     </div>
+
+    <!-- ===== BERT LOGIC DEEP DIVE ===== -->
+    <div class="chart-card" style="margin-top: 24px; margin-bottom: 24px;">
+      <p class="chart-title" style="color:#712B13;">How the sentiment score is actually computed — BERT</p>
+      <p style="font-size: 13.5px; margin:8px 0 14px; color:var(--gray-text);"><strong style="color:var(--black);">The concept:</strong> DistilBERT is a trained transformer model, not a fixed dictionary. It reads the whole sentence at once — every word's meaning is computed in the context of every other word around it (bidirectional attention) — instead of scoring words one at a time. This is exactly what a lexicon structurally can't do, and it's why this project runs it as a second check on VADER. Model used here: <code>distilbert-base-uncased-finetuned-sst-2-english</code>, already fine-tuned for sentiment — this project only ran it, never trained it.</p>
+
+      <p class="chart-title" style="margin:20px 0 2px;">The pipeline</p>
+      <p class="chart-sub" style="margin-bottom:10px;">Text passes through the actual neural network — no hand-written rules anywhere in this chain.</p>
+      <div class="dg-wrap">
+<svg viewBox="0 0 700 140" role="img" style="width:100%;" aria-label="BERT pipeline: review text is tokenized, passed through transformer layers with attention, then a classification head produces a label and confidence score">
+<desc>Review text is split into WordPiece tokens, truncated to 256 tokens. The tokens pass through six transformer layers where each word's meaning is computed using the context of every other word in the sentence. A classification head then outputs a positive and negative score, converted by softmax into a label and confidence, which this project turns into a signed compound score for comparison with VADER.</desc>
+<defs><marker id="bt-arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M2 1L8 5L2 9" fill="none" stroke="context-stroke" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></marker></defs>
+<g class="dg-box"><rect x="6" y="32" width="122" height="66" rx="10"/>
+<text class="dg-th" x="67" y="55" text-anchor="middle" dominant-baseline="central">Review text</text>
+<text class="dg-ts" x="67" y="75" text-anchor="middle" dominant-baseline="central" style="font-size:10.5px;">raw string</text></g>
+<path d="M128,65 L148,65" class="dg-arrow" marker-end="url(#bt-arrow)"/>
+<g class="dgc-rose"><rect x="148" y="32" width="122" height="66" rx="10"/>
+<text class="dg-th" x="209" y="55" text-anchor="middle" dominant-baseline="central">Tokenize</text>
+<text class="dg-ts" x="209" y="75" text-anchor="middle" dominant-baseline="central" style="font-size:10.5px;">WordPiece, &le;256</text></g>
+<path d="M270,65 L290,65" class="dg-arrow" marker-end="url(#bt-arrow)"/>
+<g class="dgc-rose"><rect x="290" y="32" width="122" height="66" rx="10"/>
+<text class="dg-th" x="351" y="51" text-anchor="middle" dominant-baseline="central">Transformer</text>
+<text class="dg-ts" x="351" y="66" text-anchor="middle" dominant-baseline="central" style="font-size:10.5px;">6 layers, context-</text>
+<text class="dg-ts" x="351" y="82" text-anchor="middle" dominant-baseline="central" style="font-size:10.5px;">aware attention</text></g>
+<path d="M412,65 L432,65" class="dg-arrow" marker-end="url(#bt-arrow)"/>
+<g class="dgc-rose"><rect x="432" y="32" width="122" height="66" rx="10"/>
+<text class="dg-th" x="493" y="51" text-anchor="middle" dominant-baseline="central">Classify</text>
+<text class="dg-ts" x="493" y="66" text-anchor="middle" dominant-baseline="central" style="font-size:10.5px;">head + softmax</text>
+<text class="dg-ts" x="493" y="82" text-anchor="middle" dominant-baseline="central" style="font-size:10.5px;">&rarr; probability</text></g>
+<path d="M554,65 L574,65" class="dg-arrow" marker-end="url(#bt-arrow)"/>
+<g class="dgc-rose"><rect x="574" y="32" width="122" height="66" rx="10"/>
+<text class="dg-th" x="635" y="55" text-anchor="middle" dominant-baseline="central">Label + score</text>
+<text class="dg-ts" x="635" y="75" text-anchor="middle" dominant-baseline="central" style="font-size:10.5px;">signed compound</text></g>
+</svg>
+      </div>
+
+      <p style="font-weight:600; font-size:14px; margin:16px 0 2px;">Walking through one real review</p>
+      <p style="font-size:12.5px; color:var(--gray-text); margin:0 0 12px;">The very first Fast Fashion review in the dataset — sarcastic, complaint-toned language, to show where BERT and VADER actually pull apart.</p>
+      <div class="field-card c-coral" style="margin-bottom:14px;">
+        <p style="font-size:13.5px; font-style:italic; margin:0;">"The TV shows are $4.99 and they have commercials! What a cheesy way to make money and a sign of a less than classy hotel, particularly when you pay more than $150 a night. And there is NO complimentary breakfast, just an overpriced buffet, something even the cheapest hotels in California provide."</p>
+      </div>
+      <div class="quality-table" style="margin-bottom:16px;">
+        <div class="quality-head" style="grid-template-columns:1fr 1fr 1fr;"><span>Method</span><span>Score</span><span>Read</span></div>
+        <div class="quality-row" style="grid-template-columns:1fr 1fr 1fr;">
+          <span>VADER</span><span class="quality-val">&minus;0.356</span>
+          <span style="font-size:12.5px; color:var(--gray-text);">negative, but mild — few words carry strong lexicon valence on their own</span>
+        </div>
+        <div class="quality-row" style="grid-template-columns:1fr 1fr 1fr;">
+          <span>BERT</span><span class="quality-val">&minus;0.999</span>
+          <span style="font-size:12.5px; color:var(--gray-text);">negative with 99.9% confidence — reads "cheesy," "overpriced," and the sarcastic tone as strongly, unambiguously negative</span>
+        </div>
+      </div>
+      <div class="so-what" style="margin-top:0; padding-top:12px;">
+        <span class="dot"></span>
+        <p>Same review, same direction (negative) — but very different <strong>conviction</strong>. VADER's word-by-word lookup finds only a few individually-negative words ("cheesy," "cheapest") diluted by neutral filler, landing near the threshold. BERT reads the sentence as a whole and comes back near-certain. This gap — mild-but-directionally-right vs. strongly-confident — is the same pattern behind the Mixed Retail divergence below.</p>
+      </div>
+    </div>
+    <!-- ===== END BERT LOGIC DEEP DIVE ===== -->
+
+    <!-- ===== VADER vs BERT CHECK ===== -->
+    <div class="chart-card" style="margin-top: 24px;">
+      <p class="chart-title">Side by side — do the two methods agree?</p>
+      <p class="chart-sub">Same 65,729 reviews, two different sentiment engines (above) — here's where their verdicts
+      line up, and where they don't.</p>
+
+      <div class="kpi-strip" style="margin-bottom:20px;">
+        <div class="kpi-card"><p class="kpi-num">80.2%</p><p class="kpi-label">Fast Fashion — VADER/BERT agreement</p></div>
+        <div class="kpi-card"><p class="kpi-num">81.8%</p><p class="kpi-label">Slow Fashion — VADER/BERT agreement</p></div>
+        <div class="kpi-card"><p class="kpi-num">72.0%</p><p class="kpi-label">Mixed Retail — VADER/BERT agreement (lowest)</p></div>
+      </div>
+
+      <div style="display:flex; flex-wrap:wrap; gap:16px; margin-bottom:16px; font-size:12.5px; color:var(--gray-text);">
+        <span style="display:flex; align-items:center; gap:6px;"><span style="width:11px; height:11px; border-radius:3px; background:#e8187a; display:inline-block;"></span>VADER</span>
+        <span style="display:flex; align-items:center; gap:6px;"><span style="width:11px; height:11px; border-radius:3px; background:#993556; display:inline-block;"></span>BERT</span>
+      </div>
+
+      <p style="font-size:12.5px; font-weight:600; color:var(--gray-text); margin:0 0 8px;">Fast Fashion</p>
+      <div class="bar-row"><span class="bar-label">VADER</span><div class="bar-track"><div class="bar-fill" style="width:61.1%; background:#e8187a;"></div></div><span class="bar-val">0.611</span></div>
+      <div class="bar-row"><span class="bar-label">BERT</span><div class="bar-track"><div class="bar-fill" style="width:32.4%; background:#993556;"></div></div><span class="bar-val">0.324</span></div>
+
+      <p style="font-size:12.5px; font-weight:600; color:var(--gray-text); margin:18px 0 8px;">Slow Fashion</p>
+      <div class="bar-row"><span class="bar-label">VADER</span><div class="bar-track"><div class="bar-fill" style="width:62.9%; background:#e8187a;"></div></div><span class="bar-val">0.629</span></div>
+      <div class="bar-row"><span class="bar-label">BERT</span><div class="bar-track"><div class="bar-fill" style="width:33.7%; background:#993556;"></div></div><span class="bar-val">0.337</span></div>
+
+      <p style="font-size:12.5px; font-weight:600; color:var(--gray-text); margin:18px 0 8px;">Mixed Retail</p>
+      <div class="bar-row"><span class="bar-label">VADER</span><div class="bar-track"><div class="bar-fill" style="width:41.2%; background:#e8187a;"></div></div><span class="bar-val">0.412</span></div>
+      <div class="bar-row"><span class="bar-label">BERT</span><div class="bar-track"><div class="bar-fill" style="width:2.3%; background:#D93025;"></div></div><span class="bar-val" style="color:#D93025;">&minus;0.023</span></div>
+
+      <div class="so-what">
+        <span class="dot"></span>
+        <p>Both methods agree on the <strong>ranking</strong> (Slow Fashion ≈ Fast Fashion &gt; Mixed Retail) — the
+        headline finding holds. But they diverge sharply on Mixed Retail: VADER calls it net <em>positive</em>
+        (69.4% positive reviews), while BERT calls the same reviews net <strong>negative</strong> (51.1% negative)
+        — and agreement between the two methods is lowest exactly there (72.0% vs ~81% elsewhere). This isn't a
+        contradiction to explain away — a transformer catches sarcasm and mixed-clause nuance a lexicon structurally
+        can't, so if anything the original Mixed Retail finding was <strong>understating</strong> how negative that
+        segment's feedback really is.</p>
+      </div>
+    </div>
   </div>
 
   <!-- ===== 06 WHAT CUSTOMERS SAY ===== -->
   <div class="section">
-    <p class="section-eyebrow">03 · Text mining</p>
-    <h2 class="section-title">What customers actually talk about</h2>
+    <p class="section-eyebrow">03 · TF-IDF &amp; Topic Modeling</p>
+    <h2 class="section-title">The words each group can't stop using</h2>
     <p class="section-desc">TF-IDF surfaced the words each group's reviews use disproportionately more than the
     others' — the vocabulary itself tells a story before any complaint is even categorized.</p>
 
@@ -565,6 +704,16 @@
         </div>
         <p class="field-desc" style="margin-top:10px;">Actual brand names + transactional language (return, line, manager).</p>
       </div>
+    </div>
+
+    <div class="so-what" style="margin-top:0; padding-top:14px;">
+      <span class="dot"></span>
+      <p>The vocabulary alone explains <strong>why</strong> Mixed Retail scores worst on every sentiment metric above —
+      its distinctive words aren't about the product at all. "Return," "line," "manager," "told" point squarely at
+      <strong>checkout and service friction</strong>, not quality. Slow Fashion's vocabulary confirms Section 4's
+      classification logic (bridal/formal categories genuinely produce bridal/formal conversations), and Fast Fashion's
+      generic, no-single-theme vocabulary matches its "no dominant complaint" pattern in the issue table below. Sentiment
+      scores said <em>how bad</em>; this says <em>why</em>.</p>
     </div>
 
     <p class="chart-title" style="margin-bottom:2px;">Negative reviews, by specific issue</p>
@@ -622,58 +771,6 @@
       </div>
 
       <p style="font-size:12px; color:var(--gray-text); margin:18px 0 0;">Fast Fashion's drop (14.8 pts) is almost exactly Slow Fashion's gain (16.7 pts) &mdash; Mixed Retail stayed roughly flat throughout. The shift is a direct transfer from fast to slow, not a general fashion-industry decline.</p>
-    </div>
-
-    <p class="chart-title" style="margin-top:32px; margin-bottom:2px;">The full decade, year by year</p>
-    <div class="dg-wrap">
-<svg viewBox="0 0 680 380" role="img" style="width:100%;" aria-label="Line chart of Fast Fashion, Slow Fashion, and Mixed Retail share of review volume from 2010 to 2021">
-<desc>Fast Fashion's share of review volume declines from about 70 percent in 2010 to about 55 percent in 2021. Slow Fashion's share rises from about 15 percent to about 31 percent over the same period. Mixed Retail stays roughly flat around 13 to 19 percent.</desc>
-<line x1="60" y1="300" x2="620" y2="300" class="dg-line"/>
-<line x1="60" y1="240" x2="620" y2="240" class="dg-line"/>
-<line x1="60" y1="180" x2="620" y2="180" class="dg-line"/>
-<line x1="60" y1="120" x2="620" y2="120" class="dg-line"/>
-<line x1="60" y1="60" x2="620" y2="60" class="dg-line"/>
-<text class="dg-ts" x="50" y="304" text-anchor="end">0%</text>
-<text class="dg-ts" x="50" y="244" text-anchor="end">20%</text>
-<text class="dg-ts" x="50" y="184" text-anchor="end">40%</text>
-<text class="dg-ts" x="50" y="124" text-anchor="end">60%</text>
-<text class="dg-ts" x="50" y="64" text-anchor="end">80%</text>
-
-<text class="dg-ts" x="60" y="320" text-anchor="middle">2010</text>
-<text class="dg-ts" x="111" y="320" text-anchor="middle">2011</text>
-<text class="dg-ts" x="162" y="320" text-anchor="middle">2012</text>
-<text class="dg-ts" x="213" y="320" text-anchor="middle">2013</text>
-<text class="dg-ts" x="264" y="320" text-anchor="middle">2014</text>
-<text class="dg-ts" x="315" y="320" text-anchor="middle">2015</text>
-<text class="dg-ts" x="366" y="320" text-anchor="middle">2016</text>
-<text class="dg-ts" x="417" y="320" text-anchor="middle">2017</text>
-<text class="dg-ts" x="468" y="320" text-anchor="middle">2018</text>
-<text class="dg-ts" x="519" y="320" text-anchor="middle">2019</text>
-<text class="dg-ts" x="570" y="320" text-anchor="middle">2020</text>
-<text class="dg-ts" x="620" y="320" text-anchor="middle">2021</text>
-
-<polyline points="60,89 111,107 162,119 213,123 264,135 315,136 366,142 417,139 468,132 519,126 570,128 620,134" fill="none" stroke="#1A4480" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
-<polyline points="60,257 111,250 162,235 213,231 264,216 315,210 366,206 417,210 468,212 519,215 570,214 620,206" fill="none" stroke="#712B13" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
-<polyline points="60,254 111,243 162,247 213,246 264,249 315,254 366,252 417,251 468,256 519,258 570,258 620,260" fill="none" stroke="#085041" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
-
-<circle cx="60" cy="89" r="4" fill="#1A4480" stroke="#fff" stroke-width="1.5"/>
-<circle cx="60" cy="257" r="4" fill="#712B13" stroke="#fff" stroke-width="1.5"/>
-<circle cx="60" cy="254" r="4" fill="#085041" stroke="#fff" stroke-width="1.5"/>
-<text class="dg-th" x="64" y="78" fill="#1A4480">70%</text>
-<text class="dg-th" x="64" y="244" fill="#712B13">15%</text>
-<text class="dg-th" x="64" y="276" fill="#085041">15%</text>
-
-<circle cx="620" cy="134" r="5" fill="#1A4480" stroke="#fff" stroke-width="2"/>
-<circle cx="620" cy="206" r="5" fill="#712B13" stroke="#fff" stroke-width="2"/>
-<circle cx="620" cy="260" r="5" fill="#085041" stroke="#fff" stroke-width="2"/>
-<text class="dg-th" x="632" y="138" fill="#1A4480">55%</text>
-<text class="dg-th" x="632" y="210" fill="#712B13">31%</text>
-<text class="dg-th" x="632" y="264" fill="#085041">13%</text>
-
-<circle cx="60" cy="352" r="5" fill="#1A4480"/><text class="dg-ts" x="72" y="356">Fast Fashion</text>
-<circle cx="200" cy="352" r="5" fill="#712B13"/><text class="dg-ts" x="212" y="356">Slow Fashion</text>
-<circle cx="340" cy="352" r="5" fill="#085041"/><text class="dg-ts" x="352" y="356">Mixed Retail</text>
-</svg>
     </div>
 
     <div class="so-what">
@@ -1042,13 +1139,28 @@ Place this code in the empty space below. */
       <div class="kpi-card"><p class="kpi-num">707</p><p class="kpi-label">Pennsylvania — largest market by far</p></div>
     </div>
 
-    <div class="so-what">
-      <span class="dot"></span>
-      <p>Fast Fashion leads in <strong>every</strong> state here — the real story is degree, not direction. California
-      and Alberta (the two most Fast-Fashion-heavy markets) also carry the <em>fewest</em> Slow Fashion businesses in
-      absolute terms, while Illinois, Delaware, and New Jersey — smaller markets closer to major East Coast metros —
-      lean furthest toward it. Bespoke and bridal simply hasn't scaled into some of these metros the way mass-market
-      chains have.</p>
+    <p class="chart-title" style="margin-top:24px; margin-bottom:12px;">What the map actually tells us</p>
+    <div style="display:flex; flex-direction:column; gap:14px;">
+      <div style="display:flex; gap:12px; align-items:flex-start;">
+        <span style="flex-shrink:0; width:22px; height:22px; border-radius:50%; background:var(--pink-tint); color:var(--pink); font-weight:700; font-size:12px; display:flex; align-items:center; justify-content:center;">1</span>
+        <p style="font-size:13.5px; margin:0;"><strong>Fast Fashion dominates every single state</strong> — no state flips to a Slow Fashion majority. The real story is degree, not direction: 37.9% (Illinois) vs. 12.7% (California) is the whole spread.</p>
+      </div>
+      <div style="display:flex; gap:12px; align-items:flex-start;">
+        <span style="flex-shrink:0; width:22px; height:22px; border-radius:50%; background:var(--pink-tint); color:var(--pink); font-weight:700; font-size:12px; display:flex; align-items:center; justify-content:center;">2</span>
+        <p style="font-size:13.5px; margin:0;"><strong>Slow Fashion leans toward smaller East-Coast-adjacent metros</strong> — Illinois (37.9%), Delaware (36.0%), New Jersey (32.1%), Missouri (28.7%) — better markets for bespoke/bridal/formal businesses.</p>
+      </div>
+      <div style="display:flex; gap:12px; align-items:flex-start;">
+        <span style="flex-shrink:0; width:22px; height:22px; border-radius:50%; background:var(--pink-tint); color:var(--pink); font-weight:700; font-size:12px; display:flex; align-items:center; justify-content:center;">3</span>
+        <p style="font-size:13.5px; margin:0;"><strong>Fast Fashion is strongest in the biggest markets</strong> — California (81.5% Fast Fashion, only 12.7% Slow) and Alberta (81.1% / 14.3%) are also the two largest absolute markets. More volume tracks with a tighter mass-market grip, not more room for bespoke.</p>
+      </div>
+      <div style="display:flex; gap:12px; align-items:flex-start;">
+        <span style="flex-shrink:0; width:22px; height:22px; border-radius:50%; background:var(--pink-tint); color:var(--pink); font-weight:700; font-size:12px; display:flex; align-items:center; justify-content:center;">4</span>
+        <p style="font-size:13.5px; margin:0;"><strong>Read every % with sample size in mind.</strong> Pennsylvania's 707 businesses make it the most reliable data point on this map — a state with only a handful of businesses can swing its share on a few data points alone.</p>
+      </div>
+      <div style="display:flex; gap:12px; align-items:flex-start;">
+        <span style="flex-shrink:0; width:22px; height:22px; border-radius:50%; background:var(--pink-tint); color:var(--pink); font-weight:700; font-size:12px; display:flex; align-items:center; justify-content:center;">5</span>
+        <p style="font-size:13.5px; margin:0;"><strong>The map shades whole states, but the data covers one metro inside each.</strong> "California is 12.7% Slow Fashion" really means <strong>Santa Barbara</strong> is — not the state at large. This is the dataset's core limitation (see caveat above), and it's why the dots on the map matter as much as the shading.</p>
+      </div>
     </div>
   </div>
 
