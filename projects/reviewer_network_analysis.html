@@ -1,0 +1,1127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Reviewer Social Network Analysis | Rutuja Patel</title>
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0%25' y1='0%25' x2='100%25' y2='100%25'%3E%3Cstop offset='0%25' stop-color='%23e8187a'/%3E%3Cstop offset='100%25' stop-color='%23f9004d'/%3E%3C/linearGradient%3E%3C/defs%3E%3Ccircle cx='32' cy='32' r='32' fill='url(%23g)'/%3E%3Ctext x='32' y='42' font-family='Poppins, Arial, sans-serif' font-weight='800' font-size='26' fill='white' text-anchor='middle'%3ERP%3C/text%3E%3C/svg%3E">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@500;600;700;800&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --pink: #e8187a;
+    --pink-tint: #FDE7EF;
+    --black: #14131A;
+    --gray-text: #6B7280;
+    --card-bg: #F4F4F3;
+    --border: #ECECEA;
+    --green: #0F9D58;
+    --green-tint: #E4F6EC;
+    --amber: #B8860B;
+    --amber-tint: #FBF3DE;
+    --red: #D93025;
+    --red-tint: #FCE9E7;
+    --heading: 'Poppins', sans-serif;
+    --body: 'Inter', -apple-system, sans-serif;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    background: #FFFFFF;
+    color: var(--black);
+    font-family: var(--body);
+    line-height: 1.65;
+  }
+  .wrap { max-width: 1040px; margin: 0 auto; padding: 56px 28px 100px; }
+
+  .crumb { font-family: var(--body); font-size: 13.5px; color: var(--gray-text); margin: 0 0 28px; }
+  .crumb a { color: var(--gray-text); text-decoration: none; }
+  .crumb a:hover { color: var(--pink); }
+
+  .eyebrow { font-family: var(--body); font-size: 12.5px; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: var(--pink); margin: 0 0 10px; }
+  h1.title { font-family: var(--heading); font-weight: 800; font-size: 40px; line-height: 1.15; margin: 0 0 16px; max-width: 760px; }
+  h1.title span { color: var(--pink); }
+  .dek { font-size: 16.5px; color: var(--gray-text); max-width: 800px; margin: 0 0 24px; }
+
+  .tag-row { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 44px; }
+  .tag { font-size: 13.5px; font-weight: 500; padding: 7px 16px; border-radius: 999px; border: 1px solid var(--border); color: var(--black); background: #fff; }
+  .tag-github {
+    display: inline-flex; align-items: center; gap: 6px;
+    font-size: 13.5px; font-weight: 600; padding: 7px 16px; border-radius: 999px;
+    background: var(--black); color: #fff; text-decoration: none; border: 1px solid var(--black);
+  }
+  .tag-github:hover { background: var(--pink); border-color: var(--pink); color: #fff; }
+  .tag.filled { background: var(--pink); color: #fff; border-color: var(--pink); }
+
+  .section { margin-bottom: 64px; }
+  .section-eyebrow { font-family: var(--body); font-size: 12.5px; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: var(--pink); margin: 0 0 8px; }
+  h2.section-title { font-family: var(--heading); font-weight: 700; font-size: 26px; margin: 0 0 10px; }
+  .section-desc { font-size: 15px; color: var(--gray-text); max-width: 800px; margin: 0 0 28px; }
+
+  .stat-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 12px; margin-bottom: 32px; }
+  .stat-card { background: var(--card-bg); border-radius: 16px; padding: 18px 20px; }
+  .stat-num { font-family: var(--heading); font-weight: 700; font-size: 24px; margin: 0 0 4px; }
+  .stat-label { font-size: 12.5px; color: var(--gray-text); margin: 0; }
+
+  .field-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)); gap: 12px; }
+  .field-card { background: var(--card-bg); border-radius: 16px; padding: 18px 20px; }
+  .field-top { display: flex; align-items: center; gap: 10px; margin-bottom: 8px; }
+  .field-name { font-weight: 600; font-size: 14.5px; flex: 1; margin: 0; }
+  .field-count { font-size: 11.5px; font-weight: 600; background: rgba(255,255,255,0.6); padding: 2px 9px; border-radius: 999px; flex-shrink: 0; }
+  .field-desc { font-size: 12.5px; margin: 0; opacity: 0.85; }
+
+  .c-purple { background: #EEEDFE; color: #3C3489; }
+  .c-teal   { background: #E1F5EE; color: #085041; }
+  .c-teal2  { background: #C3EDDC; color: #04342C; }
+  .c-coral  { background: #FAECE7; color: #712B13; }
+  .c-pink2  { background: #FBEAF0; color: #72243E; }
+  .c-amber  { background: #FAEEDA; color: #633806; }
+  .c-green  { background: #EAF3DE; color: #27500A; }
+  .c-red    { background: #FCEBEB; color: #791F1F; }
+  .c-blue   { background: #E8F0FE; color: #1A4480; }
+
+  .dg-wrap { overflow-x: auto; margin-bottom: 8px; position: relative; }
+  .dg-wrap::after { content: ''; position: absolute; top: 0; right: 0; bottom: 8px; width: 28px; background: linear-gradient(to right, transparent, rgba(255,255,255,0.95)); pointer-events: none; }
+  .dg-wrap svg { min-width: 600px; }
+  .dg-line { stroke: var(--gray-text); stroke-width: 0.75; opacity: 0.6; }
+  .dg-arrow { stroke: var(--gray-text); fill: none; stroke-width: 1; stroke-linejoin: round; stroke-linecap: round; }
+  .dg-lane-label { font-family: var(--body); font-size: 12.5px; fill: var(--gray-text); }
+  .dg-phase-label { font-family: var(--body); font-size: 12.5px; font-weight: 600; fill: var(--pink); }
+  .dg-th { font-family: var(--body); font-size: 13.5px; font-weight: 600; fill: var(--black); }
+  .dg-ts { font-family: var(--body); font-size: 11.5px; fill: var(--gray-text); }
+  .dg-box rect, .dg-box polygon, .dg-box circle,
+  .dgc-blue rect, .dgc-blue polygon, .dgc-blue circle,
+  .dgc-teal rect, .dgc-teal polygon, .dgc-teal circle,
+  .dgc-purple rect, .dgc-purple polygon, .dgc-purple circle,
+  .dgc-coral rect, .dgc-coral polygon, .dgc-coral circle,
+  .dgc-amber rect, .dgc-amber polygon, .dgc-amber circle,
+  .dgc-green rect, .dgc-green polygon, .dgc-green circle,
+  .dgc-red rect, .dgc-red polygon, .dgc-red circle {
+    filter: drop-shadow(0 2px 3px rgba(20,19,26,0.10));
+  }
+  .dg-box rect, .dg-box polygon, .dg-box circle { fill: #fff; stroke: var(--border); stroke-width: 0.5; }
+  .dg-box .dg-th { fill: var(--black); }
+  .dgc-blue rect, .dgc-blue polygon, .dgc-blue circle { fill: #E8F0FE; stroke: #1A4480; }
+  .dgc-blue .dg-th, .dgc-blue .dg-ts { fill: #1A4480; }
+  .dgc-teal rect, .dgc-teal polygon, .dgc-teal circle { fill: #E1F5EE; stroke: #085041; }
+  .dgc-teal .dg-th, .dgc-teal .dg-ts { fill: #085041; }
+  .dgc-coral rect, .dgc-coral polygon, .dgc-coral circle { fill: #FAECE7; stroke: #712B13; }
+  .dgc-coral .dg-th, .dgc-coral .dg-ts { fill: #712B13; }
+  .dgc-purple rect, .dgc-purple polygon, .dgc-purple circle { fill: #EEEDFE; stroke: #3C3489; }
+  .dgc-purple .dg-th, .dgc-purple .dg-ts { fill: #3C3489; }
+  .dgc-amber rect, .dgc-amber polygon, .dgc-amber circle { fill: #FAEEDA; stroke: #633806; }
+  .dgc-amber .dg-th, .dgc-amber .dg-ts { fill: #633806; }
+  .dg-note rect { fill: #fff; stroke: var(--border); }
+  .dg-note text { fill: var(--gray-text); }
+  .dg-dashed { fill: none; stroke: var(--gray-text); stroke-width: 0.5; stroke-dasharray: 4 3; }
+
+  .quality-table { background: var(--card-bg); border-radius: 16px; overflow: hidden; }
+  .quality-head { display: grid; grid-template-columns: 2fr 1fr 1fr; column-gap: 20px; padding: 12px 20px; font-size: 11.5px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em; color: var(--gray-text); }
+  .quality-row { display: grid; grid-template-columns: 2fr 1fr 1fr; column-gap: 20px; align-items: center; padding: 14px 20px; background: #fff; font-size: 13.5px; min-height: 56px; }
+  .quality-row:first-of-type { border-top-left-radius: 16px; border-top-right-radius: 16px; }
+  .quality-row:last-of-type { border-bottom-left-radius: 16px; border-bottom-right-radius: 16px; }
+  .quality-val { font-weight: 600; }
+  .status-pill { font-size: 11.5px; font-weight: 600; padding: 4px 12px; border-radius: 999px; display: inline-block; width: fit-content; }
+  .status-red { background: var(--red-tint); color: var(--red); }
+  .status-amber { background: var(--amber-tint); color: var(--amber); }
+  .status-green { background: var(--green-tint); color: var(--green); }
+
+  .callout { display: flex; gap: 10px; align-items: flex-start; background: var(--pink-tint); border-radius: 14px; padding: 14px 18px; margin-top: 20px; }
+  .callout p { font-size: 13.5px; color: var(--black); margin: 0; }
+  .callout .dot { width: 6px; height: 6px; border-radius: 50%; background: var(--pink); margin-top: 7px; flex-shrink: 0; }
+
+  .kpi-strip { display: grid; grid-template-columns: repeat(auto-fit, minmax(130px, 1fr)); gap: 12px; margin-bottom: 28px; }
+  .kpi-card { background: var(--card-bg); border-radius: 14px; padding: 16px 18px; }
+  .kpi-num { font-family: var(--heading); font-weight: 700; font-size: 22px; margin: 0 0 3px; }
+  .kpi-label { font-size: 11.5px; color: var(--gray-text); margin: 0; }
+
+  .chart-row { display: grid; gap: 14px; margin-bottom: 14px; }
+  .chart-row.hero { grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); }
+  .chart-row.secondary { grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); }
+
+  .chart-card { background: var(--card-bg); border-radius: 18px; padding: 20px 22px; }
+  .chart-card.hero { padding: 24px 26px; }
+  .chart-title { font-weight: 700; font-size: 15.5px; margin: 0 0 3px; }
+  .chart-sub { font-size: 12.5px; color: var(--gray-text); margin: 0 0 18px; }
+
+  .bar-row { display: flex; align-items: center; gap: 10px; margin-bottom: 10px; }
+  .bar-row:last-child { margin-bottom: 0; }
+  .bar-label { width: 110px; font-size: 12.5px; color: var(--black); flex-shrink: 0; }
+  .bar-track { flex: 1; background: #fff; border-radius: 5px; height: 22px; overflow: hidden; }
+  .bar-fill { height: 100%; border-radius: 5px; display: flex; align-items: center; padding-left: 8px; }
+  .bar-fill span { font-size: 11.5px; font-weight: 600; }
+  .bar-val { width: 74px; font-size: 12.5px; font-weight: 600; text-align: right; flex-shrink: 0; }
+
+  .callout-card { background: var(--pink-tint); border-radius: 18px; padding: 20px 22px; }
+  .callout-card .chart-title { color: var(--pink); }
+
+  .so-what { display: flex; gap: 8px; align-items: flex-start; margin-top: 14px; padding-top: 14px; border-top: 1px solid var(--border); }
+  .so-what .dot { width: 5px; height: 5px; border-radius: 50%; background: var(--pink); margin-top: 6px; flex-shrink: 0; }
+  .so-what p { font-size: 12.5px; color: var(--black); margin: 0; }
+
+  .term-cloud { display: flex; flex-wrap: wrap; gap: 7px; }
+  .term-tag { font-size: 12.5px; font-weight: 500; padding: 5px 12px; border-radius: 999px; background: #fff; border: 1px solid var(--border); }
+
+  .map-card { background: var(--card-bg); border-radius: 18px; padding: 14px 16px; }
+  .map-card svg { display: block; width: 100%; height: auto; border-radius: 10px; overflow: hidden; }
+
+  .legend-row { display: flex; flex-wrap: wrap; gap: 14px; margin: 10px 0 0; }
+  .legend-item { display: inline-flex; align-items: center; gap: 6px; font-size: 12px; color: var(--gray-text); }
+  .legend-swatch { width: 11px; height: 11px; border-radius: 3px; display: inline-block; flex-shrink: 0; }
+
+  .to-top { position: fixed; bottom: 24px; right: 24px; z-index: 60; width: 44px; height: 44px; border-radius: 50%; background: var(--pink); color: #fff; border: none; display: flex; align-items: center; justify-content: center; font-size: 18px; cursor: pointer; box-shadow: 0 4px 16px rgba(232,24,122,.35); opacity: 0; pointer-events: none; transition: opacity .2s ease, transform .2s ease; }
+  .to-top.show { opacity: 1; pointer-events: auto; }
+  .to-top:hover { transform: translateY(-2px); }
+
+  @media (max-width: 640px) {
+    h1.title { font-size: 30px; }
+    .quality-head { display: none !important; }
+    .quality-row { grid-template-columns: 1fr !important; row-gap: 4px; font-size: 12.5px; }
+    .field-grid { grid-template-columns: 1fr !important; }
+  }
+</style>
+</head>
+<body>
+<button class="to-top" id="toTop" aria-label="Back to top">↑</button>
+<div class="wrap">
+
+  <p class="crumb"><a href="https://analyzewithrutuja.github.io/#portfolio">← Back to portfolio</a></p>
+
+  <p class="eyebrow">Data Analysis · Social Network Analysis</p>
+  <h1 class="title">Your Friends Shop Like You: <span>Mapping 46,236 Yelp Reviewers</span></h1>
+  <p class="dek">
+    Does Yelp's "Elite" badge just reward good writing — or are Elite reviewers actually more socially connected too?
+    This project reuses the same 46,236 clothing reviewers from the <a href="fast_fashion_analysis.html" style="color:var(--pink); font-weight:600;">Fast Fashion vs. Slow Fashion analysis</a>,
+    but instead of asking what they wrote, it asks who they're <em>friends with</em> — turning Yelp's own social graph into a real network.
+  </p>
+
+  <div class="tag-row">
+    <a class="tag-github" href="https://github.com/analyzewithrutuja/yelp_reviewer_network_analysis" target="_blank" rel="noopener">View code on GitHub</a>
+    <span class="tag">Python</span>
+    <span class="tag">NetworkX</span>
+    <span class="tag">Graph Theory</span>
+    <span class="tag">scikit-learn</span>
+    <span class="tag">Social Network Analysis</span>
+    <span class="tag">Geospatial Clustering</span>
+    <span class="tag">pandas</span>
+  </div>
+
+  <!-- ===== 00 THE IDEA ===== -->
+  <div class="section">
+    <p class="section-eyebrow">00 · The idea, first</p>
+    <h2 class="section-title">Is Yelp secretly a social network?</h2>
+    <p class="section-desc">
+      Every Yelp user has a <code>friends</code> field — people they've connected with on the platform, the same way
+      you'd add a friend on Facebook. Nobody analyzes this data for its own sake. But it raises a real question about
+      the 46,236 clothing reviewers from the Fast Fashion project: are the ones Yelp calls <strong>"Elite"</strong>
+      just better writers, or are they also sitting at the center of an actual social network — while everyone else
+      is scattered around the edges?
+    </p>
+    <div class="callout">
+      <span class="dot"></span>
+      <p>This page answers that with real graph theory — nodes, edges, degree, clustering, homophily — applied to
+      real people, not a toy dataset. Every concept is explained in plain language before it's used, so no prior
+      graph-theory background is assumed.</p>
+    </div>
+  </div>
+  <!-- ===== END 00 ===== -->
+
+  <!-- ===== 01 DATASET / INTAKE ===== -->
+  <div class="section">
+    <p class="section-eyebrow">01 · Intake</p>
+    <h2 class="section-title">Building the friend graph</h2>
+    <p class="section-desc">
+      The <code>friends</code> field in Yelp's <code>user.json</code> lists every friend a user has <strong>across
+      the entire platform</strong> — restaurant reviewers, nail salon reviewers, everyone. Most of those friends have
+      nothing to do with clothing. The first job was narrowing that down to just the friendships that matter for this
+      analysis: <strong>clothing reviewers who are friends with other clothing reviewers.</strong>
+    </p>
+
+    <div class="stat-grid">
+      <div class="stat-card"><p class="stat-num">1,987,897</p><p class="stat-label">total Yelp users scanned</p></div>
+      <div class="stat-card"><p class="stat-num">46,236</p><p class="stat-label">clothing reviewers (network nodes)</p></div>
+      <div class="stat-card"><p class="stat-num">135,151</p><p class="stat-label">friendships kept (network edges)</p></div>
+      <div class="stat-card"><p class="stat-num">100%</p><p class="stat-label">same reviewer base as the Fast Fashion project</p></div>
+    </div>
+
+    <p class="chart-title" style="margin-bottom:2px;">How the filtering actually worked</p>
+    <p class="chart-sub" style="margin-bottom:14px;">A script (<code>extract_friends.py</code>) streamed the 3.2GB
+    <code>user.json</code> file line by line — never loading the whole file into memory — and kept an edge only when
+    <strong>both</strong> people were already in the 46,236-reviewer set built for the Fast Fashion project.</p>
+
+    <div class="dg-wrap">
+<svg viewBox="0 0 680 250" role="img" style="width:100%;" aria-label="Flow diagram showing how friend edges were extracted: for each Yelp user, skip if not a clothing reviewer, otherwise check each friend and keep the edge only if that friend is also a clothing reviewer">
+<desc>For every one of the 1,987,897 users in user.json: if the user is not one of the 46,236 clothing reviewers, skip immediately. Otherwise, look at each of their friends; keep an edge only if that friend is also one of the 46,236 clothing reviewers. Duplicate edges (A-B and B-A) are merged into one.</desc>
+<defs><marker id="fr-arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M2 1L8 5L2 9" fill="none" stroke="context-stroke" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></marker></defs>
+
+<g class="dg-box"><rect x="20" y="20" width="180" height="54" rx="10"/>
+<text class="dg-th" x="110" y="41" text-anchor="middle" dominant-baseline="central">Each Yelp user</text>
+<text class="dg-ts" x="110" y="58" text-anchor="middle" dominant-baseline="central">1,987,897 total</text></g>
+
+<path d="M200,47 L235,47" class="dg-arrow" marker-end="url(#fr-arrow)"/>
+
+<path d="M 339.7,14.7 Q 355.0,10.0 370.3,14.7 L 439.7,37.3 Q 455.0,42.0 439.7,46.7 L 370.3,69.3 Q 355.0,74.0 339.7,69.3 L 270.3,46.7 Q 255.0,42.0 270.3,37.3 L 339.7,14.7 Z" fill="var(--pink-tint)" stroke="var(--pink)" stroke-width="1" stroke-linejoin="round"/>
+<text x="355" y="38" text-anchor="middle" font-family="var(--heading)" font-weight="600" font-size="12.5" fill="#9E0F49">is a clothing</text>
+<text x="355" y="53" text-anchor="middle" font-family="var(--heading)" font-weight="600" font-size="12.5" fill="#9E0F49">reviewer?</text>
+
+<path d="M355,74 L355,108" class="dg-arrow" marker-end="url(#fr-arrow)"/>
+<rect x="343" y="84" width="24" height="14" fill="#fff"/>
+<text class="dg-ts" x="355" y="91" text-anchor="middle" dominant-baseline="central">no</text>
+<g class="dg-box"><rect x="265" y="110" width="180" height="46" rx="10" style="stroke:var(--gray-text);"/>
+<text class="dg-th" x="355" y="133" text-anchor="middle" dominant-baseline="central" style="fill:var(--gray-text);">skip — not counted</text></g>
+
+<path d="M455,42 L490,42" class="dg-arrow" marker-end="url(#fr-arrow)"/>
+<rect x="462" y="35" width="21" height="14" fill="#fff"/>
+<text class="dg-ts" x="472" y="42" text-anchor="middle" dominant-baseline="central">yes</text>
+
+<g class="dg-box"><rect x="495" y="15" width="165" height="54" rx="10"/>
+<text class="dg-th" x="577" y="36" text-anchor="middle" dominant-baseline="central">check each friend</text>
+<text class="dg-ts" x="577" y="53" text-anchor="middle" dominant-baseline="central">also a reviewer?</text></g>
+
+<path d="M577,69 L577,103" class="dg-arrow" marker-end="url(#fr-arrow)"/>
+<g class="dgc-teal"><rect x="490" y="105" width="175" height="54" rx="10"/>
+<text class="dg-th" x="577" y="126" text-anchor="middle" dominant-baseline="central">keep the edge</text>
+<text class="dg-ts" x="577" y="143" text-anchor="middle" dominant-baseline="central">135,151 unique friendships</text></g>
+
+<path d="M577,159 L577,190 L360,190" class="dg-arrow" marker-end="url(#fr-arrow)"/>
+<g class="dgc-purple"><rect x="180" y="193" width="180" height="46" rx="10"/>
+<text class="dg-th" x="270" y="216" text-anchor="middle" dominant-baseline="central" style="font-size:12.5px;">A-B and B-A merge into one</text></g>
+</svg>
+    </div>
+
+    <div class="callout" style="margin-top:16px;">
+      <span class="dot"></span>
+      <p><strong>Why this matters:</strong> this is the subgraph <em>induced</em> by the clothing-reviewer set — not
+      the full Yelp friend graph, and not any single user's full friend list. A user might have 500 friends on Yelp
+      overall, but only the handful who also reviewed a clothing business show up here. That's a deliberate scope
+      choice — it isolates exactly the social structure relevant to this analysis.</p>
+    </div>
+  </div>
+  <!-- ===== END 01 ===== -->
+
+  <!-- ===== 02 REVIEWER CATEGORIES ===== -->
+  <div class="section">
+    <p class="section-eyebrow">02 · Reviewer categories</p>
+    <h2 class="section-title">Not everyone gets treated the same</h2>
+    <p class="section-desc">
+      "Elite vs. regular" — the split used in the Fast Fashion project — hides a lot of variation. A reviewer with
+      1 review and a reviewer with 45 reviews are both technically "regular," but they're not comparable. Before
+      touching the network, every one of the 46,236 reviewers was split into <strong>6 categories</strong> using
+      thresholds pulled from the actual data, not picked arbitrarily.
+    </p>
+
+    <p class="chart-title" style="margin-bottom:2px;">Where the cutoffs came from</p>
+    <p class="chart-sub" style="margin-bottom:14px;">Yelp's <code>elite</code> field lists which years a user held
+    Elite status (e.g. <code>"2019,2021,2022"</code>). Counting those years gives an elite reviewer's <em>tenure</em>.
+    For everyone else, <code>review_count</code> measures activity level.</p>
+
+    <div class="chart-row secondary">
+      <div class="chart-card">
+        <p class="chart-title">Elite tenure cutoff: 5 years</p>
+        <p class="chart-sub">The <strong>median</strong> among all 7,965 elite reviewers — splits them roughly in half.</p>
+        <div class="bar-row"><span class="bar-label">1&ndash;4 years</span><div class="bar-track"><div class="bar-fill c-blue" style="width:53%"></div></div><span class="bar-val">53%</span></div>
+        <div class="bar-row"><span class="bar-label">5+ years</span><div class="bar-track"><div class="bar-fill c-blue" style="width:47%"></div></div><span class="bar-val">47%</span></div>
+      </div>
+      <div class="chart-card">
+        <p class="chart-title">Review-count cutoff: 50</p>
+        <p class="chart-sub">Approximately the <strong>90th percentile</strong> among non-elite reviewers &mdash; a round number close to the natural break.</p>
+        <div class="bar-row"><span class="bar-label">&lt; 50 reviews</span><div class="bar-track"><div class="bar-fill c-coral" style="width:88.6%"></div></div><span class="bar-val">88.6%</span></div>
+        <div class="bar-row"><span class="bar-label">50+ reviews</span><div class="bar-track"><div class="bar-fill c-coral" style="width:11.4%"></div></div><span class="bar-val">11.4%</span></div>
+      </div>
+    </div>
+
+    <div class="callout" style="margin-top:4px; margin-bottom:28px;">
+      <span class="dot"></span>
+      <p>The "Single-review" cutoff (<code>review_count &le; 1</code>) isn't new — it reuses the exact
+      <code>review_credibility</code> definition from the Fast Fashion project, where single-review accounts were
+      already shown to rate more extremely (39.1% give 1-star vs. 18.7% for experienced reviewers).</p>
+    </div>
+
+    <p class="chart-title" style="margin-bottom:2px;">The actual decision logic</p>
+    <p class="chart-sub" style="margin-bottom:14px;">This is exactly what <code>categorize()</code> in <code>network_analysis.py</code> does for every one of the 46,236 reviewers — elite status is checked first and always wins, so a reviewer's category depends on <em>which branch</em> they fall into, not just one number.</p>
+
+    <div class="dg-wrap">
+<svg viewBox="0 0 1100 300" role="img" style="width:100%;" aria-label="Full decision tree for the categorize function">
+<desc>Root checks if the elite field is non-empty. If yes, checks whether years elite is 5 or more, leading to Veteran Elite or New Elite. If no, review_count alone splits the reviewer into Power User (50+), Moderate (10-49), Light (2-9), or Single-review (1 or fewer).</desc>
+<defs><marker id="ct-arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M2 1L8 5L2 9" fill="none" stroke="context-stroke" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></marker></defs>
+
+<g class="dg-box"><rect x="420" y="20" width="200" height="44" rx="10"/>
+<text class="dg-th" x="520" y="42" text-anchor="middle" dominant-baseline="central">elite field filled?</text></g>
+
+<line x1="520" y1="64" x2="520" y2="90" class="dg-arrow"/>
+<line x1="250" y1="90" x2="790" y2="90" class="dg-arrow"/>
+<line x1="250" y1="90" x2="250" y2="120" class="dg-arrow" marker-end="url(#ct-arrow)"/>
+<line x1="790" y1="90" x2="790" y2="120" class="dg-arrow" marker-end="url(#ct-arrow)"/>
+<text class="dg-ts" x="250" y="84" text-anchor="middle">yes</text>
+<text class="dg-ts" x="790" y="84" text-anchor="middle">no</text>
+
+<g class="dg-box"><rect x="160" y="120" width="180" height="44" rx="10"/>
+<text class="dg-th" x="250" y="142" text-anchor="middle" dominant-baseline="central">years elite &#8805; 5?</text></g>
+
+<g class="dg-box"><rect x="690" y="120" width="200" height="44" rx="10"/>
+<text class="dg-th" x="790" y="142" text-anchor="middle" dominant-baseline="central">review_count?</text></g>
+
+<line x1="250" y1="164" x2="250" y2="190" class="dg-arrow"/>
+<line x1="160" y1="190" x2="340" y2="190" class="dg-arrow"/>
+<line x1="160" y1="190" x2="160" y2="220" class="dg-arrow" marker-end="url(#ct-arrow)"/>
+<line x1="340" y1="190" x2="340" y2="220" class="dg-arrow" marker-end="url(#ct-arrow)"/>
+<text class="dg-ts" x="160" y="184" text-anchor="middle">yes</text>
+<text class="dg-ts" x="340" y="184" text-anchor="middle">no</text>
+
+<line x1="790" y1="164" x2="790" y2="190" class="dg-arrow"/>
+<line x1="565" y1="190" x2="1015" y2="190" class="dg-arrow"/>
+<line x1="565" y1="190" x2="565" y2="220" class="dg-arrow" marker-end="url(#ct-arrow)"/>
+<line x1="715" y1="190" x2="715" y2="220" class="dg-arrow" marker-end="url(#ct-arrow)"/>
+<line x1="865" y1="190" x2="865" y2="220" class="dg-arrow" marker-end="url(#ct-arrow)"/>
+<line x1="1015" y1="190" x2="1015" y2="220" class="dg-arrow" marker-end="url(#ct-arrow)"/>
+
+<g>
+<rect x="80" y="220" width="160" height="56" rx="10" fill="#fff" stroke="#1A4480" stroke-width="1.25"/>
+<text x="160" y="240" text-anchor="middle" dominant-baseline="central" font-family="var(--heading)" font-weight="600" font-size="13.5" fill="#1A4480">Veteran Elite</text>
+<text x="160" y="258" text-anchor="middle" dominant-baseline="central" font-family="var(--body)" font-size="11.5" fill="#1A4480">&#8805;5 years &mdash; 3,748</text>
+</g>
+<g>
+<rect x="260" y="220" width="160" height="56" rx="10" fill="#fff" stroke="#3C3489" stroke-width="1.25"/>
+<text x="340" y="240" text-anchor="middle" dominant-baseline="central" font-family="var(--heading)" font-weight="600" font-size="13.5" fill="#3C3489">New Elite</text>
+<text x="340" y="258" text-anchor="middle" dominant-baseline="central" font-family="var(--body)" font-size="11.5" fill="#3C3489">&lt;5 years &mdash; 4,217</text>
+</g>
+
+<g>
+<rect x="500" y="220" width="130" height="56" rx="10" fill="#fff" stroke="#085041" stroke-width="1.25"/>
+<text x="565" y="240" text-anchor="middle" dominant-baseline="central" font-family="var(--heading)" font-weight="600" font-size="13" fill="#085041">Power User</text>
+<text x="565" y="258" text-anchor="middle" dominant-baseline="central" font-family="var(--body)" font-size="11" fill="#085041">count &#8805; 50</text>
+</g>
+<g>
+<rect x="650" y="220" width="130" height="56" rx="10" fill="#fff" stroke="#633806" stroke-width="1.25"/>
+<text x="715" y="240" text-anchor="middle" dominant-baseline="central" font-family="var(--heading)" font-weight="600" font-size="13" fill="#633806">Moderate</text>
+<text x="715" y="258" text-anchor="middle" dominant-baseline="central" font-family="var(--body)" font-size="11" fill="#633806">count 10&ndash;49</text>
+</g>
+<g>
+<rect x="800" y="220" width="130" height="56" rx="10" fill="#fff" stroke="#712B13" stroke-width="1.25"/>
+<text x="865" y="240" text-anchor="middle" dominant-baseline="central" font-family="var(--heading)" font-weight="600" font-size="13" fill="#712B13">Light</text>
+<text x="865" y="258" text-anchor="middle" dominant-baseline="central" font-family="var(--body)" font-size="11" fill="#712B13">count 2&ndash;9</text>
+</g>
+<g>
+<rect x="950" y="220" width="130" height="56" rx="10" fill="#fff" stroke="#72243E" stroke-width="1.25"/>
+<text x="1015" y="240" text-anchor="middle" dominant-baseline="central" font-family="var(--heading)" font-weight="600" font-size="13" fill="#72243E">Single-review</text>
+<text x="1015" y="258" text-anchor="middle" dominant-baseline="central" font-family="var(--body)" font-size="11" fill="#72243E">count &#8804; 1</text>
+</g>
+</svg>
+    </div>
+
+    <div class="callout" style="margin-top:16px; margin-bottom:28px;">
+      <span class="dot"></span>
+      <p><strong>Why the order matters:</strong> <code>is_elite</code> is checked before any review_count logic runs — so
+      a reviewer with 500 reviews who happens to also be elite is still classified purely by elite tenure, never as
+      "Power User." Elite status always takes priority over raw activity volume.</p>
+    </div>
+
+    <p class="chart-title" style="margin-bottom:8px;">The six categories</p>
+    <div class="quality-table">
+      <div class="quality-head" style="grid-template-columns:1.1fr 1.7fr 0.7fr 0.5fr;"><span>Category</span><span>Rule</span><span>Reviewers</span><span>%</span></div>
+      <div class="quality-row" style="grid-template-columns:1.1fr 1.7fr 0.7fr 0.5fr;">
+        <span><span class="legend-swatch" style="background:#1A4480;"></span> &nbsp;Veteran Elite</span>
+        <span style="font-size:12.5px; color:var(--gray-text);">Elite, 5+ years</span>
+        <span class="quality-val">3,748</span><span class="quality-val">8.1%</span>
+      </div>
+      <div class="quality-row" style="grid-template-columns:1.1fr 1.7fr 0.7fr 0.5fr;">
+        <span><span class="legend-swatch" style="background:#3C3489;"></span> &nbsp;New Elite</span>
+        <span style="font-size:12.5px; color:var(--gray-text);">Elite, 1&ndash;4 years</span>
+        <span class="quality-val">4,217</span><span class="quality-val">9.1%</span>
+      </div>
+      <div class="quality-row" style="grid-template-columns:1.1fr 1.7fr 0.7fr 0.5fr;">
+        <span><span class="legend-swatch" style="background:#085041;"></span> &nbsp;Power User</span>
+        <span style="font-size:12.5px; color:var(--gray-text);">Non-elite, 50+ reviews</span>
+        <span class="quality-val">4,346</span><span class="quality-val">9.4%</span>
+      </div>
+      <div class="quality-row" style="grid-template-columns:1.1fr 1.7fr 0.7fr 0.5fr;">
+        <span><span class="legend-swatch" style="background:#633806;"></span> &nbsp;Moderate</span>
+        <span style="font-size:12.5px; color:var(--gray-text);">Non-elite, 10&ndash;49 reviews</span>
+        <span class="quality-val">14,904</span><span class="quality-val">32.2%</span>
+      </div>
+      <div class="quality-row" style="grid-template-columns:1.1fr 1.7fr 0.7fr 0.5fr;">
+        <span><span class="legend-swatch" style="background:#712B13;"></span> &nbsp;Light</span>
+        <span style="font-size:12.5px; color:var(--gray-text);">Non-elite, 2&ndash;9 reviews</span>
+        <span class="quality-val">15,419</span><span class="quality-val">33.3%</span>
+      </div>
+      <div class="quality-row" style="grid-template-columns:1.1fr 1.7fr 0.7fr 0.5fr;">
+        <span><span class="legend-swatch" style="background:#72243E;"></span> &nbsp;Single-review</span>
+        <span style="font-size:12.5px; color:var(--gray-text);">Non-elite, &le;1 review</span>
+        <span class="quality-val">3,602</span><span class="quality-val">7.8%</span>
+      </div>
+    </div>
+  </div>
+  <!-- ===== END 02 ===== -->
+
+  <!-- ===== 03 TOPOLOGY ===== -->
+  <div class="section">
+    <p class="section-eyebrow">03 · Network topology</p>
+    <h2 class="section-title">Is this even a real network?</h2>
+    <p class="section-desc">
+      Before any findings, the basic vocabulary: a <strong>node</strong> is a reviewer, an <strong>edge</strong> is a
+      friendship between two reviewers, and a reviewer's <strong>degree</strong> is simply how many friends they have
+      inside this specific 46,236-person set. A <strong>component</strong> is a cluster where everyone can reach
+      everyone else through some chain of friendships. The <strong>clustering coefficient</strong> measures something
+      more specific: if A and B are both friends with C, are A and B also friends with <em>each other</em>? Real
+      social networks say yes far more often than random chance would.
+    </p>
+
+    <div class="chart-row hero">
+      <div class="chart-card hero">
+        <p class="chart-title">A slice of the network</p>
+        <p class="chart-sub">90 reviewers, sampled outward from the best-connected node. <strong>What to look for:</strong> one big circle in the middle with lines fanning out to almost everyone — that's a single highly-connected reviewer. Most of the small circles only connect to them or to 1&ndash;2 neighbors.</p>
+        <div class="dg-wrap">
+<svg viewBox="0 0 640 380" role="img" style="width:100%;" aria-label="Sample of 90 reviewers from the largest connected component of the friendship network"><desc>90 reviewers sampled outward from the highest-degree node in the largest connected component. Circle size is degree (number of in-network friends); shade is reviewer category, darker meaning more committed (Veteran Elite darkest, Single-review lightest).</desc><line x1="309.5" y1="279.7" x2="286.2" y2="213.8" class="dg-line"/><line x1="309.5" y1="279.7" x2="400.1" y2="296.8" class="dg-line"/><line x1="309.5" y1="279.7" x2="325.7" y2="299.0" class="dg-line"/><line x1="309.5" y1="279.7" x2="318.9" y2="188.4" class="dg-line"/><line x1="149.8" y1="212.0" x2="87.8" y2="218.3" class="dg-line"/><line x1="149.8" y1="212.0" x2="286.2" y2="213.8" class="dg-line"/><line x1="149.8" y1="212.0" x2="318.9" y2="188.4" class="dg-line"/><line x1="517.1" y1="244.6" x2="405.3" y2="237.6" class="dg-line"/><line x1="517.1" y1="244.6" x2="318.9" y2="188.4" class="dg-line"/><line x1="106.3" y1="255.1" x2="164.8" y2="238.1" class="dg-line"/><line x1="106.3" y1="255.1" x2="318.9" y2="188.4" class="dg-line"/><line x1="395.4" y1="347.7" x2="318.9" y2="188.4" class="dg-line"/><line x1="466.3" y1="310.9" x2="400.1" y2="296.8" class="dg-line"/><line x1="466.3" y1="310.9" x2="431.6" y2="256.3" class="dg-line"/><line x1="466.3" y1="310.9" x2="318.9" y2="188.4" class="dg-line"/><line x1="492.6" y1="181.8" x2="405.3" y2="237.6" class="dg-line"/><line x1="492.6" y1="181.8" x2="524.1" y2="159.7" class="dg-line"/><line x1="492.6" y1="181.8" x2="563.4" y2="168.0" class="dg-line"/><line x1="492.6" y1="181.8" x2="474.3" y2="153.0" class="dg-line"/><line x1="492.6" y1="181.8" x2="418.9" y2="157.8" class="dg-line"/><line x1="492.6" y1="181.8" x2="441.2" y2="196.0" class="dg-line"/><line x1="492.6" y1="181.8" x2="559.3" y2="197.8" class="dg-line"/><line x1="492.6" y1="181.8" x2="494.0" y2="132.4" class="dg-line"/><line x1="492.6" y1="181.8" x2="318.9" y2="188.4" class="dg-line"/><line x1="228.8" y1="332.7" x2="325.7" y2="299.0" class="dg-line"/><line x1="228.8" y1="332.7" x2="318.9" y2="188.4" class="dg-line"/><line x1="60.3" y1="262.3" x2="318.9" y2="188.4" class="dg-line"/><line x1="189.7" y1="263.8" x2="314.2" y2="252.5" class="dg-line"/><line x1="189.7" y1="263.8" x2="318.9" y2="188.4" class="dg-line"/><line x1="369.7" y1="30.8" x2="318.9" y2="188.4" class="dg-line"/><line x1="563.4" y1="168.0" x2="524.1" y2="159.7" class="dg-line"/><line x1="563.4" y1="168.0" x2="318.9" y2="188.4" class="dg-line"/><line x1="314.2" y1="252.5" x2="405.3" y2="237.6" class="dg-line"/><line x1="314.2" y1="252.5" x2="365.1" y2="287.7" class="dg-line"/><line x1="314.2" y1="252.5" x2="250.4" y2="293.5" class="dg-line"/><line x1="314.2" y1="252.5" x2="441.2" y2="196.0" class="dg-line"/><line x1="314.2" y1="252.5" x2="392.3" y2="204.7" class="dg-line"/><line x1="314.2" y1="252.5" x2="266.4" y2="238.9" class="dg-line"/><line x1="314.2" y1="252.5" x2="263.0" y2="261.8" class="dg-line"/><line x1="314.2" y1="252.5" x2="325.7" y2="299.0" class="dg-line"/><line x1="314.2" y1="252.5" x2="192.9" y2="285.3" class="dg-line"/><line x1="314.2" y1="252.5" x2="373.4" y2="252.8" class="dg-line"/><line x1="314.2" y1="252.5" x2="318.9" y2="188.4" class="dg-line"/><line x1="111.8" y1="98.4" x2="318.9" y2="188.4" class="dg-line"/><line x1="236.7" y1="111.6" x2="294.5" y2="149.0" class="dg-line"/><line x1="236.7" y1="111.6" x2="318.9" y2="188.4" class="dg-line"/><line x1="369.0" y1="67.6" x2="318.9" y2="188.4" class="dg-line"/><line x1="263.0" y1="261.8" x2="405.3" y2="237.6" class="dg-line"/><line x1="263.0" y1="261.8" x2="263.6" y2="316.7" class="dg-line"/><line x1="263.0" y1="261.8" x2="204.4" y2="206.9" class="dg-line"/><line x1="263.0" y1="261.8" x2="318.9" y2="188.4" class="dg-line"/><line x1="400.1" y1="296.8" x2="405.3" y2="237.6" class="dg-line"/><line x1="400.1" y1="296.8" x2="325.7" y2="299.0" class="dg-line"/><line x1="400.1" y1="296.8" x2="385.1" y2="270.8" class="dg-line"/><line x1="400.1" y1="296.8" x2="318.9" y2="188.4" class="dg-line"/><line x1="163.7" y1="53.8" x2="318.9" y2="188.4" class="dg-line"/><line x1="504.1" y1="221.0" x2="405.3" y2="237.6" class="dg-line"/><line x1="504.1" y1="221.0" x2="318.9" y2="188.4" class="dg-line"/><line x1="75.0" y1="126.2" x2="318.9" y2="188.4" class="dg-line"/><line x1="30.0" y1="206.0" x2="318.9" y2="188.4" class="dg-line"/><line x1="42.9" y1="144.1" x2="318.9" y2="188.4" class="dg-line"/><line x1="67.8" y1="186.8" x2="318.9" y2="188.4" class="dg-line"/><line x1="204.4" y1="206.9" x2="229.3" y2="163.2" class="dg-line"/><line x1="204.4" y1="206.9" x2="318.9" y2="188.4" class="dg-line"/><line x1="606.5" y1="158.3" x2="318.9" y2="188.4" class="dg-line"/><line x1="559.3" y1="197.8" x2="318.9" y2="188.4" class="dg-line"/><line x1="441.2" y1="196.0" x2="405.3" y2="237.6" class="dg-line"/><line x1="441.2" y1="196.0" x2="524.1" y2="159.7" class="dg-line"/><line x1="441.2" y1="196.0" x2="474.3" y2="153.0" class="dg-line"/><line x1="441.2" y1="196.0" x2="418.9" y2="157.8" class="dg-line"/><line x1="441.2" y1="196.0" x2="318.9" y2="188.4" class="dg-line"/><line x1="177.9" y1="85.6" x2="318.9" y2="188.4" class="dg-line"/><line x1="124.7" y1="72.7" x2="318.9" y2="188.4" class="dg-line"/><line x1="266.9" y1="82.0" x2="318.9" y2="188.4" class="dg-line"/><line x1="318.3" y1="331.3" x2="325.7" y2="299.0" class="dg-line"/><line x1="318.3" y1="331.3" x2="263.6" y2="316.7" class="dg-line"/><line x1="318.3" y1="331.3" x2="318.9" y2="188.4" class="dg-line"/><line x1="411.5" y1="327.2" x2="504.2" y2="308.4" class="dg-line"/><line x1="411.5" y1="327.2" x2="345.2" y2="350.0" class="dg-line"/><line x1="411.5" y1="327.2" x2="325.7" y2="299.0" class="dg-line"/><line x1="411.5" y1="327.2" x2="318.9" y2="188.4" class="dg-line"/><line x1="164.8" y1="238.1" x2="286.2" y2="213.8" class="dg-line"/><line x1="164.8" y1="238.1" x2="318.9" y2="188.4" class="dg-line"/><line x1="345.2" y1="350.0" x2="318.9" y2="188.4" class="dg-line"/><line x1="524.1" y1="159.7" x2="494.0" y2="132.4" class="dg-line"/><line x1="524.1" y1="159.7" x2="318.9" y2="188.4" class="dg-line"/><line x1="294.5" y1="149.0" x2="418.9" y2="157.8" class="dg-line"/><line x1="294.5" y1="149.0" x2="286.2" y2="213.8" class="dg-line"/><line x1="294.5" y1="149.0" x2="318.9" y2="188.4" class="dg-line"/><line x1="610.0" y1="196.1" x2="318.9" y2="188.4" class="dg-line"/><line x1="463.8" y1="55.0" x2="318.9" y2="188.4" class="dg-line"/><line x1="336.9" y1="44.6" x2="318.9" y2="188.4" class="dg-line"/><line x1="583.8" y1="131.1" x2="318.9" y2="188.4" class="dg-line"/><line x1="292.8" y1="30.0" x2="318.9" y2="188.4" class="dg-line"/><line x1="157.6" y1="111.4" x2="318.9" y2="188.4" class="dg-line"/><line x1="580.6" y1="252.5" x2="318.9" y2="188.4" class="dg-line"/><line x1="311.8" y1="137.3" x2="286.2" y2="213.8" class="dg-line"/><line x1="311.8" y1="137.3" x2="229.3" y2="163.2" class="dg-line"/><line x1="311.8" y1="137.3" x2="318.9" y2="188.4" class="dg-line"/><line x1="204.3" y1="315.0" x2="325.7" y2="299.0" class="dg-line"/><line x1="204.3" y1="315.0" x2="318.9" y2="188.4" class="dg-line"/><line x1="557.8" y1="110.3" x2="318.9" y2="188.4" class="dg-line"/><line x1="443.8" y1="298.2" x2="325.7" y2="299.0" class="dg-line"/><line x1="443.8" y1="298.2" x2="318.9" y2="188.4" class="dg-line"/><line x1="250.4" y1="293.5" x2="325.7" y2="299.0" class="dg-line"/><line x1="250.4" y1="293.5" x2="318.9" y2="188.4" class="dg-line"/><line x1="210.6" y1="65.4" x2="318.9" y2="188.4" class="dg-line"/><line x1="93.0" y1="160.5" x2="318.9" y2="188.4" class="dg-line"/><line x1="87.8" y1="218.3" x2="49.1" y2="233.0" class="dg-line"/><line x1="87.8" y1="218.3" x2="318.9" y2="188.4" class="dg-line"/><line x1="494.0" y1="132.4" x2="474.3" y2="153.0" class="dg-line"/><line x1="494.0" y1="132.4" x2="418.9" y2="157.8" class="dg-line"/><line x1="494.0" y1="132.4" x2="487.7" y2="95.8" class="dg-line"/><line x1="494.0" y1="132.4" x2="318.9" y2="188.4" class="dg-line"/><line x1="97.7" y1="285.8" x2="318.9" y2="188.4" class="dg-line"/><line x1="164.1" y1="188.9" x2="266.4" y2="238.9" class="dg-line"/><line x1="164.1" y1="188.9" x2="318.9" y2="188.4" class="dg-line"/><line x1="258.8" y1="50.1" x2="318.9" y2="188.4" class="dg-line"/><line x1="594.5" y1="226.5" x2="318.9" y2="188.4" class="dg-line"/><line x1="491.1" y1="262.8" x2="405.3" y2="237.6" class="dg-line"/><line x1="491.1" y1="262.8" x2="431.6" y2="256.3" class="dg-line"/><line x1="491.1" y1="262.8" x2="318.9" y2="188.4" class="dg-line"/><line x1="385.1" y1="270.8" x2="365.1" y2="287.7" class="dg-line"/><line x1="385.1" y1="270.8" x2="286.2" y2="213.8" class="dg-line"/><line x1="385.1" y1="270.8" x2="325.7" y2="299.0" class="dg-line"/><line x1="385.1" y1="270.8" x2="318.9" y2="188.4" class="dg-line"/><line x1="373.4" y1="252.8" x2="431.6" y2="256.3" class="dg-line"/><line x1="373.4" y1="252.8" x2="318.9" y2="188.4" class="dg-line"/><line x1="554.7" y1="279.8" x2="318.9" y2="188.4" class="dg-line"/><line x1="266.4" y1="238.9" x2="405.3" y2="237.6" class="dg-line"/><line x1="266.4" y1="238.9" x2="325.7" y2="299.0" class="dg-line"/><line x1="266.4" y1="238.9" x2="318.9" y2="188.4" class="dg-line"/><line x1="127.0" y1="136.3" x2="318.9" y2="188.4" class="dg-line"/><line x1="274.6" y1="342.1" x2="325.7" y2="299.0" class="dg-line"/><line x1="274.6" y1="342.1" x2="318.9" y2="188.4" class="dg-line"/><line x1="487.7" y1="95.8" x2="318.9" y2="188.4" class="dg-line"/><line x1="318.9" y1="188.4" x2="422.1" y2="67.2" class="dg-line"/><line x1="318.9" y1="188.4" x2="405.3" y2="237.6" class="dg-line"/><line x1="318.9" y1="188.4" x2="365.1" y2="287.7" class="dg-line"/><line x1="318.9" y1="188.4" x2="538.6" y2="88.3" class="dg-line"/><line x1="318.9" y1="188.4" x2="474.3" y2="153.0" class="dg-line"/><line x1="318.9" y1="188.4" x2="418.9" y2="157.8" class="dg-line"/><line x1="318.9" y1="188.4" x2="286.2" y2="213.8" class="dg-line"/><line x1="318.9" y1="188.4" x2="418.5" y2="38.3" class="dg-line"/><line x1="318.9" y1="188.4" x2="438.5" y2="110.7" class="dg-line"/><line x1="318.9" y1="188.4" x2="307.4" y2="64.8" class="dg-line"/><line x1="318.9" y1="188.4" x2="68.3" y2="100.7" class="dg-line"/><line x1="318.9" y1="188.4" x2="392.3" y2="204.7" class="dg-line"/><line x1="318.9" y1="188.4" x2="504.2" y2="308.4" class="dg-line"/><line x1="318.9" y1="188.4" x2="325.7" y2="299.0" class="dg-line"/><line x1="318.9" y1="188.4" x2="431.6" y2="256.3" class="dg-line"/><line x1="318.9" y1="188.4" x2="263.6" y2="316.7" class="dg-line"/><line x1="318.9" y1="188.4" x2="219.8" y2="37.1" class="dg-line"/><line x1="318.9" y1="188.4" x2="192.9" y2="285.3" class="dg-line"/><line x1="318.9" y1="188.4" x2="49.1" y2="233.0" class="dg-line"/><line x1="318.9" y1="188.4" x2="502.4" y2="68.1" class="dg-line"/><line x1="318.9" y1="188.4" x2="131.1" y2="308.4" class="dg-line"/><line x1="318.9" y1="188.4" x2="389.1" y2="105.8" class="dg-line"/><line x1="318.9" y1="188.4" x2="229.3" y2="163.2" class="dg-line"/><line x1="318.9" y1="188.4" x2="31.5" y2="171.5" class="dg-line"/><line x1="389.1" y1="105.8" x2="418.9" y2="157.8" class="dg-line"/><line x1="392.3" y1="204.7" x2="405.3" y2="237.6" class="dg-line"/><line x1="392.3" y1="204.7" x2="418.9" y2="157.8" class="dg-line"/><line x1="474.3" y1="153.0" x2="418.9" y2="157.8" class="dg-line"/><line x1="418.9" y1="157.8" x2="405.3" y2="237.6" class="dg-line"/><line x1="418.9" y1="157.8" x2="438.5" y2="110.7" class="dg-line"/><line x1="431.6" y1="256.3" x2="405.3" y2="237.6" class="dg-line"/><line x1="431.6" y1="256.3" x2="286.2" y2="213.8" class="dg-line"/><line x1="325.7" y1="299.0" x2="405.3" y2="237.6" class="dg-line"/><line x1="325.7" y1="299.0" x2="365.1" y2="287.7" class="dg-line"/><line x1="365.1" y1="287.7" x2="405.3" y2="237.6" class="dg-line"/><line x1="229.3" y1="163.2" x2="286.2" y2="213.8" class="dg-line"/><circle cx="309.5" cy="279.7" r="3.9" fill="#3C3489" stroke="var(--card-bg)" stroke-width="1.3"><title>New Elite — degree 18</title></circle><circle cx="149.8" cy="212.0" r="4.0" fill="#3C3489" stroke="var(--card-bg)" stroke-width="1.3"><title>New Elite — degree 20</title></circle><circle cx="517.1" cy="244.6" r="5.7" fill="#1A4480" stroke="var(--card-bg)" stroke-width="1.3"><title>Veteran Elite — degree 147</title></circle><circle cx="106.3" cy="255.1" r="4.0" fill="#3C3489" stroke="var(--card-bg)" stroke-width="1.3"><title>New Elite — degree 20</title></circle><circle cx="395.4" cy="347.7" r="4.2" fill="#3C3489" stroke="var(--card-bg)" stroke-width="1.3"><title>New Elite — degree 27</title></circle><circle cx="466.3" cy="310.9" r="3.8" fill="#3C3489" stroke="var(--card-bg)" stroke-width="1.3"><title>New Elite — degree 13</title></circle><circle cx="492.6" cy="181.8" r="7.1" fill="#1A4480" stroke="var(--card-bg)" stroke-width="1.3"><title>Veteran Elite — degree 335</title></circle><circle cx="228.8" cy="332.7" r="3.9" fill="#085041" stroke="var(--card-bg)" stroke-width="1.3"><title>Power User — degree 15</title></circle><circle cx="60.3" cy="262.3" r="3.7" fill="#1A4480" stroke="var(--card-bg)" stroke-width="1.3"><title>Veteran Elite — degree 9</title></circle><circle cx="189.7" cy="263.8" r="3.7" fill="#085041" stroke="var(--card-bg)" stroke-width="1.3"><title>Power User — degree 10</title></circle><circle cx="369.7" cy="30.8" r="3.7" fill="#3C3489" stroke="var(--card-bg)" stroke-width="1.3"><title>New Elite — degree 10</title></circle><circle cx="563.4" cy="168.0" r="4.0" fill="#1A4480" stroke="var(--card-bg)" stroke-width="1.3"><title>Veteran Elite — degree 20</title></circle><circle cx="314.2" cy="252.5" r="5.9" fill="#1A4480" stroke="var(--card-bg)" stroke-width="1.3"><title>Veteran Elite — degree 175</title></circle><circle cx="111.8" cy="98.4" r="3.8" fill="#3C3489" stroke="var(--card-bg)" stroke-width="1.3"><title>New Elite — degree 14</title></circle><circle cx="236.7" cy="111.6" r="4.2" fill="#1A4480" stroke="var(--card-bg)" stroke-width="1.3"><title>Veteran Elite — degree 31</title></circle><circle cx="369.0" cy="67.6" r="3.5" fill="#1A4480" stroke="var(--card-bg)" stroke-width="1.3"><title>Veteran Elite — degree 5</title></circle><circle cx="263.0" cy="261.8" r="4.7" fill="#1A4480" stroke="var(--card-bg)" stroke-width="1.3"><title>Veteran Elite — degree 55</title></circle><circle cx="400.1" cy="296.8" r="5.0" fill="#1A4480" stroke="var(--card-bg)" stroke-width="1.3"><title>Veteran Elite — degree 79</title></circle><circle cx="163.7" cy="53.8" r="3.7" fill="#3C3489" stroke="var(--card-bg)" stroke-width="1.3"><title>New Elite — degree 9</title></circle><circle cx="504.1" cy="221.0" r="4.2" fill="#1A4480" stroke="var(--card-bg)" stroke-width="1.3"><title>Veteran Elite — degree 28</title></circle><circle cx="75.0" cy="126.2" r="3.7" fill="#1A4480" stroke="var(--card-bg)" stroke-width="1.3"><title>Veteran Elite — degree 10</title></circle><circle cx="30.0" cy="206.0" r="3.2" fill="#1A4480" stroke="var(--card-bg)" stroke-width="1.3"><title>Veteran Elite — degree 1</title></circle><circle cx="42.9" cy="144.1" r="3.4" fill="#3C3489" stroke="var(--card-bg)" stroke-width="1.3"><title>New Elite — degree 4</title></circle><circle cx="67.8" cy="186.8" r="3.7" fill="#085041" stroke="var(--card-bg)" stroke-width="1.3"><title>Power User — degree 10</title></circle><circle cx="204.4" cy="206.9" r="5.0" fill="#1A4480" stroke="var(--card-bg)" stroke-width="1.3"><title>Veteran Elite — degree 79</title></circle><circle cx="606.5" cy="158.3" r="3.4" fill="#1A4480" stroke="var(--card-bg)" stroke-width="1.3"><title>Veteran Elite — degree 4</title></circle><circle cx="559.3" cy="197.8" r="4.3" fill="#085041" stroke="var(--card-bg)" stroke-width="1.3"><title>Power User — degree 33</title></circle><circle cx="441.2" cy="196.0" r="9.0" fill="#1A4480" stroke="var(--card-bg)" stroke-width="1.3"><title>Veteran Elite — degree 720</title></circle><circle cx="177.9" cy="85.6" r="3.5" fill="#3C3489" stroke="var(--card-bg)" stroke-width="1.3"><title>New Elite — degree 6</title></circle><circle cx="124.7" cy="72.7" r="3.6" fill="#1A4480" stroke="var(--card-bg)" stroke-width="1.3"><title>Veteran Elite — degree 7</title></circle><circle cx="266.9" cy="82.0" r="3.3" fill="#3C3489" stroke="var(--card-bg)" stroke-width="1.3"><title>New Elite — degree 2</title></circle><circle cx="318.3" cy="331.3" r="4.7" fill="#1A4480" stroke="var(--card-bg)" stroke-width="1.3"><title>Veteran Elite — degree 57</title></circle><circle cx="411.5" cy="327.2" r="4.4" fill="#1A4480" stroke="var(--card-bg)" stroke-width="1.3"><title>Veteran Elite — degree 40</title></circle><circle cx="164.8" cy="238.1" r="4.8" fill="#3C3489" stroke="var(--card-bg)" stroke-width="1.3"><title>New Elite — degree 67</title></circle><circle cx="345.2" cy="350.0" r="3.5" fill="#3C3489" stroke="var(--card-bg)" stroke-width="1.3"><title>New Elite — degree 5</title></circle><circle cx="524.1" cy="159.7" r="7.3" fill="#1A4480" stroke="var(--card-bg)" stroke-width="1.3"><title>Veteran Elite — degree 371</title></circle><circle cx="294.5" cy="149.0" r="6.5" fill="#1A4480" stroke="var(--card-bg)" stroke-width="1.3"><title>Veteran Elite — degree 243</title></circle><circle cx="610.0" cy="196.1" r="3.9" fill="#1A4480" stroke="var(--card-bg)" stroke-width="1.3"><title>Veteran Elite — degree 18</title></circle><circle cx="463.8" cy="55.0" r="3.4" fill="#1A4480" stroke="var(--card-bg)" stroke-width="1.3"><title>Veteran Elite — degree 4</title></circle><circle cx="336.9" cy="44.6" r="3.7" fill="#3C3489" stroke="var(--card-bg)" stroke-width="1.3"><title>New Elite — degree 9</title></circle><circle cx="583.8" cy="131.1" r="3.6" fill="#3C3489" stroke="var(--card-bg)" stroke-width="1.3"><title>New Elite — degree 7</title></circle><circle cx="292.8" cy="30.0" r="3.7" fill="#3C3489" stroke="var(--card-bg)" stroke-width="1.3"><title>New Elite — degree 9</title></circle><circle cx="157.6" cy="111.4" r="3.4" fill="#3C3489" stroke="var(--card-bg)" stroke-width="1.3"><title>New Elite — degree 3</title></circle><circle cx="580.6" cy="252.5" r="3.5" fill="#1A4480" stroke="var(--card-bg)" stroke-width="1.3"><title>Veteran Elite — degree 5</title></circle><circle cx="311.8" cy="137.3" r="4.6" fill="#1A4480" stroke="var(--card-bg)" stroke-width="1.3"><title>Veteran Elite — degree 51</title></circle><circle cx="204.3" cy="315.0" r="4.1" fill="#3C3489" stroke="var(--card-bg)" stroke-width="1.3"><title>New Elite — degree 26</title></circle><circle cx="557.8" cy="110.3" r="3.6" fill="#3C3489" stroke="var(--card-bg)" stroke-width="1.3"><title>New Elite — degree 7</title></circle><circle cx="443.8" cy="298.2" r="4.0" fill="#1A4480" stroke="var(--card-bg)" stroke-width="1.3"><title>Veteran Elite — degree 22</title></circle><circle cx="250.4" cy="293.5" r="4.5" fill="#3C3489" stroke="var(--card-bg)" stroke-width="1.3"><title>New Elite — degree 44</title></circle><circle cx="210.6" cy="65.4" r="3.7" fill="#3C3489" stroke="var(--card-bg)" stroke-width="1.3"><title>New Elite — degree 11</title></circle><circle cx="93.0" cy="160.5" r="3.7" fill="#3C3489" stroke="var(--card-bg)" stroke-width="1.3"><title>New Elite — degree 9</title></circle><circle cx="87.8" cy="218.3" r="4.0" fill="#3C3489" stroke="var(--card-bg)" stroke-width="1.3"><title>New Elite — degree 21</title></circle><circle cx="494.0" cy="132.4" r="7.4" fill="#1A4480" stroke="var(--card-bg)" stroke-width="1.3"><title>Veteran Elite — degree 390</title></circle><circle cx="97.7" cy="285.8" r="3.5" fill="#3C3489" stroke="var(--card-bg)" stroke-width="1.3"><title>New Elite — degree 6</title></circle><circle cx="164.1" cy="188.9" r="3.7" fill="#1A4480" stroke="var(--card-bg)" stroke-width="1.3"><title>Veteran Elite — degree 11</title></circle><circle cx="258.8" cy="50.1" r="3.2" fill="#633806" stroke="var(--card-bg)" stroke-width="1.3"><title>Moderate — degree 1</title></circle><circle cx="594.5" cy="226.5" r="4.2" fill="#1A4480" stroke="var(--card-bg)" stroke-width="1.3"><title>Veteran Elite — degree 31</title></circle><circle cx="491.1" cy="262.8" r="3.9" fill="#3C3489" stroke="var(--card-bg)" stroke-width="1.3"><title>New Elite — degree 16</title></circle><circle cx="385.1" cy="270.8" r="4.3" fill="#1A4480" stroke="var(--card-bg)" stroke-width="1.3"><title>Veteran Elite — degree 33</title></circle><circle cx="373.4" cy="252.8" r="4.2" fill="#1A4480" stroke="var(--card-bg)" stroke-width="1.3"><title>Veteran Elite — degree 30</title></circle><circle cx="554.7" cy="279.8" r="3.8" fill="#1A4480" stroke="var(--card-bg)" stroke-width="1.3"><title>Veteran Elite — degree 14</title></circle><circle cx="266.4" cy="238.9" r="5.2" fill="#1A4480" stroke="var(--card-bg)" stroke-width="1.3"><title>Veteran Elite — degree 96</title></circle><circle cx="127.0" cy="136.3" r="3.9" fill="#1A4480" stroke="var(--card-bg)" stroke-width="1.3"><title>Veteran Elite — degree 17</title></circle><circle cx="274.6" cy="342.1" r="4.0" fill="#1A4480" stroke="var(--card-bg)" stroke-width="1.3"><title>Veteran Elite — degree 22</title></circle><circle cx="487.7" cy="95.8" r="3.6" fill="#3C3489" stroke="var(--card-bg)" stroke-width="1.3"><title>New Elite — degree 7</title></circle><circle cx="318.9" cy="188.4" r="11.5" fill="#1A4480" stroke="var(--card-bg)" stroke-width="1.3"><title>Veteran Elite — degree 1455</title></circle><line x1="316" y1="177" x2="270" y2="55" stroke="#e8187a" stroke-width="1.3"/><circle cx="270" cy="55" r="2.5" fill="#e8187a"/><text x="258" y="38" text-anchor="end" font-family="var(--heading)" font-weight="600" font-size="13" fill="#14131A" stroke="var(--card-bg)" stroke-width="4" paint-order="stroke fill">Most-connected reviewer</text><text x="258" y="55" text-anchor="end" font-family="var(--body)" font-size="11.5" fill="#6B7280" stroke="var(--card-bg)" stroke-width="4" paint-order="stroke fill">1,455 friends in this network</text><circle cx="389.1" cy="105.8" r="5.0" fill="#1A4480" stroke="var(--card-bg)" stroke-width="1.3"><title>Veteran Elite — degree 84</title></circle><circle cx="504.2" cy="308.4" r="3.6" fill="#3C3489" stroke="var(--card-bg)" stroke-width="1.3"><title>New Elite — degree 8</title></circle><circle cx="392.3" cy="204.7" r="4.9" fill="#1A4480" stroke="var(--card-bg)" stroke-width="1.3"><title>Veteran Elite — degree 72</title></circle><circle cx="131.1" cy="308.4" r="4.2" fill="#1A4480" stroke="var(--card-bg)" stroke-width="1.3"><title>Veteran Elite — degree 28</title></circle><circle cx="474.3" cy="153.0" r="8.9" fill="#1A4480" stroke="var(--card-bg)" stroke-width="1.3"><title>Veteran Elite — degree 692</title></circle><circle cx="422.1" cy="67.2" r="4.1" fill="#3C3489" stroke="var(--card-bg)" stroke-width="1.3"><title>New Elite — degree 23</title></circle><circle cx="219.8" cy="37.1" r="3.4" fill="#3C3489" stroke="var(--card-bg)" stroke-width="1.3"><title>New Elite — degree 3</title></circle><circle cx="418.9" cy="157.8" r="8.2" fill="#1A4480" stroke="var(--card-bg)" stroke-width="1.3"><title>Veteran Elite — degree 545</title></circle><circle cx="68.3" cy="100.7" r="3.3" fill="#712B13" stroke="var(--card-bg)" stroke-width="1.3"><title>Light — degree 2</title></circle><circle cx="438.5" cy="110.7" r="4.0" fill="#1A4480" stroke="var(--card-bg)" stroke-width="1.3"><title>Veteran Elite — degree 19</title></circle><circle cx="431.6" cy="256.3" r="4.9" fill="#1A4480" stroke="var(--card-bg)" stroke-width="1.3"><title>Veteran Elite — degree 71</title></circle><circle cx="538.6" cy="88.3" r="3.6" fill="#3C3489" stroke="var(--card-bg)" stroke-width="1.3"><title>New Elite — degree 8</title></circle><circle cx="325.7" cy="299.0" r="6.2" fill="#3C3489" stroke="var(--card-bg)" stroke-width="1.3"><title>New Elite — degree 210</title></circle><circle cx="263.6" cy="316.7" r="4.4" fill="#3C3489" stroke="var(--card-bg)" stroke-width="1.3"><title>New Elite — degree 42</title></circle><circle cx="365.1" cy="287.7" r="5.6" fill="#1A4480" stroke="var(--card-bg)" stroke-width="1.3"><title>Veteran Elite — degree 134</title></circle><circle cx="192.9" cy="285.3" r="3.5" fill="#3C3489" stroke="var(--card-bg)" stroke-width="1.3"><title>New Elite — degree 6</title></circle><circle cx="49.1" cy="233.0" r="3.7" fill="#3C3489" stroke="var(--card-bg)" stroke-width="1.3"><title>New Elite — degree 9</title></circle><circle cx="307.4" cy="64.8" r="3.2" fill="#3C3489" stroke="var(--card-bg)" stroke-width="1.3"><title>New Elite — degree 1</title></circle><circle cx="31.5" cy="171.5" r="3.7" fill="#085041" stroke="var(--card-bg)" stroke-width="1.3"><title>Power User — degree 9</title></circle><circle cx="229.3" cy="163.2" r="4.9" fill="#1A4480" stroke="var(--card-bg)" stroke-width="1.3"><title>Veteran Elite — degree 74</title></circle><circle cx="418.5" cy="38.3" r="3.8" fill="#1A4480" stroke="var(--card-bg)" stroke-width="1.3"><title>Veteran Elite — degree 13</title></circle><circle cx="405.3" cy="237.6" r="6.7" fill="#1A4480" stroke="var(--card-bg)" stroke-width="1.3"><title>Veteran Elite — degree 279</title></circle><circle cx="286.2" cy="213.8" r="5.8" fill="#3C3489" stroke="var(--card-bg)" stroke-width="1.3"><title>New Elite — degree 155</title></circle><circle cx="502.4" cy="68.1" r="3.7" fill="#3C3489" stroke="var(--card-bg)" stroke-width="1.3"><title>New Elite — degree 11</title></circle></svg>
+        </div>
+        <div class="legend-row">
+          <span class="legend-item"><span class="legend-swatch" style="background:#1A4480;"></span>Veteran Elite</span>
+          <span class="legend-item"><span class="legend-swatch" style="background:#3C3489;"></span>New Elite</span>
+          <span class="legend-item"><span class="legend-swatch" style="background:#085041;"></span>Power User</span>
+          <span class="legend-item"><span class="legend-swatch" style="background:#633806;"></span>Moderate</span>
+          <span class="legend-item"><span class="legend-swatch" style="background:#712B13;"></span>Light</span>
+        </div>
+        <div class="so-what"><span class="dot"></span><p>Sampling outward from the best-connected node pulls in mostly Veteran &amp; New Elite reviewers — the hub-and-spoke structure is visible even in this small slice.</p></div>
+      </div>
+    </div>
+
+    <p class="chart-title" style="margin-bottom:2px;">Degree distribution</p>
+    <p class="chart-sub">How many in-network friends each reviewer has, across all 46,236 reviewers &mdash; log scale, since counts range from 108 to 28,241.</p>
+    <div class="chart-card" style="margin-bottom:24px;">
+<svg viewBox="0 0 680 300" role="img" style="width:100%;" aria-label="Degree (in-network friends per reviewer) versus Reviewers (log scale)"><line x1="56" y1="224.2" x2="664" y2="224.2" stroke="var(--border)" stroke-width="1"/><text x="48" y="224.2" text-anchor="end" dominant-baseline="central" class="dg-ts">1</text><line x1="56" y1="190.3" x2="664" y2="190.3" stroke="var(--border)" stroke-width="1"/><text x="48" y="190.3" text-anchor="end" dominant-baseline="central" class="dg-ts">10</text><line x1="56" y1="146.1" x2="664" y2="146.1" stroke="var(--border)" stroke-width="1"/><text x="48" y="146.1" text-anchor="end" dominant-baseline="central" class="dg-ts">100</text><line x1="56" y1="100.5" x2="664" y2="100.5" stroke="var(--border)" stroke-width="1"/><text x="48" y="100.5" text-anchor="end" dominant-baseline="central" class="dg-ts">1,000</text><line x1="56" y1="54.7" x2="664" y2="54.7" stroke="var(--border)" stroke-width="1"/><text x="48" y="54.7" text-anchor="end" dominant-baseline="central" class="dg-ts">10,000</text><line x1="56" y1="238" x2="664" y2="238" stroke="var(--gray-text)" stroke-width="1.2"/><rect x="56.0" y="34.0" width="51.8" height="204.0" rx="4" fill="#e8187a"><title>0: 28,241</title></rect><text x="81.9" y="26.0" text-anchor="middle" class="dg-th" style="font-size:10.5px;">28.2k</text><text x="81.9" y="254" text-anchor="middle" class="dg-ts">0</text><rect x="117.8" y="67.8" width="51.8" height="170.2" rx="4" fill="#e8187a"><title>1: 5,181</title></rect><text x="143.7" y="59.8" text-anchor="middle" class="dg-th" style="font-size:10.5px;">5.2k</text><text x="143.7" y="254" text-anchor="middle" class="dg-ts">1</text><rect x="179.6" y="82.1" width="51.8" height="155.9" rx="4" fill="#e8187a"><title>2: 2,521</title></rect><text x="205.5" y="74.1" text-anchor="middle" class="dg-th" style="font-size:10.5px;">2.5k</text><text x="205.5" y="254" text-anchor="middle" class="dg-ts">2</text><rect x="241.4" y="76.1" width="51.8" height="161.9" rx="4" fill="#e8187a"><title>3-5: 3,406</title></rect><text x="267.3" y="68.1" text-anchor="middle" class="dg-th" style="font-size:10.5px;">3.4k</text><text x="267.3" y="254" text-anchor="middle" class="dg-ts">3-5</text><rect x="303.2" y="84.4" width="51.8" height="153.6" rx="4" fill="#e8187a"><title>6-10: 2,245</title></rect><text x="329.1" y="76.4" text-anchor="middle" class="dg-th" style="font-size:10.5px;">2.2k</text><text x="329.1" y="254" text-anchor="middle" class="dg-ts">6-10</text><rect x="365.0" y="89.1" width="51.8" height="148.9" rx="4" fill="#e8187a"><title>11-20: 1,773</title></rect><text x="390.9" y="81.1" text-anchor="middle" class="dg-th" style="font-size:10.5px;">1.8k</text><text x="390.9" y="254" text-anchor="middle" class="dg-ts">11-20</text><rect x="426.8" y="90.0" width="51.8" height="148.0" rx="4" fill="#e8187a"><title>21-50: 1,693</title></rect><text x="452.7" y="82.0" text-anchor="middle" class="dg-th" style="font-size:10.5px;">1.7k</text><text x="452.7" y="254" text-anchor="middle" class="dg-ts">21-50</text><rect x="488.6" y="107.5" width="51.8" height="130.5" rx="4" fill="#e8187a"><title>51-100: 701</title></rect><text x="514.5" y="99.5" text-anchor="middle" class="dg-th" style="font-size:10.5px;">701</text><text x="514.5" y="254" text-anchor="middle" class="dg-ts">51-100</text><rect x="550.4" y="120.4" width="51.8" height="117.6" rx="4" fill="#e8187a"><title>101-250: 367</title></rect><text x="576.3" y="112.4" text-anchor="middle" class="dg-th" style="font-size:10.5px;">367</text><text x="576.3" y="254" text-anchor="middle" class="dg-ts">101-250</text><rect x="612.2" y="144.6" width="51.8" height="93.4" rx="4" fill="#e8187a"><title>251+: 108</title></rect><text x="638.1" y="136.6" text-anchor="middle" class="dg-th" style="font-size:10.5px;">108</text><text x="638.1" y="254" text-anchor="middle" class="dg-ts">251+</text><text x="360.0" y="290" text-anchor="middle" class="dg-ts" style="font-weight:600;">Degree (in-network friends per reviewer)</text><text x="16" y="136.0" text-anchor="middle" class="dg-ts" style="font-weight:600;" transform="rotate(-90 16 136.0)">Reviewers (log scale)</text></svg>
+      <div class="so-what"><span class="dot"></span><p><strong>61.1% of reviewers have zero</strong> in-network friends (the "0" bar, by far the tallest) — most people simply don't happen to know another clothing reviewer. But a long tail stretches out to a max degree of 1,455.</p></div>
+    </div>
+
+    <p class="chart-title" style="margin-bottom:8px;">Network topology, in numbers</p>
+    <div class="quality-table" style="margin-bottom:24px;">
+      <div class="quality-head" style="grid-template-columns:1.4fr 1fr;"><span>Metric</span><span>Value</span></div>
+      <div class="quality-row" style="grid-template-columns:1.4fr 1fr;"><span>Nodes (reviewers)</span><span class="quality-val">46,236</span></div>
+      <div class="quality-row" style="grid-template-columns:1.4fr 1fr;"><span>Edges (friendships)</span><span class="quality-val">135,151</span></div>
+      <div class="quality-row" style="grid-template-columns:1.4fr 1fr;"><span>Density</span><span class="quality-val">0.000126</span></div>
+      <div class="quality-row" style="grid-template-columns:1.4fr 1fr;"><span>Isolated (0 friends)</span><span class="quality-val">61.1%</span></div>
+      <div class="quality-row" style="grid-template-columns:1.4fr 1fr;"><span>Mean degree</span><span class="quality-val">5.85</span></div>
+      <div class="quality-row" style="grid-template-columns:1.4fr 1fr;"><span>Max degree</span><span class="quality-val">1,455</span></div>
+      <div class="quality-row" style="grid-template-columns:1.4fr 1fr;"><span>Connected components</span><span class="quality-val">28,613</span></div>
+      <div class="quality-row" style="grid-template-columns:1.4fr 1fr;"><span>Largest component</span><span class="quality-val">17,182 (37.2%)</span></div>
+      <div class="quality-row" style="grid-template-columns:1.4fr 1fr;"><span>Clustering coefficient</span><span class="quality-val">0.2555</span></div>
+    </div>
+
+    <p class="chart-title" style="margin-bottom:2px;">Component size distribution</p>
+    <p class="chart-sub">28,613 total components &mdash; log scale. The lone giant bar on the right is the single 17,182-node component.</p>
+    <div class="chart-row hero" style="grid-template-columns: 1.1fr 1fr;">
+      <div class="chart-card">
+<svg viewBox="0 0 420 460" role="img" style="width:100%;" aria-label="Component size versus Components (log scale)"><line x1="56" y1="373.4" x2="404" y2="373.4" stroke="var(--border)" stroke-width="1"/><text x="48" y="373.4" text-anchor="end" dominant-baseline="central" class="dg-ts">1</text><line x1="56" y1="312.8" x2="404" y2="312.8" stroke="var(--border)" stroke-width="1"/><text x="48" y="312.8" text-anchor="end" dominant-baseline="central" class="dg-ts">10</text><line x1="56" y1="234.1" x2="404" y2="234.1" stroke="var(--border)" stroke-width="1"/><text x="48" y="234.1" text-anchor="end" dominant-baseline="central" class="dg-ts">100</text><line x1="56" y1="152.6" x2="404" y2="152.6" stroke="var(--border)" stroke-width="1"/><text x="48" y="152.6" text-anchor="end" dominant-baseline="central" class="dg-ts">1,000</text><line x1="56" y1="70.9" x2="404" y2="70.9" stroke="var(--border)" stroke-width="1"/><text x="48" y="70.9" text-anchor="end" dominant-baseline="central" class="dg-ts">10,000</text><line x1="56" y1="398" x2="404" y2="398" stroke="var(--gray-text)" stroke-width="1.2"/><rect x="56.0" y="34.0" width="76.5" height="364.0" rx="4" fill="#993556"><title>1 (isolate): 28,241</title></rect><text x="94.2" y="26.0" text-anchor="middle" class="dg-th" style="font-size:11px;">28.2k</text><text x="94.2" y="414" text-anchor="middle" class="dg-ts">1 (isolate)</text><rect x="146.5" y="193.6" width="76.5" height="204.4" rx="4" fill="#993556"><title>2: 315</title></rect><text x="184.8" y="185.6" text-anchor="middle" class="dg-th" style="font-size:11px;">315</text><text x="184.8" y="414" text-anchor="middle" class="dg-ts">2</text><rect x="237.0" y="254.4" width="76.5" height="143.6" rx="4" fill="#993556"><title>3-5: 56</title></rect><text x="275.2" y="246.4" text-anchor="middle" class="dg-th" style="font-size:11px;">56</text><text x="275.2" y="414" text-anchor="middle" class="dg-ts">3-5</text><rect x="327.5" y="373.4" width="76.5" height="24.6" rx="4" fill="#993556"><title>2001+: 1</title></rect><text x="365.8" y="365.4" text-anchor="middle" class="dg-th" style="font-size:11px;">1</text><text x="365.8" y="414" text-anchor="middle" class="dg-ts">2001+</text><text x="230.0" y="450" text-anchor="middle" class="dg-ts" style="font-weight:600;">Component size</text><text x="16" y="216.0" text-anchor="middle" class="dg-ts" style="font-weight:600;" transform="rotate(-90 16 216.0)">Components (log scale)</text></svg>
+      </div>
+      <div class="chart-card" style="display:flex; flex-direction:column; justify-content:center;">
+        <p class="chart-title">What this bar chart is hiding</p>
+        <p style="font-size:13.5px; color:var(--black); margin:0;">Aside from 28,241 isolated singletons and a few hundred small pairs/triples, the entire rest of the connected reviewer population &mdash; <strong>17,182 people</strong> &mdash; belongs to <strong>one single giant component</strong> (the near-invisible "2001+" bar on the right, since a bar chart can't show a bar 28,000&times; taller than its neighbor). The 0.2555 clustering coefficient confirms real triadic closure inside it, not random pairing.</p>
+      </div>
+    </div>
+  </div>
+  <!-- ===== END 03 ===== -->
+
+  <!-- ===== 04 CATEGORY VS CONNECTION ===== -->
+  <div class="section">
+    <p class="section-eyebrow">04 · Does commitment predict connection?</p>
+    <h2 class="section-title">The 44&times; gradient</h2>
+    <p class="section-desc">
+      Splitting network position by the 6 categories from Section 02 produces one of the cleanest results in this
+      whole analysis: a smooth, <strong>monotonic</strong> gradient. Connectivity rises at every single step from
+      Single-review up to Veteran Elite &mdash; no exceptions, no reversals.
+    </p>
+
+    <div class="chart-row secondary">
+      <div class="chart-card">
+        <p class="chart-title">Mean degree by category</p>
+        <p class="chart-sub">Log scale (0.2 to 44.0)</p>
+<svg viewBox="0 0 340 300" role="img" style="width:100%;" aria-label="Reviewer category versus Mean degree (log scale)"><line x1="50" y1="230.8" x2="326" y2="230.8" stroke="var(--border)" stroke-width="1"/><text x="42" y="230.8" text-anchor="end" dominant-baseline="central" class="dg-ts">0.1</text><line x1="50" y1="198.5" x2="326" y2="198.5" stroke="var(--border)" stroke-width="1"/><text x="42" y="198.5" text-anchor="end" dominant-baseline="central" class="dg-ts">1</text><line x1="50" y1="106.2" x2="326" y2="106.2" stroke="var(--border)" stroke-width="1"/><text x="42" y="106.2" text-anchor="end" dominant-baseline="central" class="dg-ts">10</text><line x1="50" y1="236" x2="326" y2="236" stroke="var(--gray-text)" stroke-width="1.2"/><rect x="50.0" y="30.0" width="36.0" height="206.0" rx="5" fill="#1A4480"><title>Veteran Elite: 44.0</title></rect><text x="68.0" y="22.0" text-anchor="middle" class="dg-th" style="font-size:12px;">44.0</text><text x="68.0" y="252" text-anchor="middle" class="dg-ts" style="font-size:10.5px;">Veteran</text><text x="68.0" y="265" text-anchor="middle" class="dg-ts" style="font-size:10.5px;">Elite</text><rect x="98.0" y="85.0" width="36.0" height="151.0" rx="5" fill="#3C3489"><title>New Elite: 15.3</title></rect><text x="116.0" y="77.0" text-anchor="middle" class="dg-th" style="font-size:12px;">15.3</text><text x="116.0" y="252" text-anchor="middle" class="dg-ts" style="font-size:10.5px;">New</text><text x="116.0" y="265" text-anchor="middle" class="dg-ts" style="font-size:10.5px;">Elite</text><rect x="146.0" y="146.4" width="36.0" height="89.6" rx="5" fill="#085041"><title>Power User: 4.2</title></rect><text x="164.0" y="138.4" text-anchor="middle" class="dg-th" style="font-size:12px;">4.2</text><text x="164.0" y="252" text-anchor="middle" class="dg-ts" style="font-size:10.5px;">Power</text><text x="164.0" y="265" text-anchor="middle" class="dg-ts" style="font-size:10.5px;">User</text><rect x="194.0" y="196.8" width="36.0" height="39.2" rx="5" fill="#633806"><title>Moderate: 1.1</title></rect><text x="212.0" y="188.8" text-anchor="middle" class="dg-th" style="font-size:12px;">1.1</text><text x="212.0" y="252" text-anchor="middle" class="dg-ts" style="font-size:10.5px;">Moderate</text><rect x="242.0" y="218.7" width="36.0" height="17.3" rx="5" fill="#712B13"><title>Light: 0.4</title></rect><text x="260.0" y="210.7" text-anchor="middle" class="dg-th" style="font-size:12px;">0.4</text><text x="260.0" y="252" text-anchor="middle" class="dg-ts" style="font-size:10.5px;">Light</text><rect x="290.0" y="225.7" width="36.0" height="10.3" rx="5" fill="#72243E"><title>Single-review: 0.2</title></rect><text x="308.0" y="217.7" text-anchor="middle" class="dg-th" style="font-size:12px;">0.2</text><text x="308.0" y="252" text-anchor="middle" class="dg-ts" style="font-size:10.5px;">Single-review</text><text x="188.0" y="292" text-anchor="middle" class="dg-ts" style="font-weight:600;">Reviewer category</text><text x="14" y="133.0" text-anchor="middle" class="dg-ts" style="font-weight:600;" transform="rotate(-90 14 133.0)">Mean degree (log scale)</text></svg>
+      </div>
+      <div class="chart-card">
+        <p class="chart-title">Isolated % by category</p>
+        <p class="chart-sub">Share with zero in-network friends</p>
+<svg viewBox="0 0 340 300" role="img" style="width:100%;" aria-label="Reviewer category versus Isolated %"><line x1="46" y1="236.0" x2="326" y2="236.0" stroke="var(--border)" stroke-width="1"/><text x="38" y="236.0" text-anchor="end" dominant-baseline="central" class="dg-ts">0%</text><line x1="46" y1="184.5" x2="326" y2="184.5" stroke="var(--border)" stroke-width="1"/><text x="38" y="184.5" text-anchor="end" dominant-baseline="central" class="dg-ts">25%</text><line x1="46" y1="133.0" x2="326" y2="133.0" stroke="var(--border)" stroke-width="1"/><text x="38" y="133.0" text-anchor="end" dominant-baseline="central" class="dg-ts">50%</text><line x1="46" y1="81.5" x2="326" y2="81.5" stroke="var(--border)" stroke-width="1"/><text x="38" y="81.5" text-anchor="end" dominant-baseline="central" class="dg-ts">75%</text><line x1="46" y1="30.0" x2="326" y2="30.0" stroke="var(--border)" stroke-width="1"/><text x="38" y="30.0" text-anchor="end" dominant-baseline="central" class="dg-ts">100%</text><line x1="46" y1="236" x2="326" y2="236" stroke="var(--gray-text)" stroke-width="1.2"/><rect x="46.0" y="231.9" width="36.7" height="4.1" rx="5" fill="#1A4480"><title>Veteran Elite: 2.0%</title></rect><text x="64.3" y="223.9" text-anchor="middle" class="dg-th" style="font-size:12px;">2.0%</text><text x="64.3" y="252" text-anchor="middle" class="dg-ts" style="font-size:10.5px;">Veteran</text><text x="64.3" y="265" text-anchor="middle" class="dg-ts" style="font-size:10.5px;">Elite</text><rect x="94.7" y="221.8" width="36.7" height="14.2" rx="5" fill="#3C3489"><title>New Elite: 6.9%</title></rect><text x="113.0" y="213.8" text-anchor="middle" class="dg-th" style="font-size:12px;">6.9%</text><text x="113.0" y="252" text-anchor="middle" class="dg-ts" style="font-size:10.5px;">New</text><text x="113.0" y="265" text-anchor="middle" class="dg-ts" style="font-size:10.5px;">Elite</text><rect x="143.3" y="144.3" width="36.7" height="91.7" rx="5" fill="#085041"><title>Power User: 44.5%</title></rect><text x="161.7" y="136.3" text-anchor="middle" class="dg-th" style="font-size:12px;">44.5%</text><text x="161.7" y="252" text-anchor="middle" class="dg-ts" style="font-size:10.5px;">Power</text><text x="161.7" y="265" text-anchor="middle" class="dg-ts" style="font-size:10.5px;">User</text><rect x="192.0" y="98.4" width="36.7" height="137.6" rx="5" fill="#633806"><title>Moderate: 66.8%</title></rect><text x="210.3" y="90.4" text-anchor="middle" class="dg-th" style="font-size:12px;">66.8%</text><text x="210.3" y="252" text-anchor="middle" class="dg-ts" style="font-size:10.5px;">Moderate</text><rect x="240.7" y="65.3" width="36.7" height="170.7" rx="5" fill="#712B13"><title>Light: 82.9%</title></rect><text x="259.0" y="57.3" text-anchor="middle" class="dg-th" style="font-size:12px;">82.9%</text><text x="259.0" y="252" text-anchor="middle" class="dg-ts" style="font-size:10.5px;">Light</text><rect x="289.3" y="52.8" width="36.7" height="183.2" rx="5" fill="#72243E"><title>Single-review: 89.0%</title></rect><text x="307.7" y="44.8" text-anchor="middle" class="dg-th" style="font-size:12px;">89.0%</text><text x="307.7" y="252" text-anchor="middle" class="dg-ts" style="font-size:10.5px;">Single-review</text><text x="186.0" y="292" text-anchor="middle" class="dg-ts" style="font-weight:600;">Reviewer category</text><text x="14" y="133.0" text-anchor="middle" class="dg-ts" style="font-weight:600;" transform="rotate(-90 14 133.0)">Isolated %</text></svg>
+      </div>
+    </div>
+    <div class="callout" style="margin-top:4px; margin-bottom:32px;">
+      <span class="dot"></span>
+      <p><strong>Veteran Elite reviewers are ~44&times; more connected</strong> than Single-review accounts, and 44&times;
+      less likely to be isolated. This extends the Fast Fashion project's finding that elite reviewers rate more
+      positively — elite status predicts <strong>social embeddedness</strong> too, not just rating behavior. Elite
+      reviewers aren't just nicer raters; they're structurally central to the reviewer community.</p>
+    </div>
+
+    <p class="chart-title" style="margin-bottom:2px;">What each category actually shops for</p>
+    <p class="chart-sub">Each reviewer's dominant fashion_type (from the Fast Fashion project), stacked to 100% per category.</p>
+    <div class="chart-card">
+<svg viewBox="0 0 900 190" role="img" style="width:100%;" aria-label="Fashion-type mix by reviewer category, shown as donut charts"><desc>Six donut charts, one per reviewer category, each showing the split between Fast Fashion, Slow Fashion, and Mixed Retail as the reviewer's dominant fashion type.</desc><g><circle cx="60" cy="60" r="46" fill="none" stroke="var(--border)" stroke-width="24"/><circle cx="60" cy="60" r="46" fill="none" stroke="#1A4480" stroke-width="24" stroke-dasharray="193.99 289.03" stroke-dashoffset="-0.00" transform="rotate(-90 60 60)"><title>Veteran Elite — Fast Fashion: 67.6%</title></circle><circle cx="60" cy="60" r="46" fill="none" stroke="#712B13" stroke-width="24" stroke-dasharray="34.98 289.03" stroke-dashoffset="-195.49" transform="rotate(-90 60 60)"><title>Veteran Elite — Slow Fashion: 12.6%</title></circle><circle cx="60" cy="60" r="46" fill="none" stroke="#085041" stroke-width="24" stroke-dasharray="55.57 289.03" stroke-dashoffset="-231.96" transform="rotate(-90 60 60)"><title>Veteran Elite — Mixed Retail: 19.7%</title></circle><text x="60" y="60" text-anchor="middle" dominant-baseline="central" class="dg-th" style="font-size:16px;">68%</text><text x="60" y="132" text-anchor="middle" class="dg-ts">Veteran</text><text x="60" y="146" text-anchor="middle" class="dg-ts">Elite</text></g><g><circle cx="210" cy="60" r="46" fill="none" stroke="var(--border)" stroke-width="24"/><circle cx="210" cy="60" r="46" fill="none" stroke="#1A4480" stroke-width="24" stroke-dasharray="188.56 289.03" stroke-dashoffset="-0.00" transform="rotate(-90 210 60)"><title>New Elite — Fast Fashion: 65.8%</title></circle><circle cx="210" cy="60" r="46" fill="none" stroke="#712B13" stroke-width="24" stroke-dasharray="49.08 289.03" stroke-dashoffset="-190.06" transform="rotate(-90 210 60)"><title>New Elite — Slow Fashion: 17.5%</title></circle><circle cx="210" cy="60" r="46" fill="none" stroke="#085041" stroke-width="24" stroke-dasharray="46.89 289.03" stroke-dashoffset="-240.64" transform="rotate(-90 210 60)"><title>New Elite — Mixed Retail: 16.7%</title></circle><text x="210" y="60" text-anchor="middle" dominant-baseline="central" class="dg-th" style="font-size:16px;">66%</text><text x="210" y="132" text-anchor="middle" class="dg-ts">New</text><text x="210" y="146" text-anchor="middle" class="dg-ts">Elite</text></g><g><circle cx="360" cy="60" r="46" fill="none" stroke="var(--border)" stroke-width="24"/><circle cx="360" cy="60" r="46" fill="none" stroke="#1A4480" stroke-width="24" stroke-dasharray="183.71 289.03" stroke-dashoffset="-0.00" transform="rotate(-90 360 60)"><title>Power User — Fast Fashion: 64.1%</title></circle><circle cx="360" cy="60" r="46" fill="none" stroke="#712B13" stroke-width="24" stroke-dasharray="49.18 289.03" stroke-dashoffset="-185.21" transform="rotate(-90 360 60)"><title>Power User — Slow Fashion: 17.5%</title></circle><circle cx="360" cy="60" r="46" fill="none" stroke="#085041" stroke-width="24" stroke-dasharray="51.64 289.03" stroke-dashoffset="-235.89" transform="rotate(-90 360 60)"><title>Power User — Mixed Retail: 18.4%</title></circle><text x="360" y="60" text-anchor="middle" dominant-baseline="central" class="dg-th" style="font-size:16px;">64%</text><text x="360" y="132" text-anchor="middle" class="dg-ts">Power</text><text x="360" y="146" text-anchor="middle" class="dg-ts">User</text></g><g><circle cx="510" cy="60" r="46" fill="none" stroke="var(--border)" stroke-width="24"/><circle cx="510" cy="60" r="46" fill="none" stroke="#1A4480" stroke-width="24" stroke-dasharray="162.72 289.03" stroke-dashoffset="-0.00" transform="rotate(-90 510 60)"><title>Moderate — Fast Fashion: 56.8%</title></circle><circle cx="510" cy="60" r="46" fill="none" stroke="#712B13" stroke-width="24" stroke-dasharray="86.31 289.03" stroke-dashoffset="-164.22" transform="rotate(-90 510 60)"><title>Moderate — Slow Fashion: 30.4%</title></circle><circle cx="510" cy="60" r="46" fill="none" stroke="#085041" stroke-width="24" stroke-dasharray="35.50 289.03" stroke-dashoffset="-252.03" transform="rotate(-90 510 60)"><title>Moderate — Mixed Retail: 12.8%</title></circle><text x="510" y="60" text-anchor="middle" dominant-baseline="central" class="dg-th" style="font-size:16px;">57%</text><text x="510" y="132" text-anchor="middle" class="dg-ts">Moderate</text></g><g><circle cx="660" cy="60" r="46" fill="none" stroke="var(--border)" stroke-width="24"/><circle cx="660" cy="60" r="46" fill="none" stroke="#1A4480" stroke-width="24" stroke-dasharray="148.93 289.03" stroke-dashoffset="-0.00" transform="rotate(-90 660 60)"><title>Light — Fast Fashion: 52.0%</title></circle><circle cx="660" cy="60" r="46" fill="none" stroke="#712B13" stroke-width="24" stroke-dasharray="110.20 289.03" stroke-dashoffset="-150.43" transform="rotate(-90 660 60)"><title>Light — Slow Fashion: 38.6%</title></circle><circle cx="660" cy="60" r="46" fill="none" stroke="#085041" stroke-width="24" stroke-dasharray="25.40 289.03" stroke-dashoffset="-262.13" transform="rotate(-90 660 60)"><title>Light — Mixed Retail: 9.3%</title></circle><text x="660" y="60" text-anchor="middle" dominant-baseline="central" class="dg-th" style="font-size:16px;">52%</text><text x="660" y="132" text-anchor="middle" class="dg-ts">Light</text></g><g><circle cx="810" cy="60" r="46" fill="none" stroke="var(--border)" stroke-width="24"/><circle cx="810" cy="60" r="46" fill="none" stroke="#1A4480" stroke-width="24" stroke-dasharray="139.80 289.03" stroke-dashoffset="-0.00" transform="rotate(-90 810 60)"><title>Single-review — Fast Fashion: 48.9%</title></circle><circle cx="810" cy="60" r="46" fill="none" stroke="#712B13" stroke-width="24" stroke-dasharray="125.12 289.03" stroke-dashoffset="-141.30" transform="rotate(-90 810 60)"><title>Single-review — Slow Fashion: 43.8%</title></circle><circle cx="810" cy="60" r="46" fill="none" stroke="#085041" stroke-width="24" stroke-dasharray="19.60 289.03" stroke-dashoffset="-267.92" transform="rotate(-90 810 60)"><title>Single-review — Mixed Retail: 7.3%</title></circle><text x="810" y="60" text-anchor="middle" dominant-baseline="central" class="dg-th" style="font-size:16px;">49%</text><text x="810" y="132" text-anchor="middle" class="dg-ts">Single-review</text></g></svg>
+      <div class="legend-row">
+        <span class="legend-item"><span class="legend-swatch" style="background:#1A4480;"></span>Fast Fashion</span>
+        <span class="legend-item"><span class="legend-swatch" style="background:#712B13;"></span>Slow Fashion</span>
+        <span class="legend-item"><span class="legend-swatch" style="background:#085041;"></span>Mixed Retail</span>
+      </div>
+      <div class="so-what"><span class="dot"></span><p>Slow Fashion's share <strong>rises steadily</strong> from 12.6% (Veteran Elite) to 43.8% (Single-review) — casual, one-time reviewers lean far more toward bespoke &amp; bridal purchases than committed reviewers do.</p></div>
+    </div>
+  </div>
+  <!-- ===== END 04 ===== -->
+
+  <!-- ===== 05 HOMOPHILY ===== -->
+  <div class="section">
+    <p class="section-eyebrow">05 · Do friends shop alike?</p>
+    <h2 class="section-title">Homophily: birds of a feather</h2>
+    <p class="section-desc">
+      <strong>Homophily</strong> is the tendency for people to be friends with others who are similar to them — the
+      "birds of a feather" effect studied throughout social network research. Here, it's tested directly: do friend
+      pairs share the same dominant fashion_type more often than random chance would predict?
+    </p>
+
+    <div class="chart-row hero">
+      <div class="chart-card hero">
+        <p class="chart-title">Observed vs. expected, by pair</p>
+        <p class="chart-sub">Each cell: % of friend pairs matching that combination, and the gap vs. random-chance expectation. Green = over-represented, red = under-represented.</p>
+<svg viewBox="0 0 354 322" role="img" style="width:100%;" aria-label="Fashion-type homophily heatmap"><text x="56" y="79.0" text-anchor="end" dominant-baseline="central" class="dg-ts">Fast</text><text x="56" y="173.0" text-anchor="end" dominant-baseline="central" class="dg-ts">Slow</text><text x="56" y="267.0" text-anchor="end" dominant-baseline="central" class="dg-ts">Mixed</text><text x="111.0" y="20" text-anchor="middle" class="dg-ts">Fast</text><text x="205.0" y="20" text-anchor="middle" class="dg-ts">Slow</text><text x="299.0" y="20" text-anchor="middle" class="dg-ts">Mixed</text><g><rect x="66" y="34" width="90" height="90" rx="8" fill="#0F9D58" fill-opacity="0.69" stroke="var(--border)" stroke-width="0.75"><title>Fast Fashion × Fast Fashion: observed 45.5%, expected 32.5% under random pairing (+13.0 pts)</title></rect><text x="111.0" y="71.0" text-anchor="middle" dominant-baseline="central" class="dg-th" style="font-size:15px;">45.5%</text><text x="111.0" y="92.0" text-anchor="middle" dominant-baseline="central" class="dg-ts">+13.0pt</text></g><g><rect x="160" y="34" width="90" height="90" rx="8" fill="#D93025" fill-opacity="0.90" stroke="var(--border)" stroke-width="0.75"><title>Fast Fashion × Slow Fashion: observed 16.5%, expected 34.6% under random pairing (-18.1 pts)</title></rect><text x="205.0" y="71.0" text-anchor="middle" dominant-baseline="central" class="dg-th" style="font-size:15px;">16.5%</text><text x="205.0" y="92.0" text-anchor="middle" dominant-baseline="central" class="dg-ts">-18.1pt</text></g><g><rect x="254" y="34" width="90" height="90" rx="8" fill="#0F9D58" fill-opacity="0.63" stroke="var(--border)" stroke-width="0.75"><title>Fast Fashion × Mixed Retail: observed 26.0%, expected 14.4% under random pairing (+11.6 pts)</title></rect><text x="299.0" y="71.0" text-anchor="middle" dominant-baseline="central" class="dg-th" style="font-size:15px;">26.0%</text><text x="299.0" y="92.0" text-anchor="middle" dominant-baseline="central" class="dg-ts">+11.6pt</text></g><g><rect x="66" y="128" width="90" height="90" rx="8" fill="#D93025" fill-opacity="0.90" stroke="var(--border)" stroke-width="0.75"><title>Slow Fashion × Fast Fashion: observed 16.5%, expected 34.6% under random pairing (-18.1 pts)</title></rect><text x="111.0" y="165.0" text-anchor="middle" dominant-baseline="central" class="dg-th" style="font-size:15px;">16.5%</text><text x="111.0" y="186.0" text-anchor="middle" dominant-baseline="central" class="dg-ts">-18.1pt</text></g><g><rect x="160" y="128" width="90" height="90" rx="8" fill="#D93025" fill-opacity="0.45" stroke="var(--border)" stroke-width="0.75"><title>Slow Fashion × Slow Fashion: observed 2.2%, expected 9.2% under random pairing (-7.0 pts)</title></rect><text x="205.0" y="165.0" text-anchor="middle" dominant-baseline="central" class="dg-th" style="font-size:15px;">2.2%</text><text x="205.0" y="186.0" text-anchor="middle" dominant-baseline="central" class="dg-ts">-7.0pt</text></g><g><rect x="254" y="128" width="90" height="90" rx="8" fill="#D93025" fill-opacity="0.26" stroke="var(--border)" stroke-width="0.75"><title>Slow Fashion × Mixed Retail: observed 5.2%, expected 7.7% under random pairing (-2.5 pts)</title></rect><text x="299.0" y="165.0" text-anchor="middle" dominant-baseline="central" class="dg-th" style="font-size:15px;">5.2%</text><text x="299.0" y="186.0" text-anchor="middle" dominant-baseline="central" class="dg-ts">-2.5pt</text></g><g><rect x="66" y="222" width="90" height="90" rx="8" fill="#0F9D58" fill-opacity="0.63" stroke="var(--border)" stroke-width="0.75"><title>Mixed Retail × Fast Fashion: observed 26.0%, expected 14.4% under random pairing (+11.6 pts)</title></rect><text x="111.0" y="259.0" text-anchor="middle" dominant-baseline="central" class="dg-th" style="font-size:15px;">26.0%</text><text x="111.0" y="280.0" text-anchor="middle" dominant-baseline="central" class="dg-ts">+11.6pt</text></g><g><rect x="160" y="222" width="90" height="90" rx="8" fill="#D93025" fill-opacity="0.26" stroke="var(--border)" stroke-width="0.75"><title>Mixed Retail × Slow Fashion: observed 5.2%, expected 7.7% under random pairing (-2.5 pts)</title></rect><text x="205.0" y="259.0" text-anchor="middle" dominant-baseline="central" class="dg-th" style="font-size:15px;">5.2%</text><text x="205.0" y="280.0" text-anchor="middle" dominant-baseline="central" class="dg-ts">-2.5pt</text></g><g><rect x="254" y="222" width="90" height="90" rx="8" fill="#0F9D58" fill-opacity="0.29" stroke="var(--border)" stroke-width="0.75"><title>Mixed Retail × Mixed Retail: observed 4.7%, expected 1.6% under random pairing (+3.1 pts)</title></rect><text x="299.0" y="259.0" text-anchor="middle" dominant-baseline="central" class="dg-th" style="font-size:15px;">4.7%</text><text x="299.0" y="280.0" text-anchor="middle" dominant-baseline="central" class="dg-ts">+3.1pt</text></g></svg>
+      </div>
+      <div class="chart-card hero">
+        <p class="chart-title">The headline number</p>
+        <p class="chart-sub">Any friend pair sharing the same dominant type, aggregated across all three types.</p>
+        <div class="bar-row"><span class="bar-label">Observed</span><div class="bar-track"><div class="bar-fill" style="width:87%; background:#0F9D58;"></div></div><span class="bar-val">52.4%</span></div>
+        <div class="bar-row"><span class="bar-label">Expected</span><div class="bar-track"><div class="bar-fill" style="width:72%; background:#0F9D58; opacity:.5;"></div></div><span class="bar-val">43.3%</span></div>
+        <div class="so-what" style="margin-top:18px;"><span class="dot"></span><p>Friends share a dominant fashion_type <strong>9.1 percentage points more often than chance</strong> — real homophily, not coincidence. But averaging across all three types hides the sharper story on the left.</p></div>
+      </div>
+    </div>
+
+    <div class="callout">
+      <span class="dot"></span>
+      <p><strong>The aggregate number hides a sharper pattern.</strong> Mixed Retail&ndash;Mixed Retail pairs are the
+      <em>most</em> over-represented combination of any (~3&times; expected) — department-store reviewers cluster
+      tightly with each other. Fast Fashion&ndash;Slow Fashion cross-pairs are the most under-represented (observed
+      less than half of what chance predicts) — casual mass-market reviewers and bespoke/bridal reviewers largely
+      avoid each other's friend circles. Slow Fashion&ndash;Slow Fashion pairing is also <em>below</em> chance, unlike
+      the other two same-type combinations — suggesting Slow Fashion friendships form for reasons other than shared
+      bespoke/bridal taste specifically (geography, life stage, etc.).</p>
+    </div>
+  </div>
+  <!-- ===== END 05 ===== -->
+
+  <!-- ===== 06 GEOGRAPHY ===== -->
+  <div class="section">
+    <p class="section-eyebrow">06 · Does geography matter more than taste?</p>
+    <h2 class="section-title">The metro map</h2>
+    <p class="section-desc">
+      Every reviewer was also assigned a "home metro" &mdash; the city (from the Fast Fashion project's fixed set of
+      11 Yelp metro areas) whose businesses they reviewed most. Since <code>clothing_users.csv</code> has no location
+      field, businesses were clustered into those 11 metros with <strong>k-means on real latitude/longitude</strong>,
+      reusing the exact projection that positioned the original state choropleth so this map lines up with it pixel
+      for pixel.
+    </p>
+
+    <div class="map-card">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 959 758" width="100%" role="img" aria-label="Reviewer friendship network overlaid on a real US map">
+<title>Reviewer friendship network on a real US map</title>
+<desc>Metro bubbles positioned at true latitude/longitude on a blank US states map. Bubble size is reviewer count, shade is mean network degree, lines are the busiest cross-metro friend connections.</desc>
+<rect x="0" y="0" width="959" height="758" fill="#f7f6f2"/>
+<g transform="translate(0,165)">
+  <title>Blank map of the United States, territories not included</title>
+<defs>
+<style type="text/css">
+.state {fill:#D0D0D0}                        /* default color for all states not specified below */
+.borders {stroke:#FFFFFF; stroke-width:1}    /* color and width of borders between states */
+.dccircle {display:yes}                      /* set display to yes to show the circle for the District of Columbia, or none to hide it */
+.separator1 {stroke:#B0B0B0; stroke-width:2} /* color and width of lines around Alaska and Hawaii */
+
+/* Individual states can be colored as follows:
+.ks,.mt,.pa {fill:#0000FF}
+.ca,.de {fill:#FF0000}
+In this example, Kansas, Montana and Pennsylvania are colored blue, and California and Delaware are colored red.
+Place this code in the empty space below. */
+
+
+
+</style>
+</defs>
+
+<g class="state">
+
+<path class="al" d="m 643,467.4 .4,-7.3 -.9,-1.2 -1.7,-.7 -2.5,-2.8 .5,-2.9 48.8,-5.1 -.7,-2.2 -1.5,-1.5 -.5,-1.4 .6,-6.3 -2.4,-5.7 .5,-2.6 .3,-3.7 2.2,-3.8 -.2,-1.1 -1.7,-1 v -3.2 l -1.8,-1.9 -2.9,-6.1 -12.9,-45.8 -45.7,4 1.3,2 -1.3,67 4.4,33.2 .9,-.5 1.3,.1 .6,.4 .8,-.1 2,-3.8 v -2.3 l 1.1,-1.1 1.4,.5 3.4,6.4 v .9 l -3.3,2.2 3.5,-.4 4.9,-1.6 z">
+<title>Alabama</title></path>
+
+<!-- The scale of Alaska is 42% that of the contiguous United States, so its area is reduced to about 17.6%. The Islands of Four Mountains, Andreanof Islands, Rat Islands and Near Islands are not shown. -->
+<path class="ak" d="m 15.8,572 h 2.4 l .7,.7 -1,1.2 -1.9,.2 -2.5,1.3 -3.7,-.1 2.2,-.9 .3,-1.1 2.5,-.3 z m 8.3,-1.7 1.3,.5 h .9 l .5,1.2 .3,-.6 .9,.2 1.1,1.5 0,.5 -4.2,1.9 -2.4,-.1 -1,-.5 -1.1,.7 -2,0 -1.1,-1.4 4.7,-.5 z m 5.4,-.1 1,.1 .7,.7 v 1 l -1.3,.1 -.9,-1.1 z m 2.5,.3 1.3,-.1 -.1,1 -1.1,.6 z m .3,2.2 3.4,-.1 .2,1.1 -1.3,.1 -.3,-.5 -.8,.6 -.4,-.6 -.9,-.2 z m 166.3,7.6 2.1,.1 -1,1.9 -1.1,-.1 -.4,-.8 .5,-1.3 m -1.1,-2.9 .6,-1.3 -.2,-2.3 2.4,-.5 4.5,4.4 1.3,3.4 1.9,1.6 .3,5.1 -1.4,0 -1.3,-2.3 -3.1,-2.4 h -.6 l 1.1,2.8 1.7,.2 .2,2.1 -.9,.1 -4.1,-4.4 -.1,-.9 1.9,-1 0,-1 -.5,-.8 -1.6,-.6 -1.7,-1.3 1.4,.1 .5,-.4 -.6,-.9 -.6,.5 z m -3.6,-9.1 1.3,.1 2.4,2.5 -.2,.8 -.8,-.1 -.1,1.8 .5,.5 0,1.5 -.8,.3 -.4,1.2 -.8,-.4 -.4,-2.2 1.1,-1.4 -2.1,-2.2 .1,-1.2 z m 1.5,-1.5 1.9,.2 2.5,.1 3.4,3.2 -.2,.5 -1.1,.6 -1.1,-.2 -.1,-.7 -1.2,-1.6 -.3,.7 1,1.3 -.2,1.2 -.8,-.1 -1.3,.2 -.1,-1.7 -2.6,-2.8 z m -12.7,-8.9 .9,-.4 h 1.6 l .7,-.5 4.1,2.2 .1,1.5 -.5,.5 h -.8 l -1.4,-.7 1.1,1.3 1.8,0 .5,2 -.9,0 -2.2,-1.5 -1.1,-.2 .6,1.3 .1,.9 .8,-.6 1.7,1.2 1.3,-.1 -.2,.8 1.9,4.3 0,3.4 .4,2.1 -.8,.3 -1.2,-2 -.5,-1.5 -1.6,-1.6 -.2,-2.7 -.6,-1.7 h -.7 l .3,1.1 0,.5 -1.4,1 .1,-3.3 -1.6,-1.6 -1.3,-2.3 -1.2,-1.2 z m 7.2,-2.3 1.1,1.8 2.4,-.1 1,2.1 -.6,.6 2,3.2 v 1.3 l -1.2,.8 v .7 l -2,1.9 -.5,-1.4 -.1,-1.3 .6,-.7 v -1.1 l -1.5,-1.9 -.5,-3.7 -.9,-1.5 z m -56.7,-18.3 -4,4.1 v 1.6 l 2.1,-.8 .8,-1.9 2.2,-2.4 z m -31.6,16.6 0,.6 1.8,1.2 .2,-1.4 .6,.9 3.5,.1 .7,-.6 .2,-1.8 -.5,-.7 -1.4,0 0,-.8 .4,-.6 v -.4 l -1.5,-.3 -3.3,3.6 z m -8.1,6.2 1.5,5.8 h 2.1 l 2.4,-2.5 .3,1.2 6.3,-4 .7,-1 -1,-1.1 v -.7 l .5,-1.3 -.9,-.1 -2,1 0,-1.2 -2.7,-.6 -2.4,.3 -.2,3.4 -.8,-2 -1.5,-.1 -1,.6 z m -2.2,8.2 .1,-.7 2.1,-1.3 .6,.3 1.3,.2 1.3,1.2 -2.2,-.2 -.4,-.6 -1,.6 z m -5.2,3.3 -1.1,.8 1.5,1.4 .8,-.7 -.1,-1.3 z m -6.3,-7.9 1.4,.1 .4,.6 -1.8,.1 z m -13.9,11.9 v .5 l .7,.1 -.1,-.6 z m -.4,-3.2 -1,1 v .5 l .7,1.1 1,-1 -.7,-.1 z m -2,-.8 -.3,1 -1.3,.1 -.4,.2 0,1.3 -.5,.9 .6,0 .7,-.9 .8,-.1 .9,-1 .2,-1.3 z m -4.4,-2 -.2,1.8 1.4,.8 1.2,-.6 0,-1 1.7,-.3 -.1,-.6 -.9,-.2 -.7,.6 -.9,-.5 z m -4.9,-.1 1,.7 -.3,1.2 -1.4,-1.1 z m -4.2,1.3 1.4,.1 -.7,.8 z m -3.5,3 1.8,1.1 -1.7,.1 z m -25.4,-31.2 1.2,.6 -.8,.6 z m -.7,-6.3 .4,1.2 .8,-1.2 z m 24.3,-19.3 1.5,-.1 .9,.4 1.1,-.5 1.3,-.1 1.6,.8 .8,1.9 -.1,.9 -1.2,2 -2.4,-.2 -2.1,-1.8 -1,-.4 -1.1,-2 z m -21.1,-14.4 .1,1.9 2,2 v .5 l -.8,-.2 -1.7,-.8 -.3,-1.1 -.3,-1.6 z m 18.3,-23.3 v 1.2 l 1.9,1.8 h 2.3 l .6,1.1 v 1.6 l 2.1,1.9 1.8,1.2 -.1,.7 -.7,1.1 -1.4,-1.2 -2.1,.1 -.8,-.8 -.9,-2.1 -1.5,-2.2 -2.6,-.1 -1,-.7 1,-2.1 z m 16.8,-4.5 1,0 .1,1.1 h -1 z m 16.2,19.7 .9,.1 0,1.2 -1.7,-.5 z m 127.8,77.7 -1.2,.4 -.1,1.1 h 1.2 z m -157.6,-4.5 -1.3,-.4 -4.1,.6 -2.8,1.4 -.1,1.9 1.9,.7 1.5,-.9 1.7,-.1 4.7,1.4 .1,-1.3 -1.6,-1.1 z m 2.1,2.3 -.4,-1.4 1.2,.2 .1,1.4 1.8,0 .4,-2.5 .3,2.4 2.5,-.1 3.2,-3.3 .8,.1 -.7,1.3 1.4,.9 4.2,-.2 2.6,-1.2 1.4,-.1 .3,1.5 .6,-.5 .4,-1.4 5.9,.2 1.9,-1.6 -1.3,-1.1 .6,-1.2 2.6,.2 -.2,-1.2 2.5,.2 .7,-1.1 1.1,.2 4.6,-1.9 .2,-1.7 5.6,-2.4 2,-1.9 1.2,-.6 1.3,.8 2.3,-.9 1.1,-1.9 .5,-1.3 1.7,-.9 1.5,-.7 .4,-1.4 -1.1,-1.7 -2.2,-.2 -.2,-1.3 .8,-1.6 1.4,-.2 1.3,-1.5 1.9,-.1 3.4,-3.2 .4,-1.4 1.5,-2.3 3.8,-4.1 2.5,-.9 1.9,-.9 2.1,.8 1.4,2.6 -1.5,0 -1.4,-1.5 -3,2 -1.7,.1 -.2,3.1 -3.1,4.9 .6,2 2.3,0 -.6,1 -1.4,.1 -2.4,1.8 0,.9 1.9,1 3.4,-.6 1.4,-1.7 1.4,.1 3,-1.7 .5,-2.3 1.6,-.1 6.3,.8 1,-1.1 1,-4.5 -1.6,1.1 .6,-2.2 -1.6,-1.4 .8,-1.5 .1,1.5 3.4,0 .7,-1 1.6,-.1 -.3,1.7 1.9,.1 -1.9,1.3 4.1,1.1 -3.5,.4 -1.3,1.2 .9,1.4 4.6,-1.7 2.3,1.7 .7,-.9 .6,1.4 4,2.3 h 2.9 l 3.9,-.5 4.3,1.1 2,1.9 4.5,.4 1.8,-1.5 .8,2.4 -1.8,.7 1.2,1.2 7.4,3.8 1.4,2.5 5.4,4.1 3.3,-2 -.6,-2.2 -3.5,-2 3.1,1.2 .5,-.7 .9,1.3 0,2.7 2.1,-.6 2.1,1.8 -2.5,-9.8 1.2,1.3 1.4,6 2.2,2.5 2.4,-.4 1.8,3.5 h .9 l .6,5.6 3.4,.5 1.6,2.2 1.8,1.1 .4,2.8 -1.8,2.6 2.9,1.6 1.2,-2.4 -.2,3.1 -.8,.9 1.4,1.7 .7,-2.4 -.2,-1.2 .8,.2 .6,2.3 -1,1.4 .6,2.6 .5,.4 .3,-1.6 .7,.6 -.3,2 1.2,.2 -.4,.9 1.7,-.1 0,-1 h -1 l .1,-1.7 -.8,-.6 1.7,-.3 .5,-.8 0,-1.6 .5,1.3 -.6,1.8 1.2,3.9 1.8,.1 2.2,-4.2 .1,-1.9 -1.3,-4 -.1,-1.2 .5,-1.2 -.7,-.7 -1.7,.1 -2.5,-2 -1.7,0 -2,-1.4 -1.5,0 -.5,-1.6 -1.4,-.3 -.2,-1.5 -1,-.5 .1,-1.7 -5.1,-7.4 -1.8,-1.5 v -1.2 l -4.3,-3.5 -.7,-1.1 -1.6,-2 -1.9,-.6 0,-2.2 -1.2,-1.3 -1.7,-.7 -2.1,1.3 -1.6,2.1 -.4,2.4 -1.5,.1 -2.5,2.7 -.8,-.3 v -2.5 l -2.4,-2.2 -2.3,-2 -.5,-2 -2.5,-1.3 .2,-2.2 -2.8,-.1 -.7,1.1 -1.2,0 -.7,-.7 -1.2,.8 -1.8,-1.2 0,-85.8 -6.9,-4.1 -1.8,-.5 -2.2,1.1 -2.2,.1 -2.3,-1.6 -4.3,-.6 -5.8,-3.6 -5.7,-.4 -2,.5 -.2,-1.8 -1.8,-.7 1.1,-1 -.2,-.9 -3.2,-1.1 h -2.4 l -.4,.4 -.9,-.6 .1,-2.6 -.8,-.9 -2.5,2.9 -.8,-.1 v -.8 l 1.7,-.8 v -.8 l -1.9,-2.4 -1.1,-.1 -4.5,3.1 h -3.9 l .4,-.9 -1.8,-.1 -5.2,3.4 -1.8,0 -.6,-.8 -2.7,1.5 -3.6,3.7 -2.8,2.7 -1.5,1.2  -2.6,.1 -2.2,-.4 -2.3,-1.3 v 0 l -2.8,3.9 -.1,2.4 2.6,2.4 2.1,4.5 .2,5.3 2.9,2 3.4,.4 .7,.8 -1.5,2.3 .7,2.7 -1.7,-2.6 v -2.4 l -1.5,-.3 .1,1.2 .7,2.1 2.9,3.7 h -1.4 l -2.2,1.1 -6.2,-2.5 -.1,-2 1.4,-1.3 0,-1.4 -2.1,-.5 -2.3,.2 -4.8,.2 1.5,2.3 -1.9,-1.8 -8.4,1.2 -.8,1.5 4.9,4.7 -.8,1.4 -.3,2 -.7,.8 -.1,1.9 4.4,3.6 4.1,.2 4.6,1.9 h 2 l .8,-.6 3.8,.1 .1,-.8 1.2,1.1 .1,2 -2.5,-.1 .1,3.3 .5,3.2 -2.9,2.7 -1.9,-.1 -2,-.8 -1,.1 -3.1,2.1 -1.7,.2 -1.4,-2.8 -3.1,0 -2.2,2 -.5,1.8 -3.3,1.8 -5.3,4.3 -.3,3.1 .7,2.2 1,1.2 1,-.4 .9,1 -.8,.6 -1.5,.9 1.1,1.5 -2.6,1.1 .8,2.2 1.7,2.3 .8,4.1 4,1.5 2.6,-.8 1.7,-1.1 .5,2.1 .3,4.4 -1.9,1.4 0,4.4 -.6,.9 h -1.7 l 1.7,1.2 2.1,-.1 .4,-1 4.6,-.6 2,2.6 1.3,-.7 1.3,5.1 1,.5 1,-.7 .1,-2.4 .9,-1 .7,1.1 .2,1.6 1.6,.4 4.7,-1.2 .2,1.2 -2,1.1 -1.6,1.7 -2.8,7 -4.3,2 -1.4,1.5 -.3,1.4 -1,-.6 -9.3,3.3 -1.8,4.1 -1.3,-.4 .5,-1.1 -1.5,-1.4 -3.5,-.2 -5.3,3.2 -2.2,1.3 -2.3,0 -.5,2.4 z">
+<title>Alaska</title></path>
+
+<path class="az" d="m 139.6,387.6 3,-2.2 .8,-2.4 -1,-1.6 -1.8,-.2 -1.1,-1.6 1.1,-6.9 1.6,-.3 2.4,-3.2 1.6,-7 2.4,-3.6 4.8,-1.7 1.3,-1.3 -.4,-1.9 -2.3,-2.5 -1.2,-5.8 -1.4,-1.8 -1.3,-3.4 .9,-2.1 1.4,-3 .5,-2.9 -.5,-4.9 1,-13.6 3.5,-.6 3.7,1.4 1.2,2.7 h 2 l 2.4,-2.9 3.4,-17.5 46.2,8.2 40,6 -17.4,124.1 -37.3,-5.4 -64.2,-37.5 .5,-2.9 2,-1.8 z">
+<title>Arizona</title></path>
+
+<path class="ar" d="m 584.2,367 .9,-2.2 1.2,.5 .7,-1 -.8,-.7 .3,-1.5 -1.1,-.9 .6,-1 -.1,-1.5 -1.1,-.1 .8,-.8 1.3,.8 .3,-1.4 -.4,-1.1 .1,-.7 2,.6 -.4,-1.5 1.6,-1.3 -.5,-.9 -1.1,.1 -.6,-.9 .9,-.9 1.6,-.2 .5,-.8 1.4,-.2 -.1,-.8 -.9,-.9 v -.5 h 1.5 l .4,-.7 -1.4,-1 -.1,-.6 -11.2,.8 2.8,-5.1 1.7,-1.5 v -2.2 l -1.6,-2.5 -39.8,2 -39.1,.7 4.1,24.4 -.7,39 2.6,2.3 2.8,-1.3 3.2,.8 .2,11.9 52.3,-1.3 1.2,-1.5 .5,-3 -1.5,-2.3 -.5,-2.2 .9,-.7 v -.8 l -1.7,-1.1 -.1,-.7 1.6,-.9 -1.2,-1.1 1.7,-7.1 3.4,-1.6 v -.8 l -1.1,-1.4 2.9,-5.4 h 1.9 l 1.5,-1.2 -.3,-5.2 3.1,-4.5 1.8,-.6 -.5,-3.1 z">
+<title>Arkansas</title></path>
+
+<path class="ca" d="m 69.4,365.6 3.4,5.2 -1.4,.1 -1.8,-1.9 z m 1.9,-9.8 1.8,4.1 2.6,1 .7,-.6 -1.3,-2.5 -2.6,-2.4 z m -19.9,-19 v 2.4 l 2,1.2 4.4,-.2 1,-1 -3.1,-.2 z m -5.9,.1 3.3,.5 1.4,2.2 h -3.8 z m 47.9,45.5 -1,-3 .2,-3 -.4,-7.9 -1.8,-4.8 -1.2,-1.4 -.6,-1.5 -7,-8.6 -3.6,.1 -2,-1.9 1.1,-1.8 -.7,-3.7 -2.2,-1.2 -3.9,-.6 -2.8,-1.3 -1.5,-1.9 -4.5,-6.6 -2.7,-2.2 -3.7,-.5 -3.1,-2.3 -4.7,-1.5 -2.8,-.3 -2.5,-2.5 .2,-2.8 .8,-4.8 1.8,-5.1 -1.4,-1.6 -4,-9.4 -2.7,-3.7 -.4,-3 -1.6,-2.3 .2,-2.5 -2,-5 -2.9,-2.7 .6,-7.1 2.4,-.8 1.8,-3.1 -.4,-3.2 -1,-.9 h -2.5 l -2.5,-3.3 -1.5,-3.5 v -7.5 l 1.2,-4.2 .2,-2.1 2.5,.2 -.1,1.6 -.8,.7 v 2.5 l 3.7,3.2 v -4.7 l -1.4,-3.4 .5,-1.1 -1,-1.7 2.8,-1.5 -1.9,-3 -1.4,.5 -1.5,3.8 .5,1.3 -.8,1 -.9,-.1 -5.4,-6.1 .7,-5.6 -1.1,-3.9 -6.5,-12.8 .8,-10.7 2.3,-3.6 .2,-6.4 -5.5,-11.1 .3,-5.2 6.9,-7.5 1.7,-2.4 -.1,-1.4 4,-9.2 .1,-8.4 .9,-2.5 66.1,18.6 -16.4,63.1 1.1,3.5 70.4,105 -.9,2.1 1.3,3.4 1.4,1.8 1.2,5.8 2.3,2.5 .4,1.9 -1.3,1.3 -4.8,1.7 -2.4,3.6 -1.6,7 -2.4,3.2 -1.6,.3 -1.1,6.9 1.1,1.6 1.8,.2 1,1.6 -.8,2.4 -3,2.2 -2.2,-.1 z">
+<title>California</title></path>
+
+<path class="co" d="m 374.6,323.3 -16.5,-1 -51.7,-4.8 -52.6,-6.5 11.5,-88.3 44.9,5.7 37.5,3.4 33.1,2.4 -1.4,22.1 z">
+<title>Colorado</title></path>
+
+<path class="ct" d="m 873.5,178.9 .4,-1.1 -3.2,-12.3 -.1,-.3 -14.9,3.4 v .7 l -.9,.3 -.5,-.7 -10.5,2.4 2.8,16.3 1.8,1.5 -3.5,3.4 1.7,2.2 5.4,-4.5 1.7,-1.3 h .8 l 2.4,-3.1 1.4,.1 2.9,-1.1 h 2.1 l 5.3,-2.7 2.8,-.9 1,-1 1.5,.5 z">
+<title>Connecticut</title></path>
+
+<path class="de" d="m 822.2,226.6 -1.6,.3 -1.5,1.1 -1.2,2.1 7.6,27.1 10.9,-2.3 -2.2,-7.6 -1.1,.5 -3.3,-2.6 -.5,-1.7 -1.8,-1 -.2,-3.7 -2.1,-2.2 -1.1,-.8 -1.2,-1.1 -.4,-3.2 .3,-2.1 1,-2.2 z">
+<title>Delaware</title></path>
+
+<path class="fl" d="m 751.7,445.1 -4,-.7 -1.7,-.9 -2.2,1.4 v 2.5 l 1.4,2.1 -.5,4.3 -2.1,.6 -1,-1.1 -.6,-3.2 -50.1,3.3 -3.3,-6 -48.8,5.1 -.5,2.9 2.5,2.8 1.7,.7 .9,1.2 -.4,7.3 -1.1,.6 .5,.4 1,-.3 .7,-.8 10.5,-2.7 9.2,-.5 8.1,1.9 8.5,5 2.4,.8 2.2,2 -.1,2.7 h 2.4 l 1.9,-1 2.5,.1 2,-.8 2.9,-2 3.1,-2.9 1.1,-.4 .6,.5 h 1.4 l .5,-.8 -.5,-1.2 -.6,-.6 .2,-.8 2,-1.1 5,-.4 .8,1 1,.1 2.3,1 3,1.8 1.2,1.7 1.1,1.2 2.8,1.4 v 2.4 l 2.8,1.9 1,.1 1.6,1.4 .7,1.6 1,.2 .8,2.1 .7,.6 1,-1.1 2.9,.1 .5,1.4 1.1,.9 v 1.3 l 2.9,2.2 .2,9.6 -1.8,5.8 1,1.2 -.2,3.4 -.8,1.4 .7,1.2 2.3,2.3 .3,1.5 .8,1 -.4,-1.9 1.3,-.6 .8,-3.6 -3,-1.2 .1,-.6 2.6,-.4 .9,2.6 1.1,.6 .1,-2 1.1,.3 .6,.8 -.1,.7 -2.9,4.2 -.2,1.1 -1.7,1.9 v 1.1 l 3.7,3.8 5.3,7.9 1.8,2.1 v 1.8 l 2.8,4.6 2.3,.6 .7,-1.2 -2.1,.3 -3,-4.5 .2,-1.4 1.5,-.8 v -1.5 l -.6,-1.3 .9,-.9 .4,.9 .7,.5 v 4 l -1.2,-.6 -.8,.9 1.4,1.6 1,2.6 1.2,-.6 2.3,1.2 2.1,2.2 1.6,5.1 3.1,4.8 .8,-1.3 2.8,-.5 3.2,1.3 .3,1.7 3.3,3.8 .1,1.1 2.2,2.7 -.7,.5 v 2.7 l 2.7,1.4 h 1.5 l 2.7,-1.8 1.5,.3 1.1,.4 2.3,-1.7 .2,-.7 1.2,.3 2.4,-1.7 1.3,-2.3 -.7,-3.2 -.2,-1.3 1.1,-4 .6,-.2 .6,1.6 .8,-1.8 -.8,-7.2 -.4,-10.5 -1,-6.8 -.7,-1.7 -6.6,-11.1 -5.2,-9.1 -2.2,-3.3 -1.3,-3.6 -.2,-3.4 .9,-.3 v -.9 l -1.1,-2.2 -4,-4 -7.6,-9.7 -5.7,-10.4 -4.3,-10.7 -.6,-3.7 -1.2,-1 -.5,-3.8 z m 9.2,134.5 1.7,-.1 -.7,-1 z m 7.3,-1.1 v -.7 l 1.6,-.2 3.7,-3.3 1.5,-.6 2.4,-.9 .3,1.3 1.7,.8 -2.6,1.2 h -2.4 l -3.9,2.5 z m 17.2,-7.6 -3,1.4 -1,1.3 1.1,.1 z m 3.8,-2.9 -1.1,.3 -1.4,2 1.1,-.2 1.5,-1.6 z m 8.3,-15.7 -1.7,5.6 -.8,1 -1,2.6 -1.2,1.6 -.7,1.7 -1.9,2.2 v .9 l 2.7,-2.8 2.4,-3.5 .6,-2 2.1,-4.9 z">
+<title>Florida</title></path>
+
+<path class="ga" d="m 761.8,414.1 v 1.4 l -4.2,6.2 -1.2,.2 1.5,.5 v 2 l -.9,1.1 -.6,6 -2.3,6.2 .5,2 .7,5.1 -3.6,.3 -4,-.7 -1.7,-.9 -2.2,1.4 v 2.5 l 1.4,2.1 -.5,4.3 -2.1,.6 -1,-1.1 -.6,-3.2 -50.1,3.3 -3.3,-6 -.7,-2.2 -1.5,-1.5 -.5,-1.4 .6,-6.3 -2.4,-5.7 .5,-2.6 .3,-3.7 2.2,-3.8 -.2,-1.1 -1.7,-1 v -3.2 l -1.8,-1.9 -2.9,-6.1 -12.9,-45.8 22.9,-2.9 21.4,-3 -.1,1.9 -1.9,1 -1.4,3.2 .2,1.3 6.1,3.8 2.6,-.3 3.1,4 .4,1.7 4.2,5.1 2.6,1.7 1.4,.2 2.2,1.6 1.1,2.2 2,1.6 1.8,.5 2.7,2.7 .1,1.4 2.6,2.8 5,2.3 3.6,6.7 .3,2.7 3.9,2.1 2.5,4.8 .8,3.1 4.2,.4 z">
+<title>Georgia</title></path>
+
+<!-- Hawaii is shown in the same scale as the contiguous United States. The Northwestern Hawaiian Islands are not shown. -->
+<path class="hi" d="m 317,553.7 -.2,3.2 1.7,1.9 .1,1.2 -4.8,4.5 -.1,1.2 1.9,3.2 1.7,4.2 v 2.6 l -.5,1.2 .1,3.4 4.1,2.1 1.1,1.1 1.2,-1.1 2.1,-3.6 4.5,-2.9 3.3,-.5 2.5,-1 1.7,-1.2 3.2,-3.5 -2.8,-1.1 -1.4,-1.4 .1,-1.7 -.5,-.6 h -2 l .2,-2.5 -.7,-1.2 -2.6,-2.3 -4.5,-1.9 -2.8,-.2 -3.3,-2.7 -1.2,-.6 z m -15.3,-17 -1.1,1.5 -.1,1.7 2.7,2.4 1.9,.5 .6,1 .4,3 3.6,.2 5.3,-2.6 -.1,-2.5 -1.4,-.5 -3.5,-2.6 -1.8,-.3 -2.9,1.3 -1.5,-2.7 z m -1.5,11.5 .9,-1.4 2.5,-.3 .6,1.8 z m -7,-8.7 1.7,4 3.1,-.6 .3,-2 -1.4,-1.5 z m -4.1,-6.7 -1.1,2.4 h 5 l 4.8,1.6 2.5,-1.6 .2,-1.5 -4.8,.2 z m -16,-10.6 -1.9,2.1 -2.9,.6 .8,2.2 2.2,2.8 .1,1 2.1,-.3 2.3,.1 1.7,1.2 3.5,-.8 v -.7 l -1,-.8 -.5,-2.1 -.8,-.3 -.5,1 -1.2,-1.3 .2,-1.4 -1.8,-3.3 -1.1,-.7 z m -31.8,-12.4 -4.2,2.9 .2,2.3 2.4,1.2 1.9,1.3 2.7,.4 2.6,-2.2 -.2,-1.9 .8,-1.7 v -1.4 l -1,-.9 z m -10.8,4.8 -.3,1.2 -1.9,.9 -.6,1.8 1,.8 1.1,-1.5 1.9,-.6 .4,-2.6 z">
+<title>Hawaii</title></path>
+
+<path class="id" d="m 165.3,183.1 -24.4,-5.4 8.5,-37.3 2.9,-5.8 .4,-2.1 .8,-.9 -.9,-2 -2.9,-1.2 .2,-4.2 4,-5.8 2.5,-.8 1.6,-2.3 -.1,-1.6 1.8,-1.6 3.2,-5.5 4.2,-4.8 -.5,-3.2 -3.5,-3.1 -1.6,-3.6 1.1,-4.3 -.7,-4 12.7,-56.1 14.2,3 -4.8,22 3.7,7.4 -1.6,4.8 3.6,4.8 1.9,.7 3.9,8.3 v 2.1 l 2.3,3 h .9 l 1.4,2.1 h 3.2 v 1.6 l -7.1,17 -.5,4.1 1.4,.5 1.6,2.6 2.8,-1.4 3.6,-2.4 1.9,1.9 .5,2.5 -.5,3.2 2.5,9.7 2.6,3.5 2.3,1.4 .4,3 v 4.1 l 2.3,2.3 1.6,-2.3 6.9,1.6 2.1,-1.2 9,1.7 2.8,-3.3 1.8,-.6 1.2,1.8 1.6,4.1 .9,.1 -8.5,54.8 -47.9,-8.2 z">
+<title>Idaho</title></path>
+
+<path class="il" d="m 623.5,265.9 -1,5.2 v 2 l 2.4,3.5 v .7 l -.3,.9 .9,1.9 -.3,2.4 -1.6,1.8 -1.3,4.2 -3.8,5.3 -.1,7 h -1 l .9,1.9 v .9 l -2.2,2.7 .1,1.1 1.5,2.2 -.1,.9 -3.7,.6 -.6,1.2 -1.2,-.6 -1,.5 -.4,3.3 1.7,1.8 -.4,2.4 -1.5,.3 -6.9,-3 -4,3.7 .3,1.8 h -2.8 l -1.4,-1.5 -1.8,-3.8 v -1.9 l .8,-.6 .1,-1.3 -1.7,-1.9 -.9,-2.5 -2.7,-4.1 -4.8,-1.3 -7.4,-7.1 -.4,-2.4 2.8,-7.6 -.4,-1.9 1.2,-1.1 v -1.3 l -2.8,-1.5 -3,-.7 -3.4,1.2 -1.3,-2.3 .6,-1.9 -.7,-2.4 -8.6,-8.4 -2.2,-1.5 -2.5,-5.9 -1.2,-5.4 1.4,-3.7 .7,-.7 .1,-2.3 -.7,-.9 1,-1.5 1.8,-.6 .9,-.3 1,-1.2 v -2.4 l 1.7,-2.4 .5,-.5 .1,-3.5 -.9,-1.4 -1,-.3 -1.1,-1.6 1,-4 3,-.8 h 2.4 l 4.2,-1.8 1.7,-2.2 .1,-2.4 1.1,-1.3 1.3,-3.2 -.1,-2.6 -2.8,-3.5 h -1.2 l -.9,-1.1 .2,-1.6 -1.7,-1.7 -2.5,-1.3 .5,-.6 45.9,-2.8 .1,4.6 3.4,4.6 1.2,4.1 1.6,3.2 z">
+<title>Illinois</title></path>
+
+<path class="in" d="m 629.2,214.8 -5.1,2.3 -4.7,-1.4 4.1,50.2 -1,5.2 v 2 l 2.4,3.5 v .7 l -.3,.9 .9,1.9 -.3,2.4 -1.6,1.8 -1.3,4.2 -3.8,5.3 -.1,7 h -1 l .9,1.9 1.1,.8 .6,-1 -.7,-1.7 4.6,-.5 .2,1.2 1.1,.2 .4,-.9 -.6,-1.3 .3,-.8 1.3,.8 1.7,-.4 1.7,.6 3.4,2.1 1.8,-2.8 3.5,-2.2 3,3.3 1.6,-2.1 .3,-2.7 3.8,-2.3 .2,1.3 1.9,1.2 3,-.2 1.2,-.7 .1,-3.4 2.5,-3.7 4.6,-4.4 -.1,-1.7 1.2,-3.8 2.2,1 6.7,-4.5 -.4,-1.7 -1.5,-2.1 1,-1.9 -6.6,-57.2 -.1,-1.4 -32.4,3.4 z">
+<title>Indiana</title></path>
+
+<path class="ia" d="m 556.9,183 2.1,1.6 .6,1.1 -1.6,3.3 -.1,2.5 2,5.5 2.7,1.5 3.3,.7 1.3,2.8 -.5,.6 2.5,1.3 1.7,1.7 -.2,1.6 .9,1.1 h 1.2 l 2.8,3.5 .1,2.6 -1.3,3.2 -1.1,1.3 -.1,2.4 -1.7,2.2 -4.2,1.8 h -2.4 l -3,.8 -1,4 1.1,1.6 1,.3 .9,1.4 -.1,3.5 -.5,.5 -1.7,2.4 v 2.4 l -1,1.2 -.9,.3 -1.8,.6 -1,1.5 .7,.9 -.1,2.3 -.7,.7 -1.5,-.8 -1.1,-1.1 -.6,-1.6 -1.7,-1.3 -14.3,.8 -27.2,1.2 -25.9,-.1 -1.8,-4.4 .7,-2.2 -.8,-3.3 .2,-2.9 -1.3,-.7 -.4,-6.1 -2.8,-5 -.2,-3.7 -2.2,-4.3 -1.3,-3.7 v -1.4 l -.6,-1.7 v -2.3 l -.5,-.9 -.7,-1.7 -.3,-1.3 -1.3,-1.2 1,-4.3 1.7,-5.1 -.7,-2 -1.3,-.4 -.4,-1.6 1,-.5 .1,-1.1 -1.3,-1.5 .1,-1.6 2.2,.1 h 28.2 l 36.3,-.9 18.6,-.7 z">
+<title>Iowa</title></path>
+
+<path class="ks" d="m 459.1,259.5 -43.7,-1.2 -36,-2 -4.8,67 67.7,2.9 62,.1 -.5,-48.1 -3.2,-.7 -2.6,-4.7 -2.5,-2.5 .5,-2.3 2.7,-2.6 .1,-1.2 -1.5,-2.1 -.9,1 -2,-.6 -2.9,-3 z">
+<title>Kansas</title></path>
+
+<path class="ky" d="m 692.1,322.5 -20.5,1.4 -5.2,.8 -17.4,1 -2.6,.8 -22.6,2 -.7,-.6 h -3.7 l 1.2,3.2 -.6,.9 -23.3,1.5 1,-2.7 1.4,.9 .7,-.4 1.2,-4.1 -1,-1 1,-2 .2,-.9 -1.3,-.8 -.3,-1.8 4,-3.7 6.9,3 1.5,-.3 .4,-2.4 -1.7,-1.8 .4,-3.3 1,-.5 1.2,.6 .6,-1.2 3.7,-.6 .1,-.9 -1.5,-2.2 -.1,-1.1 2.2,-2.7 0,-.9 1.1,.8 .6,-1 -.7,-1.7 4.6,-.5 .2,1.2 1.1,.2 .4,-.9 -.6,-1.3 .3,-.8 1.3,.8 1.7,-.4 1.7,.6 3.4,2.1 1.8,-2.8 3.5,-2.2 3,3.3 1.6,-2.1 .3,-2.7 3.8,-2.3 .2,1.3 1.9,1.2 3,-.2 1.2,-.7 .1,-3.4 2.5,-3.7 4.6,-4.4 -.1,-1.7 1.2,-3.8 2.2,1 6.7,-4.5 -.4,-1.7 -1.5,-2.1 1,-1.9 1.3,.5 2.2,.1 1.9,-.8 2.9,1.2 2.2,3.4 v 1 l 4.1,.7 2.3,-.2 1.9,2.1 2.2,.2 v -1 l 1.9,-.8 3,.8 1.2,.8 1.3,-.7 h .9 l .6,-1.7 3.4,-1.8 .5,.8 .8,2.9 3.5,1.4 1.2,2.1 -.1,1.1 .6,1 -.6,3.6 1.9,1.6 .8,1.1 1,.6 -.1,.9 4.4,5.6 h 1.4 l 1.5,1.8 1.2,.3 1.4,-.1 -4.9,6.6 -2.9,1 -3,3 -.4,2.2 -2.1,1.3 -.1,1.7 -1.4,1.4 -1.8,.5 -.5,1.9 -1,.4 -6.9,4.2 z m -98,11.3 -.7,-.7 .2,-1 h 1.1 l .7,.7 -.3,1 z">
+<title>Kentucky</title></path>
+
+<path class="la" d="m 602.5,472.8 -1.2,-1.8 .3,-1.3 -4.8,-6.8 .9,-4.6 1,-1.4 .1,-1.4 -36,2 1.7,-11.9 2.4,-4.8 6,-8.4 -1.8,-2.5 h 2 v -3.3 l -2.4,-2.5 .5,-1.7 -1.2,-1 -1.6,-7.1 .6,-1.4 -52.3,1.3 .5,19.9 .7,3.4 2.6,2.8 .7,5.4 3.8,4.6 .8,4.3 h 1 l -.1,7.3 -3.3,6.4 1.3,2.3 -1.3,1.5 .7,3 -.1,4.3 -2.2,3.5 -.1,.8 -1.7,1.2 1,1.8 1.2,1.1 1.6,-1.3 5.3,-.9 6.1,-.1 9.6,3.8 8,1 1.5,-1.4 1.8,-.2 4.8,2.2 1.6,-.4 1.1,-1.5 -4.2,-1.8 -2.2,1 -1.1,-.2 -1.4,-2 3.3,-2.2 1.6,-.1 v 1.7 l 1.5,-.1 3.4,-.3 .4,2.3 1.1,.4 .6,1.9 4.8,1 1.7,1.6 v .7 h -1.2 l -1.5,1.7 1.7,1.2 5.4,1 2.7,2.8 4.4,-1 -3.7,.2 -.1,-.6 2.8,-.7 .2,-1.8 1.2,-.3 v -1.4 l 1.1,.1 v 1.6 l 2.5,.1 .8,-1.9 .9,.3 .2,2.5 1.2,.2 -1.8,2 2.6,-.9 2,-1.1 2.9,-3.3 h -.7 l -1.3,1.2 -.4,-.1 -.5,-.8 .9,-1.2 v -2.3 l 1.1,-.8 .7,.7 1,-.8 1,-.1 .6,1.3 -.6,1.9 h 2.4 l 5.1,1.7 .5,1.3 1.6,1.4 2.8,.1 1.3,.7 1.8,-1 .9,-1.7 v -1.7 h -1.4 l -1.2,-1.4 -1.1,-1.1 -3.2,-.9 -2.6,.2 -4.2,-2.4 v -2.3 l 1.3,-1 2.4,.6 -3.1,-1.6 .2,-.8 h 3.6 l 2.6,-3.5 -2.6,-1.8 .8,-1.5 -1.2,-.8 h -.8 l -2,2.1 v 2.1 l -.6,.7 -1.1,-.1 -1.6,-1.4 h -1.3 v -1.5 l .6,-.7 .8,.7 1.7,-1.6 .7,-1.6 .8,-.3 z m -10.3,-2.7 1.9,1 .8,1.1 2.5,.1 1.5,.8 .2,1.4 -.4,.6 -.9,-1.5 -1.4,1.2 -.9,1.4 -2.8,.8 -1.6,.1 -3.7,-1 .1,-1.7 2,-2 1.1,-2.4 z m -4.7,1.2 v 1.1 l -1.8,2 h -1.2 v -2.2 l 1.6,-1.5 z">
+<title>Louisiana</title></path>
+
+<path class="me" d="m 875,128.7 .6,4 3.2,2 .8,2.2 2.3,1.4 1.4,-.3 1,-3 -.8,-2.9 1.6,-.9 .5,-2.8 -.6,-1.3 3.3,-1.9 -2.2,-2.3 .9,-2.4 1.4,-2.2 .5,3.2 1.6,-2 1.3,.9 1.2,-.8 v -1.7 l 3.2,-1.3 .3,-2.9 2.5,-.2 2.7,-3.7 v -.7 l -.9,-.5 -.1,-3.3 .6,-1.1 .2,1.6 1,-.5 -.2,-3.2 -.9,.3 -.1,1.2 -1.2,-1.4 .9,-1.4 .6,.1 1.1,-.4 .5,2.8 2,-.3 2.9,.7 v -1 l -1.1,-1.2 1.3,.1 .1,-2.3 .6,.8 .3,1.9 2.1,1.5 .2,-1 .9,-.2 -.3,-.8 .8,-.6 -.1,-1.6 -1.6,-.2 -2,.7 1.4,-1.6 .7,-.8 1.3,-.2 .4,1.3 1.7,1.6 .4,-2.1 2.3,-1.2 -.9,-1.3 .1,-1.7 1.1,.5 h .7 l 1.7,-1.4 .4,-2.3 2.2,.3 .1,-.7 .2,-1.6 .5,1.4 1.5,-1 2.3,-4.1 -.1,-2.2 -1.4,-2 -3,-3.2 h -1.9 l -.8,2.2 -2.9,-3 .3,-.8 v -1.5 l -1.6,-4.5 -.8,-.2 -.7,.4 h -4.8 l -.3,-3.6 -8.1,-26 -7.3,-3.7 -2.9,-.1 -6.7,6.6 -2.7,-1 -1,-3.9 h -2.7 l -6.9,19.5 .7,6.2 -1.7,2.4 -.4,4.6 1.3,3.7 .8,.2 v 1.6 l -1.6,4.5 -1.5,1.4 -1.3,2.2 -.4,7.8 -2.4,-1 -1.5,.4 z m 34.6,-24.7 -1,.8 v 1.3 l .7,-.8 .9,.8 .4,-.5 1.1,.2 -1,-.8 .4,-.8 z m -1.7,2.6 -1,1.1 .5,.4 -.1,1 h 1.1 v -1.8 z m -3,-1.6 .9,1.3 1,.5 .3,-1 v -1.8 l -1.3,-.7 -.4,1.2 z m -1,5 -1.7,-1.7 1.6,-2.4 .8,.3 .2,1.1 1,.8 v 1.1 l -1,1 z">
+<title>Maine</title></path>
+
+<path class="md" d="m 822.9,269.3 0,-1.7 h -.8 l 0,1.8 z m 11.8,-3.9 1.2,-2.2 .1,-2.5 -.6,-.6 -.7,.9 -.2,2.1 -.8,1.4 -.3,1.1 -4.6,1.6 -.7,.8 -1.3,.2 -.4,.9 -1.3,.6 -.3,-2.5 .4,-.7 -.8,-.5 .2,-1.5 -1.6,1 v -2 l 1.2,-.3 -1.9,-.4 -.7,-.8 .4,-1.3 -.8,-.6 -.7,1.6 .5,.8 -.7,.6 -1.1,.5 -2,-1 -.2,-1.2 -1,-1.1 -1.4,-1.7 1.5,-.8 -1,-.6 v -.9 l .6,-1 1.7,-.3 -1.4,-.6 -.1,-.7 -1.3,-.1 -.4,1.1 -.6,.3 .1,-3.4 1,-1 .8,.7 .1,-1.6 -1,-.9 -.9,1.1 -1,1.4 -.6,-1 .2,-2.4 .9,-1 .9,.9 1.2,-.7 -.4,-1.7 -1,1 -.9,-2.1 -.2,-1.7 1.1,-2.4 1.1,-1.4 1.4,-.2 -.5,-.8 .5,-.6 -.3,-.7 .2,-2.1 -1.5,.4 -.8,1.1 1,1.3 -2.6,3.6 -.9,-.4 -.7,.9 -.6,2.2 -1.8,.5 1.3,.6 1.3,1.3 -.2,.7 .9,1.2 -1.1,1 .5,.3 -.5,1.3 v 2.1 l -.5,1.3 .9,1.1 .7,3.4 1.3,1.4 1.6,1.4 .4,2.8 1.6,2 .4,1.4 v 1 h -.7 l -1.5,-1.2 -.4,.2 -1.2,-.2 -1.7,-1.4 -1.4,-.3 -1,.5 -1.2,-.3 -.4,.2 -1.7,-.8 -1,-1 -1,-1.3 -.6,-.2 -.8,.7 -1.6,1.3 -1.1,-.8 -.4,-2.3 .8,-2.1 -.3,-.5 .3,-.4 -.7,-1 1,-.1 1,-.9 .4,-1.8 1.7,-2.6 -2.6,-1.8 -1,1.7 -.6,-.6 h -1 l -.6,-.1 -.4,-.4 .1,-.5 -1.7,-.6 -.8,.3 -1.2,-.1 -.7,-.7 -.5,-.2 -.2,-.7 .6,-.8 v -.9 l -1.2,-.2 -1,-.9 -.9,.1 -1.6,-.3 -.9,-.4 .2,-1.6 -1,-.5 -.2,-.7 h -.7 l -.8,-1.2 .2,-1 -2.6,.4 -2.2,-1.6 -1.4,.3 -.9,1.4 h -1.3 l -1.7,2.9 -3.3,.4 -1.9,-1 -2.6,3.8 -2.2,-.3 -3.1,3.9 -.9,1.6 -1.8,1.6 -1.7,-11.4 60.5,-11.8 7.6,27.1 10.9,-2.3 0,5.3 -.1,3.1 -1,1.8 z m -13.4,-1.8 -1.3,.9 .8,1.8 1.7,.8 -.4,-1.6 z">
+<title>Maryland</title></path>
+
+<path class="ma" d="m 899.9,174.2 h 3.4 l .9,-.6 .1,-1.3 -1.9,-1.8 .4,1 -1.5,1.5 h -2.3 l .1,.8 z m -9,1.8 -1.2,-.6 1,-.8 .6,-2.1 1.2,-1 .8,-.2 .6,.9 1.1,.2 .6,-.6 .5,1.9 -1.3,.3 -2.8,.7 z m -34.9,-23.4 18.4,-3.8 1,-1.5 .3,-1.7 1.9,-.6 .5,-1.1 1.7,-1.1 1.3,.3 1.7,3.3 1,.4 1.1,-1.3 .8,1.3 v 1.1 l -3,2.4 .2,.8 -.9,1 .4,.8 -1.3,.3 .9,1.2 -.8,.7 .6,1 .9,-.2 .3,-.8 1.1,.6 h 1.8 l 2.5,2.6 .2,2.6 1.8,.1 .8,1.1 .6,2 1,.7 h 1.9 l 1.9,-.1 .8,-.9 1.6,-1.2 1.1,-.3 -1.2,-2.1 -.3,.9 -1.5,-3.6 h -.8 l -.4,.9 -1.2,-1 1.3,-1.1 1.8,.4 2.3,2.1 1.3,2.7 1.2,3.3 -1,2.8 v -1.8 l -.7,-1 -3.5,2.3 -.9,-.3 -1.6,1 -.1,1.2 -2.2,1.2 -2,2.1 -2,1.9 h -1.2 l 3.3,-3.3 .5,-1.9 -.5,-.6 -.3,-1.3 -.9,-.1 -.1,1.3 -1,1.2 h -1.2 l -.3,1.1 .4,1.2 -1.2,1.1 -1.1,-.2 -.4,1 -1.4,-3 -1.3,-1.1 -2.6,-1.3 -.6,-2.2 h -.8 l -.7,-2.6 -6.5,2 -.1,-.3 -14.9,3.4 v .7 l -.9,.3 -.5,-.7 -10.5,2.4 -.7,-1 .5,-15 z">
+<title>Massachusetts</title></path>
+
+<path class="mi" d="m 663.3,209.8 .1,1.4 21.4,-3.5 .5,-1.2 3.9,-5.9 v -4.3 l .8,-2.1 2.2,-.8 2,-7.8 1,-.5 1,.6 -.2,.6 -1.1,.8 .3,.9 .8,.4 1.9,-1.4 .4,-9.8 -1.6,-2.3 -1.2,-3.7 v -2.5 l -2.3,-4.4 v -1.8 l -1.2,-3.3 -2.3,-3 -2.9,-1 -4.8,3 -2.5,4.6 -.2,.9 -3,3.5 -1.5,-.2 -2.9,-2.8 -.1,-3.4 1.5,-1.9 2,-.2 1.2,-1.7 .2,-4 .8,-.8 1.1,-.1 .9,-1.7 -.2,-9.6 -.3,-1.3 -1.2,-1.2 -1.7,-1 -.1,-1.8 .7,-.6 1.8,.8 -.3,-1.7 -1.9,-2.7 -.7,-1.6 -1.1,-1.1 h -2.2 l -8.1,-2.9 -1.4,-1.7 -3.1,-.3 -1.2,.3 -4.4,-2.3 h -1.4 l .5,1 -2.7,-.1 .1,.6 .6,.6 -2.5,2.1 .1,1.8 1.5,2.3 1.5,.2 v .6 l -1.5,.5 -2.1,-.1 -2.8,2.5 .1,2.5 .4,5.8 -2.2,3.4 .8,-4.5 -.8,-.6 -.9,5.3 -1,-2.3 .5,-2.3 -.5,-1 .6,-1.3 -.6,-1.1 1,-1 v -1.2 l -1.3,.6 -1.3,3.1 -.7,.7 -1.3,2.4 -1.7,-.2 -.1,1.2 h -1.6 l .2,1.5 .2,2 -3,1.2 .1,1.3 1,1.7 -.1,5.2 -1.3,4.4 -1.7,2.5 1.2,1.4 .8,3.5 -1,2.5 -.2,2.1 1.7,3.4 2.5,4.9 1.2,1.9 1.6,6.9 -.1,8.8 -.9,3.9 -2,3.2 -.9,3.7 -2,3 -1.2,1 z m -95.8,-96.8 3,3.8 17,3.8 1.4,1 4,.8 .7,.5 2.8,-.2 4.9,.8 1.4,1.5 -1,1 .8,.8 3.8,.7 1.2,1.2 .1,4.4 -1.3,2.8 2,.1 1,-.8 .9,.8 -1.1,3.1 1,1.6 1.2,.3 .8,-1.8 2.9,-4.6 1.6,-6 2.3,-2 -.5,-1.6 .5,-.9 1,1.6 -.3,2.2 2.9,-2.2 .2,-2.3 2.1,.6 .8,-1.6 .7,.6 -.7,1.5 -1,.5 -1,2 1.4,1.8 1.1,-.5 -.5,-.7 1,-1.5 1.9,-1.7 h .8 l .2,-2.6 2,-1.8 7.9,-.5 1.9,-3.1 3.8,-.3 3.8,1.2 4.2,2.7 .7,-.2 -.2,-3.5 .7,-.2 4.5,1.1 1.5,-.2 2.9,-.7 1.7,.4 1.8,.1 v -1.1 l -.7,-.9 -1.5,-.2 -1.1,-.8 .5,-1.4 -.8,-.3 -2.6,.1 -.1,-1 1.1,-.8 .6,.8 .5,-1.8 -.7,-.7 .7,-.2 -1.4,-1.3 .3,-1.3 .1,-1.9 h -1.3 l -1.5,1 -1.9,.1 -.5,1.8 -1.9,.2 -.3,-1.2 -2.2,.1 -1,1.2 -.7,-.1 -.2,-.8 -2.6,.4 -.1,-4.8 1,-2 -.7,-.1 -1.8,1.1 h -2.2 l -3.8,2.7 -6.2,.3 -4.1,.8 -1.9,1.5 -1.4,1.3 -2.5,1.7 -.3,.8 -.6,-1.7 -1.3,-.6 v .6 l .7,.7 v 1.3 l -1.5,-.6 h -.6 l -.3,1.2 -2,-1.9 -1.3,-.2 -1.3,1.5 -3.2,-.1 -.5,-1.4 -2,-1.9 -1.3,-1.6 v -.7 l -1.1,-1.4 -2.6,-1.2 -3.3,-.1 -1.1,-.9 h -1.4 l -.7,.4 -2.2,2.2 -.7,1.1 -1,-.7 .2,-1 .8,-2.1 3.2,-5 .8,-.2 1.7,-1.9 .7,-1.6 3,-.6 .8,-.6 -.1,-1 -.5,-.5 -4.5,.2 -2,.5 -2.6,1.2 -1.2,1.2 -1.7,2.2 -1.8,1 -3.3,3.4 -.4,1.6 -7.4,4.6 -4,.5 -1.8,.4 -2.3,3 -1.8,.7 -4.4,2.3 z m 100.7,3.8 3.8,.1 .6,-.5 -.2,-2 -1.7,-1.8 -1.9,.1 -.1,.5 1.1,.4 -1.6,.8 -.3,1 -.6,-.6 -.4,.8 z m -75.1,-41.9 -2.3,.2 -2.7,1.9 -7.1,5.3 .8,1 1.8,.3 2.8,-2 -1.1,-.5 2.3,-1.6 h 1 l 3,-1.9 -.1,-.9 z m 41.1,62.8 v 1 l 2.1,1.6 -.2,-2.4 z m -.7,2.8 1.1,.1 v .9 h -1 z m 21.4,-21.3 v .9 l .8,-.2 v -.5 z m 4.7,3.1 -.1,-1.1 -1.6,-.2 -.6,-.4 h -.9 l -.4,.3 .9,.4 1.1,1.1 z m -18,1.2 -.1,1.1 -.3,.7 .2,2.2 .4,.3 .7,.1 .5,-.9 .1,-1.6 -.3,-.6 -.1,-1.1 z">
+<title>Michigan</title></path>
+
+<path class="mn" d="m 464.7,68.6 -1.1,2.8 .8,1.4 -.3,5.1 -.5,1.1 2.7,9.1 1.3,2.5 .7,14 1,2.7 -.4,5.8 2.9,7.4 .3,5.8 -.1,2.1 -.1,2.2 -.9,2 -3.1,1.9 -.3,1.2 1.7,2.5 .4,1.8 2.6,.6 1.5,1.9 -.2,39.5 h 28.2 l 36.3,-.9 18.6,-.7 -1.1,-4.5 -.2,-3 -2.2,-3 -2.8,-.7 -5.2,-3.6 -.6,-3.3 -6.3,-3.1 -.2,-1.3 h -3.3 l -2.2,-2.6 -2,-1.3 .7,-5.1 -.9,-1.6 .5,-5.4 1,-1.8 -.3,-2.7 -1.2,-1.3 -1.8,-.3 v -1.7 l 2.8,-5.8 5.9,-3.9 -.4,-13 .9,.4 .6,-.5 .1,-1.1 .9,-.6 1.4,1.2 .7,-.1 v 0 l -1.2,-2.2 4.3,-3.1 3.1,-3.7 1.6,-.8 4.7,-5.9 6.3,-5.8 3.9,-2.1 6.3,-2.7 7.6,-4.5 -.6,-.4 -3.7,.7 -2.8,.1 -1,-1.6 -1.4,-.9 -9.8,1.2 -1,-2.8 -1.6,-.1 -1.7,.8 -3.7,3.1 h -4.1 l -2.1,-1 -.3,-1.7 -3.9,-.8 -.6,-1.6 -.7,-1.3 -1,.9 -2.6,.1 -9.9,-5.5 h -2.9 l -.8,-.7 -3.1,1.3 -.8,1.3 -3.3,.8 -1.3,-.2 v -1.7 l -.7,-.9 h -5.9 l -.4,-1.4 h -2.6 l -1.1,.4 -2.4,-1.7 .3,-1.4 -.6,-2.4 -.7,-1.1 -.2,-3 -1,-3.1 -2.1,-1.6 h -2.9 l .1,8 -30.9,-.4 z">
+<title>Minnesota</title></path>
+
+<path class="ms" d="m 623.8,468.6 -5,.1 -2.4,-1.5 -7.9,2.5 -.9,-.7 -.5,.2 -.1,1.6 -.6,.1 -2.6,2.7 -.7,-.1 -.6,-.7 -1.2,-1.8 .3,-1.3 -4.8,-6.8 .9,-4.6 1,-1.4 .1,-1.4 -36,2 1.7,-11.9 2.4,-4.8 6,-8.4 -1.8,-2.5 h 2 v -3.3 l -2.4,-2.5 .5,-1.7 -1.2,-1 -1.6,-7.1 .6,-1.4 1.2,-1.5 .5,-3 -1.5,-2.3 -.5,-2.2 .9,-.7 v -.8 l -1.7,-1.1 -.1,-.7 1.6,-.9 -1.2,-1.1 1.7,-7.1 3.4,-1.6 v -.8 l -1.1,-1.4 2.9,-5.4 h 1.9 l 1.5,-1.2 -.3,-5.2 3.1,-4.5 1.8,-.6 -.5,-3.1 38.3,-2.6 1.3,2 -1.3,67 4.4,33.2 z">
+<title>Mississippi</title></path>
+
+<path class="mo" d="m 555.3,248.9 -1.1,-1.1 -.6,-1.6 -1.7,-1.3 -14.3,.8 -27.2,1.2 -25.9,-.1 1.3,1.3 -.3,1.4 2.1,3.7 3.9,6.3 2.9,3 2,.6 .9,-1 1.5,2.1 -.1,1.2 -2.7,2.6 -.5,2.3 2.5,2.5 2.6,4.7 3.2,.7 .5,48.1 .2,10.8 39.1,-.7 39.8,-2 1.6,2.5 v 2.2 l -1.7,1.5 -2.8,5.1 11.2,-.8 1,-2 1.2,-.5 v -.7 l -1.2,-1.1 -.6,-1 1.7,.2 .8,-.7 -1.4,-1.5 1.4,-.5 .1,-1 -.6,-1 v -1.3 l -.7,-.7 .2,-1 h 1.1 l .7,.7 -.3,1 .8,.7 .8,-1 1,-2.7 1.4,.9 .7,-.4 1.2,-4.1 -1,-1 1,-2 .2,-.9 -1.3,-.8 h -2.8 l -1.4,-1.5 -1.8,-3.8 v -1.9 l .8,-.6 .1,-1.3 -1.7,-1.9 -.9,-2.5 -2.7,-4.1 -4.8,-1.3 -7.4,-7.1 -.4,-2.4 2.8,-7.6 -.4,-1.9 1.2,-1.1 v -1.3 l -2.8,-1.5 -3,-.7 -3.4,1.2 -1.3,-2.3 .6,-1.9 -.7,-2.4 -8.6,-8.4 -2.2,-1.5 -2.5,-5.9 -1.2,-5.4 1.4,-3.7 z">
+<title>Missouri</title></path>
+
+<path class="mt" d="m 247,130.5 57.3,7.9 51,5.3 2,-20.7 5.2,-66.7 -53.5,-5.6 -54.3,-7.7 -65.9,-12.5 -4.8,22 3.7,7.4 -1.6,4.8 3.6,4.8 1.9,.7 3.9,8.3 v 2.1 l 2.3,3 h .9 l 1.4,2.1 h 3.2 v 1.6 l -7.1,17 -.5,4.1 1.4,.5 1.6,2.6 2.8,-1.4 3.6,-2.4 1.9,1.9 .5,2.5 -.5,3.2 2.5,9.7 2.6,3.5 2.3,1.4 .4,3 v 4.1 l 2.3,2.3 1.6,-2.3 6.9,1.6 2.1,-1.2 9,1.7 2.8,-3.3 1.8,-.6 1.2,1.8 1.6,4.1 .9,.1 z">
+<title>Montana</title></path>
+
+<path class="ne" d="m 402.5,191.1 38,1.6 3.4,3.2 1.7,.2 2.1,2 1.8,-.1 1.8,-2 1.5,.6 1,-.7 .7,.5 .9,-.4 .7,.4 .9,-.4 1,.5 1.4,-.6 2,.6 .6,1.1 6.1,2.2 1.2,1.3 .9,2.6 1.8,.7 1.5,-.2 .5,.9 v 2.3 l .6,1.7 v 1.4 l 1.3,3.7 2.2,4.3 .2,3.7 2.8,5 .4,6.1 1.3,.7 -.2,2.9 .8,3.3 -.7,2.2 1.8,4.4 1.3,1.3 -.3,1.4 2.1,3.7 3.9,6.3 h -32.4 l -43.7,-1.2 -36,-2 1.4,-22.1 -33.1,-2.4 3.7,-44.2 z">
+<title>Nebraska</title></path>
+
+<path class="nv" d="m 167.6,296.8 -3.4,17.5 -2.4,2.9 h -2 l -1.2,-2.7 -3.7,-1.4 -3.5,.6 -1,13.6 .5,4.9 -.5,2.9 -1.4,3 -70.4,-105 -1.1,-3.5 16.4,-63.1 47,11.2 24.4,5.4 23.3,4.7 z">
+<title>Nevada</title></path>
+
+<path class="nh" d="m 862.6,93.6 -1.3,.1 -1,-1.1 -1.9,1.4 -.5,6.1 1.2,2.3 -1.1,3.5 2.1,2.8 -.4,1.7 .1,1.3 -1.1,2.1 -1.4,.4 -.6,1.3 -2.1,1 -.7,1.5 1.4,3.4 -.5,2.5 .5,1.5 -1,1.9 .4,1.9 -1.3,1.9 .2,2.2 -.7,1.1 .7,4.5 .7,1.5 -.5,2.6 .9,1.8 -.2,2.5 -.5,1.3 -.1,1.4 2.1,2.6 18.4,-3.8 1,-1.5 .3,-1.7 1.9,-.6 .5,-1.1 1.7,-1.1 1.3,.3 .8,-4.8 -2.3,-1.4 -.8,-2.2 -3.2,-2 -.6,-4 -11.9,-36.8 z">
+<title>New Hampshire</title></path>
+
+<path class="nj" d="m 842.5,195.4 -14.6,-4.9 -1.8,2.5 .1,2.2 -3,5.4 1.5,1.8 -.7,2 -1,1 .5,3.6 2.7,.9 1,2.8 2.1,1.1 4.2,3.2 -3.3,2.6 -1.6,2.3 -1.8,3 -1.6,.6 -1.4,1.7 -1,2.2 -.3,2.1 .8,.9 .4,2.3 1.2,.6 2.4,1.5 1.8,.8 1.6,.8 .1,1.1 .8,.1 1.1,-1.2 .8,.4 2.1,.2 -.2,2.9 .2,2.5 1.8,-.7 1.5,-3.9 1.6,-4.8 2.9,-2.8 .6,-3.5 -.6,-1.2 1.7,-2.9 v -1.2 l -.7,-1.1 1.2,-2.7 -.3,-3.6 -.6,-8.2 -1.2,-1.4 v 1.4 l .5,.6 h -1.1 l -.6,-.4 -1.3,-.2 -.9,.6 -1.2,-1.6 .7,-1.7 v -1 l 1.7,-.7 .8,-2.1 z">
+<title>New Jersey</title></path>
+
+<path class="nm" d="m 357.5,332.9 h -.8 l -7.9,99.3 -31.8,-2.6 -34.4,-3.6 -.3,3 2,2.2 -30.8,-4.1 -1.4,10.2 -15.7,-2.2 17.4,-124.1 52.6,6.5 51.7,4.8 z">
+<title>New Mexico</title></path>
+
+<path class="ny" d="m 872.9,181.6 -1.3,.1 -.5,1 z m -30.6,22.7 .7,.6 1.3,-.3 1.1,.3 .9,-1.3 h 1.9 l 2.4,-.9 5.1,-2.1 -.5,-.5 -1.9,.8 -2,.9 .2,-.8 2.6,-1.1 .8,-1 1.2,.1 4.1,-2.3 v .7 l -4.2,3 4.5,-2.8 1.7,-2.2 1.5,-.1 4.5,-3.1 3.2,-3.1 3,-2.3 1,-1.2 -1.7,-.1 -1,1.2 -.2,.7 -.9,.7 -.8,-1.1 -1.7,1 -.1,.9 -.9,-.2 .5,-.9 -1.2,-.7 -.6,.9 .9,.3 .2,.5 -.3,.5 -1.4,2.6 h -1.9 l .9,-1.8 .9,-.6 .3,-1.7 1.4,-1.6 .9,-.8 1.5,-.7 -1.2,-.2 -.7,.9 h -.7 l -1.1,.8 -.2,1 -2.2,2.1 -.4,.9 -1.4,.9 -7.7,1.9 .2,.9 -.9,.7 -2,.3 -1,-.6 -.2,1.1 -1.1,-.4 .1,1 -1.2,-.1 -1.2,.5 -.2,1.1 h -1 l .2,1 h -.7 l .2,1 -1.8,.4 -1.5,2.3 z m -.8,-.4 -1.6,.4 v 1 l -.7,1.6 .6,.7 2.4,-2.3 -.1,-.9 z m -10.1,-95.2 -.6,1.9 1.4,.9 -.4,1.5 .5,3.2 2.2,2.3 -.4,2.2 .6,2 -.4,1 -.3,3.8 3.1,6.7 -.8,1.8 .9,2.2 .9,-1.6 1.9,1.5 3,14.2 -.5,2 1.1,1 -.5,15 .7,1 2.8,16.3 1.8,1.5 -3.5,3.4 1.7,2.2 -1.3,3.3 -1.5,1.7 -1.5,2.3 -.2,-.7 .4,-5.9 -14.6,-4.9 -1.6,-1.1 -1.9,.3 -3,-2.2 -3,-5.8 h -2 l -.4,-1.5 -1.7,-1.1 -70.5,13.9 -.8,-6 4.3,-3.9 .6,-1.7 3.9,-2.5 .6,-2.4 2.3,-2 .8,-1.1 -1.7,-3.3 -1.7,-.5 -1.8,-3 -.2,-3.2 7.6,-3.9 8.2,-1.6 h 4.4 l 3.2,1.6 .9,-.1 1.8,-1.6 3.4,-.7 h 3 l 2.6,-1.3 2.5,-2.6 2.4,-3.1 1.9,-.4 1.1,-.5 .4,-3.2 -1.4,-2.7 -1.2,-.7 2,-1.3 -.1,-1.8 h -1.5 l -2.3,-1.4 -.1,-3.1 6.2,-6.1 .7,-2.4 3.7,-6.3 5.9,-6.4 2.1,-1.7 2.5,.1 20.6,-5.2 z">
+<title>New York</title></path>
+
+<path class="nc" d="m 829,300.1 -29.1,6.1 -39.4,7.3 -29.4,3.5 v 5.2 l -1.5,-.1 -1.4,1.2 -2.4,5.2 -2.6,-1.1 -3.5,2.5 -.7,2.1 -1.5,1.2 -.8,-.8 -.1,-1.5 -.8,-.2 -4,3.3 -.6,3.4 -4.7,2.4 -.5,1.2 -3.2,2.6 -3.6,.5 -4.6,3 -.8,4.1 -1.3,.9 -1.5,-.1 -1.4,1.3 -.1,4.9 21.4,-3 4.4,-1.9 1.3,-.1 7.3,-4.3 23.2,-2.2 .4,.5 -.2,1.4 .7,.3 1.2,-1.5 3.3,3 .1,2.6 19.7,-2.8 24.5,17.1 4,-2.2 3,-.7 h 1.7 l 1.1,1.1 .8,-2 .6,-5 1.7,-3.9 5.4,-6.1 4.1,-3.5 5.4,-2.3 2.5,-.4 1.3,.4 .7,1.1 3.3,-6.6 3.3,-5.3 -.7,-.3 -4.4,6.8 -.5,-.8 2,-2.2 -.4,-1.5 -2,-.5 1,1.3 -1.2,.1 -1.2,-1.8 -1.2,2 -1.6,.2 1,-2.7 .7,-1.7 -.2,-2.9 -2.2,-.1 .9,-.9 1.1,.3 2.7,.1 .8,-.5 h 2.3 l 2,-1.9 .2,-3.2 1.3,-1.4 1.2,-.2 1.3,-1 -.5,-3.7 -2.2,-3.8 -2.7,-.2 -.9,1.6 -.5,-1 -2.7,.2 -1.2,.4 -1.9,1.2 -.3,-.4 h -.9 l -1.8,1.2 -2.6,.5 v -1.3 l .8,-1 1,.7 h 1 l 1.7,-2.1 3.7,-1.7 2,-2.2 h 2.4 l .8,1.3 1.7,.8 -.5,-1.5 -.3,-1.6 -2.8,-3.1 -.3,-1.4 -.4,1 -.9,-1.3 z m 7,31 2.7,-2.5 4.6,-3.3 v -3.7 l -.4,-3.1 -1.7,-4.2 1.5,1.4 1,3.2 .4,7.6 -1.7,.4 -3.1,2.4 -3.2,3.2 z m 1.9,-19.3 -.9,-.2 v 1 l 2.5,2.2 -.2,-1.4 z m 2.9,2.1 -1.4,-2.8 -2.2,-3.4 -2.4,-3 -2.2,-4.3 -.8,-.7 2.2,4.3 .3,1.3 3.4,5.5 1.8,2.1 z">
+<title>North Carolina</title></path>
+
+<path class="nd" d="m 464.7,68.6 -1.1,2.8 .8,1.4 -.3,5.1 -.5,1.1 2.7,9.1 1.3,2.5 .7,14 1,2.7 -.4,5.8 2.9,7.4 .3,5.8 -.1,2.1 -29.5,-.4 -46,-2.1 -39.2,-2.9 5.2,-66.7 44.5,3.4 55.3,1.6 z">
+<title>North Dakota</title></path>
+
+<path class="oh" d="m 685.7,208.8 1.9,-.4 3,1.3 2.1,.6 .7,.9 h 1 l 1,-1.5 1.3,.8 h 1.5 l -.1,1 -3.1,.5 -2,1.1 1.9,.8 1.6,-1.5 2.4,-.4 2.2,1.5 1.5,-.1 2.5,-1.7 3.6,-2.1 5.2,-.3 4.9,-5.9 3.8,-3.1 9.3,-5.1 4.9,29.9 -2.2,1.2 1.4,2.1 -.1,2.2 .6,2 -1.1,3.4 -.1,5.4 -1,3.6 .5,1.1 -.4,2.2 -1.1,.5 -2,3.3 -1.8,2 h -.6 l -1.8,1.7 -1.3,-1.2 -1.5,1.8 -.3,1.2 h -1.3 l -1.3,2.2 .1,2.1 -1,.5 1.4,1.1 v 1.9 l -1,.2 -.7,.8 -1,.5 -.6,-2.1 -1.6,-.5 -1,2.3 -.3,2.2 -1.1,1.3 1.3,3.6 -1.5,.8 -.4,3.5 h -1.5 l -3.2,1.4 -1.2,-2.1 -3.5,-1.4 -.8,-2.9 -.5,-.8 -3.4,1.8 -.6,1.7 h -.9 l -1.3,.7 -1.2,-.8 -3,-.8 -1.9,.8 v 1 l -2.2,-.2 -1.9,-2.1 -2.3,.2 -4.1,-.7 v -1 l -2.2,-3.4 -2.9,-1.2 -1.9,.8 -2.2,-.1 -1.3,-.5 -6.6,-57.2 21.4,-3.5 z">
+<title>Ohio</title></path>
+
+<path class="ok" d="m 501.5,398.6 -4.6,-3.8 -2.2,-.9 -.5,1.6 -5.1,.3 -.6,-1.5 -5,2.5 -1.6,-.7 -3.7,.3 -.6,1.7 -3.6,.9 -1.3,-1.2 -1.2,.1 -2,-1.8 -2.1,.7 -2,-.5 -1.8,-2 -2.5,4.2 -1.2,.8 -1,-1.8 .3,-2 -1.2,-.7 -2.3,2.5 -1.7,-1.2 -.1,-1.5 -1.3,.5 -2.6,-1.7 -3,2.6 -2.3,-1.1 .7,-2.1 -2.3,.1 -1.9,-3 -3.5,-1.1 -2,2.3 -2.3,-2.2 -1.4,.4 -2,.1 -3.5,-1.9 -2.3,.1 -1.2,-.7 -.5,-2.9 -2.3,-1.7 -1.1,1.5 -1.4,-1 -1.2,-.4 -1.1,1 -1.5,-.3 -2.5,-3 -2.7,-1.3 1.4,-42.7 -52.6,-3.2 .6,-10.6 16.5,1 67.7,2.9 62,.1 .2,10.8 4.1,24.4 -.7,39 z">
+<title>Oklahoma</title></path>
+
+<path class="or" d="m 93.9,166.5 47,11.2 8.5,-37.3 2.9,-5.8 .4,-2.1 .8,-.9 -.9,-2 -2.9,-1.2 .2,-4.2 4,-5.8 2.5,-.8 1.6,-2.3 -.1,-1.6 1.8,-1.6 3.2,-5.5 4.2,-4.8 -.5,-3.2 -3.5,-3.1 -1.6,-3.6 -30.3,-7.3 -2.8,1 -5.4,-.9 -1.8,-.9 -1.5,1.2 -3.3,-.4 -4.5,.5 -.9,.7 -4.2,-.4 -.8,-1.6 -1.2,-.2 -4.4,1.3 -1.6,-1.1 -2.2,.8 -.2,-1.8 -2.3,-1.2 -1.5,-.2 -1,-1.1 -3,.3 -1.2,-.8 h -1.2 l -1.2,.9 -5.5,.7 -6.6,-4.2 1.1,-5.6 -.4,-4.1 -3.2,-3.7 -3.7,.1 -.4,-1.1 .4,-1.2 -.7,-.8 -1,.1 -1.1,1.3 -1.5,-.2 -.5,-1.1 -1,-.1 -.7,.6 -2,-1.9 v 4.3 l -1.3,1.3 -1.1,3.5 -.1,2.3 -4.5,12.3 -13.2,31.3 -3.2,4.6 -1.6,-.1 .1,2.1 -5.2,7.1 -.3,3.3 1,1.3 .1,2.4 -1.2,1.1 -1.2,3 .1,5.7 1.2,2.9 z">
+<title>Oregon</title></path>
+
+<path class="pa" d="m 826.3,189.4 -1.9,.3 -3,-2.2 -3,-5.8 h -2 l -.4,-1.5 -1.7,-1.1 -70.5,13.9 -.8,-6 -4.2,3.4 -.9,.1 -2.7,3 -3.3,1.7 4.9,29.9 3.2,19.7 17.4,-2.9 60.5,-11.8 1.2,-2.1 1.5,-1.1 1.6,-.3 1.6,.6 1.4,-1.7 1.6,-.6 1.8,-3 1.6,-2.3 3.3,-2.6 -4.2,-3.2 -2.1,-1.1 -1,-2.8 -2.7,-.9 -.5,-3.6 1,-1 .7,-2 -1.5,-1.8 3,-5.4 -.1,-2.2 1.8,-2.5 z">
+<title>Pennsylvania</title></path>
+
+<path class="ri" d="m 883.2,170.7 -1.3,-1.1 -2.6,-1.3 -.6,-2.2 h -.8 l -.7,-2.6 -6.5,2 3.2,12.3 -.4,1.1 .4,1.8 5.6,-3.6 .1,-3 -.8,-.8 .4,-.6 -.1,-1.3 -.9,-.7 1.2,-.4 -.9,-1.6 1.8,.7 .3,1.4 .7,1.2 -1.4,-.8 1.1,1.7 -.3,1.2 -.6,-1.1 v 2.5 l .6,-.9 .4,.9 1.3,-1.5 -.2,-2.5 1.4,3.1 1,-.9 z m -4.7,12.2 h .9 l .5,-.6 -.8,-1.3 -.7,.7 z">
+<title>Rhode Island</title></path>
+
+<path class="sc" d="m 772.3,350.2 -19.7,2.8 -.1,-2.6 -3.3,-3 -1.2,1.5 -.7,-.3 .2,-1.4 -.4,-.5 -23.2,2.2 -7.3,4.3 -1.3,.1 -4.4,1.9 -.1,1.9 -1.9,1 -1.4,3.2 .2,1.3 6.1,3.8 2.6,-.3 3.1,4 .4,1.7 4.2,5.1 2.6,1.7 1.4,.2 2.2,1.6 1.1,2.2 2,1.6 1.8,.5 2.7,2.7 .1,1.4 2.6,2.8 5,2.3 3.6,6.7 .3,2.7 3.9,2.1 2.5,4.8 .8,3.1 4.2,.4 .8,-1.5 h .6 l 1.8,-1.5 .5,-2 3.2,-2.1 .3,-2.4 -1.2,-.9 .8,-.7 .8,.4 1.3,-.4 1.8,-2.1 3.8,-1.8 1.6,-2.4 .1,-.7 4.8,-4.4 -.1,-.5 -.9,-.8 1.1,-1.5 h .8 l .4,.5 .7,-.8 h 1.3 l .6,-1.5 2.3,-2.1 -.3,-5.4 .8,-2.3 3.6,-6.2 2.4,-2.2 2.2,-1.1 z">
+<title>South Carolina</title></path>
+
+<path class="sd" d="m 396.5,125.9 46,2.1 29.5,.4 -.1,2.2 -.9,2 -3.1,1.9 -.3,1.2 1.7,2.5 .4,1.8 2.6,.6 1.5,1.9 -.2,39.5 -2.2,-.1 -.1,1.6 1.3,1.5 -.1,1.1 -1,.5 .4,1.6 1.3,.4 .7,2 -1.7,5.1 -1,4.3 1.3,1.2 .3,1.3 .7,1.7 -1.5,.2 -1.8,-.7 -.9,-2.6 -1.2,-1.3 -6.1,-2.2 -.6,-1.1 -2,-.6 -1.4,.6 -1,-.5 -.9,.4 -.7,-.4 -.9,.4 -.7,-.5 -1,.7 -1.5,-.6 -1.8,2 -1.8,.1 -2.1,-2 -1.7,-.2 -3.4,-3.2 -38,-1.6 -51.1,-3.5 3.9,-43.9 2,-20.7 z">
+<title>South Dakota</title></path>
+
+<path class="tn" d="m 620.9,365.1 45.7,-4 22.9,-2.9 .1,-4.9 1.4,-1.3 1.5,.1 1.3,-.9 .8,-4.1 4.6,-3 3.6,-.5 3.2,-2.6 .5,-1.2 4.7,-2.4 .6,-3.4 4,-3.3 .8,.2 .1,1.5 .8,.8 1.5,-1.2 .7,-2.1 3.5,-2.5 2.6,1.1 2.4,-5.2 1.4,-1.2 1.5,.1 0,-5.2 .3,-.7 -4.6,.5 -.2,1 -28.9,3.3 -5.6,1.4 -20.5,1.4 -5.2,.8 -17.4,1 -2.6,.8 -22.6,2 -.7,-.6 h -3.7 l 1.2,3.2 -.6,.9 -23.3,1.5 -.8,1 -.8,-.7 h -1 v 1.3 l .6,1 -.1,1 -1.4,.5 1.4,1.5 -.8,.7 -1.7,-.2 .6,1 1.2,1.1 v .7 l -1.2,.5 -1,2 .1,.6 1.4,1 -.4,.7 h -1.5 v .5 l .9,.9 .1,.8 -1.4,.2 -.5,.8 -1.6,.2 -.9,.9 .6,.9 1.1,-.1 .5,.9 -1.6,1.3 .4,1.5 -2,-.6 -.1,.7 .4,1.1 -.3,1.4 -1.3,-.8 -.8,.8 1.1,.1 .1,1.5 -.6,1 1.1,.9 -.3,1.5 .8,.7 -.7,1 -1.2,-.5 -.9,2.2 -1.6,.7 z">
+<title>Tennessee</title></path>
+
+<path class="tx" d="m 282.3,429 .3,-3 34.4,3.6 31.8,2.6 7.9,-99.3 .8,0 52.6,3.2 -1.4,42.7 2.7,1.3 2.5,3 1.5,.3 1.1,-1 1.2,.4 1.4,1 1.1,-1.5 2.3,1.7 .5,2.9 1.2,.7 2.3,-.1 3.5,1.9 2,-.1 1.4,-.4 2.3,2.2 2,-2.3 3.5,1.1 1.9,3 2.3,-.1 -.7,2.1 2.3,1.1 3,-2.6 2.6,1.7 1.3,-.5 .1,1.5 1.7,1.2 2.3,-2.5 1.2,.7 -.3,2 1,1.8 1.2,-.8 2.5,-4.2 1.8,2 2,.5 2.1,-.7 2,1.8 1.2,-.1 1.3,1.2 3.6,-.9 .6,-1.7 3.7,-.3 1.6,.7 5,-2.5 .6,1.5 5.1,-.3 .5,-1.6 2.2,.9 4.6,3.8 6.4,1.9 2.6,2.3 2.8,-1.3 3.2,.8 .2,11.9 .5,19.9 .7,3.4 2.6,2.8 .7,5.4 3.8,4.6 .8,4.3 h 1 l -.1,7.3 -3.3,6.4 1.3,2.3 -1.3,1.5 .7,3 -.1,4.3 -2.2,3.5 -.1,.8 -1.7,1.2 1,1.8 1.2,1.1 -3.5,.3 -8.4,3.9 -3.5,1.4 -1.8,1.8 -.7,-.5 2.1,-2.3 1.8,-.7 .5,-.9 -2.9,-.1 -.7,-.8 .8,-2 -.9,-1.8 h -.6 l -2.4,1.3 -1.9,2.6 .3,1.7 3.3,3.4 1.3,.3 v .8 l -2.3,1.6 -4.9,4 -4,3.9 -3.2,1.4 -5,3 -3.7,2 -4.5,1.9 -4.1,2.5 3.2,-3 v -1.1 l .6,-.8 -.2,-1.8 -1.5,-.1 -1.1,1.5 -2.6,1.3 -1.8,-1.2 -.3,-1.7 h -1.5 l .8,2.2 1.4,.7 1.2,.9 1.8,1.6 -.7,.8 -3.9,1.7 -1.7,.1 -1.2,-1.2 -.5,2.1 .5,1.1 -2.7,2 -1.5,.2 -.8,.7 -.4,1.7 -1.8,3.3 -1.6,.7 -1.6,-.6 -1.8,1.1 .3,1.4 1.3,.8 1,.8 -1.8,3.5 -.3,2.8 -1,1.7 -1.4,1 -2.9,.4 1.8,.6 1.9,-.6 -.4,3.2 -1.1,-.1 .2,1.2 .3,1.4 -1.3,.9 v 3.1 l 1.6,1.4 .6,3.1 -.4,2.2 -1,.4 .4,1.5 1.1,.4 .8,1.7 v 2.6 l 1.1,2.1 2.2,2.6 -.1,.7 -2.2,-.2 -1.6,1.4 .2,1.4 -.9,-.3 -1.4,-.2 -3.4,-3.7 -2.3,-.6 h -7.1 l -2.8,-.8 -3.6,-3 -1.7,-1 -2.1,.1 -3.2,-2.6 -5.4,-1.6 v -1.3 l -1.4,-1.8 -.9,-4.7 -1.1,-1.7 -1.7,-1.4 v -1.6 l -1.4,-.6 .6,-2.6 -.3,-2.2 -1.3,-1.4 .7,-3 -.8,-3.2 -1.7,-1.4 h -1.1 l -4,-3.5 .1,-1.9 -.8,-1.7 -.8,-.2 -.9,-2.4 -2,-1.6 -2.9,-2.5 -.2,-2.1 -1,-.7 .2,-1.6 .5,-.7 -1.4,-1.5 .1,-.7 -2,-2.2 .1,-2.1 -2.7,-4.9 -.1,-1.7 -1.8,-3.1 -5.1,-4.8 v -1.1 l -3.3,-1.7 -.1,-1.8 -1.2,-.4 v -.7 l -.8,-.2 -2.1,-2.8 h -.8 l -.7,-.6 -1.3,1.1 h -2.2 l -2.6,-1.1 h -4.6 l -4.2,-2.1 -1.3,1.9 -2.2,-.6 -3.3,1.2 -1.7,2.8 -2,3.2 -1.1,4.4 -1.4,1.2 -1.1,.1 -.9,1.6 -1.3,.6 -.1,1.8 -2.9,.1 -1.8,-1.5 h -1 l -2,-2.9 -3.6,-.5 -1.7,-2.3 -1.3,-.2 -2.1,-.8 -3.4,-3.4 .2,-.8 -1.6,-1.2 -1,-.1 -3.4,-3.1 -.1,-2 -2.3,-4 .2,-1.6 -.7,-1.3 .8,-1.5 -.1,-2.4 -2.6,-4.1 -.6,-4.2 -1.6,-1.6 v -1 l -1.2,-.2 -.7,-1.1 -2.4,-1.7 -.9,-.1 -1.9,-1.6 v -1.1 l -2.9,-1.8 -.6,-2.1 -2.6,-2.3 -3.2,-4.4 -3,-1.3 -2.1,-1.8 .2,-1.2 -1.3,-1.4 -1.7,-3.7 -2.4,-1 z m 174.9,138.3 .8,.1 -.6,-4.8 -3.5,-12.3 -.2,-8.1 4.9,-10.5 6.1,-8.2 7.2,-5.1 v -.7 h -.8 l -2.6,1 -3.6,2.3 -.7,1.5 -8.2,11.6 -2.8,7.9 v 8.8 l 3.6,12 z">
+<title>Texas</title></path>
+
+<path class="ut" d="m 233.2,217.9 3.3,-21.9 -47.9,-8.2 -21,109 46.2,8.2 40,6 11.5,-88.3 z">
+<title>Utah</title></path>
+
+<path class="vt" d="m 859.1,102.4 -1.1,3.5 2.1,2.8 -.4,1.7 .1,1.3 -1.1,2.1 -1.4,.4 -.6,1.3 -2.1,1 -.7,1.5 1.4,3.4 -.5,2.5 .5,1.5 -1,1.9 .4,1.9 -1.3,1.9 .2,2.2 -.7,1.1 .7,4.5 .7,1.5 -.5,2.6 .9,1.8 -.2,2.5 -.5,1.3 -.1,1.4 2.1,2.6 -12.4,2.7 -1.1,-1 .5,-2 -3,-14.2 -1.9,-1.5 -.9,1.6 -.9,-2.2 .8,-1.8 -3.1,-6.7 .3,-3.8 .4,-1 -.6,-2 .4,-2.2 -2.2,-2.3 -.5,-3.2 .4,-1.5 -1.4,-.9 .6,-1.9 -.8,-1.7 27.3,-6.9 z">
+<title>Vermont</title></path>
+
+<path class="va" d="m 834.7,265.4 -1.1,2.8 .5,1.1 .4,-1.1 .8,-3.1 z m -34.6,-7 -.7,-1 1,-.1 1,-.9 .4,-1.8 -.2,-.5 .1,-.5 -.3,-.7 -.6,-.5 -.4,-.1 -.5,-.4 -.6,-.6 h -1 l -.6,-.1 -.4,-.4 .1,-.5 -1.7,-.6 -.8,.3 -1.2,-.1 -.7,-.7 -.5,-.2 -.2,-.7 .6,-.8 v -.9 l -1.2,-.2 -1,-.9 -.9,.1 -1.6,-.3 -.4,.7 -.4,1.6 -.5,2.3 -10,-5.2 -.2,.9 .9,1.6 -.8,2.3 .1,2.9 -1.2,.8 -.5,2.1 -.9,.8 -1.4,1.8 -.9,.8 -1,2.5 -2.4,-1.1 -2.3,8.5 -1.3,1.6 -2.8,-.5 -1.3,-1.9 -2.3,-.7 -.1,4.7 -1.4,1.7 .4,1.5 -2.1,2.2 .4,1.9 -3.7,6.3 -1,3.3 1.5,1.2 -1.5,1.9 .1,1.4 -2.3,2 -.7,-1.1 -4.3,3.1 -1.5,-1 -.6,1.4 .8,.5 -.5,.9 -5.5,2.4 -3,-1.8 -.8,1.7 -1.9,1.8 -2.3,.1 -4.4,-2.3 -.1,-1.5 -1.5,-.7 .8,-1.2 -.7,-.6 -4.9,6.6 -2.9,1 -3,3 -.4,2.2 -2.1,1.3 -.1,1.7 -1.4,1.4 -1.8,.5 -.5,1.9 -1,.4 -6.9,4.2 28.9,-3.3 .2,-1 4.6,-.5 -.3,.7 29.4,-3.5 39.4,-7.3 29.1,-6.1 -.6,-1.2 .4,-.1 .9,.9 -.1,-1.4 -.3,-1.9 1.6,1.2 .9,2.1 v -1.3 l -3.4,-5.5 v -1.2 l -.7,-.8 -1.3,.7 .5,1.4 h -.8 l -.4,-1 -.6,.9 -.9,-1.1 -2.1,-.1 -.2,.7 1.5,2.1 -1.4,-.7 -.5,-1 -.4,.8 -.8,.1 -1.5,1.7 .3,-1.6 v -1.4 l -1.5,-.7 -1.8,-.5 -.2,-1.7 -.6,-1.3 -.6,1.1 -1.7,-1 -2,.3 .2,-.9 1.5,-.2 .9,.5 1.7,-.8 .9,.4 .5,1 v .7 l 1.9,.4 .3,.9 .9,.4 .9,1.2 1.4,-1.6 h .6 l -.1,-2.1 -1.3,1 -.6,-.9 1.5,-.2 -1.2,-.9 -1.2,.6 -.1,-1.7 -1.7,.2 -2.2,-1.1 -1.8,-2.2 3.6,2.2 .9,.3 1.7,-.8 -1.7,-.9 .6,-.6 -1,-.5 .8,-.2 -.3,-.9 1.1,.9 .4,-.8 .4,1.3 1.2,.8 .6,-.5 -.5,-.6 -.1,-2.5 -1.1,-.1 -1.6,-.8 .9,-1.1 -2,-.1 -.4,-.5 -1.4,.6 -1.4,-.8 -.5,-1.2 -2.1,-1.2 -2.1,-1.8 -2.2,-1.9 3,1.3 .9,1.2 2.1,.7 2.3,2.5 .2,-1.7 .6,1.3 2.3,.5 v -4 l -.8,-1.1 1.1,.4 .1,-1.6 -3.1,-1.4 -1.6,-.2 -1.3,-.2 .3,-1.2 -1.5,-.3 -.1,-.6 h -1.8 l -.2,.8 -.7,-1 h -2.7 l -1,-.4 -.2,-1 -1.2,-.6 -.4,-1.5 -.6,-.4 -.7,1.1 -.9,.2 -.9,.7 h -1.5 l -.9,-1.3 .4,-3.1 .5,-2.4 .6,.5 z m 21.9,11.6 .9,-.1 0,-.6 -.8,.1 z m 7.5,14.2 -1,2.7 1.2,-1.3 z m -1.8,-15.3 .7,.3 -.2,1.9 -.5,-.5 -1.3,1 1,.4 -1.8,4.4 .1,8.1 1.9,3.1 .5,-1.5 .4,-2.7 -.3,-2.3 .7,-.9 -.2,-1.4 1.2,-.6 -.6,-.5 .5,-.7 .8,1.1 -.2,1.1 -.4,3.9 1.1,-2.2 .4,-3.1 .1,-3 -.3,-2 .6,-2.3 1.1,-1.8 .1,-2.2 .3,-.9 -4.6,1.6 -.7,.8 z">
+<title>Virginia</title></path>
+
+<path class="wa" d="m 161.9,83.6 .7,4 -1.1,4.3 -30.3,-7.3 -2.8,1 -5.4,-.9 -1.8,-.9 -1.5,1.2 -3.3,-.4 -4.5,.5 -.9,.7 -4.2,-.4 -.8,-1.6 -1.2,-.2 -4.4,1.3 -1.6,-1.1 -2.2,.8 -.2,-1.8 -2.3,-1.2 -1.5,-.2 -1,-1.1 -3,.3 -1.2,-.8 h -1.2 l -1.2,.9 -5.5,.7 -6.6,-4.2 1.1,-5.6 -.4,-4.1 -3.2,-3.7 -3.7,.1 -.4,-1.1 .4,-1.2 -.7,-.8 -1,.1 -2.1,-1.5 -1.2,.4 -2,-.1 -.7,-1.5 -1.6,-.3 2.5,-7.5 -.7,6 .5,.5 v -2 l .8,-.2 1.1,2.3 -.5,-2.2 1.2,-4.2 1.8,.4 -1.1,-2 -1,.3 -1.5,-.4 .2,-4.2 .2,1.5 .9,.5 .6,-1.6 h 3.2 l -2.2,-1.2 -1.7,-1.9 -1.4,1.6 1.2,-3.1 -.3,-4.6 -.2,-3.6 .9,-6.1 -.5,-2 -1.4,-2.1 .1,-4 .4,-2.7 2,-2.3 -.7,-1.4 .2,-.6 .9,.1 7.8,7.6 4.7,1.9 5.1,2.5 3.2,-.1 .2,3 1,-1.6 h .7 l .6,2.7 .5,-2.6 1.4,-.2 .5,.7 -1.1,.6 .1,1.6 .7,-1.5 h 1.1 l -.4,2.6 -1.1,-.8 .4,1.4 -.1,1.5 -.8,.7 -2.5,2.9 1.2,-3.4 -1.6,.4 -.4,2.1 -3.8,2.8 -.4,1 -2.1,2.2 -.1,1 h 2.2 l 2.4,-.2 .5,-.9 -3.9,.5 v -.6 l 2.6,-2.8 1.8,-.8 1.9,-.2 1,-1.6 3,-2.3 v -1.4 h 1.1 l .1,4 h -1.5 l -.6,.8 -1.1,-.9 .3,1.1 v 1.7 l -.7,.7 -.3,-1.6 -.8,.8 .7,.6 -.9,1.1 h 1.3 l .7,-.5 .1,2 -1,1.9 -.9,1 -.1,1.8 -1,-.2 -.2,-1.4 .9,-1.1 -.8,-.5 -.8,.7 -.7,2.2 -.8,.9 -.1,-2 .8,-1.1 -.2,-1.1 -1.2,1.2 .1,2.2 -.6,.4 -2.1,-.4 -1.3,1.2 2.2,-.6 -.2,2.2 1,-1.8 .4,1.4 .5,-1 .7,1.8 h .7 l .7,-.8 .6,-.1 2,-1.9 .2,-1.2 .8,.6 .3,.9 .7,-.3 .1,-1.2 h 1.3 l .2,-2.9 -.1,-2.7 .9,.3 -.7,-2.1 1.4,-.8 .2,-2.4 2.3,-2.2 1,.1 .3,-1.4 -1.2,-1.4 -.1,-3.5 -.8,.9 .7,2.9 -.6,.1 -.6,-1.9 -.6,-.5 .3,-2.3 1.8,-.1 .3,.7 .3,-1.6 -1.6,-1.7 -.6,-1.6 -.2,2 .9,1.1 -.7,.4 -1,-.8 -1.8,1.3 1.5,.5 .2,2.4 -.3,1.8 .9,-1.3 1.4,2.3 -.4,1.9 h -1.5 v -1.2 l -1.5,-1.2 .5,-3 -1.9,-2.6 2.7,-3 .6,-4.1 h .9 l 1.4,3.2 v -2.6 l 1.2,.3 v -3.3 l -.9,-.8 -1.2,2.5 -1,-3 1.3,-.1 -1.5,-4.9 1.9,-.6 25.4,7.5 31.7,8 23.6,5.5 z m -78.7,-39.4 h .5 l .1,.8 -.5,.3 .1,.6 -.7,.4 -.2,-.9 .5,-.4 z m 5,-4.3 -1.2,1.9 -.1,.8 .4,.2 .5,-.6 1.1,.1 z m -.4,-21.6 .5,.6 1.3,-.3 .2,-1 1.2,-1.8 -1,-.4 -.7,1.6 -.1,-1.6 -1.1,.2 -.7,1.4 z m 3.2,-5.5 .7,1.5 -.9,.2 -.8,.4 -.2,-2.4 z m -2.7,-1.6 -1.1,-.2 .5,1.4 z m -1,2.5 .8,.4 -.4,1.1 1.7,-.5 -.2,-2.2 -.9,-.2 z m -2.7,-.4 .3,2.7 1.6,1.3 .6,-1.9 -1.1,-2.2 z m 1.9,-1.1 -1.1,-1 -.9,.1 1.8,1.5 z m 3.2,-7 h -1.2 v .8 l 1.2,.6 z m -.9,32.5 .4,-2.7 h -1.1 l -.2,1.9 z">
+<title>Washington</title></path>
+
+<path class="wv" d="m 723.4,297.5 -.8,1.2 1.5,.7 .1,1.5 4.4,2.3 2.3,-.1 1.9,-1.8 .8,-1.7 3,1.8 5.5,-2.4 .5,-.9 -.8,-.5 .6,-1.4 1.5,1 4.3,-3.1 .7,1.1 2.3,-2 -.1,-1.4 1.5,-1.9 -1.5,-1.2 1,-3.3 3.7,-6.3 -.4,-1.9 2.1,-2.2 -.4,-1.5 1.4,-1.7 .1,-4.7 2.3,.7 1.3,1.9 2.8,.5 1.3,-1.6 2.3,-8.5 2.4,1.1 1,-2.5 .9,-.8 1.4,-1.8 .9,-.8 .5,-2.1 1.2,-.8 -.1,-2.9 .8,-2.3 -.9,-1.6 .2,-.9 10,5.2 .5,-2.3 .4,-1.6 .4,-.7 -.9,-.4 .2,-1.6 -1,-.5 -.2,-.7 h -.7 l -.8,-1.2 .2,-1 -2.6,.4 -2.2,-1.6 -1.4,.3 -.9,1.4 h -1.3 l -1.7,2.9 -3.3,.4 -1.9,-1 -2.6,3.8 -2.2,-.3 -3.1,3.9 -.9,1.6 -1.8,1.6 -1.7,-11.4 -17.4,2.9 -3.2,-19.7 -2.2,1.2 1.4,2.1 -.1,2.2 .6,2 -1.1,3.4 -.1,5.4 -1,3.6 .5,1.1 -.4,2.2 -1.1,.5 -2,3.3 -1.8,2 h -.6 l -1.8,1.7 -1.3,-1.2 -1.5,1.8 -.3,1.2 h -1.3 l -1.3,2.2 .1,2.1 -1,.5 1.4,1.1 v 1.9 l -1,.2 -.7,.8 -1,.5 -.6,-2.1 -1.6,-.5 -1,2.3 -.3,2.2 -1.1,1.3 1.3,3.6 -1.5,.8 -.4,3.5 h -1.5 l -3.2,1.4 -.1,1.1 .6,1 -.6,3.6 1.9,1.6 .8,1.1 1,.6 -.1,.9 4.4,5.6 h 1.4 l 1.5,1.8 1.2,.3 1.4,-.1 z">
+<title>West Virginia</title></path>
+
+<path class="wi" d="m 611,144 -2.9,.8 .2,2.3 -2.4,3.4 -.2,3.1 .6,.7 .8,-.7 .5,-1.6 2,-1.1 1.6,-4.2 3.5,-1.1 .8,-3.3 .7,-.9 .4,-2.1 1.8,-1.1 v -1.5 l 1,-.9 1.4,.1 v 2 l -1,.1 .5,1.2 -.7,2.2 -.6,.1 -1.2,4.5 -.7,.5 -2.8,7.2 -.3,4.2 .6,2 .1,1.3 -2.4,1.9 .3,1.9 -.9,3.1 .3,1.6 .4,3.7 -1.1,4.1 -1.5,5 1,1.5 -.3,.3 .8,1.7 -.5,1.1 1.1,.9 v 2.7 l 1.3,1.5 -.4,3 .3,4 -45.9,2.8 -1.3,-2.8 -3.3,-.7 -2.7,-1.5 -2,-5.5 .1,-2.5 1.6,-3.3 -.6,-1.1 -2.1,-1.6 -.2,-2.6 -1.1,-4.5 -.2,-3 -2.2,-3 -2.8,-.7 -5.2,-3.6 -.6,-3.3 -6.3,-3.1 -.2,-1.3 h -3.3 l -2.2,-2.6 -2,-1.3 .7,-5.1 -.9,-1.6 .5,-5.4 1,-1.8 -.3,-2.7 -1.2,-1.3 -1.8,-.3 v -1.7 l 2.8,-5.8 5.9,-3.9 -.4,-13 .9,.4 .6,-.5 .1,-1.1 .9,-.6 1.4,1.2 .7,-.1 h 2.6 l 6.8,-2.6 .3,-1 h 1.2 l .7,-1.2 .4,.8 1.8,-.9 1.8,-1.7 .3,.5 1,-1 2.2,1.6 -.8,1.6 -1.2,1.4 .5,1.5 -1.4,1.6 .4,.9 2.3,-1.1 v -1.4 l 3.3,1.9 1.9,.7 1.9,.7 3,3.8 17,3.8 1.4,1 4,.8 .7,.5 2.8,-.2 4.9,.8 1.4,1.5 -1,1 .8,.8 3.8,.7 1.2,1.2 .1,4.4 -1.3,2.8 2,.1 1,-.8 .9,.8 -1.1,3.1 1,1.6 1.2,.3 z m -49.5,-37.3 -.5,.1 -1.5,1.6 .2,.5 1.5,-.6 v -.6 l .9,-.3 z m 1.6,-1.1 -1,.3 -.2,.7 .9,-.1 z m -1.3,-1.6 -.2,.9 h 1.7 l .6,-.4 .1,-1 z m 2.8,-3 -.3,1.9 1.2,-.5 .1,-1.4 z m 58.3,31.9 -2,.3 -.4,1.3 1.3,1.7 z">
+<title>Wisconsin</title></path>
+
+<path class="wy" d="m 355.3,143.7 -51,-5.3 -57.3,-7.9 -2,10.7 -8.5,54.8 -3.3,21.9 32.1,4.8 44.9,5.7 37.5,3.4 3.7,-44.2 z">
+<title>Wyoming</title></path>
+
+<path class="dc" d="m 803.5,252 -2.6,-1.8 -1,1.7 .5,.4 .4,.1 .6,.5 .3,.7 -.1,.5 .2,.5 z">
+<title>District of Columbia</title></path>
+
+</g>
+
+<g class="borders" fill="none">
+<path class="al-fl" d="m 687.6,447.4 -48.8,5.1 -.5,2.9 2.5,2.8 1.7,.7 .9,1.2 -.4,7.3 -1.1,.6"/>
+<path class="al-ga" d="m 666.6,361.1 12.9,45.8 2.9,6.1 1.8,1.9 v 3.2 l 1.7,1 .2,1.1 -2.2,3.8 -.3,3.7 -.5,2.6 2.4,5.7 -.6,6.3 .5,1.4 1.5,1.5 .7,2.2"/>
+<path class="al-ms" d="m 620.9,365.1 1.3,2 -1.3,67 4.4,33.2"/>
+<path class="al-tn" d="m 620.9,365.1 45.7,-4"/>
+<path class="ar-la" d="m 516.7,414.2 52.3,-1.3"/>
+<path class="ar-mo" d="m 591.7,344.9 -11.2,.8 2.8,-5.1 1.7,-1.5 v -2.2 l -1.6,-2.5 -39.8,2 -39.1,.7"/>
+<path class="ar-ms" d="m 569,412.9 1.2,-1.5 .5,-3 -1.5,-2.3 -.5,-2.2 .9,-.7 v -.8 l -1.7,-1.1 -.1,-.7 1.6,-.9 -1.2,-1.1 1.7,-7.1 3.4,-1.6 0,-.8 -1.1,-1.4 2.9,-5.4 h 1.9 l 1.5,-1.2 -.3,-5.2 3.1,-4.5 1.8,-.6 -.5,-3.1"/>
+<path class="ar-ok" d="m 507.9,400.5 .7,-39 -4.1,-24.4"/>
+<path class="ar-tn" d="m 582.6,367.7 1.6,-.7 .9,-2.2 1.2,.5 .7,-1 -.8,-.7 .3,-1.5 -1.1,-.9 .6,-1 -.1,-1.5 -1.1,-.1 .8,-.8 1.3,.8 .3,-1.4 -.4,-1.1 .1,-.7 2,.6 -.4,-1.5 1.6,-1.3 -.5,-.9 -1.1,.1 -.6,-.9 .9,-.9 1.6,-.2 .5,-.8 1.4,-.2 -.1,-.8 -.9,-.9 0,-.5 h 1.5 l .4,-.7 -1.4,-1 -.1,-.6"/>
+<path class="ar-tx" d="m 507.9,400.5 2.6,2.3 2.8,-1.3 3.2,.8 .2,11.9"/>
+<path class="az-ca" d="m 149,338.1 -.9,2.1 1.3,3.4 1.4,1.8 1.2,5.8 2.3,2.5 .4,1.9 -1.3,1.3 -4.8,1.7 -2.4,3.6 -1.6,7 -2.4,3.2 -1.6,.3 -1.1,6.9 1.1,1.6 1.8,.2 1,1.6 -.8,2.4 -3,2.2 -2.2,-.1"/>
+<path class="az-nm" d="m 253.8,311 -17.4,124.1"/>
+<path class="az-nv" d="m 167.6,296.8 -3.4,17.5 -2.4,2.9 h -2 l -1.2,-2.7 -3.7,-1.4 -3.5,.6 -1,13.6 .5,4.9 -.5,2.9 -1.4,3"/>
+<path class="az-ut" d="m 167.6,296.8 46.2,8.2 40,6"/>
+<path class="ca-nv" d="m 93.9,166.5 -16.4,63.1 1.1,3.5 70.4,105"/>
+<path class="ca-or" d="m 27.8,147.9 66.1,18.6"/>
+<path class="co-ks" d="m 379.4,256.3 -4.8,67"/>
+<path class="co-ne" d="m 347.7,231.8 33.1,2.4 -1.4,22.1"/>
+<path class="co-nm" d="m 253.8,311 52.6,6.5 51.7,4.8"/>
+<path class="co-ok" d="m 358.1,322.3 16.5,1"/>
+<path class="co-ut" d="m 265.3,222.7 -11.5,88.3"/>
+<path class="co-wy" d="m 265.3,222.7 44.9,5.7 37.5,3.4"/>
+<path class="ct-ma" d="m 843.8,171.3 10.5,-2.4 .5,.7 .9,-.3 0,-.7 14.9,-3.4 .1,.3"/>
+<path class="ct-ny" d="m 846.6,194.7 -1.7,-2.2 3.5,-3.4 -1.8,-1.5 -2.8,-16.3"/>
+<path class="ct-ri" d="m 870.7,165.5 3.2,12.3 -.4,1.1 .4,1.8"/>
+<path class="dc-md" d="m 801.8,254.6 1.7,-2.6 -2.6,-1.8 -1,1.7"/>
+<path class="dc-va" d="m 799.9,251.9 .5,.4 .4,.1 .6,.5 .3,.7 -.1,.5 .2,.5"/>
+<path class="de-md" d="m 817.9,230.1 7.6,27.1 10.9,-2.3"/>
+<path class="de-nj" d="m 823.8,227.2 -1,2.2 -.3,2.1"/>
+<path class="de-pa" d="m 817.9,230.1 1.2,-2.1 1.5,-1.1 1.6,-.3 1.6,.6"/>
+<path class="fl-ga" d="m 687.6,447.4 3.3,6 50.1,-3.3 .6,3.2 1,1.1 2.1,-.6 .5,-4.3 -1.4,-2.1 v -2.5 l 2.2,-1.4 1.7,.9 4,.7 3.6,-.3"/>
+<path class="ga-nc" d="m 689.5,358.2 21.4,-3"/>
+<path class="ga-sc" d="m 710.9,355.2 -.1,1.9 -1.9,1 -1.4,3.2 .2,1.3 6.1,3.8 2.6,-.3 3.1,4 .4,1.7 4.2,5.1 2.6,1.7 1.4,.2 2.2,1.6 1.1,2.2 2,1.6 1.8,.5 2.7,2.7 .1,1.4 2.6,2.8 5,2.3 3.6,6.7 .3,2.7 3.9,2.1 2.5,4.8 .8,3.1 4.2,.4"/>
+<path class="ga-tn" d="m 666.6,361.1 22.9,-2.9"/>
+<path class="ia-il" d="m 556.8,249.7 .7,-.7 .1,-2.3 -.7,-.9 1,-1.5 1.8,-.6 .9,-.3 1,-1.2 0,-2.4 1.7,-2.4 .5,-.5 .1,-3.5 -.9,-1.4 -1,-.3 -1.1,-1.6 1,-4 3,-.8 h 2.4 l 4.2,-1.8 1.7,-2.2 .1,-2.4 1.1,-1.3 1.3,-3.2 -.1,-2.6 -2.8,-3.5 -1.2,0 -.9,-1.1 .2,-1.6 -1.7,-1.7 -2.5,-1.3 .5,-.6"/>
+<path class="ia-mn" d="m 473.6,182 28.2,0 36.3,-.9 18.6,-.7"/>
+<path class="ia-mo" d="m 484.5,246.8 25.9,.1 27.2,-1.2 14.3,-.8 1.7,1.3 .6,1.6 1.1,1.1 1.5,.8"/>
+<path class="ia-ne" d="m 484.5,246.8 -1.8,-4.4 .7,-2.2 -.8,-3.3 .2,-2.9 -1.3,-.7 -.4,-6.1 -2.8,-5 -.2,-3.7 -2.2,-4.3 -1.3,-3.7 v -1.4 l -.6,-1.7 v -2.3 l -.5,-.9"/>
+<path class="ia-sd" d="m 473.5,204.2 -.7,-1.7 -.3,-1.3 -1.3,-1.2 1,-4.3 1.7,-5.1 -.7,-2 -1.3,-.4 -.4,-1.6 1,-.5 .1,-1.1 -1.3,-1.5 .1,-1.6 2.2,.1"/>
+<path class="ia-wi" d="m 567.2,202 -1.3,-2.8 -3.3,-.7 -2.7,-1.5 -2,-5.5 .1,-2.5 1.6,-3.3 -.6,-1.1 -2.1,-1.6 -.2,-2.6"/>
+<path class="id-mt" d="m 188.8,30.5 -4.8,22 3.7,7.4 -1.6,4.8 3.6,4.8 1.9,.7 3.9,8.3 v 2.1 l 2.3,3 h .9 l 1.4,2.1 h 3.2 v 1.6 l -7.1,17 -.5,4.1 1.4,.5 1.6,2.6 2.8,-1.4 3.6,-2.4 1.9,1.9 .5,2.5 -.5,3.2 2.5,9.7 2.6,3.5 2.3,1.4 .4,3 v 4.1 l 2.3,2.3 1.6,-2.3 6.9,1.6 2.1,-1.2 9,1.7 2.8,-3.3 1.8,-.6 1.2,1.8 1.6,4.1 .9,.1"/>
+<path class="id-nv" d="m 140.9,177.7 24.4,5.4 23.3,4.7"/>
+<path class="id-or" d="m 140.9,177.7 8.5,-37.3 2.9,-5.8 .4,-2.1 .8,-.9 -.9,-2 -2.9,-1.2 .2,-4.2 4,-5.8 2.5,-.8 1.6,-2.3 -.1,-1.6 1.8,-1.6 3.2,-5.5 4.2,-4.8 -.5,-3.2 -3.5,-3.1 -1.6,-3.6"/>
+<path class="id-ut" d="m 236.5,196 -47.9,-8.2"/>
+<path class="id-wa" d="m 174.6,27.5 -12.7,56.1 .7,4 -1.1,4.3"/>
+<path class="id-wy" d="m 245,141.2 -8.5,54.8"/>
+<path class="il-in" d="m 619.4,215.7 4.1,50.2 -1,5.2 v 2 l 2.4,3.5 v .7 l -.3,.9 .9,1.9 -.3,2.4 -1.6,1.8 -1.3,4.2 -3.8,5.3 -.1,7 h -1 l .9,1.9"/>
+<path class="il-ky" d="m 599.9,322.5 -.3,-1.8 4,-3.7 6.9,3 1.5,-.3 .4,-2.4 -1.7,-1.8 .4,-3.3 1,-.5 1.2,.6 .6,-1.2 3.7,-.6 .1,-.9 -1.5,-2.2 -.1,-1.1 2.2,-2.7 v -.9"/>
+<path class="il-mo" d="m 599.9,322.5 -2.8,0 -1.4,-1.5 -1.8,-3.8 v -1.9 l .8,-.6 .1,-1.3 -1.7,-1.9 -.9,-2.5 -2.7,-4.1 -4.8,-1.3 -7.4,-7.1 -.4,-2.4 2.8,-7.6 -.4,-1.9 1.2,-1.1 v -1.3 l -2.8,-1.5 -3,-.7 -3.4,1.2 -1.3,-2.3 .6,-1.9 -.7,-2.4 -8.6,-8.4 -2.2,-1.5 -2.5,-5.9 -1.2,-5.4 1.4,-3.7"/>
+<path class="il-wi" d="m 567.2,202 45.9,-2.8"/>
+<path class="in-ky" d="m 618.3,302.7 1.1,.8 .6,-1 -.7,-1.7 4.6,-.5 .2,1.2 1.1,.2 .4,-.9 -.6,-1.3 .3,-.8 1.3,.8 1.7,-.4 1.7,.6 3.4,2.1 1.8,-2.8 3.5,-2.2 3,3.3 1.6,-2.1 .3,-2.7 3.8,-2.3 .2,1.3 1.9,1.2 3,-.2 1.2,-.7 .1,-3.4 2.5,-3.7 4.6,-4.4 -.1,-1.7 1.2,-3.8 2.2,1 6.7,-4.5 -.4,-1.7 -1.5,-2.1 1,-1.9"/>
+<path class="in-mi" d="m 630.9,213.2 32.4,-3.4 .1,1.4"/>
+<path class="in-oh" d="m 670,268.4 -6.6,-57.2"/>
+<path class="ks-mo" d="m 504.3,326.3 -.5,-48.1 -3.2,-.7 -2.6,-4.7 -2.5,-2.5 .5,-2.3 2.7,-2.6 .1,-1.2 -1.5,-2.1 -.9,1 -2,-.6 -2.9,-3"/>
+<path class="ks-ne" d="m 379.4,256.3 36,2 43.7,1.2 h 32.4"/>
+<path class="ks-ok" d="m 374.6,323.3 67.7,2.9 62,.1"/>
+<path class="ky-mo" d="m 596.7,333.5 1,-2.7 1.4,.9 .7,-.4 1.2,-4.1 -1,-1 1,-2 .2,-.9 -1.3,-.8 m -5.8,11.3 -.7,-.7 .2,-1 h 1.1 l .7,.7 -.3,1"/>
+<path class="ky-oh" d="m 670,268.4 1.3,.5 2.2,.1 1.9,-.8 2.9,1.2 2.2,3.4 v 1 l 4.1,.7 2.3,-.2 1.9,2.1 2.2,.2 v -1 l 1.9,-.8 3,.8 1.2,.8 1.3,-.7 h .9 l .6,-1.7 3.4,-1.8 .5,.8 .8,2.9 3.5,1.4 1.2,2.1"/>
+<path class="ky-tn" d="m 596.7,333.5 23.3,-1.5 .6,-.9 -1.2,-3.2 h 3.7 l .7,.6 22.6,-2 2.6,-.8 17.4,-1 5.2,-.8 20.5,-1.4 5.6,-1.4 m -103.6,12.7 h 1"/>
+<path class="ky-va" d="m 697.7,321.1 6.9,-4.2 1,-.4 .5,-1.9 1.8,-.5 1.4,-1.4 .1,-1.7 2.1,-1.3 .4,-2.2 3,-3 2.9,-1 4.9,-6.6"/>
+<path class="ky-wv" d="m 709.3,279.4 -.1,1.1 .6,1 -.6,3.6 1.9,1.6 .8,1.1 1,.6 -.1,.9 4.4,5.6 h 1.4 l 1.5,1.8 1.2,.3 1.4,-.1"/>
+<path class="la-ms" d="m 569,412.9 -.6,1.4 1.6,7.1 1.2,1 -.5,1.7 2.4,2.5 v 3.3 l -2,0 1.8,2.5 -6,8.4 -2.4,4.8 -1.7,11.9 36,-2 -.1,1.4 -1,1.4 -.9,4.6 4.8,6.8 -.3,1.3 1.2,1.8 .6,.7"/>
+<path class="la-tx" d="m 516.7,414.2 .5,19.9 .7,3.4 2.6,2.8 .7,5.4 3.8,4.6 .8,4.3 h 1 l -.1,7.3 -3.3,6.4 1.3,2.3 -1.3,1.5 .7,3 -.1,4.3 -2.2,3.5 -.1,.8 -1.7,1.2 1,1.8 1.2,1.1"/>
+<path class="ma-nh" d="m 856,152.6 18.4,-3.8 1,-1.5 .3,-1.7 1.9,-.6 .5,-1.1 1.7,-1.1 1.3,.3"/>
+<path class="ma-ny" d="m 843.8,171.3 -.7,-1 .5,-15"/>
+<path class="ma-ri" d="m 870.7,165.5 6.5,-2 .7,2.6 h .8 l .6,2.2 2.6,1.3 1.3,1.1 1.4,3"/>
+<path class="ma-vt" d="m 843.6,155.3 12.4,-2.7"/>
+<path class="md-pa" d="m 757.4,241.9 60.5,-11.8"/>
+<path class="md-va" d="m 822.9,269.3 -.8,.1 m 13.2,-4.3 -.6,.3 m -1.3,.2 -4.6,1.6 -.7,.8 m -28.2,-16.1 -.6,-.6 h -1 l -.6,-.1 -.4,-.4 .1,-.5 -1.7,-.6 -.8,.3 -1.2,-.1 -.7,-.7 -.5,-.2 -.2,-.7 .6,-.8 v -.9 l -1.2,-.2 -1,-.9 -.9,.1 -1.6,-.3 m 11.6,13.5 .3,-.4 -.7,-1 1,-.1 1,-.9 .4,-1.8"/>
+<path class="md-wv" d="m 757.4,241.9 1.7,11.4 1.8,-1.6 .9,-1.6 3.1,-3.9 2.2,.3 2.6,-3.8 1.9,1 3.3,-.4 1.7,-2.9 h 1.3 l .9,-1.4 1.4,-.3 2.2,1.6 2.6,-.4 -.2,1 .8,1.2 h .7 l .2,.7 1,.5 -.2,1.6 .9,.4"/>
+<path class="me-nh" d="m 881.9,138.3 -2.3,-1.4 -.8,-2.2 -3.2,-2 -.6,-4 -11.9,-36.8"/>
+<path class="mi-oh" d="m 663.4,211.2 21.4,-3.5"/>
+<path class="mi-wi" d="m 565.6,112.3 1.9,.7 3,3.8 17,3.8 1.4,1 4,.8 .7,.5 2.8,-.2 4.9,.8 1.4,1.5 -1,1 .8,.8 3.8,.7 1.2,1.2 .1,4.4 -1.3,2.8 2,.1 1,-.8 .9,.8 -1.1,3.1 1,1.6 1.2,.3"/>
+<path class="mn-nd" d="m 462.3,61.3 2.4,7.3 -1.1,2.8 .8,1.4 -.3,5.1 -.5,1.1 2.7,9.1 1.3,2.5 .7,14 1,2.7 -.4,5.8 2.9,7.4 .3,5.8 -.1,2.1"/>
+<path class="mn-sd" d="m 473.6,182 .2,-39.5 -1.5,-1.9 -2.6,-.6 -.4,-1.8 -1.7,-2.5 .3,-1.2 3.1,-1.9 .9,-2 .1,-2.2"/>
+<path class="mn-wi" d="m 556.7,180.4 -1.1,-4.5 -.2,-3 -2.2,-3 -2.8,-.7 -5.2,-3.6 -.6,-3.3 -6.3,-3.1 -.2,-1.3 -3.3,0 -2.2,-2.6 -2,-1.3 .7,-5.1 -.9,-1.6 .5,-5.4 1,-1.8 -.3,-2.7 -1.2,-1.3 -1.8,-.3 v -1.7 l 2.8,-5.8 5.9,-3.9 -.4,-13 .9,.4 .6,-.5 .1,-1.1 .9,-.6 1.4,1.2 .7,-.1"/>
+<path class="mo-ne" d="m 491.5,259.5 -3.9,-6.3 -2.1,-3.7 .3,-1.4 -1.3,-1.3"/>
+<path class="mo-ok" d="m 504.3,326.3 .2,10.8"/>
+<path class="mo-tn" d="m 591.7,344.9 1,-2 1.2,-.5 v -.7 l -1.2,-1.1 -.6,-1 1.7,.2 .8,-.7 -1.4,-1.5 1.4,-.5 .1,-1 -.6,-1 0,-1.3 m 1,0 .8,.7 .8,-1"/>
+<path class="ms-tn" d="m 582.6,367.7 38.3,-2.6"/>
+<path class="mt-nd" d="m 362.5,56.3 -5.2,66.7"/>
+<path class="mt-sd" d="m 357.3,123 -2,20.7"/>
+<path class="mt-wy" d="m 355.3,143.7 -51,-5.3 -57.3,-7.9 -2,10.7"/>
+<path class="nc-sc" d="m 710.9,355.2 4.4,-1.9 1.3,-.1 7.3,-4.3 23.2,-2.2 .4,.5 -.2,1.4 .7,.3 1.2,-1.5 3.3,3 .1,2.6 19.7,-2.8 24.5,17.1"/>
+<path class="nc-tn" d="m 731.1,317 0,5.2 -1.5,-.1 -1.4,1.2 -2.4,5.2 -2.6,-1.1 -3.5,2.5 -.7,2.1 -1.5,1.2 -.8,-.8 -.1,-1.5 -.8,-.2 -4,3.3 -.6,3.4 -4.7,2.4 -.5,1.2 -3.2,2.6 -3.6,.5 -4.6,3 -.8,4.1 -1.3,.9 -1.5,-.1 -1.4,1.3 -.1,4.9"/>
+<path class="nc-va" d="m 731.1,317 29.4,-3.5 39.4,-7.3 29.1,-6.1"/>
+<path class="nd-sd" d="m 357.3,123 39.2,2.9 46,2.1 29.5,.4"/>
+<path class="ne-sd" d="m 351.4,187.6 51.1,3.5 38,1.6 3.4,3.2 1.7,.2 2.1,2 1.8,-.1 1.8,-2 1.5,.6 1,-.7 .7,.5 .9,-.4 .7,.4 .9,-.4 1,.5 1.4,-.6 2,.6 .6,1.1 6.1,2.2 1.2,1.3 .9,2.6 1.8,.7 1.5,-.2"/>
+<path class="ne-wy" d="m 347.7,231.8 3.7,-44.2"/>
+<path class="nh-vt" d="m 857.9,100.1 1.2,2.3 -1.1,3.5 2.1,2.8 -.4,1.7 .1,1.3 -1.1,2.1 -1.4,.4 -.6,1.3 -2.1,1 -.7,1.5 1.4,3.4 -.5,2.5 .5,1.5 -1,1.9 .4,1.9 -1.3,1.9 .2,2.2 -.7,1.1 .7,4.5 .7,1.5 -.5,2.6 .9,1.8 -.2,2.5 -.5,1.3 -.1,1.4 2.1,2.6"/>
+<path class="nj-ny" d="m 827.9,190.5 14.6,4.9 -.4,5.9"/>
+<path class="nj-pa" d="m 823.8,227.2 1.4,-1.7 1.6,-.6 1.8,-3 1.6,-2.3 3.3,-2.6 -4.2,-3.2 -2.1,-1.1 -1,-2.8 -2.7,-.9 -.5,-3.6 1,-1 .7,-2 -1.5,-1.8 3,-5.4 -.1,-2.2 1.8,-2.5"/>
+<path class="nm-ok" d="m 358.1,322.3 -.6,10.6"/>
+<path class="nm-tx" d="m 284.3,431.2 -2,-2.2 .3,-3 34.4,3.6 31.8,2.6 7.9,-99.3 .8,0"/>
+<path class="nv-or" d="m 93.9,166.5 47,11.2"/>
+<path class="nv-ut" d="m 188.6,187.8 -21,109"/>
+<path class="ny-pa" d="m 827.9,190.5 -1.6,-1.1 -1.9,.3 -3,-2.2 -3,-5.8 h -2 l -.4,-1.5 -1.7,-1.1 -70.5,13.9 -.8,-6"/>
+<path class="ny-vt" d="m 843.6,155.3 -1.1,-1 .5,-2 -3,-14.2 -1.9,-1.5 -.9,1.6 -.9,-2.2 .8,-1.8 -3.1,-6.7 .3,-3.8 .4,-1 -.6,-2 .4,-2.2 -2.2,-2.3 -.5,-3.2 .4,-1.5 -1.4,-.9 .6,-1.9 -.8,-1.7"/>
+<path class="oh-pa" d="m 736.8,225.1 -4.9,-29.9"/>
+<path class="oh-wv" d="m 709.3,279.4 3.2,-1.4 h 1.5 l .4,-3.5 1.5,-.8 -1.3,-3.6 1.1,-1.3 .3,-2.2 1,-2.3 1.6,.5 .6,2.1 1,-.5 .7,-.8 1,-.2 v -1.9 l -1.4,-1.1 1,-.5 -.1,-2.1 1.3,-2.2 h 1.3 l .3,-1.2 1.5,-1.8 1.3,1.2 1.8,-1.7 h .6 l 1.8,-2 2,-3.3 1.1,-.5 .4,-2.2 -.5,-1.1 1,-3.6 .1,-5.4 1.1,-3.4 -.6,-2 .1,-2.2 -1.4,-2.1 2.2,-1.2"/>
+<path class="ok-tx" d="m 357.5,332.9 52.6,3.2 -1.4,42.7 2.7,1.3 2.5,3 1.5,.3 1.1,-1 1.2,.4 1.4,1 1.1,-1.5 2.3,1.7 .5,2.9 1.2,.7 2.3,-.1 3.5,1.9 2,-.1 1.4,-.4 2.3,2.2 2,-2.3 3.5,1.1 1.9,3 2.3,-.1 -.7,2.1 2.3,1.1 3,-2.6 2.6,1.7 1.3,-.5 .1,1.5 1.7,1.2 2.3,-2.5 1.2,.7 -.3,2 1,1.8 1.2,-.8 2.5,-4.2 1.8,2 2,.5 2.1,-.7 2,1.8 1.2,-.1 1.3,1.2 3.6,-.9 .6,-1.7 3.7,-.3 1.6,.7 5,-2.5 .6,1.5 5.1,-.3 .5,-1.6 2.2,.9 4.6,3.8 6.4,1.9"/>
+<path class="or-wa" d="m 161.5,91.9 -30.3,-7.3 -2.8,1 -5.4,-.9 -1.8,-.9 -1.5,1.2 -3.3,-.4 -4.5,.5 -.9,.7 -4.2,-.4 -.8,-1.6 -1.2,-.2 -4.4,1.3 -1.6,-1.1 -2.2,.8 -.2,-1.8 -2.3,-1.2 -1.5,-.2 -1,-1.1 -3,.3 -1.2,-.8 h -1.2 l -1.2,.9 -5.5,.7 -6.6,-4.2 1.1,-5.6 -.4,-4.1 -3.2,-3.7 -3.7,.1 -.4,-1.1 .4,-1.2 -.7,-.8 -1,.1"/>
+<path class="pa-wv" d="m 736.8,225.1 3.2,19.7 17.4,-2.9"/>
+<path class="sd-wy" d="m 351.4,187.6 3.9,-43.9"/>
+<path class="tn-va" d="m 697.7,321.1 28.9,-3.3 .2,-1 4.6,-.5 -.3,.7"/>
+<path class="ut-wy" d="m 236.5,196 -3.3,21.9 32.1,4.8"/>
+<path class="va-wv" d="m 722.7,296.9 .7,.6 -.8,1.2 1.5,.7 .1,1.5 4.4,2.3 2.3,-.1 1.9,-1.8 .8,-1.7 3,1.8 5.5,-2.4 .5,-.9 -.8,-.5 .6,-1.4 1.5,1 4.3,-3.1 .7,1.1 2.3,-2 -.1,-1.4 1.5,-1.9 -1.5,-1.2 1,-3.3 3.7,-6.3 -.4,-1.9 2.1,-2.2 -.4,-1.5 1.4,-1.7 .1,-4.7 2.3,.7 1.3,1.9 2.8,.5 1.3,-1.6 2.3,-8.5 2.4,1.1 1,-2.5 .9,-.8 1.4,-1.8 .9,-.8 .5,-2.1 1.2,-.8 -.1,-2.9 .8,-2.3 -.9,-1.6 .2,-.9 10,5.2 .5,-2.3 .4,-1.6 .4,-.7"/>
+</g>
+
+<circle class="state borders dccircle dc" cx="801.6" cy="252.1" r="5">
+<title>District of Columbia</title></circle>
+
+<path class="separator1" fill="none" d="m 215,493 v 55 l 36,45 m -251,-168 h 147 l 68,68 h 85 l 54,54 v 46"/>
+
+</g>
+<line x1="591.3" y1="642.9" x2="824.4" y2="402.5" stroke="#e8187a" stroke-width="4.90" opacity="0.75"><title>New Orleans ↔ Philadelphia: 3,448 cross-metro friend edges</title></line>
+<line x1="643.4" y1="498.3" x2="824.4" y2="402.5" stroke="#e8187a" stroke-width="4.42" opacity="0.70"><title>Nashville ↔ Philadelphia: 3,038 cross-metro friend edges</title></line>
+<line x1="643.4" y1="498.3" x2="591.3" y2="642.9" stroke="#e8187a" stroke-width="4.38" opacity="0.69"><title>Nashville ↔ New Orleans: 2,999 cross-metro friend edges</title></line>
+<line x1="591.3" y1="642.9" x2="744.6" y2="664.0" stroke="#e8187a" stroke-width="4.21" opacity="0.67"><title>New Orleans ↔ Tampa: 2,854 cross-metro friend edges</title></line>
+<line x1="824.4" y1="402.5" x2="744.6" y2="664.0" stroke="#e8187a" stroke-width="3.89" opacity="0.64"><title>Philadelphia ↔ Tampa: 2,578 cross-metro friend edges</title></line>
+<line x1="643.4" y1="498.3" x2="744.6" y2="664.0" stroke="#e8187a" stroke-width="3.57" opacity="0.60"><title>Nashville ↔ Tampa: 2,305 cross-metro friend edges</title></line>
+<line x1="591.3" y1="642.9" x2="78.5" y2="504.8" stroke="#e8187a" stroke-width="2.49" opacity="0.48"><title>New Orleans ↔ Santa Barbara: 1,374 cross-metro friend edges</title></line>
+<line x1="643.4" y1="498.3" x2="579.8" y2="453.3" stroke="#e8187a" stroke-width="2.49" opacity="0.48"><title>Nashville ↔ Saint Louis: 1,372 cross-metro friend edges</title></line>
+<line x1="591.3" y1="642.9" x2="81.8" y2="392.9" stroke="#e8187a" stroke-width="2.42" opacity="0.47"><title>New Orleans ↔ Reno: 1,309 cross-metro friend edges</title></line>
+<line x1="591.3" y1="642.9" x2="579.8" y2="453.3" stroke="#e8187a" stroke-width="2.31" opacity="0.46"><title>New Orleans ↔ Saint Louis: 1,212 cross-metro friend edges</title></line>
+<g><circle cx="78.5" cy="504.8" r="18.6" fill="#1A4480" fill-opacity="0.38" stroke="#ffffff" stroke-width="1.8"><title>Santa Barbara: 3,117 reviewers, mean degree 3.61, 66.5% isolated</title></circle><text x="78.5" y="538.4" text-anchor="middle" font-family="Poppins,sans-serif" font-weight="600" font-size="13" fill="#14131A" stroke="#ffffff" stroke-width="2.4" paint-order="stroke fill">Santa Barbara</text><text x="78.5" y="553.4" text-anchor="middle" font-family="Inter,sans-serif" font-size="11" fill="#6B7280" stroke="#ffffff" stroke-width="2" paint-order="stroke fill">3,117 reviewers &#183; deg 3.6</text></g>
+<g><circle cx="824.4" cy="402.5" r="29.0" fill="#1A4480" fill-opacity="0.58" stroke="#ffffff" stroke-width="1.8"><title>Philadelphia: 13,554 reviewers, mean degree 5.07, 63.6% isolated</title></circle><text x="824.4" y="446.5" text-anchor="middle" font-family="Poppins,sans-serif" font-weight="600" font-size="13" fill="#14131A" stroke="#ffffff" stroke-width="2.4" paint-order="stroke fill">Philadelphia</text><text x="824.4" y="461.5" text-anchor="middle" font-family="Inter,sans-serif" font-size="11" fill="#6B7280" stroke="#ffffff" stroke-width="2" paint-order="stroke fill">13,554 reviewers &#183; deg 5.1</text></g>
+<g><circle cx="649.1" cy="419.7" r="18.8" fill="#1A4480" fill-opacity="0.78" stroke="#ffffff" stroke-width="1.8"><title>Indianapolis: 3,253 reviewers, mean degree 6.58, 52.5% isolated</title></circle><text x="649.1" y="453.5" text-anchor="middle" font-family="Poppins,sans-serif" font-weight="600" font-size="13" fill="#14131A" stroke="#ffffff" stroke-width="2.4" paint-order="stroke fill">Indianapolis</text><text x="649.1" y="468.5" text-anchor="middle" font-family="Inter,sans-serif" font-size="11" fill="#6B7280" stroke="#ffffff" stroke-width="2" paint-order="stroke fill">3,253 reviewers &#183; deg 6.6</text></g>
+<g><circle cx="591.3" cy="642.9" r="20.1" fill="#1A4480" fill-opacity="1.00" stroke="#ffffff" stroke-width="1.8"><title>New Orleans: 4,185 reviewers, mean degree 8.20, 54.7% isolated</title></circle><text x="591.3" y="678.0" text-anchor="middle" font-family="Poppins,sans-serif" font-weight="600" font-size="13" fill="#14131A" stroke="#ffffff" stroke-width="2.4" paint-order="stroke fill">New Orleans</text><text x="591.3" y="693.0" text-anchor="middle" font-family="Inter,sans-serif" font-size="11" fill="#6B7280" stroke="#ffffff" stroke-width="2" paint-order="stroke fill">4,185 reviewers &#183; deg 8.2</text></g>
+<g><circle cx="579.8" cy="453.3" r="18.5" fill="#1A4480" fill-opacity="0.74" stroke="#ffffff" stroke-width="1.8"><title>Saint Louis: 3,052 reviewers, mean degree 6.31, 61.4% isolated</title></circle><text x="579.8" y="486.8" text-anchor="middle" font-family="Poppins,sans-serif" font-weight="600" font-size="13" fill="#14131A" stroke="#ffffff" stroke-width="2.4" paint-order="stroke fill">Saint Louis</text><text x="579.8" y="501.8" text-anchor="middle" font-family="Inter,sans-serif" font-size="11" fill="#6B7280" stroke="#ffffff" stroke-width="2" paint-order="stroke fill">3,052 reviewers &#183; deg 6.3</text></g>
+<g><circle cx="81.8" cy="392.9" r="19.4" fill="#1A4480" fill-opacity="0.82" stroke="#ffffff" stroke-width="1.8"><title>Reno: 3,668 reviewers, mean degree 6.85, 55.0% isolated</title></circle><text x="81.8" y="427.3" text-anchor="middle" font-family="Poppins,sans-serif" font-weight="600" font-size="13" fill="#14131A" stroke="#ffffff" stroke-width="2.4" paint-order="stroke fill">Reno</text><text x="81.8" y="442.3" text-anchor="middle" font-family="Inter,sans-serif" font-size="11" fill="#6B7280" stroke="#ffffff" stroke-width="2" paint-order="stroke fill">3,668 reviewers &#183; deg 6.8</text></g>
+<g><circle cx="156.9" cy="322.1" r="14.4" fill="#1A4480" fill-opacity="0.30" stroke="#ffffff" stroke-width="1.8"><title>Boise: 972 reviewers, mean degree 3.02, 72.5% isolated</title></circle><text x="156.9" y="351.4" text-anchor="middle" font-family="Poppins,sans-serif" font-weight="600" font-size="13" fill="#14131A" stroke="#ffffff" stroke-width="2.4" paint-order="stroke fill">Boise</text><text x="156.9" y="366.4" text-anchor="middle" font-family="Inter,sans-serif" font-size="11" fill="#6B7280" stroke="#ffffff" stroke-width="2" paint-order="stroke fill">972 reviewers &#183; deg 3.0</text></g>
+<g><circle cx="744.6" cy="664.0" r="21.7" fill="#1A4480" fill-opacity="0.99" stroke="#ffffff" stroke-width="1.8"><title>Tampa: 5,465 reviewers, mean degree 8.13, 61.2% isolated</title></circle><text x="744.6" y="700.7" text-anchor="middle" font-family="Poppins,sans-serif" font-weight="600" font-size="13" fill="#14131A" stroke="#ffffff" stroke-width="2.4" paint-order="stroke fill">Tampa</text><text x="744.6" y="715.7" text-anchor="middle" font-family="Inter,sans-serif" font-size="11" fill="#6B7280" stroke="#ffffff" stroke-width="2" paint-order="stroke fill">5,465 reviewers &#183; deg 8.1</text></g>
+<g><circle cx="214.8" cy="577.4" r="17.4" fill="#1A4480" fill-opacity="0.49" stroke="#ffffff" stroke-width="1.8"><title>Tucson: 2,409 reviewers, mean degree 4.40, 62.3% isolated</title></circle><text x="214.8" y="609.9" text-anchor="middle" font-family="Poppins,sans-serif" font-weight="600" font-size="13" fill="#14131A" stroke="#ffffff" stroke-width="2.4" paint-order="stroke fill">Tucson</text><text x="214.8" y="624.9" text-anchor="middle" font-family="Inter,sans-serif" font-size="11" fill="#6B7280" stroke="#ffffff" stroke-width="2" paint-order="stroke fill">2,409 reviewers &#183; deg 4.4</text></g>
+<g><circle cx="643.4" cy="498.3" r="21.9" fill="#1A4480" fill-opacity="0.50" stroke="#ffffff" stroke-width="1.8"><title>Nashville: 5,642 reviewers, mean degree 4.49, 64.4% isolated</title></circle><text x="643.4" y="535.2" text-anchor="middle" font-family="Poppins,sans-serif" font-weight="600" font-size="13" fill="#14131A" stroke="#ffffff" stroke-width="2.4" paint-order="stroke fill">Nashville</text><text x="643.4" y="550.2" text-anchor="middle" font-family="Inter,sans-serif" font-size="11" fill="#6B7280" stroke="#ffffff" stroke-width="2" paint-order="stroke fill">5,642 reviewers &#183; deg 4.5</text></g>
+<g><circle cx="231.4" cy="106.9" r="14.2" fill="#1A4480" fill-opacity="0.91" stroke="#ffffff" stroke-width="1.8"><title>Edmonton: 919 reviewers, mean degree 7.52, 52.2% isolated</title></circle><text x="231.4" y="136.1" text-anchor="middle" font-family="Poppins,sans-serif" font-weight="600" font-size="13" fill="#14131A" stroke="#ffffff" stroke-width="2.4" paint-order="stroke fill">Edmonton</text><text x="231.4" y="151.1" text-anchor="middle" font-family="Inter,sans-serif" font-size="11" fill="#6B7280" stroke="#ffffff" stroke-width="2" paint-order="stroke fill">919 reviewers &#183; deg 7.5</text></g>
+<text x="231.4" y="20" text-anchor="middle" font-family="Inter,sans-serif" font-size="12" font-style="italic" fill="#6B7280">Canada (approx., no borders drawn)</text>
+</svg>
+    </div>
+    <div class="legend-row" style="margin-top:12px;">
+      <span class="legend-item"><span class="legend-swatch" style="background:#1A4480;"></span>Bubble size = reviewer count, shade = mean degree</span>
+      <span class="legend-item"><span class="legend-swatch" style="background:#e8187a;"></span>Line = cross-metro friend edges (top 10 pairs)</span>
+    </div>
+
+    <div class="chart-row secondary" style="margin-top:20px;">
+      <div class="chart-card">
+        <p class="chart-title">Geographic homophily</p>
+        <div class="bar-row"><span class="bar-label">Observed</span><div class="bar-track"><div class="bar-fill" style="width:100%; background:#1A4480;"></div></div><span class="bar-val">70.5%</span></div>
+        <div class="bar-row"><span class="bar-label">Expected</span><div class="bar-track"><div class="bar-fill" style="width:20.9%; background:#633806;"></div></div><span class="bar-val">14.7%</span></div>
+      </div>
+      <div class="kpi-card">
+        <p class="kpi-num">29.5%</p>
+        <p class="kpi-label">of edges are cross-metro (39,911 of 135,151) — a meaningful long-distance signal, not noise</p>
+      </div>
+    </div>
+
+    <p class="chart-title" style="margin-bottom:8px;">Per-metro network stats</p>
+    <div class="quality-table" style="margin-bottom:24px;">
+      <div class="quality-head" style="grid-template-columns:1.1fr 0.8fr 0.8fr 0.8fr;"><span>Metro</span><span>Reviewers</span><span>Mean degree</span><span>Isolated %</span></div>
+      <div class="quality-row" style="grid-template-columns:1.1fr 0.8fr 0.8fr 0.8fr;"><span>Philadelphia</span><span class="quality-val">13,554</span><span class="quality-val">5.07</span><span class="quality-val">63.6%</span></div>
+      <div class="quality-row" style="grid-template-columns:1.1fr 0.8fr 0.8fr 0.8fr;"><span>Nashville</span><span class="quality-val">5,642</span><span class="quality-val">4.49</span><span class="quality-val">64.4%</span></div>
+      <div class="quality-row" style="grid-template-columns:1.1fr 0.8fr 0.8fr 0.8fr;"><span>Tampa</span><span class="quality-val">5,465</span><span class="quality-val">8.13</span><span class="quality-val">61.2%</span></div>
+      <div class="quality-row" style="grid-template-columns:1.1fr 0.8fr 0.8fr 0.8fr;"><span>New Orleans</span><span class="quality-val">4,185</span><span class="quality-val">8.20</span><span class="quality-val">54.7%</span></div>
+      <div class="quality-row" style="grid-template-columns:1.1fr 0.8fr 0.8fr 0.8fr;"><span>Reno</span><span class="quality-val">3,668</span><span class="quality-val">6.85</span><span class="quality-val">55.0%</span></div>
+      <div class="quality-row" style="grid-template-columns:1.1fr 0.8fr 0.8fr 0.8fr;"><span>Indianapolis</span><span class="quality-val">3,253</span><span class="quality-val">6.58</span><span class="quality-val">52.5%</span></div>
+      <div class="quality-row" style="grid-template-columns:1.1fr 0.8fr 0.8fr 0.8fr;"><span>Santa Barbara</span><span class="quality-val">3,117</span><span class="quality-val">3.61</span><span class="quality-val">66.5%</span></div>
+      <div class="quality-row" style="grid-template-columns:1.1fr 0.8fr 0.8fr 0.8fr;"><span>Saint Louis</span><span class="quality-val">3,052</span><span class="quality-val">6.31</span><span class="quality-val">61.4%</span></div>
+      <div class="quality-row" style="grid-template-columns:1.1fr 0.8fr 0.8fr 0.8fr;"><span>Tucson</span><span class="quality-val">2,409</span><span class="quality-val">4.40</span><span class="quality-val">62.3%</span></div>
+      <div class="quality-row" style="grid-template-columns:1.1fr 0.8fr 0.8fr 0.8fr;"><span>Boise</span><span class="quality-val">972</span><span class="quality-val">3.02</span><span class="quality-val">72.5%</span></div>
+      <div class="quality-row" style="grid-template-columns:1.1fr 0.8fr 0.8fr 0.8fr;"><span>Edmonton</span><span class="quality-val">919</span><span class="quality-val">7.52</span><span class="quality-val">52.2%</span></div>
+    </div>
+
+    <div class="callout">
+      <span class="dot"></span>
+      <p>Connectivity varies a lot by metro <strong>independent of size</strong>. New Orleans and Tampa have the
+      highest mean degree (~8.1&ndash;8.2) and lowest isolation (~55&ndash;61%), while Boise is the most isolated
+      (72.5%) despite not being the smallest metro. Philadelphia, despite having by far the most reviewers, is only
+      mid-pack on connectivity (mean degree 5.07) &mdash; a bigger reviewer pool doesn't automatically mean a more
+      tightly-knit one. The busiest single cross-metro link is <strong>New Orleans&ndash;Philadelphia</strong>
+      (3,448 edges), followed by Nashville&ndash;Philadelphia and Nashville&ndash;New Orleans.</p>
+    </div>
+  </div>
+  <!-- ===== END 06 ===== -->
+
+  <!-- ===== 07 DEGREE VS SENTIMENT ===== -->
+  <div class="section">
+    <p class="section-eyebrow">07 · Does being social make you happier?</p>
+    <h2 class="section-title">More friends, nicer reviews — up to a point</h2>
+    <p class="section-desc">
+      Binning reviewers by degree and averaging their star ratings and VADER sentiment (both from the Fast Fashion
+      project) tests one more angle: does social connectedness itself correlate with how positively someone reviews?
+    </p>
+    <div class="chart-row secondary">
+      <div class="chart-card">
+        <p class="chart-title">Avg. star rating by degree</p>
+<svg viewBox="0 0 340 300" role="img" style="width:100%;" aria-label="Degree (in-network friends) versus Avg. star rating"><line x1="50" y1="240.0" x2="326" y2="240.0" stroke="var(--border)" stroke-width="1"/><text x="42" y="240.0" text-anchor="end" dominant-baseline="central" class="dg-ts">0</text><line x1="50" y1="197.6" x2="326" y2="197.6" stroke="var(--border)" stroke-width="1"/><text x="42" y="197.6" text-anchor="end" dominant-baseline="central" class="dg-ts">1</text><line x1="50" y1="155.2" x2="326" y2="155.2" stroke="var(--border)" stroke-width="1"/><text x="42" y="155.2" text-anchor="end" dominant-baseline="central" class="dg-ts">2</text><line x1="50" y1="112.8" x2="326" y2="112.8" stroke="var(--border)" stroke-width="1"/><text x="42" y="112.8" text-anchor="end" dominant-baseline="central" class="dg-ts">3</text><line x1="50" y1="70.4" x2="326" y2="70.4" stroke="var(--border)" stroke-width="1"/><text x="42" y="70.4" text-anchor="end" dominant-baseline="central" class="dg-ts">4</text><line x1="50" y1="28.0" x2="326" y2="28.0" stroke="var(--border)" stroke-width="1"/><text x="42" y="28.0" text-anchor="end" dominant-baseline="central" class="dg-ts">5</text><line x1="50" y1="240.0" x2="326" y2="240.0" stroke="var(--gray-text)" stroke-width="1.2"/><rect x="50.0" y="87.8" width="37.7" height="152.2" rx="5" fill="#1A4480"><title>degree 0: 3.59</title></rect><text x="68.8" y="79.8" text-anchor="middle" class="dg-th" style="font-size:12px;">3.59</text><text x="68.8" y="256.0" text-anchor="middle" class="dg-ts">0</text><rect x="97.7" y="78.2" width="37.7" height="161.8" rx="5" fill="#1A4480"><title>degree 1-2: 3.82</title></rect><text x="116.5" y="70.2" text-anchor="middle" class="dg-th" style="font-size:12px;">3.82</text><text x="116.5" y="256.0" text-anchor="middle" class="dg-ts">1-2</text><rect x="145.3" y="74.6" width="37.7" height="165.4" rx="5" fill="#1A4480"><title>degree 3-5: 3.90</title></rect><text x="164.2" y="66.6" text-anchor="middle" class="dg-th" style="font-size:12px;">3.90</text><text x="164.2" y="256.0" text-anchor="middle" class="dg-ts">3-5</text><rect x="193.0" y="72.6" width="37.7" height="167.4" rx="5" fill="#1A4480"><title>degree 6-20: 3.95</title></rect><text x="211.8" y="64.6" text-anchor="middle" class="dg-th" style="font-size:12px;">3.95</text><text x="211.8" y="256.0" text-anchor="middle" class="dg-ts">6-20</text><rect x="240.7" y="73.0" width="37.7" height="167.0" rx="5" fill="#1A4480"><title>degree 21-100: 3.94</title></rect><text x="259.5" y="65.0" text-anchor="middle" class="dg-th" style="font-size:12px;">3.94</text><text x="259.5" y="256.0" text-anchor="middle" class="dg-ts">21-100</text><rect x="288.3" y="71.4" width="37.7" height="168.6" rx="5" fill="#1A4480"><title>degree 101+: 3.98</title></rect><text x="307.2" y="63.4" text-anchor="middle" class="dg-th" style="font-size:12px;">3.98</text><text x="307.2" y="256.0" text-anchor="middle" class="dg-ts">101+</text><text x="188.0" y="292" text-anchor="middle" class="dg-ts" style="font-weight:600;">Degree (in-network friends)</text><text x="14" y="134.0" text-anchor="middle" class="dg-ts" style="font-weight:600;" transform="rotate(-90 14 134.0)">Avg. star rating</text></svg>
+      </div>
+      <div class="chart-card">
+        <p class="chart-title">Avg. VADER sentiment by degree</p>
+<svg viewBox="0 0 340 300" role="img" style="width:100%;" aria-label="Degree (in-network friends) versus Avg. VADER sentiment"><line x1="50" y1="240.0" x2="326" y2="240.0" stroke="var(--border)" stroke-width="1"/><text x="42" y="240.0" text-anchor="end" dominant-baseline="central" class="dg-ts">0</text><line x1="50" y1="187.0" x2="326" y2="187.0" stroke="var(--border)" stroke-width="1"/><text x="42" y="187.0" text-anchor="end" dominant-baseline="central" class="dg-ts">0.25</text><line x1="50" y1="134.0" x2="326" y2="134.0" stroke="var(--border)" stroke-width="1"/><text x="42" y="134.0" text-anchor="end" dominant-baseline="central" class="dg-ts">0.5</text><line x1="50" y1="81.0" x2="326" y2="81.0" stroke="var(--border)" stroke-width="1"/><text x="42" y="81.0" text-anchor="end" dominant-baseline="central" class="dg-ts">0.75</text><line x1="50" y1="28.0" x2="326" y2="28.0" stroke="var(--border)" stroke-width="1"/><text x="42" y="28.0" text-anchor="end" dominant-baseline="central" class="dg-ts">1</text><line x1="50" y1="240.0" x2="326" y2="240.0" stroke="var(--gray-text)" stroke-width="1.2"/><rect x="50.0" y="130.0" width="37.7" height="110.0" rx="5" fill="#712B13"><title>degree 0: 0.52</title></rect><text x="68.8" y="122.0" text-anchor="middle" class="dg-th" style="font-size:12px;">0.52</text><text x="68.8" y="256.0" text-anchor="middle" class="dg-ts">0</text><rect x="97.7" y="113.4" width="37.7" height="126.6" rx="5" fill="#712B13"><title>degree 1-2: 0.60</title></rect><text x="116.5" y="105.4" text-anchor="middle" class="dg-th" style="font-size:12px;">0.60</text><text x="116.5" y="256.0" text-anchor="middle" class="dg-ts">1-2</text><rect x="145.3" y="104.6" width="37.7" height="135.4" rx="5" fill="#712B13"><title>degree 3-5: 0.64</title></rect><text x="164.2" y="96.6" text-anchor="middle" class="dg-th" style="font-size:12px;">0.64</text><text x="164.2" y="256.0" text-anchor="middle" class="dg-ts">3-5</text><rect x="193.0" y="93.1" width="37.7" height="146.9" rx="5" fill="#712B13"><title>degree 6-20: 0.69</title></rect><text x="211.8" y="85.1" text-anchor="middle" class="dg-th" style="font-size:12px;">0.69</text><text x="211.8" y="256.0" text-anchor="middle" class="dg-ts">6-20</text><rect x="240.7" y="93.1" width="37.7" height="146.9" rx="5" fill="#712B13"><title>degree 21-100: 0.69</title></rect><text x="259.5" y="85.1" text-anchor="middle" class="dg-th" style="font-size:12px;">0.69</text><text x="259.5" y="256.0" text-anchor="middle" class="dg-ts">21-100</text><rect x="288.3" y="93.4" width="37.7" height="146.6" rx="5" fill="#712B13"><title>degree 101+: 0.69</title></rect><text x="307.2" y="85.4" text-anchor="middle" class="dg-th" style="font-size:12px;">0.69</text><text x="307.2" y="256.0" text-anchor="middle" class="dg-ts">101+</text><text x="188.0" y="292" text-anchor="middle" class="dg-ts" style="font-weight:600;">Degree (in-network friends)</text><text x="14" y="134.0" text-anchor="middle" class="dg-ts" style="font-weight:600;" transform="rotate(-90 14 134.0)">Avg. VADER sentiment</text></svg>
+      </div>
+    </div>
+    <div class="callout">
+      <span class="dot"></span>
+      <p>Both ratings and sentiment <strong>rise with degree, then plateau</strong> around 6+ friends. More socially
+      connected reviewers do rate and write somewhat more positively — but the effect saturates rather than growing
+      without bound, which is itself informative: there's no runaway "echo chamber" amplification here, just a
+      modest, bounded social-happiness effect.</p>
+    </div>
+  </div>
+  <!-- ===== END 07 ===== -->
+
+  <!-- ===== 08 SO WHAT ===== -->
+  <div class="section">
+    <p class="section-eyebrow">08 · So what</p>
+    <h2 class="section-title">What this means, beyond the graph</h2>
+    <p class="section-desc">Every finding above, turned into an actual takeaway — for this dataset and for the bigger picture.</p>
+
+    <div class="quality-table" style="margin-bottom:28px;">
+      <div class="quality-head" style="grid-template-columns:1fr;"><span>What this network actually shows</span></div>
+      <div class="quality-row" style="grid-template-columns:1fr; display:block; padding:16px 20px;">
+        <p style="font-size:13.5px; margin:0 0 12px; line-height:1.7;"><strong style="color:var(--black);">1. Most reviewers are alone, but there's a real tight-knit core.</strong> <span style="color:var(--gray-text);">61.1% have zero clothing-reviewer friends — yet the 37% who aren't form one giant, genuinely clustered component (clustering coefficient 0.26), not a random scatter.</span></p>
+        <p style="font-size:13.5px; margin:0 0 12px; line-height:1.7;"><strong style="color:var(--black);">2. Elite status is a network signal, not just a writing-quality one.</strong> <span style="color:var(--gray-text);">Veteran Elite reviewers are ~44&times; more connected than Single-review accounts, in a clean, exception-free gradient across all 6 categories.</span></p>
+        <p style="font-size:13.5px; margin:0 0 12px; line-height:1.7;"><strong style="color:var(--black);">3. Friends share taste — unevenly.</strong> <span style="color:var(--gray-text);">Mixed Retail reviewers cluster ~3&times; tighter than chance; Fast and Slow Fashion crowds actively avoid each other's friend circles (well under half of chance-level overlap).</span></p>
+        <p style="font-size:13.5px; margin:0 0 12px; line-height:1.7;"><strong style="color:var(--black);">4. Geography beats shopping taste as a predictor of friendship.</strong> <span style="color:var(--gray-text);">70.5% of friend pairs share a metro (vs. 14.7% expected) — but 29.5% are cross-metro, a real long-distance signal, not noise.</span></p>
+        <p style="font-size:13.5px; margin:0; line-height:1.7;"><strong style="color:var(--black);">5. Being social nudges ratings up, but only up to a point.</strong> <span style="color:var(--gray-text);">Stars and sentiment both rise with degree, then plateau past ~6 friends — a bounded effect, not a runaway echo chamber.</span></p>
+      </div>
+    </div>
+
+    <div class="field-grid">
+      <div class="field-card c-coral">
+        <p class="field-name" style="margin-bottom:8px;">Rating-volatility risk for Slow Fashion</p>
+        <p class="field-desc">Single-review accounts (Section 02) skew toward extreme ratings — a fact already known
+        from the Fast Fashion project. Section 04 now shows those same accounts disproportionately review Slow
+        Fashion businesses (43.8% vs. 12.6% for Veteran Elite). Slow Fashion's online reputation is therefore more
+        exposed to the least predictable raters than Fast Fashion's is — a concrete, previously undocumented risk.</p>
+      </div>
+      <div class="field-card c-teal">
+        <p class="field-name" style="margin-bottom:8px;">Elite status is a network signal, not just a quality one</p>
+        <p class="field-desc">If a platform treats "Elite" purely as a content-quality label, it's missing half the
+        picture. Section 04 shows Elite status also predicts network centrality (44&times; more connections) — an
+        Elite review isn't just more trustworthy, it also reaches further through the reviewer community.</p>
+      </div>
+      <div class="field-card c-blue">
+        <p class="field-name" style="margin-bottom:8px;">Marketing &amp; referral targeting</p>
+        <p class="field-desc">Mixed Retail reviewers cluster unusually tightly (Section 05) — referral/word-of-mouth
+        campaigns should work well there. Fast and Slow Fashion crowds barely overlap, so cross-selling between them
+        via social channels will be an uphill fight. Geographically, New Orleans and Tampa (Section 06) are the most
+        socially fertile metros for word-of-mouth; Boise is the least.</p>
+      </div>
+      <div class="field-card c-purple">
+        <p class="field-name" style="margin-bottom:8px;">Where this technique generalizes</p>
+        <p class="field-desc">The same graph-theory toolkit here — degree, components, clustering, homophily testing
+        — is exactly what platforms use for fake-review/fraud detection (isolated, coordinated clusters are a red
+        flag), influencer identification (high-degree nodes), and recommendation systems (homophily is the core idea
+        behind "your friends also liked X").</p>
+      </div>
+    </div>
+  </div>
+  <!-- ===== END 08 ===== -->
+
+  <!-- ===== 09 LIMITATIONS ===== -->
+  <div class="section">
+    <p class="section-eyebrow">09 · Honesty check</p>
+    <h2 class="section-title">Limitations &amp; honest assessment</h2>
+    <p class="section-desc">Stated plainly rather than glossed over.</p>
+
+    <div class="quality-table">
+      <div class="quality-head"><span>Limitation</span><span>What it means</span><span>Flag</span></div>
+      <div class="quality-row">
+        <span>Metro assignment is approximate</span>
+        <span style="font-size:12.5px; color:var(--gray-text);">k-means clustering, not exact city ground truth — a small number of businesses near cluster boundaries could be mislabeled</span>
+        <span class="status-pill status-amber">medium</span>
+      </div>
+      <div class="quality-row">
+        <span>No formal significance testing</span>
+        <span style="font-size:12.5px; color:var(--gray-text);">homophily is measured as observed-vs-expected, not validated with a p-value or permutation test</span>
+        <span class="status-pill status-amber">medium</span>
+      </div>
+      <div class="quality-row">
+        <span>Sample network is a slice</span>
+        <span style="font-size:12.5px; color:var(--gray-text);">the 90-node visual (Section 03) is a BFS sample from one hub, not the full 46,236-node graph</span>
+        <span class="status-pill status-green">labeled as such</span>
+      </div>
+      <div class="quality-row">
+        <span>Friend graph is a snapshot</span>
+        <span style="font-size:12.5px; color:var(--gray-text);">reflects friendships at the time the Yelp dataset was collected — real relationships change over time</span>
+        <span class="status-pill status-amber">medium</span>
+      </div>
+      <div class="quality-row">
+        <span>"Dominant" labels simplify mixed behavior</span>
+        <span style="font-size:12.5px; color:var(--gray-text);">a user's single most-frequent fashion_type/metro stands in for potentially varied real behavior</span>
+        <span class="status-pill status-amber">medium</span>
+      </div>
+      <div class="quality-row">
+        <span>Descriptive, not causal</span>
+        <span style="font-size:12.5px; color:var(--gray-text);">every finding is a correlation/pattern in the network — no controlled experiment establishes why</span>
+        <span class="status-pill status-amber">medium</span>
+      </div>
+    </div>
+
+    <div class="callout">
+      <span class="dot"></span>
+      <p><strong>Bottom line:</strong> this is a genuine, defensible graph-theoretic read of a real social network —
+      not a claim that social connectivity <em>causes</em> better ratings or that Yelp's Elite algorithm explicitly
+      rewards network position. The strongest result here is the 44&times; category gradient (Section 04): it's
+      monotonic across all 6 categories with no reversals, and it's corroborated by an independent line of evidence
+      from the original Fast Fashion project (elite reviewers already rate more positively) rather than a repeat of
+      the same measurement.</p>
+    </div>
+  </div>
+  <!-- ===== END 09 ===== -->
+
+  <div style="border-top:1px solid var(--border); padding-top:20px; margin-top:20px;"></div>
+  <p style="font-size:13.5px; color:var(--black); margin:0 0 8px;">That's the full graph — if you followed every edge this far, you deserve a <span style="color:var(--pink); font-weight:700;">snack 🍪</span>.</p>
+  <p class="crumb" style="margin-top:0; padding-top:8px;"><a href="https://analyzewithrutuja.github.io/#portfolio" style="color:var(--pink); font-weight:600;">← Back to portfolio</a></p>
+
+</div>
+
+<script>
+  const toTopBtn = document.getElementById('toTop');
+  window.addEventListener('scroll', () => {
+    toTopBtn.classList.toggle('show', window.scrollY > 600);
+  }, { passive: true });
+  toTopBtn.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
+</script>
+</body>
+</html>
