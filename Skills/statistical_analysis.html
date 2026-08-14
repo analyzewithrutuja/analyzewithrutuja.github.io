@@ -45,6 +45,7 @@ nav{position:sticky;top:0;z-index:100;background:rgba(248,247,245,.95);backdrop-
 .formula{background:var(--bg3);border:1px solid var(--border);border-left:3px solid var(--pk);border-radius:0 var(--r) var(--r) 0;padding:12px 16px;font-family:var(--mono);font-size:.75rem;color:#555;margin:12px 0;line-height:2}
 .formula .c{color:var(--dim)}
 .formula .k{color:var(--pk)}
+.chart-wrap svg{width:100%;height:100%;display:block}
 .wgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:14px}
 .wcard{background:var(--bg2);border:1px solid var(--border);border-radius:var(--rl);padding:20px;transition:border-color .2s,box-shadow .2s}
 .wcard:hover{border-color:var(--pkb);box-shadow:0 4px 20px rgba(232,24,122,.08)}
@@ -75,11 +76,76 @@ footer span{color:var(--pk)}
   <div class="sec-head"><span class="sec-num">01</span><div class="sec-title">Descriptive Statistics</div><div class="sec-line"></div></div>
   <p class="sec-desc">Summarising data before drawing any conclusions — the foundation of every analysis.</p>
   <div class="grid">
-    <div class="card"><div class="chart-wrap"><canvas id="d1" role="img" aria-label="Center measures bar chart">Center</canvas></div><div class="card-label">Measures of Center</div><div class="card-tag">mean · median · mode</div></div>
-    <div class="card"><div class="chart-wrap"><canvas id="d2" role="img" aria-label="Spread visualization">Spread</canvas></div><div class="card-label">Measures of Spread</div><div class="card-tag">SD · variance · IQR</div></div>
-    <div class="card"><div class="chart-wrap"><canvas id="d3" role="img" aria-label="Z-score on bell curve">Z-score</canvas></div><div class="card-label">Z-Score & Position</div><div class="card-tag">z = (x−μ)/σ</div></div>
-    <div class="card"><div class="chart-wrap"><canvas id="d4" role="img" aria-label="Empirical rule chart">68-95-99</canvas></div><div class="card-label">Empirical Rule</div><div class="card-tag">68 · 95 · 99.7%</div></div>
-    <div class="card"><div class="chart-wrap"><canvas id="d5" role="img" aria-label="Skewness shapes">Skew</canvas></div><div class="card-label">Shape & Skewness</div><div class="card-tag">left · right · normal</div></div>
+    <div class="card"><div class="chart-wrap">
+      <svg viewBox="0 0 150 64" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="A right-skewed histogram with mode, median and mean marked at three different positions">
+        <g fill="#fbcfe4"><rect x="8" y="30" width="12" height="28"/><rect x="21" y="16" width="12" height="42"/><rect x="34" y="24" width="12" height="34"/><rect x="47" y="36" width="12" height="22"/><rect x="60" y="44" width="12" height="14"/><rect x="73" y="50" width="12" height="8"/><rect x="86" y="53" width="12" height="5"/></g>
+        <line x1="27" y1="8" x2="27" y2="58" stroke="#e8187a" stroke-width="1.8"/>
+        <line x1="46" y1="8" x2="46" y2="58" stroke="#f492b8" stroke-width="1.6" stroke-dasharray="2 2"/>
+        <line x1="62" y1="8" x2="62" y2="58" stroke="#c21463" stroke-width="1.6" stroke-dasharray="1 2"/>
+        <text x="27" y="7" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="7" fill="#e8187a">Mo</text>
+        <text x="46" y="7" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="7" fill="#f492b8">Md</text>
+        <text x="62" y="7" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="7" fill="#c21463">x̄</text>
+        <text x="118" y="34" font-family="JetBrains Mono, monospace" font-size="6.5" fill="#999">tail →</text>
+      </svg>
+    </div><div class="card-label">Measures of Center</div><div class="card-tag">mean · median · mode</div></div>
+
+    <div class="card"><div class="chart-wrap">
+      <svg viewBox="0 0 150 64" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="A boxplot showing the interquartile range box, median line and whiskers, with an IQR brace beneath">
+        <line x1="10" y1="30" x2="40" y2="30" stroke="#999" stroke-width="1.4"/>
+        <line x1="10" y1="20" x2="10" y2="40" stroke="#999" stroke-width="1.4"/>
+        <rect x="40" y="14" width="60" height="32" fill="rgba(232,24,122,0.16)" stroke="#e8187a" stroke-width="1.6"/>
+        <line x1="66" y1="14" x2="66" y2="46" stroke="#e8187a" stroke-width="2"/>
+        <line x1="100" y1="30" x2="132" y2="30" stroke="#999" stroke-width="1.4"/>
+        <line x1="132" y1="20" x2="132" y2="40" stroke="#999" stroke-width="1.4"/>
+        <path d="M40,54 L40,58 L100,58 L100,54" fill="none" stroke="#e8187a" stroke-width="1.2"/>
+        <text x="70" y="63" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="6.5" fill="#e8187a">IQR</text>
+        <text x="40" y="11" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="6" fill="#999">Q1</text>
+        <text x="100" y="11" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="6" fill="#999">Q3</text>
+      </svg>
+    </div><div class="card-label">Measures of Spread</div><div class="card-tag">SD · variance · IQR</div></div>
+
+    <div class="card"><div class="chart-wrap">
+      <svg viewBox="0 0 150 64" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="A bell curve with the region beyond one and a half standard deviations shaded and the sigma distance labeled">
+        <path d="M8,54 C24,54 30,10 60,10 C90,10 96,54 112,54" fill="none" stroke="#e8187a" stroke-width="2"/>
+        <path d="M96,52 C104,42 108,26 112,12 L112,54 Z" fill="rgba(232,24,122,0.3)"/>
+        <line x1="60" y1="10" x2="60" y2="58" stroke="#ccc" stroke-width="1" stroke-dasharray="2 2"/>
+        <line x1="96" y1="30" x2="96" y2="58" stroke="#e8187a" stroke-width="1.4" stroke-dasharray="2 2"/>
+        <line x1="60" y1="60" x2="96" y2="60" stroke="#e8187a" stroke-width="1.2"/>
+        <text x="78" y="63" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="6.5" fill="#e8187a">1.5σ</text>
+        <text x="60" y="8" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="6.5" fill="#999">μ</text>
+        <circle cx="96" cy="30" r="2.6" fill="#e8187a"/>
+        <text x="102" y="20" font-family="JetBrains Mono, monospace" font-size="6.5" fill="#e8187a">x</text>
+      </svg>
+    </div><div class="card-label">Z-Score & Position</div><div class="card-tag">z = (x−μ)/σ</div></div>
+
+    <div class="card"><div class="chart-wrap">
+      <svg viewBox="0 0 150 64" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="A bell curve split into one two and three standard deviation bands labeled 68, 95 and 99.7 percent">
+        <path d="M8,56 C20,56 28,8 75,8 C122,8 130,56 142,56" fill="none" stroke="#e8187a" stroke-width="1.8"/>
+        <line x1="57" y1="8" x2="57" y2="58" stroke="#fff" stroke-width="0"/>
+        <path d="M8,56 C20,56 28,8 75,8 C122,8 130,56 142,56 Z" fill="rgba(232,24,122,0.06)"/>
+        <rect x="57" y="6" width="36" height="2" fill="none"/>
+        <line x1="57" y1="18" x2="57" y2="58" stroke="#e8187a" stroke-width="1" stroke-dasharray="1 2" opacity="0.5"/>
+        <line x1="93" y1="18" x2="93" y2="58" stroke="#e8187a" stroke-width="1" stroke-dasharray="1 2" opacity="0.5"/>
+        <line x1="39" y1="34" x2="39" y2="58" stroke="#e8187a" stroke-width="1" stroke-dasharray="1 2" opacity="0.35"/>
+        <line x1="111" y1="34" x2="111" y2="58" stroke="#e8187a" stroke-width="1" stroke-dasharray="1 2" opacity="0.35"/>
+        <line x1="21" y1="48" x2="21" y2="58" stroke="#e8187a" stroke-width="1" stroke-dasharray="1 2" opacity="0.2"/>
+        <line x1="129" y1="48" x2="129" y2="58" stroke="#e8187a" stroke-width="1" stroke-dasharray="1 2" opacity="0.2"/>
+        <text x="75" y="26" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="6.5" fill="#e8187a">68%</text>
+        <text x="75" y="46" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="6" fill="#c21463" opacity="0.7">95%</text>
+        <text x="75" y="60" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="5.5" fill="#c21463" opacity="0.55">99.7%</text>
+      </svg>
+    </div><div class="card-label">Empirical Rule</div><div class="card-tag">68 · 95 · 99.7%</div></div>
+
+    <div class="card"><div class="chart-wrap">
+      <svg viewBox="0 0 150 64" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Three distribution shapes side by side depicting left skew, symmetric normal and right skew">
+        <path d="M2,54 C10,54 16,44 20,30 C24,14 30,10 34,10 C38,10 40,30 46,54" fill="none" stroke="#e8187a" stroke-width="1.8"/>
+        <text x="24" y="62" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="6" fill="#999">left</text>
+        <path d="M54,54 C60,20 66,8 75,8 C84,8 90,20 96,54" fill="none" stroke="#e8187a" stroke-width="1.8"/>
+        <text x="75" y="62" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="6" fill="#999">normal</text>
+        <path d="M104,54 C110,30 112,10 116,10 C120,10 126,14 130,30 C134,44 140,54 148,54" fill="none" stroke="#e8187a" stroke-width="1.8"/>
+        <text x="126" y="62" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="6" fill="#999">right</text>
+      </svg>
+    </div><div class="card-label">Shape & Skewness</div><div class="card-tag">left · right · normal</div></div>
   </div>
 </div>
 
@@ -87,14 +153,111 @@ footer span{color:var(--pk)}
   <div class="sec-head"><span class="sec-num">02</span><div class="sec-title">Probability</div><div class="sec-line"></div></div>
   <p class="sec-desc">Quantifying uncertainty and building the backbone for statistical inference.</p>
   <div class="grid">
-    <div class="card"><div class="chart-wrap"><canvas id="p1" role="img" aria-label="AND OR NOT probability bars">Rules</canvas></div><div class="card-label">Basic Rules</div><div class="card-tag">AND · OR · NOT</div></div>
-    <div class="card"><div class="chart-wrap"><canvas id="p2" role="img" aria-label="Conditional probability">Conditional</canvas></div><div class="card-label">Conditional Probability</div><div class="card-tag">P(A|B)</div></div>
-    <div class="card"><div class="chart-wrap"><canvas id="p3" role="img" aria-label="Prior to posterior update">Prior→Post</canvas></div><div class="card-label">Bayesian Updating</div><div class="card-tag">prior → posterior</div></div>
-    <div class="card"><div class="chart-wrap"><canvas id="bay2" role="img" aria-label="Types of priors">Priors</canvas></div><div class="card-label">Types of Priors</div><div class="card-tag">informative · uniform · Jeffreys</div></div>
-    <div class="card"><div class="chart-wrap"><canvas id="bay3" role="img" aria-label="Conjugate prior beta binomial">Conjugate</canvas></div><div class="card-label">Conjugate Priors</div><div class="card-tag">Beta-Binomial · Normal-Normal</div></div>
-    <div class="card"><div class="chart-wrap"><canvas id="bay4" role="img" aria-label="Likelihood function">Likelihood</canvas></div><div class="card-label">Likelihood Function</div><div class="card-tag">P(Data|θ)</div></div>
-    <div class="card"><div class="chart-wrap"><canvas id="bay5" role="img" aria-label="Bayes vs Frequentist">Freq vs Bay</canvas></div><div class="card-label">Frequentist vs Bayesian</div><div class="card-tag">fixed param · uncertain param</div></div>
-    <div class="card"><div class="chart-wrap"><canvas id="p4" role="img" aria-label="At least one complement">Complement</canvas></div><div class="card-label">At Least One</div><div class="card-tag">1 − P(none)</div></div>
+    <div class="card"><div class="chart-wrap">
+      <svg viewBox="0 0 150 64" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Three mini Venn diagrams showing the shaded regions for AND, OR and NOT">
+        <circle cx="18" cy="26" r="14" fill="none" stroke="#f7a8c9" stroke-width="1.4"/>
+        <circle cx="30" cy="26" r="14" fill="none" stroke="#f7a8c9" stroke-width="1.4"/>
+        <path d="M24,14 A14,14 0 0 1 24,38 A14,14 0 0 1 24,14 Z" fill="#e8187a"/>
+        <text x="24" y="58" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="6.5" fill="#e8187a">AND</text>
+        <circle cx="68" cy="26" r="14" fill="#fbcfe4" stroke="#e8187a" stroke-width="1.2"/>
+        <circle cx="80" cy="26" r="14" fill="#fbcfe4" stroke="#e8187a" stroke-width="1.2"/>
+        <text x="74" y="58" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="6.5" fill="#e8187a">OR</text>
+        <rect x="108" y="12" width="34" height="28" fill="#e8187a"/>
+        <circle cx="125" cy="26" r="10" fill="#fff"/>
+        <text x="125" y="58" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="6.5" fill="#e8187a">NOT</text>
+      </svg>
+    </div><div class="card-label">Basic Rules</div><div class="card-tag">AND · OR · NOT</div></div>
+
+    <div class="card"><div class="chart-wrap">
+      <svg viewBox="0 0 150 64" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="A Venn diagram of A and B, then an arrow to just circle B enlarged with the same intersection shaded, showing the sample space restricted to B">
+        <defs><marker id="sa1" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="5" markerHeight="5" orient="auto-start-reverse"><path d="M2 1L8 5L2 9" fill="none" stroke="#e8187a" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></marker></defs>
+        <circle cx="18" cy="26" r="15" fill="none" stroke="#bbb" stroke-width="1.3"/>
+        <circle cx="32" cy="26" r="15" fill="none" stroke="#e8187a" stroke-width="1.3"/>
+        <path d="M25,13 A15,15 0 0 1 25,39 A15,15 0 0 1 25,13 Z" fill="#e8187a"/>
+        <text x="8" y="16" font-family="JetBrains Mono, monospace" font-size="6.5" fill="#999">A</text>
+        <text x="42" y="16" font-family="JetBrains Mono, monospace" font-size="6.5" fill="#e8187a">B</text>
+        <line x1="52" y1="26" x2="66" y2="26" stroke="#e8187a" stroke-width="1.6" marker-end="url(#sa1)"/>
+        <circle cx="105" cy="26" r="24" fill="none" stroke="#e8187a" stroke-width="1.8"/>
+        <path d="M93,7 A24,24 0 0 1 93,45 Z" fill="#e8187a"/>
+        <text x="105" y="58" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="7" fill="#e8187a">P(A|B)</text>
+      </svg>
+    </div><div class="card-label">Conditional Probability</div><div class="card-tag">P(A|B)</div></div>
+
+    <div class="card"><div class="chart-wrap">
+      <svg viewBox="0 0 150 64" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="A wide flat prior curve updated by data into a narrower taller posterior curve">
+        <defs><marker id="sa2" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="5" markerHeight="5" orient="auto-start-reverse"><path d="M2 1L8 5L2 9" fill="none" stroke="#e8187a" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></marker></defs>
+        <path d="M6,50 C20,50 30,20 48,20 C66,20 76,50 90,50" fill="none" stroke="#c9c9c9" stroke-width="1.6" stroke-dasharray="3 2"/>
+        <text x="20" y="16" font-family="JetBrains Mono, monospace" font-size="6" fill="#999">prior</text>
+        <line x1="52" y1="58" x2="66" y2="58" stroke="#e8187a" stroke-width="1.6" marker-end="url(#sa2)"/>
+        <text x="59" y="53" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="5.5" fill="#e8187a">+data</text>
+        <path d="M70,58 C82,58 90,10 108,10 C126,10 134,58 146,58" fill="none" stroke="#e8187a" stroke-width="2.2"/>
+        <text x="120" y="8" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="6" fill="#e8187a">posterior</text>
+      </svg>
+    </div><div class="card-label">Bayesian Updating</div><div class="card-tag">prior → posterior</div></div>
+
+    <div class="card"><div class="chart-wrap">
+      <svg viewBox="0 0 150 64" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Three prior shapes: a peaked informative curve, a flat uniform rectangle, and a U-shaped Jeffreys curve">
+        <path d="M4,50 C10,50 14,16 24,16 C34,16 38,50 44,50" fill="none" stroke="#e8187a" stroke-width="1.8"/>
+        <text x="24" y="60" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="6" fill="#999">informative</text>
+        <rect x="56" y="24" width="38" height="10" fill="#fbcfe4" stroke="#e8187a" stroke-width="1.3"/>
+        <text x="75" y="60" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="6" fill="#999">uniform</text>
+        <path d="M106,14 C112,32 116,32 116,42 C116,32 120,32 126,14" fill="none" stroke="#e8187a" stroke-width="1.8" transform="translate(0,0)"/>
+        <path d="M104,14 C108,40 118,40 122,14" fill="none" stroke="#e8187a" stroke-width="1.8" transform="scale(1,-1) translate(0,-54)"/>
+        <text x="113" y="60" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="6" fill="#999">Jeffreys</text>
+      </svg>
+    </div><div class="card-label">Types of Priors</div><div class="card-tag">informative · uniform · Jeffreys</div></div>
+
+    <div class="card"><div class="chart-wrap">
+      <svg viewBox="0 0 150 64" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="A Beta prior curve bounded between 0 and 1 updated with data into a narrower Beta posterior curve">
+        <defs><marker id="sa3" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="5" markerHeight="5" orient="auto-start-reverse"><path d="M2 1L8 5L2 9" fill="none" stroke="#e8187a" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></marker></defs>
+        <line x1="6" y1="52" x2="46" y2="52" stroke="#ccc" stroke-width="1"/>
+        <path d="M6,52 C12,52 16,26 24,26 C32,26 34,44 46,52" fill="none" stroke="#c9c9c9" stroke-width="1.6" stroke-dasharray="3 2"/>
+        <text x="6" y="60" font-family="JetBrains Mono, monospace" font-size="5.5" fill="#999">0</text>
+        <text x="42" y="60" font-family="JetBrains Mono, monospace" font-size="5.5" fill="#999">1</text>
+        <line x1="54" y1="30" x2="66" y2="30" stroke="#e8187a" stroke-width="1.6" marker-end="url(#sa3)"/>
+        <line x1="76" y1="52" x2="140" y2="52" stroke="#ccc" stroke-width="1"/>
+        <path d="M76,52 C88,52 92,10 108,10 C124,10 128,44 140,52" fill="none" stroke="#e8187a" stroke-width="2.2"/>
+        <text x="76" y="60" font-family="JetBrains Mono, monospace" font-size="5.5" fill="#999">0</text>
+        <text x="136" y="60" font-family="JetBrains Mono, monospace" font-size="5.5" fill="#999">1</text>
+      </svg>
+    </div><div class="card-label">Conjugate Priors</div><div class="card-tag">Beta-Binomial · Normal-Normal</div></div>
+
+    <div class="card"><div class="chart-wrap">
+      <svg viewBox="0 0 150 64" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="A likelihood curve over theta with a dashed line marking the maximum likelihood estimate theta hat">
+        <line x1="8" y1="56" x2="144" y2="56" stroke="#ccc" stroke-width="1.2"/>
+        <path d="M8,54 C30,54 42,12 78,12 C114,12 124,54 144,54" fill="none" stroke="#e8187a" stroke-width="2"/>
+        <line x1="78" y1="12" x2="78" y2="58" stroke="#e8187a" stroke-width="1.3" stroke-dasharray="2 2"/>
+        <text x="78" y="9" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="7" fill="#e8187a">θ̂</text>
+        <text x="8" y="63" font-family="JetBrains Mono, monospace" font-size="6" fill="#999">0</text>
+        <text x="140" y="63" text-anchor="end" font-family="JetBrains Mono, monospace" font-size="6" fill="#999">θ</text>
+      </svg>
+    </div><div class="card-label">Likelihood Function</div><div class="card-tag">P(Data|θ)</div></div>
+
+    <div class="card"><div class="chart-wrap">
+      <svg viewBox="0 0 150 64" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Left panel shows theta as one fixed point on a line for frequentist, right panel shows theta as a probability distribution for Bayesian">
+        <line x1="42" y1="6" x2="42" y2="58" stroke="#ddd" stroke-width="1"/>
+        <line x1="8" y1="40" x2="34" y2="40" stroke="#999" stroke-width="1.4"/>
+        <circle cx="21" cy="40" r="4" fill="#e8187a"/>
+        <text x="21" y="54" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="6" fill="#e8187a">θ fixed</text>
+        <text x="21" y="14" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="6" fill="#999">Freq</text>
+        <line x1="94" y1="52" x2="140" y2="52" stroke="#999" stroke-width="1"/>
+        <path d="M94,52 C102,52 106,24 116,24 C126,24 130,52 140,52" fill="#fbcfe4" stroke="#e8187a" stroke-width="1.6"/>
+        <text x="116" y="58" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="6" fill="#e8187a">θ ~ dist</text>
+        <text x="116" y="14" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="6" fill="#999">Bayes</text>
+      </svg>
+    </div><div class="card-label">Frequentist vs Bayesian</div><div class="card-tag">fixed param · uncertain param</div></div>
+
+    <div class="card"><div class="chart-wrap">
+      <svg viewBox="0 0 150 64" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="P of none decreasing and P of at least one increasing as trials increase, converging toward one minus the other">
+        <line x1="8" y1="8" x2="8" y2="56" stroke="#ddd" stroke-width="1"/>
+        <line x1="8" y1="56" x2="144" y2="56" stroke="#ddd" stroke-width="1"/>
+        <path d="M8,12 C30,20 50,34 70,42 C95,50 120,54 144,55" fill="none" stroke="#bbb" stroke-width="1.8" stroke-dasharray="3 2"/>
+        <path d="M8,52 C30,44 50,30 70,22 C95,14 120,10 144,9" fill="none" stroke="#e8187a" stroke-width="2.2"/>
+        <text x="100" y="20" font-family="JetBrains Mono, monospace" font-size="6.5" fill="#e8187a">P(≥1)</text>
+        <text x="100" y="52" font-family="JetBrains Mono, monospace" font-size="6.5" fill="#999">P(none)</text>
+        <text x="4" y="62" font-family="JetBrains Mono, monospace" font-size="6" fill="#999">n trials →</text>
+      </svg>
+    </div><div class="card-label">At Least One</div><div class="card-tag">1 − P(none)</div></div>
   </div>
   <div class="formula"><span class="c"># Bayes Rule</span><br/>P(A|B) = <span class="k">P(B|A) × P(A)</span> / P(B)</div>
 </div>
@@ -103,11 +266,60 @@ footer span{color:var(--pk)}
   <div class="sec-head"><span class="sec-num">03</span><div class="sec-title">Probability Distributions</div><div class="sec-line"></div></div>
   <p class="sec-desc">Modelling how data and outcomes are distributed — from coin flips to continuous measurements.</p>
   <div class="grid">
-    <div class="card"><div class="chart-wrap"><canvas id="dist1" role="img" aria-label="Normal bell curve">Normal</canvas></div><div class="card-label">Normal Distribution</div><div class="card-tag">μ · σ</div></div>
-    <div class="card"><div class="chart-wrap"><canvas id="dist2" role="img" aria-label="Binomial bars">Binomial</canvas></div><div class="card-label">Binomial</div><div class="card-tag">n · p · q</div></div>
-    <div class="card"><div class="chart-wrap"><canvas id="dist3" role="img" aria-label="Poisson bars">Poisson</canvas></div><div class="card-label">Poisson</div><div class="card-tag">λ = rate</div></div>
-    <div class="card"><div class="chart-wrap"><canvas id="dist4" role="img" aria-label="Beta distribution">Beta</canvas></div><div class="card-label">Beta Distribution</div><div class="card-tag">α · β</div></div>
-    <div class="card"><div class="chart-wrap"><canvas id="dist5" role="img" aria-label="Normal approximation">Approx</canvas></div><div class="card-label">Normal Approximation</div><div class="card-tag">np≥10 · nq≥10</div></div>
+    <div class="card"><div class="chart-wrap">
+      <svg viewBox="0 0 150 64" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="A smooth symmetric bell curve centered on mu with sigma tick marks on either side">
+        <path d="M8,56 C24,56 32,10 75,10 C118,10 126,56 142,56" fill="none" stroke="#e8187a" stroke-width="2" fill-opacity="0"/>
+        <path d="M8,56 C24,56 32,10 75,10 C118,10 126,56 142,56 L142,58 L8,58 Z" fill="rgba(232,24,122,0.1)"/>
+        <line x1="75" y1="10" x2="75" y2="58" stroke="#e8187a" stroke-width="1.2" stroke-dasharray="2 2"/>
+        <text x="75" y="8" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="7" fill="#e8187a">μ</text>
+        <line x1="51" y1="52" x2="99" y2="52" stroke="#999" stroke-width="1"/>
+        <text x="75" y="63" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="6.5" fill="#999">σ</text>
+      </svg>
+    </div><div class="card-label">Normal Distribution</div><div class="card-tag">μ · σ</div></div>
+
+    <div class="card"><div class="chart-wrap">
+      <svg viewBox="0 0 150 64" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="A discrete bar histogram of binomial counts across 0 through 8 successes with the most likely count highlighted">
+        <g font-family="JetBrains Mono, monospace" font-size="5.5" fill="#999" text-anchor="middle">
+        <rect x="6" y="52" width="12" height="4" fill="#fbcfe4"/><rect x="20" y="38" width="12" height="18" fill="#f7a8c9"/><rect x="34" y="20" width="12" height="36" fill="#f492b8"/><rect x="48" y="8" width="12" height="48" fill="#e8187a"/><rect x="62" y="8" width="12" height="48" fill="#e8187a"/><rect x="76" y="20" width="12" height="36" fill="#f492b8"/><rect x="90" y="38" width="12" height="18" fill="#f7a8c9"/><rect x="104" y="52" width="12" height="4" fill="#fbcfe4"/>
+        <text x="12" y="63">0</text><text x="40" y="63">2</text><text x="68" y="63">4</text><text x="96" y="63">6</text><text x="110" y="63">8</text>
+        </g>
+        <text x="130" y="20" font-family="JetBrains Mono, monospace" font-size="6.5" fill="#e8187a">n=8</text>
+        <text x="130" y="30" font-family="JetBrains Mono, monospace" font-size="6.5" fill="#999">p=.5</text>
+      </svg>
+    </div><div class="card-label">Binomial</div><div class="card-tag">n · p · q</div></div>
+
+    <div class="card"><div class="chart-wrap">
+      <svg viewBox="0 0 150 64" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="A right-skewed discrete bar histogram of Poisson counts peaking at a low value near lambda">
+        <g>
+        <rect x="6" y="46" width="13" height="10" fill="#fbcfe4"/><rect x="21" y="26" width="13" height="30" fill="#f7a8c9"/><rect x="36" y="12" width="13" height="44" fill="#e8187a"/><rect x="51" y="12" width="13" height="44" fill="#e8187a"/><rect x="66" y="22" width="13" height="34" fill="#f492b8"/><rect x="81" y="36" width="13" height="20" fill="#fbcfe4"/><rect x="96" y="46" width="13" height="10" fill="#fbcfe4"/><rect x="111" y="52" width="13" height="4" fill="#fbcfe4"/>
+        </g>
+        <text x="42" y="8" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="7" fill="#e8187a">λ=3</text>
+        <text x="148" y="30" text-anchor="end" font-family="JetBrains Mono, monospace" font-size="5.5" fill="#999">tail →</text>
+      </svg>
+    </div><div class="card-label">Poisson</div><div class="card-tag">λ = rate</div></div>
+
+    <div class="card"><div class="chart-wrap">
+      <svg viewBox="0 0 150 64" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="An asymmetric hump bounded between 0 and 1 depicting the Beta distribution support">
+        <line x1="12" y1="54" x2="138" y2="54" stroke="#ccc" stroke-width="1.2"/>
+        <line x1="12" y1="8" x2="12" y2="54" stroke="#ccc" stroke-width="1"/>
+        <line x1="138" y1="8" x2="138" y2="54" stroke="#ccc" stroke-width="1"/>
+        <path d="M12,54 C30,54 40,14 62,14 C84,14 96,42 138,54" fill="rgba(232,24,122,0.16)" stroke="#e8187a" stroke-width="2"/>
+        <text x="12" y="62" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="6.5" fill="#999">0</text>
+        <text x="138" y="62" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="6.5" fill="#999">1</text>
+        <text x="55" y="10" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="6.5" fill="#e8187a">α,β</text>
+      </svg>
+    </div><div class="card-label">Beta Distribution</div><div class="card-tag">α · β</div></div>
+
+    <div class="card"><div class="chart-wrap">
+      <svg viewBox="0 0 150 64" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="A binomial bar histogram overlaid closely by a smooth normal curve, showing the approximation">
+        <g fill="#fbcfe4">
+        <rect x="8" y="48" width="10" height="8"/><rect x="20" y="36" width="10" height="20"/><rect x="32" y="22" width="10" height="34"/><rect x="44" y="10" width="10" height="46"/><rect x="56" y="6" width="10" height="50"/><rect x="68" y="10" width="10" height="46"/><rect x="80" y="22" width="10" height="34"/><rect x="92" y="36" width="10" height="20"/><rect x="104" y="48" width="10" height="8"/>
+        </g>
+        <path d="M8,52 C30,52 44,6 61,6 C78,6 92,52 114,52" fill="none" stroke="#e8187a" stroke-width="2.2"/>
+        <text x="130" y="16" font-family="JetBrains Mono, monospace" font-size="6" fill="#e8187a">np≥10</text>
+        <text x="130" y="28" font-family="JetBrains Mono, monospace" font-size="6" fill="#999">nq≥10</text>
+      </svg>
+    </div><div class="card-label">Normal Approximation</div><div class="card-tag">np≥10 · nq≥10</div></div>
   </div>
 </div>
 
@@ -115,11 +327,66 @@ footer span{color:var(--pk)}
   <div class="sec-head"><span class="sec-num">04</span><div class="sec-title">Sampling & CLT</div><div class="sec-line"></div></div>
   <p class="sec-desc">Using samples to make inferences about populations — and why averages are always normal.</p>
   <div class="grid">
-    <div class="card"><div class="chart-wrap"><canvas id="s1" role="img" aria-label="CLT narrowing bell">CLT</canvas></div><div class="card-label">Central Limit Theorem</div><div class="card-tag">n ≥ 30</div></div>
-    <div class="card"><div class="chart-wrap"><canvas id="s2" role="img" aria-label="SE decreasing with n">SE</canvas></div><div class="card-label">Standard Error</div><div class="card-tag">SE = σ/√n</div></div>
-    <div class="card"><div class="chart-wrap"><canvas id="s3" role="img" aria-label="LLN convergence">LLN</canvas></div><div class="card-label">Law of Large Numbers</div><div class="card-tag">x̄ → μ</div></div>
-    <div class="card"><div class="chart-wrap"><canvas id="s4" role="img" aria-label="Sampling methods comparison">Methods</canvas></div><div class="card-label">Sampling Methods</div><div class="card-tag">SRS · stratified</div></div>
-    <div class="card"><div class="chart-wrap"><canvas id="s5" role="img" aria-label="Bias and chance error">Bias</canvas></div><div class="card-label">Bias & Chance Error</div><div class="card-tag">systematic · random</div></div>
+    <div class="card"><div class="chart-wrap">
+      <svg viewBox="0 0 150 64" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="A lumpy skewed population distribution on the left and an arrow to a smooth narrow bell shaped sampling distribution of means on the right">
+        <defs><marker id="sa4" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="5" markerHeight="5" orient="auto-start-reverse"><path d="M2 1L8 5L2 9" fill="none" stroke="#e8187a" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></marker></defs>
+        <path d="M2,54 L8,40 L14,50 L20,20 L26,44 L32,14 L38,36 L44,54" fill="#fbcfe4" stroke="#f492b8" stroke-width="1.2"/>
+        <text x="23" y="62" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="6" fill="#999">population</text>
+        <line x1="52" y1="30" x2="64" y2="30" stroke="#e8187a" stroke-width="1.6" marker-end="url(#sa4)"/>
+        <path d="M72,54 C84,54 90,14 108,14 C126,14 132,54 144,54" fill="rgba(232,24,122,0.18)" stroke="#e8187a" stroke-width="2"/>
+        <text x="108" y="62" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="6" fill="#e8187a">means (n≥30)</text>
+      </svg>
+    </div><div class="card-label">Central Limit Theorem</div><div class="card-tag">n ≥ 30</div></div>
+
+    <div class="card"><div class="chart-wrap">
+      <svg viewBox="0 0 150 64" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="A curve of standard error shrinking as sample size n grows, following sigma over root n">
+        <line x1="10" y1="8" x2="10" y2="56" stroke="#ddd" stroke-width="1"/>
+        <line x1="10" y1="56" x2="144" y2="56" stroke="#ddd" stroke-width="1"/>
+        <path d="M10,12 C24,26 36,36 52,42 C72,48 100,52 144,54" fill="none" stroke="#e8187a" stroke-width="2.2"/>
+        <circle cx="24" cy="26" r="2.6" fill="#e8187a"/><circle cx="52" cy="42" r="2.6" fill="#e8187a"/><circle cx="100" cy="52" r="2.6" fill="#e8187a"/>
+        <text x="24" y="18" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="5.5" fill="#999">n=10</text>
+        <text x="100" y="60" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="5.5" fill="#999">n=90</text>
+        <text x="118" y="24" font-family="JetBrains Mono, monospace" font-size="7" fill="#e8187a">σ/√n</text>
+      </svg>
+    </div><div class="card-label">Standard Error</div><div class="card-tag">SE = σ/√n</div></div>
+
+    <div class="card"><div class="chart-wrap">
+      <svg viewBox="0 0 150 64" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="A jittery running average line settling down and converging onto a flat dashed true mean line as trials increase">
+        <line x1="6" y1="20" x2="144" y2="20" stroke="#999" stroke-width="1.3" stroke-dasharray="4 3"/>
+        <text x="6" y="14" font-family="JetBrains Mono, monospace" font-size="6.5" fill="#999">μ</text>
+        <path d="M6,50 L18,10 L30,42 L42,14 L54,34 L66,24 L78,22 L90,18 L102,22 L114,19 L126,21 L138,20" fill="none" stroke="#e8187a" stroke-width="2" stroke-linejoin="round"/>
+        <text x="80" y="63" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="6" fill="#999">n trials →</text>
+        <text x="120" y="12" font-family="JetBrains Mono, monospace" font-size="6.5" fill="#e8187a">x̄ₙ</text>
+      </svg>
+    </div><div class="card-label">Law of Large Numbers</div><div class="card-tag">x̄ → μ</div></div>
+
+    <div class="card"><div class="chart-wrap">
+      <svg viewBox="0 0 150 64" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Simple random sampling shown as scattered dots with a few randomly highlighted, next to stratified sampling shown as three horizontal bands each with proportionally sampled dots">
+        <g fill="#ddd"><circle cx="10" cy="10" r="2.3"/><circle cx="22" cy="18" r="2.3"/><circle cx="14" cy="30" r="2.3"/><circle cx="30" cy="8" r="2.3"/><circle cx="6" cy="44" r="2.3"/><circle cx="26" cy="40" r="2.3"/><circle cx="36" cy="26" r="2.3"/><circle cx="18" cy="52" r="2.3"/></g>
+        <g fill="#e8187a"><circle cx="22" cy="18" r="3"/><circle cx="26" cy="40" r="3"/></g>
+        <text x="21" y="62" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="6" fill="#999">SRS</text>
+        <g>
+        <rect x="66" y="6" width="76" height="15" fill="#fbcfe4"/><rect x="66" y="23" width="76" height="15" fill="#f492b8"/><rect x="66" y="40" width="76" height="15" fill="#f7a8c9"/>
+        </g>
+        <g fill="#e8187a" stroke="#fff" stroke-width="0.8"><circle cx="80" cy="13" r="2.8"/><circle cx="112" cy="13" r="2.8"/><circle cx="92" cy="30" r="2.8"/><circle cx="128" cy="30" r="2.8"/><circle cx="76" cy="47" r="2.8"/></g>
+        <text x="104" y="62" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="6" fill="#999">stratified</text>
+      </svg>
+    </div><div class="card-label">Sampling Methods</div><div class="card-tag">SRS · stratified</div></div>
+
+    <div class="card"><div class="chart-wrap">
+      <svg viewBox="0 0 150 64" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Two dartboard targets: one with a tight cluster of shots off-center showing systematic bias, one with shots scattered widely around the center showing chance error">
+        <circle cx="36" cy="30" r="26" fill="none" stroke="#eee" stroke-width="8"/>
+        <circle cx="36" cy="30" r="18" fill="none" stroke="#f2f1ef" stroke-width="1"/>
+        <circle cx="36" cy="30" r="9" fill="none" stroke="#f2f1ef" stroke-width="1"/>
+        <g fill="#e8187a"><circle cx="18" cy="16" r="2.6"/><circle cx="14" cy="20" r="2.6"/><circle cx="20" cy="12" r="2.6"/><circle cx="16" cy="24" r="2.6"/></g>
+        <text x="36" y="63" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="6" fill="#e8187a">systematic</text>
+        <circle cx="114" cy="30" r="26" fill="none" stroke="#eee" stroke-width="8"/>
+        <circle cx="114" cy="30" r="18" fill="none" stroke="#f2f1ef" stroke-width="1"/>
+        <circle cx="114" cy="30" r="9" fill="none" stroke="#f2f1ef" stroke-width="1"/>
+        <g fill="#e8187a"><circle cx="114" cy="10" r="2.6"/><circle cx="132" cy="24" r="2.6"/><circle cx="96" cy="34" r="2.6"/><circle cx="120" cy="46" r="2.6"/><circle cx="108" cy="18" r="2.6"/></g>
+        <text x="114" y="63" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="6" fill="#e8187a">random</text>
+      </svg>
+    </div><div class="card-label">Bias & Chance Error</div><div class="card-tag">systematic · random</div></div>
   </div>
   <div class="formula">SE(mean) = σ/√n <span class="c">← decreases with n</span><br/>SE(sum)&nbsp; = σ·√n <span class="c">← increases with n</span></div>
 </div>
@@ -128,14 +395,98 @@ footer span{color:var(--pk)}
   <div class="sec-head"><span class="sec-num">05</span><div class="sec-title">Inferential Statistics</div><div class="sec-line"></div></div>
   <p class="sec-desc">Drawing conclusions about populations from sample data — the engine of data-driven decisions.</p>
   <div class="grid">
-    <div class="card"><div class="chart-wrap"><canvas id="i1" role="img" aria-label="Confidence interval">CI</canvas></div><div class="card-label">Confidence Intervals</div><div class="card-tag">x̄ ± Z·SE</div></div>
-    <div class="card"><div class="chart-wrap"><canvas id="i2" role="img" aria-label="P-value under curve">P-value</canvas></div><div class="card-label">Hypothesis Testing</div><div class="card-tag">H₀ · H₁ · α</div></div>
-    <div class="card"><div class="chart-wrap"><canvas id="i3a" role="img" aria-label="One sample t-test">One-Sample</canvas></div><div class="card-label">One-Sample T-Test</div><div class="card-tag">x̄ vs μ₀</div></div>
-    <div class="card"><div class="chart-wrap"><canvas id="i3b" role="img" aria-label="Independent t-test">Independent</canvas></div><div class="card-label">Independent T-Test</div><div class="card-tag">μ₁ vs μ₂ · σ unknown</div></div>
-    <div class="card"><div class="chart-wrap"><canvas id="i3c" role="img" aria-label="Paired t-test">Paired</canvas></div><div class="card-label">Paired Sample T-Test</div><div class="card-tag">before vs after</div></div>
-    <div class="card"><div class="chart-wrap"><canvas id="i4" role="img" aria-label="Two sample comparison">Z-test</canvas></div><div class="card-label">Two-Sample Z-Test</div><div class="card-tag">μ₁ vs μ₂</div></div>
-    <div class="card"><div class="chart-wrap"><canvas id="i5" role="img" aria-label="Effect size dumbbell">Effect</canvas></div><div class="card-label">Effect Size</div><div class="card-tag">Cohen's d · power</div></div>
-    <div class="card"><div class="chart-wrap"><canvas id="i6" role="img" aria-label="Matched pairs">Pairs</canvas></div><div class="card-label">Matched Pairs</div><div class="card-tag">d̄ / (sd/√n)</div></div>
+    <div class="card"><div class="chart-wrap">
+      <svg viewBox="0 0 150 64" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="A number line with a point estimate marked at the center and a shaded confidence band extending on either side">
+        <line x1="8" y1="34" x2="142" y2="34" stroke="#ddd" stroke-width="1.3"/>
+        <rect x="46" y="26" width="58" height="16" fill="rgba(232,24,122,0.18)"/>
+        <line x1="46" y1="20" x2="46" y2="48" stroke="#e8187a" stroke-width="1.6"/>
+        <line x1="104" y1="20" x2="104" y2="48" stroke="#e8187a" stroke-width="1.6"/>
+        <circle cx="75" cy="34" r="3.6" fill="#e8187a"/>
+        <text x="75" y="18" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="7" fill="#e8187a">x̄</text>
+        <text x="46" y="58" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="6" fill="#999">lower</text>
+        <text x="104" y="58" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="6" fill="#999">upper</text>
+      </svg>
+    </div><div class="card-label">Confidence Intervals</div><div class="card-tag">x̄ ± Z·SE</div></div>
+
+    <div class="card"><div class="chart-wrap">
+      <svg viewBox="0 0 150 64" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="A bell curve for the null hypothesis with the tail rejection region shaded and the observed test statistic marked inside it">
+        <path d="M8,56 C22,56 30,12 60,12 C90,12 98,56 112,56" fill="none" stroke="#e8187a" stroke-width="2"/>
+        <path d="M95,52 C102,40 106,24 112,12 L112,56 Z" fill="rgba(232,24,122,0.32)"/>
+        <text x="60" y="10" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="6.5" fill="#999">H₀</text>
+        <line x1="95" y1="30" x2="95" y2="58" stroke="#e8187a" stroke-width="1.4" stroke-dasharray="2 2"/>
+        <text x="95" y="63" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="6.5" fill="#e8187a">t</text>
+        <text x="120" y="42" font-family="JetBrains Mono, monospace" font-size="6.5" fill="#e8187a">α</text>
+      </svg>
+    </div><div class="card-label">Hypothesis Testing</div><div class="card-tag">H₀ · H₁ · α</div></div>
+
+    <div class="card"><div class="chart-wrap">
+      <svg viewBox="0 0 150 64" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="A sampling distribution curve centered on the hypothesized mu zero with the sample mean marked as an offset point">
+        <path d="M8,56 C24,56 32,10 75,10 C118,10 126,56 142,56" fill="none" stroke="#e8187a" stroke-width="2"/>
+        <line x1="75" y1="10" x2="75" y2="58" stroke="#999" stroke-width="1.3" stroke-dasharray="2 2"/>
+        <text x="75" y="8" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="6.5" fill="#999">μ₀</text>
+        <circle cx="104" cy="42" r="3.4" fill="#e8187a"/>
+        <line x1="75" y1="58" x2="104" y2="58" stroke="#e8187a" stroke-width="1.2"/>
+        <text x="104" y="20" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="7" fill="#e8187a">x̄</text>
+      </svg>
+    </div><div class="card-label">One-Sample T-Test</div><div class="card-tag">x̄ vs μ₀</div></div>
+
+    <div class="card"><div class="chart-wrap">
+      <svg viewBox="0 0 150 64" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Two separate bell curves for two independent groups with their means marked and the gap between them bracketed">
+        <path d="M4,56 C14,56 20,26 34,26 C48,26 54,56 64,56" fill="rgba(232,24,122,0.15)" stroke="#f492b8" stroke-width="1.6"/>
+        <path d="M80,56 C92,56 99,10 116,10 C133,10 140,56 150,56" fill="rgba(232,24,122,0.22)" stroke="#e8187a" stroke-width="2"/>
+        <line x1="34" y1="26" x2="34" y2="58" stroke="#f492b8" stroke-width="1.2" stroke-dasharray="2 2"/>
+        <line x1="116" y1="10" x2="116" y2="58" stroke="#e8187a" stroke-width="1.2" stroke-dasharray="2 2"/>
+        <text x="34" y="62" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="6.5" fill="#f492b8">μ₁</text>
+        <text x="116" y="8" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="6.5" fill="#e8187a">μ₂</text>
+      </svg>
+    </div><div class="card-label">Independent T-Test</div><div class="card-tag">μ₁ vs μ₂ · σ unknown</div></div>
+
+    <div class="card"><div class="chart-wrap">
+      <svg viewBox="0 0 150 64" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Five subjects each with a before dot and an after dot connected by a line, showing a consistent upward shift">
+        <g stroke="#e8187a" stroke-width="1.4">
+          <line x1="14" y1="44" x2="14" y2="22"/><line x1="38" y1="50" x2="38" y2="16"/><line x1="62" y1="36" x2="62" y2="10"/><line x1="86" y1="46" x2="86" y2="24"/><line x1="110" y1="40" x2="110" y2="18"/>
+        </g>
+        <g fill="#f7a8c9"><circle cx="14" cy="44" r="3"/><circle cx="38" cy="50" r="3"/><circle cx="62" cy="36" r="3"/><circle cx="86" cy="46" r="3"/><circle cx="110" cy="40" r="3"/></g>
+        <g fill="#e8187a"><circle cx="14" cy="22" r="3"/><circle cx="38" cy="16" r="3"/><circle cx="62" cy="10" r="3"/><circle cx="86" cy="24" r="3"/><circle cx="110" cy="18" r="3"/></g>
+        <text x="14" y="60" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="6" fill="#f7a8c9">pre</text>
+        <text x="132" y="18" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="6" fill="#e8187a">post</text>
+      </svg>
+    </div><div class="card-label">Paired Sample T-Test</div><div class="card-tag">before vs after</div></div>
+
+    <div class="card"><div class="chart-wrap">
+      <svg viewBox="0 0 150 64" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Two group bars with known population standard deviation error bars, comparing mu one and mu two">
+        <rect x="26" y="24" width="30" height="32" fill="#fbcfe4" stroke="#e8187a" stroke-width="1.4"/>
+        <rect x="90" y="12" width="30" height="44" fill="#e8187a"/>
+        <line x1="41" y1="16" x2="41" y2="32" stroke="#999" stroke-width="1.3"/><line x1="35" y1="16" x2="47" y2="16" stroke="#999" stroke-width="1.3"/><line x1="35" y1="32" x2="47" y2="32" stroke="#999" stroke-width="1.3"/>
+        <line x1="105" y1="4" x2="105" y2="20" stroke="#999" stroke-width="1.3"/><line x1="99" y1="4" x2="111" y2="4" stroke="#999" stroke-width="1.3"/><line x1="99" y1="20" x2="111" y2="20" stroke="#999" stroke-width="1.3"/>
+        <text x="41" y="63" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="6.5" fill="#f492b8">μ₁</text>
+        <text x="105" y="63" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="6.5" fill="#e8187a">μ₂</text>
+      </svg>
+    </div><div class="card-label">Two-Sample Z-Test</div><div class="card-tag">μ₁ vs μ₂</div></div>
+
+    <div class="card"><div class="chart-wrap">
+      <svg viewBox="0 0 150 64" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Two overlapping bell curves for two groups with the separation between their means bracketed and labeled d">
+        <defs><marker id="sa5" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="4.5" markerHeight="4.5" orient="auto-start-reverse"><path d="M2 1L8 5L2 9" fill="none" stroke="#e8187a" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></marker></defs>
+        <path d="M4,54 C16,54 24,18 42,18 C60,18 68,54 80,54" fill="rgba(153,153,153,0.12)" stroke="#bbb" stroke-width="1.6"/>
+        <path d="M58,54 C70,54 78,18 96,18 C114,18 122,54 134,54" fill="rgba(232,24,122,0.18)" stroke="#e8187a" stroke-width="2"/>
+        <line x1="42" y1="6" x2="42" y2="12" stroke="#999" stroke-width="1.2"/>
+        <line x1="96" y1="6" x2="96" y2="12" stroke="#e8187a" stroke-width="1.2"/>
+        <line x1="42" y1="9" x2="96" y2="9" stroke="#e8187a" stroke-width="1.3" marker-end="url(#sa5)"/>
+        <text x="69" y="7" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="7" fill="#e8187a">d</text>
+      </svg>
+    </div><div class="card-label">Effect Size</div><div class="card-tag">Cohen's d · power</div></div>
+
+    <div class="card"><div class="chart-wrap">
+      <svg viewBox="0 0 150 64" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="A histogram of paired difference scores centered away from a dashed zero reference line, with the mean difference marked">
+        <line x1="46" y1="8" x2="46" y2="56" stroke="#999" stroke-width="1.2" stroke-dasharray="2 2"/>
+        <text x="46" y="6" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="6" fill="#999">0</text>
+        <g fill="#e8187a">
+        <rect x="58" y="46" width="10" height="10"/><rect x="70" y="34" width="10" height="22"/><rect x="82" y="18" width="10" height="38"/><rect x="94" y="26" width="10" height="30"/><rect x="106" y="42" width="10" height="14"/><rect x="118" y="50" width="10" height="6"/>
+        </g>
+        <line x1="87" y1="10" x2="87" y2="58" stroke="#c21463" stroke-width="1.4" stroke-dasharray="1 2"/>
+        <text x="87" y="8" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="6.5" fill="#c21463">d̄</text>
+      </svg>
+    </div><div class="card-label">Matched Pairs</div><div class="card-tag">d̄ / (sd/√n)</div></div>
   </div>
   <div class="formula">Z = (x̄₁ − x̄₂) / √(<span class="k">σ₁²/n₁ + σ₂²/n₂</span>) <span class="c">← reject H₀ if |Z| > 1.96</span></div>
 </div>
@@ -144,16 +495,131 @@ footer span{color:var(--pk)}
   <div class="sec-head"><span class="sec-num">06</span><div class="sec-title">Correlation & Regression</div><div class="sec-line"></div></div>
   <p class="sec-desc">Measuring relationships between variables and building predictive models.</p>
   <div class="grid">
-    <div class="card"><div class="chart-wrap"><canvas id="r1" role="img" aria-label="Scatter plot correlation">Scatter</canvas></div><div class="card-label">Correlation</div><div class="card-tag">r = −1 to +1</div></div>
-    <div class="card"><div class="chart-wrap"><canvas id="r2" role="img" aria-label="Regression line">Line</canvas></div><div class="card-label">Linear Regression</div><div class="card-tag">Y = a + bX</div></div>
-    <div class="card"><div class="chart-wrap"><canvas id="r3" role="img" aria-label="Residual plot">Residuals</canvas></div><div class="card-label">Residual Diagnostics</div><div class="card-tag">y − ŷ</div></div>
-    <div class="card"><div class="chart-wrap"><canvas id="r4" role="img" aria-label="R-squared bar">R²</canvas></div><div class="card-label">R² & Model Fit</div><div class="card-tag">SST · SSR · SSE</div></div>
-    <div class="card"><div class="chart-wrap"><canvas id="r5" role="img" aria-label="RTM convergence">RTM</canvas></div><div class="card-label">Regression to Mean</div><div class="card-tag">extreme → average</div></div>
-    <div class="card"><div class="chart-wrap"><canvas id="r6" role="img" aria-label="Influential point">Leverage</canvas></div><div class="card-label">Outliers & Leverage</div><div class="card-tag">Cook's D · hᵢᵢ</div></div>
-    <div class="card"><div class="chart-wrap"><canvas id="r7" role="img" aria-label="Multiple regression">Multiple</canvas></div><div class="card-label">Multiple Linear Regression</div><div class="card-tag">Y = a + b₁X₁ + b₂X₂</div></div>
-    <div class="card"><div class="chart-wrap"><canvas id="r8" role="img" aria-label="Logistic sigmoid">Logistic</canvas></div><div class="card-label">Logistic Regression</div><div class="card-tag">0 or 1 · sigmoid</div></div>
-    <div class="card"><div class="chart-wrap"><canvas id="r9" role="img" aria-label="VIF multicollinearity">VIF</canvas></div><div class="card-label">Multicollinearity</div><div class="card-tag">VIF · corr matrix</div></div>
-    <div class="card"><div class="chart-wrap"><canvas id="r10" role="img" aria-label="Normality of errors">Errors</canvas></div><div class="card-label">Normality of Errors</div><div class="card-tag">e ~ N(0, σ²)</div></div>
+    <div class="card"><div class="chart-wrap">
+      <svg viewBox="0 0 150 64" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="A scatter plot of points following a tight upward linear trend">
+        <line x1="10" y1="8" x2="10" y2="56" stroke="#eee" stroke-width="1"/>
+        <line x1="10" y1="56" x2="144" y2="56" stroke="#eee" stroke-width="1"/>
+        <g fill="#e8187a">
+        <circle cx="20" cy="48" r="3"/><circle cx="34" cy="42" r="3"/><circle cx="46" cy="44" r="3"/><circle cx="58" cy="34" r="3"/><circle cx="72" cy="30" r="3"/><circle cx="84" cy="24" r="3"/><circle cx="98" cy="20" r="3"/><circle cx="112" cy="14" r="3"/><circle cx="126" cy="10" r="3"/>
+        </g>
+        <text x="128" y="52" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="7" fill="#e8187a">r≈.9</text>
+      </svg>
+    </div><div class="card-label">Correlation</div><div class="card-tag">r = −1 to +1</div></div>
+
+    <div class="card"><div class="chart-wrap">
+      <svg viewBox="0 0 150 64" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="A scatter of points with a drawn regression line, the y-intercept a marked on the axis and a slope triangle marked b">
+        <line x1="14" y1="8" x2="14" y2="56" stroke="#ccc" stroke-width="1"/>
+        <line x1="14" y1="56" x2="144" y2="56" stroke="#ccc" stroke-width="1"/>
+        <g fill="#fbcfe4" stroke="#e8187a" stroke-width="1"><circle cx="30" cy="46" r="3"/><circle cx="52" cy="38" r="3"/><circle cx="74" cy="30" r="3"/><circle cx="96" cy="24" r="3"/><circle cx="118" cy="16" r="3"/></g>
+        <line x1="14" y1="50" x2="140" y2="10" stroke="#e8187a" stroke-width="2"/>
+        <circle cx="14" cy="50" r="2.6" fill="#c21463"/>
+        <text x="6" y="50" text-anchor="end" font-family="JetBrains Mono, monospace" font-size="6.5" fill="#c21463">a</text>
+        <path d="M60,34 L84,34 L84,20" fill="none" stroke="#e8187a" stroke-width="1" stroke-dasharray="1.5 1.5"/>
+        <text x="90" y="30" font-family="JetBrains Mono, monospace" font-size="6.5" fill="#e8187a">b</text>
+      </svg>
+    </div><div class="card-label">Linear Regression</div><div class="card-tag">Y = a + bX</div></div>
+
+    <div class="card"><div class="chart-wrap">
+      <svg viewBox="0 0 150 64" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="A scatter plot with vertical residual lines dropping from each point to a horizontal zero line">
+        <line x1="8" y1="32" x2="144" y2="32" stroke="#999" stroke-width="1.3" stroke-dasharray="3 2"/>
+        <g stroke="#e8187a" stroke-width="1.2">
+          <line x1="22" y1="32" x2="22" y2="14"/><line x1="46" y1="32" x2="46" y2="50"/><line x1="70" y1="32" x2="70" y2="22"/><line x1="94" y1="32" x2="94" y2="46"/><line x1="118" y1="32" x2="118" y2="18"/><line x1="134" y1="32" x2="134" y2="42"/>
+        </g>
+        <g fill="#e8187a"><circle cx="22" cy="14" r="3"/><circle cx="46" cy="50" r="3"/><circle cx="70" cy="22" r="3"/><circle cx="94" cy="46" r="3"/><circle cx="118" cy="18" r="3"/><circle cx="134" cy="42" r="3"/></g>
+        <text x="8" y="28" font-family="JetBrains Mono, monospace" font-size="6" fill="#999">0</text>
+      </svg>
+    </div><div class="card-label">Residual Diagnostics</div><div class="card-tag">y − ŷ</div></div>
+
+    <div class="card"><div class="chart-wrap">
+      <svg viewBox="0 0 150 64" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="A horizontal bar split into a large explained segment and a small unexplained segment representing SST decomposed into SSR and SSE">
+        <rect x="10" y="20" width="130" height="24" fill="#f2f1ef" stroke="#ddd" stroke-width="1"/>
+        <rect x="10" y="20" width="106" height="24" fill="#e8187a"/>
+        <rect x="116" y="20" width="24" height="24" fill="#fbcfe4"/>
+        <text x="63" y="36" text-anchor="middle" font-family="Inter, sans-serif" font-weight="700" font-size="9" fill="#fff">R² = .82</text>
+        <text x="10" y="14" font-family="JetBrains Mono, monospace" font-size="6" fill="#e8187a">SSR (explained)</text>
+        <text x="140" y="56" text-anchor="end" font-family="JetBrains Mono, monospace" font-size="6" fill="#c21463">SSE</text>
+      </svg>
+    </div><div class="card-label">R² & Model Fit</div><div class="card-tag">SST · SSR · SSE</div></div>
+
+    <div class="card"><div class="chart-wrap">
+      <svg viewBox="0 0 150 64" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Extreme initial scores with arrows converging inward toward the central mean line on retest">
+        <defs><marker id="sa6" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="4.5" markerHeight="4.5" orient="auto-start-reverse"><path d="M2 1L8 5L2 9" fill="none" stroke="#e8187a" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></marker></defs>
+        <line x1="8" y1="32" x2="144" y2="32" stroke="#999" stroke-width="1.3" stroke-dasharray="3 2"/>
+        <text x="8" y="26" font-family="JetBrains Mono, monospace" font-size="6" fill="#999">mean</text>
+        <circle cx="20" cy="10" r="3.2" fill="#f7a8c9"/>
+        <line x1="20" y1="14" x2="20" y2="27" stroke="#e8187a" stroke-width="1.4" marker-end="url(#sa6)"/>
+        <circle cx="20" cy="30" r="2.6" fill="#e8187a"/>
+        <circle cx="70" cy="56" r="3.2" fill="#f7a8c9"/>
+        <line x1="70" y1="52" x2="70" y2="37" stroke="#e8187a" stroke-width="1.4" marker-end="url(#sa6)"/>
+        <circle cx="70" cy="34" r="2.6" fill="#e8187a"/>
+        <circle cx="126" cy="12" r="3.2" fill="#f7a8c9"/>
+        <line x1="126" y1="16" x2="126" y2="27" stroke="#e8187a" stroke-width="1.4" marker-end="url(#sa6)"/>
+        <circle cx="126" cy="30" r="2.6" fill="#e8187a"/>
+      </svg>
+    </div><div class="card-label">Regression to Mean</div><div class="card-tag">extreme → average</div></div>
+
+    <div class="card"><div class="chart-wrap">
+      <svg viewBox="0 0 150 64" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="A cluster of points with a fitted line, and one distant outlier point that tilts the regression line away from the dashed correct fit">
+        <g fill="#fbcfe4" stroke="#e8187a" stroke-width="1"><circle cx="20" cy="38" r="3"/><circle cx="32" cy="32" r="3"/><circle cx="44" cy="28" r="3"/><circle cx="56" cy="24" r="3"/></g>
+        <line x1="10" y1="46" x2="70" y2="14" stroke="#bbb" stroke-width="1.4" stroke-dasharray="3 2"/>
+        <path d="M10,44 L140,4" stroke="#e8187a" stroke-width="2" fill="none"/>
+        <path d="M132,10 L140,52 L124,52 Z" fill="#e8187a"/>
+        <text x="132" y="30" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="6.5" fill="#fff">•</text>
+        <text x="128" y="60" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="6" fill="#e8187a">high leverage</text>
+      </svg>
+    </div><div class="card-label">Outliers & Leverage</div><div class="card-tag">Cook's D · hᵢᵢ</div></div>
+
+    <div class="card"><div class="chart-wrap">
+      <svg viewBox="0 0 150 64" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Two input nodes X1 and X2 each with a weighted arrow feeding into a Y output node">
+        <defs><marker id="sa7" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="4.5" markerHeight="4.5" orient="auto-start-reverse"><path d="M2 1L8 5L2 9" fill="none" stroke="#e8187a" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></marker></defs>
+        <circle cx="20" cy="16" r="12" fill="#fbcfe4" stroke="#e8187a" stroke-width="1.4"/>
+        <text x="20" y="20" text-anchor="middle" font-family="Inter, sans-serif" font-weight="700" font-size="9" fill="#e8187a">X₁</text>
+        <circle cx="20" cy="48" r="12" fill="#f7a8c9" stroke="#e8187a" stroke-width="1.4"/>
+        <text x="20" y="52" text-anchor="middle" font-family="Inter, sans-serif" font-weight="700" font-size="9" fill="#fff">X₂</text>
+        <line x1="31" y1="20" x2="98" y2="30" stroke="#e8187a" stroke-width="1.6" marker-end="url(#sa7)"/>
+        <line x1="31" y1="44" x2="98" y2="34" stroke="#e8187a" stroke-width="1.6" marker-end="url(#sa7)"/>
+        <text x="55" y="18" font-family="JetBrains Mono, monospace" font-size="6" fill="#e8187a">b₁</text>
+        <text x="55" y="54" font-family="JetBrains Mono, monospace" font-size="6" fill="#e8187a">b₂</text>
+        <circle cx="112" cy="32" r="14" fill="#e8187a"/>
+        <text x="112" y="37" text-anchor="middle" font-family="Inter, sans-serif" font-weight="700" font-size="11" fill="#fff">Y</text>
+      </svg>
+    </div><div class="card-label">Multiple Linear Regression</div><div class="card-tag">Y = a + b₁X₁ + b₂X₂</div></div>
+
+    <div class="card"><div class="chart-wrap">
+      <svg viewBox="0 0 150 64" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="An S shaped sigmoid curve rising from zero to one with a threshold line at point five and points snapped to the two outcomes">
+        <line x1="8" y1="10" x2="8" y2="56" stroke="#ccc" stroke-width="1"/>
+        <line x1="8" y1="10" x2="144" y2="10" stroke="#eee" stroke-width="1" stroke-dasharray="2 2"/>
+        <line x1="8" y1="33" x2="144" y2="33" stroke="#999" stroke-width="1.2" stroke-dasharray="3 2"/>
+        <line x1="8" y1="56" x2="144" y2="56" stroke="#eee" stroke-width="1" stroke-dasharray="2 2"/>
+        <path d="M8,54 C40,54 55,12 76,12 C97,12 112,10 144,10" fill="none" stroke="#e8187a" stroke-width="2.2"/>
+        <text x="146" y="12" text-anchor="end" font-family="JetBrains Mono, monospace" font-size="6" fill="#999">1</text>
+        <text x="10" y="55" font-family="JetBrains Mono, monospace" font-size="6" fill="#999">0</text>
+        <text x="120" y="30" font-family="JetBrains Mono, monospace" font-size="6" fill="#e8187a">.5</text>
+        <circle cx="20" cy="53" r="2.6" fill="#e8187a"/><circle cx="130" cy="11" r="2.6" fill="#e8187a"/>
+      </svg>
+    </div><div class="card-label">Logistic Regression</div><div class="card-tag">0 or 1 · sigmoid</div></div>
+
+    <div class="card"><div class="chart-wrap">
+      <svg viewBox="0 0 150 64" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="A scatter plot of two predictors X1 and X2 that are themselves tightly correlated, indicating high VIF">
+        <line x1="12" y1="8" x2="12" y2="56" stroke="#ccc" stroke-width="1"/>
+        <line x1="12" y1="56" x2="144" y2="56" stroke="#ccc" stroke-width="1"/>
+        <text x="4" y="32" font-family="JetBrains Mono, monospace" font-size="6.5" fill="#999">X₂</text>
+        <text x="130" y="63" font-family="JetBrains Mono, monospace" font-size="6.5" fill="#999">X₁</text>
+        <g fill="#e8187a"><circle cx="24" cy="48" r="3"/><circle cx="40" cy="40" r="3"/><circle cx="56" cy="36" r="3"/><circle cx="72" cy="28" r="3"/><circle cx="88" cy="22" r="3"/><circle cx="104" cy="16" r="3"/><circle cx="120" cy="10" r="3"/></g>
+        <line x1="18" y1="52" x2="128" y2="8" stroke="#e8187a" stroke-width="1.6" stroke-dasharray="2 2"/>
+        <text x="128" y="20" text-anchor="end" font-family="JetBrains Mono, monospace" font-size="6.5" fill="#e8187a">high VIF</text>
+      </svg>
+    </div><div class="card-label">Multicollinearity</div><div class="card-tag">VIF · corr matrix</div></div>
+
+    <div class="card"><div class="chart-wrap">
+      <svg viewBox="0 0 150 64" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="A Q-Q plot with sample residual quantiles plotted close to a diagonal reference line, checking normality">
+        <line x1="10" y1="56" x2="140" y2="8" stroke="#999" stroke-width="1.4" stroke-dasharray="3 2"/>
+        <g fill="#e8187a">
+        <circle cx="16" cy="52" r="2.8"/><circle cx="32" cy="47" r="2.8"/><circle cx="48" cy="39" r="2.8"/><circle cx="64" cy="34" r="2.8"/><circle cx="80" cy="29" r="2.8"/><circle cx="96" cy="24" r="2.8"/><circle cx="112" cy="18" r="2.8"/><circle cx="128" cy="10" r="2.8"/>
+        </g>
+        <text x="16" y="62" font-family="JetBrains Mono, monospace" font-size="6" fill="#999">theoretical →</text>
+      </svg>
+    </div><div class="card-label">Normality of Errors</div><div class="card-tag">e ~ N(0, σ²)</div></div>
   </div>
   <div class="formula">b = r · (sy/sx) <span class="c">← slope</span>&nbsp;&nbsp;&nbsp;a = ȳ − b·x̄ <span class="c">← intercept</span><br/>R² = 1 − SSR/SST <span class="c">← proportion explained</span></div>
 </div>
@@ -162,10 +628,59 @@ footer span{color:var(--pk)}
   <div class="sec-head"><span class="sec-num">07</span><div class="sec-title">Bootstrap & Simulation</div><div class="sec-line"></div></div>
   <p class="sec-desc">Estimating uncertainty without assumptions — using data itself as the population.</p>
   <div class="grid">
-    <div class="card"><div class="chart-wrap"><canvas id="b1" role="img" aria-label="Bootstrap distribution">Bootstrap</canvas></div><div class="card-label">Bootstrap SE</div><div class="card-tag">resample · SD</div></div>
-    <div class="card"><div class="chart-wrap"><canvas id="b2" role="img" aria-label="Percentile CI">Percentile CI</canvas></div><div class="card-label">Bootstrap CI</div><div class="card-tag">2.5th · 97.5th %ile</div></div>
-    <div class="card"><div class="chart-wrap"><canvas id="b3" role="img" aria-label="Monte Carlo scatter">Monte Carlo</canvas></div><div class="card-label">Monte Carlo</div><div class="card-tag">simulate · estimate</div></div>
-    <div class="card"><div class="chart-wrap"><canvas id="b4" role="img" aria-label="Plug-in comparison">Plug-in</canvas></div><div class="card-label">Plug-in Principle</div><div class="card-tag">μ≈x̄ · σ≈s</div></div>
+    <div class="card"><div class="chart-wrap">
+      <svg viewBox="0 0 150 64" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="An original sample of dots with arrows down to several resampled sets drawn with replacement, some dots repeated, building up a bootstrap distribution below">
+        <defs><marker id="sa8" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="4" markerHeight="4" orient="auto-start-reverse"><path d="M2 1L8 5L2 9" fill="none" stroke="#e8187a" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></marker></defs>
+        <g fill="#e8187a"><circle cx="30" cy="8" r="2.6"/><circle cx="50" cy="8" r="2.6"/><circle cx="70" cy="8" r="2.6"/><circle cx="90" cy="8" r="2.6"/><circle cx="110" cy="8" r="2.6"/></g>
+        <text x="70" y="6" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="0" fill="none"> </text>
+        <g stroke="#e8187a" stroke-width="1" opacity="0.5"><line x1="30" y1="12" x2="22" y2="24" marker-end="url(#sa8)"/><line x1="50" y1="12" x2="50" y2="24" marker-end="url(#sa8)"/><line x1="90" y1="12" x2="90" y2="24" marker-end="url(#sa8)"/><line x1="110" y1="12" x2="118" y2="24" marker-end="url(#sa8)"/></g>
+        <g fill="#fbcfe4"><rect x="10" y="28" width="8" height="8"/><rect x="24" y="28" width="8" height="8"/><rect x="46" y="28" width="8" height="8"/><rect x="60" y="28" width="8" height="8"/><rect x="86" y="28" width="8" height="8"/><rect x="100" y="28" width="8" height="8"/><rect x="114" y="28" width="8" height="8"/></g>
+        <g fill="#e8187a"><rect x="30" y="42" width="14" height="16"/><rect x="46" y="34" width="14" height="24"/><rect x="62" y="30" width="14" height="28"/><rect x="78" y="36" width="14" height="22"/><rect x="94" y="46" width="14" height="12"/></g>
+      </svg>
+    </div><div class="card-label">Bootstrap SE</div><div class="card-tag">resample · SD</div></div>
+
+    <div class="card"><div class="chart-wrap">
+      <svg viewBox="0 0 150 64" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="A histogram of bootstrap estimates with the middle 95 percent shaded and the 2.5th and 97.5th percentile cutoffs marked with dashed lines">
+        <g fill="#fbcfe4">
+        <rect x="6" y="50" width="10" height="6"/><rect x="18" y="42" width="10" height="14"/>
+        </g>
+        <g fill="#e8187a">
+        <rect x="30" y="30" width="10" height="26"/><rect x="42" y="18" width="10" height="38"/><rect x="54" y="10" width="10" height="46"/><rect x="66" y="14" width="10" height="42"/><rect x="78" y="22" width="10" height="34"/><rect x="90" y="34" width="10" height="22"/><rect x="102" y="44" width="10" height="12"/>
+        </g>
+        <g fill="#fbcfe4">
+        <rect x="114" y="50" width="10" height="6"/><rect x="126" y="53" width="10" height="3"/>
+        </g>
+        <line x1="30" y1="6" x2="30" y2="58" stroke="#c21463" stroke-width="1.4" stroke-dasharray="2 2"/>
+        <line x1="112" y1="6" x2="112" y2="58" stroke="#c21463" stroke-width="1.4" stroke-dasharray="2 2"/>
+        <text x="30" y="6" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="5.5" fill="#c21463">2.5%</text>
+        <text x="112" y="6" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="5.5" fill="#c21463">97.5%</text>
+      </svg>
+    </div><div class="card-label">Bootstrap CI</div><div class="card-tag">2.5th · 97.5th %ile</div></div>
+
+    <div class="card"><div class="chart-wrap">
+      <svg viewBox="0 0 150 64" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Random points scattered inside a square, colored differently depending on whether they fall inside or outside a circular boundary">
+        <rect x="42" y="4" width="56" height="56" fill="none" stroke="#ccc" stroke-width="1.2"/>
+        <circle cx="70" cy="32" r="27" fill="none" stroke="#e8187a" stroke-width="1.6"/>
+        <g fill="#e8187a">
+        <circle cx="60" cy="20" r="2"/><circle cx="72" cy="14" r="2"/><circle cx="82" cy="26" r="2"/><circle cx="58" cy="40" r="2"/><circle cx="70" cy="48" r="2"/><circle cx="84" cy="42" r="2"/><circle cx="66" cy="30" r="2"/><circle cx="78" cy="35" r="2"/><circle cx="90" cy="20" r="2"/>
+        </g>
+        <g fill="#bbb">
+        <circle cx="48" cy="12" r="2"/><circle cx="92" cy="10" r="2"/><circle cx="46" cy="52" r="2"/><circle cx="94" cy="50" r="2"/><circle cx="50" cy="30" r="2"/>
+        </g>
+        <text x="12" y="34" font-family="JetBrains Mono, monospace" font-size="6" fill="#999">simulate</text>
+        <text x="108" y="34" font-family="JetBrains Mono, monospace" font-size="6" fill="#e8187a">estimate</text>
+      </svg>
+    </div><div class="card-label">Monte Carlo</div><div class="card-tag">simulate · estimate</div></div>
+
+    <div class="card"><div class="chart-wrap">
+      <svg viewBox="0 0 150 64" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="An unknown population curve with mu and sigma next to an approximately-equals arrow to a known sample curve with x-bar and s">
+        <path d="M4,50 C12,50 16,14 30,14 C44,14 48,50 56,50" fill="none" stroke="#ccc" stroke-width="1.6" stroke-dasharray="3 2"/>
+        <text x="30" y="60" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="6.5" fill="#999">μ, σ</text>
+        <text x="66" y="34" text-anchor="middle" font-family="Inter, sans-serif" font-weight="700" font-size="10" fill="#e8187a">≈</text>
+        <path d="M78,50 C86,50 90,14 104,14 C118,14 122,50 130,50" fill="rgba(232,24,122,0.18)" stroke="#e8187a" stroke-width="2"/>
+        <text x="104" y="60" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="6.5" fill="#e8187a">x̄, s</text>
+      </svg>
+    </div><div class="card-label">Plug-in Principle</div><div class="card-tag">μ≈x̄ · σ≈s</div></div>
   </div>
 </div>
 
@@ -173,16 +688,135 @@ footer span{color:var(--pk)}
   <div class="sec-head"><span class="sec-num">08</span><div class="sec-title">Categorical Data Analysis</div><div class="sec-line"></div></div>
   <p class="sec-desc">Analysing relationships between non-numeric variables using contingency tables and chi-square tests.</p>
   <div class="grid">
-    <div class="card"><div class="chart-wrap"><canvas id="cat1" role="img" aria-label="Contingency table heatmap">Table</canvas></div><div class="card-label">Contingency Tables</div><div class="card-tag">joint · marginal</div></div>
-    <div class="card"><div class="chart-wrap"><canvas id="cat2" role="img" aria-label="Chi-square O vs E">Chi²</canvas></div><div class="card-label">Chi-Square Test</div><div class="card-tag">χ² = Σ(O−E)²/E</div></div>
-    <div class="card"><div class="chart-wrap"><canvas id="cat3" role="img" aria-label="Goodness of fit">GoF</canvas></div><div class="card-label">Goodness of Fit</div><div class="card-tag">observed vs claimed</div></div>
-    <div class="card"><div class="chart-wrap"><canvas id="cat4" role="img" aria-label="ANOVA group comparison">ANOVA</canvas></div><div class="card-label">ANOVA</div><div class="card-tag">F = MSB/MSW</div></div>
-    <div class="card"><div class="chart-wrap"><canvas id="cat5" role="img" aria-label="One-way ANOVA">One-Way</canvas></div><div class="card-label">One-Way ANOVA</div><div class="card-tag">1 factor · F-test</div></div>
-    <div class="card"><div class="chart-wrap"><canvas id="cat6" role="img" aria-label="Two-way ANOVA">Two-Way</canvas></div><div class="card-label">Two-Way ANOVA</div><div class="card-tag">2 factors · interaction</div></div>
-    <div class="card"><div class="chart-wrap"><canvas id="cat9" role="img" aria-label="Repeated Measures ANOVA">Repeated</canvas></div><div class="card-label">Repeated Measures ANOVA</div><div class="card-tag">same subject · time</div></div>
-    <div class="card"><div class="chart-wrap"><canvas id="cat10" role="img" aria-label="Mixed Model ANOVA">Mixed</canvas></div><div class="card-label">Mixed Model ANOVA</div><div class="card-tag">between + within</div></div>
-    <div class="card"><div class="chart-wrap"><canvas id="cat7" role="img" aria-label="Post-hoc Tukey">Post-hoc</canvas></div><div class="card-label">Post-Hoc Test</div><div class="card-tag">Tukey's HSD</div></div>
-    <div class="card"><div class="chart-wrap"><canvas id="cat8" role="img" aria-label="Homogeneity test">Homog.</canvas></div><div class="card-label">Chi-Square Homogeneity</div><div class="card-tag">multiple populations</div></div>
+    <div class="card"><div class="chart-wrap">
+      <svg viewBox="0 0 150 64" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="A small table grid with two rows and three columns, cells shaded by count intensity, plus a highlighted marginal totals row and column">
+        <g stroke="#fff" stroke-width="1.5">
+        <rect x="10" y="8" width="34" height="20" fill="#e8187a"/><rect x="44" y="8" width="34" height="20" fill="#f492b8"/><rect x="78" y="8" width="34" height="20" fill="#fbcfe4"/>
+        <rect x="10" y="28" width="34" height="20" fill="#f7a8c9"/><rect x="44" y="28" width="34" height="20" fill="#f492b8"/><rect x="78" y="28" width="34" height="20" fill="#ec5f97"/>
+        </g>
+        <rect x="112" y="8" width="26" height="40" fill="#c21463"/>
+        <rect x="10" y="48" width="102" height="10" fill="#c21463"/>
+        <text x="125" y="32" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="6" fill="#fff">Σ</text>
+        <text x="61" y="55" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="6" fill="#fff">Σ</text>
+      </svg>
+    </div><div class="card-label">Contingency Tables</div><div class="card-tag">joint · marginal</div></div>
+
+    <div class="card"><div class="chart-wrap">
+      <svg viewBox="0 0 150 64" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Paired observed and expected bars per category with the residual gap between them highlighted">
+        <g>
+        <rect x="10" y="14" width="14" height="42" fill="#e8187a"/><rect x="26" y="26" width="14" height="30" fill="#fbcfe4"/>
+        <rect x="54" y="30" width="14" height="26" fill="#e8187a"/><rect x="70" y="24" width="14" height="32" fill="#fbcfe4"/>
+        <rect x="98" y="40" width="14" height="16" fill="#e8187a"/><rect x="114" y="34" width="14" height="22" fill="#fbcfe4"/>
+        </g>
+        <path d="M24,14 L26,14 L26,26 L24,26 Z" fill="none" stroke="#c21463" stroke-width="1.2"/>
+        <text x="25" y="10" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="6" fill="#c21463">gap</text>
+        <text x="17" y="62" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="5.5" fill="#e8187a">O</text>
+        <text x="33" y="62" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="5.5" fill="#f7a8c9">E</text>
+      </svg>
+    </div><div class="card-label">Chi-Square Test</div><div class="card-tag">χ² = Σ(O−E)²/E</div></div>
+
+    <div class="card"><div class="chart-wrap">
+      <svg viewBox="0 0 150 64" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Observed category bars of varying height against a dashed claimed uniform expected line">
+        <g fill="#e8187a">
+        <rect x="8" y="42" width="16" height="14" fill="#fbcfe4"/><rect x="28" y="18" width="16" height="38"/><rect x="48" y="34" width="16" height="22" fill="#fbcfe4"/><rect x="68" y="24" width="16" height="32"/><rect x="88" y="10" width="16" height="46"/><rect x="108" y="40" width="16" height="16" fill="#fbcfe4"/>
+        </g>
+        <line x1="4" y1="32" x2="128" y2="32" stroke="#999" stroke-width="1.3" stroke-dasharray="3 2"/>
+        <text x="148" y="35" text-anchor="end" font-family="JetBrains Mono, monospace" font-size="5.5" fill="#999">claimed</text>
+      </svg>
+    </div><div class="card-label">Goodness of Fit</div><div class="card-tag">observed vs claimed</div></div>
+
+    <div class="card"><div class="chart-wrap">
+      <svg viewBox="0 0 150 64" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Three group clusters of points scattered around their own mean, all measured against a shared grand mean line, illustrating between and within group variance">
+        <line x1="6" y1="34" x2="144" y2="34" stroke="#999" stroke-width="1.2" stroke-dasharray="3 2"/>
+        <text x="6" y="28" font-family="JetBrains Mono, monospace" font-size="5.5" fill="#999">grand mean</text>
+        <g fill="#e8187a"><circle cx="24" cy="46" r="2.4"/><circle cx="30" cy="42" r="2.4"/><circle cx="20" cy="50" r="2.4"/><circle cx="28" cy="52" r="2.4"/></g>
+        <g fill="#e8187a"><circle cx="74" cy="16" r="2.4"/><circle cx="80" cy="10" r="2.4"/><circle cx="70" cy="12" r="2.4"/><circle cx="78" cy="20" r="2.4"/></g>
+        <g fill="#e8187a"><circle cx="124" cy="26" r="2.4"/><circle cx="130" cy="22" r="2.4"/><circle cx="120" cy="30" r="2.4"/><circle cx="128" cy="32" r="2.4"/></g>
+        <text x="25" y="62" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="6" fill="#e8187a">within</text>
+        <text x="100" y="62" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="6" fill="#e8187a">between</text>
+      </svg>
+    </div><div class="card-label">ANOVA</div><div class="card-tag">F = MSB/MSW</div></div>
+
+    <div class="card"><div class="chart-wrap">
+      <svg viewBox="0 0 150 64" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Three mini box plots comparing one factor's levels A, B and C against a shared grand mean line">
+        <line x1="6" y1="40" x2="144" y2="40" stroke="#999" stroke-width="1.2" stroke-dasharray="3 2"/>
+        <g>
+        <rect x="16" y="30" width="20" height="16" fill="#fbcfe4" stroke="#e8187a" stroke-width="1.3"/><line x1="26" y1="30" x2="26" y2="46" stroke="#e8187a" stroke-width="1.6"/>
+        <rect x="65" y="8" width="20" height="16" fill="#e8187a"/><line x1="75" y1="8" x2="75" y2="24" stroke="#fff" stroke-width="1.6"/>
+        <rect x="114" y="36" width="20" height="16" fill="#fbcfe4" stroke="#e8187a" stroke-width="1.3"/><line x1="124" y1="36" x2="124" y2="52" stroke="#e8187a" stroke-width="1.6"/>
+        </g>
+        <text x="26" y="60" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="6" fill="#999">A</text>
+        <text x="75" y="60" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="6" fill="#999">B</text>
+        <text x="124" y="60" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="6" fill="#999">C</text>
+      </svg>
+    </div><div class="card-label">One-Way ANOVA</div><div class="card-tag">1 factor · F-test</div></div>
+
+    <div class="card"><div class="chart-wrap">
+      <svg viewBox="0 0 150 64" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="An interaction plot with two lines of different slope, one per factor level, crossing to show an interaction between two factors">
+        <line x1="10" y1="8" x2="10" y2="56" stroke="#ccc" stroke-width="1"/>
+        <line x1="10" y1="56" x2="144" y2="56" stroke="#ccc" stroke-width="1"/>
+        <path d="M18,46 L76,20 L134,10" fill="none" stroke="#e8187a" stroke-width="2"/>
+        <path d="M18,14 L76,30 L134,50" fill="none" stroke="#f7a8c9" stroke-width="2"/>
+        <circle cx="18" cy="46" r="2.6" fill="#e8187a"/><circle cx="76" cy="20" r="2.6" fill="#e8187a"/><circle cx="134" cy="10" r="2.6" fill="#e8187a"/>
+        <circle cx="18" cy="14" r="2.6" fill="#f7a8c9"/><circle cx="76" cy="30" r="2.6" fill="#f7a8c9"/><circle cx="134" cy="50" r="2.6" fill="#f7a8c9"/>
+        <text x="136" y="8" font-family="JetBrains Mono, monospace" font-size="6" fill="#e8187a">F1=a</text>
+        <text x="136" y="58" font-family="JetBrains Mono, monospace" font-size="6" fill="#f7a8c9">F1=b</text>
+      </svg>
+    </div><div class="card-label">Two-Way ANOVA</div><div class="card-tag">2 factors · interaction</div></div>
+
+    <div class="card"><div class="chart-wrap">
+      <svg viewBox="0 0 150 64" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Several individual subject lines each measured across the same three time points, all trending upward together">
+        <line x1="10" y1="8" x2="10" y2="56" stroke="#ccc" stroke-width="1"/>
+        <line x1="10" y1="56" x2="144" y2="56" stroke="#ccc" stroke-width="1"/>
+        <g fill="none" stroke-width="1.4">
+        <path d="M20,48 L75,32 L130,14" stroke="#e8187a"/>
+        <path d="M20,44 L75,28 L130,22" stroke="#f492b8"/>
+        <path d="M20,52 L75,40 L130,26" stroke="#f7a8c9"/>
+        <path d="M20,38 L75,20 L130,8" stroke="#c21463"/>
+        </g>
+        <text x="20" y="62" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="6" fill="#999">t1</text>
+        <text x="75" y="62" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="6" fill="#999">t2</text>
+        <text x="130" y="62" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="6" fill="#999">t3</text>
+      </svg>
+    </div><div class="card-label">Repeated Measures ANOVA</div><div class="card-tag">same subject · time</div></div>
+
+    <div class="card"><div class="chart-wrap">
+      <svg viewBox="0 0 150 64" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Two between-subject groups each with their own line of within-subject measurements across time, combining a between factor and a within factor">
+        <line x1="10" y1="8" x2="10" y2="56" stroke="#ccc" stroke-width="1"/>
+        <line x1="10" y1="56" x2="144" y2="56" stroke="#ccc" stroke-width="1"/>
+        <path d="M22,44 L75,30 L128,12" fill="none" stroke="#e8187a" stroke-width="2"/>
+        <circle cx="22" cy="44" r="2.6" fill="#e8187a"/><circle cx="75" cy="30" r="2.6" fill="#e8187a"/><circle cx="128" cy="12" r="2.6" fill="#e8187a"/>
+        <path d="M22,50 L75,46 L128,40" fill="none" stroke="#f7a8c9" stroke-width="2"/>
+        <circle cx="22" cy="50" r="2.6" fill="#f7a8c9"/><circle cx="75" cy="46" r="2.6" fill="#f7a8c9"/><circle cx="128" cy="40" r="2.6" fill="#f7a8c9"/>
+        <text x="136" y="10" font-family="JetBrains Mono, monospace" font-size="6" fill="#e8187a">G1</text>
+        <text x="136" y="43" font-family="JetBrains Mono, monospace" font-size="6" fill="#f7a8c9">G2</text>
+      </svg>
+    </div><div class="card-label">Mixed Model ANOVA</div><div class="card-tag">between + within</div></div>
+
+    <div class="card"><div class="chart-wrap">
+      <svg viewBox="0 0 150 64" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Three group bars with pairwise comparison brackets above marking which pairs differ significantly">
+        <rect x="14" y="30" width="26" height="26" fill="#fbcfe4" stroke="#e8187a" stroke-width="1.2"/>
+        <rect x="62" y="10" width="26" height="46" fill="#e8187a"/>
+        <rect x="110" y="34" width="26" height="22" fill="#fbcfe4" stroke="#e8187a" stroke-width="1.2"/>
+        <path d="M27,26 L27,20 L75,20 L75,8" fill="none" stroke="#c21463" stroke-width="1.2"/>
+        <text x="51" y="17" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="6.5" fill="#c21463">*</text>
+        <path d="M27,58 L27,60 L123,60 L123,32" fill="none" stroke="#999" stroke-width="1.1"/>
+        <text x="75" y="62" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="5.5" fill="#999">ns</text>
+      </svg>
+    </div><div class="card-label">Post-Hoc Test</div><div class="card-tag">Tukey's HSD</div></div>
+
+    <div class="card"><div class="chart-wrap">
+      <svg viewBox="0 0 150 64" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Three stacked bars, one per population, each split into the same three category proportions to compare distribution shape across populations">
+        <g>
+        <rect x="14" y="34" width="26" height="22" fill="#e8187a"/><rect x="14" y="18" width="26" height="16" fill="#f7a8c9"/><rect x="14" y="6" width="26" height="12" fill="#fbcfe4"/>
+        <rect x="62" y="30" width="26" height="26" fill="#e8187a"/><rect x="62" y="16" width="26" height="14" fill="#f7a8c9"/><rect x="62" y="6" width="26" height="10" fill="#fbcfe4"/>
+        <rect x="110" y="38" width="26" height="18" fill="#e8187a"/><rect x="110" y="20" width="26" height="18" fill="#f7a8c9"/><rect x="110" y="6" width="26" height="14" fill="#fbcfe4"/>
+        </g>
+        <text x="27" y="62" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="6" fill="#999">Pop1</text>
+        <text x="75" y="62" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="6" fill="#999">Pop2</text>
+        <text x="123" y="62" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="6" fill="#999">Pop3</text>
+      </svg>
+    </div><div class="card-label">Chi-Square Homogeneity</div><div class="card-tag">multiple populations</div></div>
   </div>
   <div class="formula">χ² = Σ(O−E)²/E <span class="c">← E = row×col/N</span>&nbsp;&nbsp;&nbsp;F = MSB/MSW <span class="c">← between/within</span></div>
 </div>
@@ -219,83 +853,5 @@ footer span{color:var(--pk)}
   <a href="https://analyzewithrutuja.github.io/#portfolio" style="font-family:var(--mono);font-size:.8rem;color:var(--pk);text-decoration:none;">&larr; Back to portfolio</a>
 </div>
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
-<script>
-const PK='#e8187a',PKA='rgba(232,24,122,0.12)',PKB='rgba(232,24,122,0.35)',PKC='rgba(232,24,122,0.6)';
-const base={responsive:true,maintainAspectRatio:false,animation:{duration:600},plugins:{legend:{display:false},tooltip:{enabled:false}},scales:{x:{display:false},y:{display:false}}};
-function ln(id,data,fill=true){new Chart(document.getElementById(id),{type:'line',data:{labels:data.map((_,i)=>i),datasets:[{data,borderColor:PK,borderWidth:2,pointRadius:0,fill,backgroundColor:fill?PKA:false,tension:.4}]},options:{...base}})}
-function br(id,labels,data,colors){new Chart(document.getElementById(id),{type:'bar',data:{labels,datasets:[{data,backgroundColor:colors,borderRadius:4,borderSkipped:false}]},options:{...base}})}
-
-// ===== 01 Descriptive =====
-br('d1',['Mean','Med','Mode'],[70,65,68],[PK,PKA,PKB]);
-(()=>{const xs=[...Array(41).keys()],g=(s,a)=>xs.map(x=>a*Math.exp(-Math.pow((x-20)/s,2)/2)),wide=g(11,0.34),med=g(6,0.6),narrow=g(3,1);new Chart(document.getElementById('d2'),{type:'line',data:{labels:xs,datasets:[{data:wide,borderColor:PKB,borderWidth:1.5,pointRadius:0,fill:false,tension:.4},{data:med,borderColor:PKC,borderWidth:1.5,pointRadius:0,fill:false,tension:.4},{data:narrow,borderColor:PK,borderWidth:2,pointRadius:0,fill:true,backgroundColor:PKA,tension:.4}]},options:{...base,scales:{x:{display:false},y:{display:false,min:0,max:1.05}}}})})();
-(()=>{const b=[0.5,2,8,20,34,20,8,2,0.5];new Chart(document.getElementById('d3'),{type:'line',data:{labels:b.map((_,i)=>i),datasets:[{data:b,borderColor:PK,borderWidth:2,pointRadius:0,fill:true,backgroundColor:PKA,tension:.4},{data:b.map((v,i)=>i===6?v:null),type:'scatter',pointRadius:7,pointBackgroundColor:PK,pointBorderColor:'#fff',pointBorderWidth:2}]},options:{...base}})})();
-(()=>{const b=[0.4,1,2.5,6,12,20,26,20,12,6,2.5,1,0.4];const col=i=>{const d=Math.abs(i-6);return d<=1?PK:d<=2?PKC:d<=3?PKB:PKA;};br('d4',b.map((_,i)=>i),b,b.map((_,i)=>col(i)))})();
-(()=>{const l=[4,6,5,8,7,5,4],r=[1,2,5,12,8,3,1];new Chart(document.getElementById('d5'),{type:'line',data:{labels:l.map((_,i)=>i),datasets:[{data:l,borderColor:PK,borderWidth:2,pointRadius:0,fill:false,tension:.4},{data:r,borderColor:PKB,borderWidth:1.5,pointRadius:0,fill:false,tension:.4,borderDash:[3,3]}]},options:{...base}})})();
-
-// ===== 02 Probability & Bayesian =====
-br('p1',['P(A)','P(B)','P(A∩B)'],[0.4,0.35,0.15],[PK,PKA,PKB]);
-(()=>{new Chart(document.getElementById('p2'),{type:'bubble',data:{datasets:[{data:[{x:2.4,y:3,r:17}],backgroundColor:'rgba(232,24,122,0.22)',borderColor:PK,borderWidth:1.5},{data:[{x:3.6,y:3,r:17}],backgroundColor:'rgba(0,0,0,0.05)',borderColor:'rgba(0,0,0,0.25)',borderWidth:1.5}]},options:{...base,scales:{x:{display:false,min:0,max:6},y:{display:false,min:0,max:6}}}})})();
-ln('p3',[1,2,4,9,14,17,16,15]);
-(()=>{new Chart(document.getElementById('bay2'),{type:'bar',data:{labels:['Informative','Uniform','Jeffreys'],datasets:[{data:[8,5,6],backgroundColor:[PK,PKB,PKA],borderRadius:4}]},options:{...base,scales:{x:{display:false},y:{display:false,min:0,max:10}}}})})();
-(()=>{const prior=[2,4,6,8,9,8,6,4,2],post=[1,2,5,10,16,14,9,4,1];new Chart(document.getElementById('bay3'),{type:'line',data:{labels:prior.map((_,i)=>i),datasets:[{data:prior,borderColor:PKB,borderWidth:1.5,pointRadius:0,fill:false,tension:.4,borderDash:[3,3]},{data:post,borderColor:PK,borderWidth:2,pointRadius:0,fill:true,backgroundColor:PKA,tension:.4}]},options:{...base}})})();
-(()=>{const like=[0.5,1,3,8,16,22,18,10,4,1.5,0.5];new Chart(document.getElementById('bay4'),{type:'line',data:{labels:like.map((_,i)=>i),datasets:[{data:like,borderColor:PK,borderWidth:2,pointRadius:0,fill:true,backgroundColor:PKA,tension:.4}]},options:{...base}})})();
-(()=>{new Chart(document.getElementById('bay5'),{type:'bar',data:{labels:['Freq','Bayes'],datasets:[{data:[7,9],backgroundColor:[PKA,PK],borderRadius:6,categoryPercentage:.5}]},options:{...base,scales:{x:{display:false},y:{display:false,min:0,max:10}}}})})();
-ln('p4',[1,0.65,0.42,0.28,0.18,0.11,0.07]);
-
-// ===== 03 Distributions =====
-(()=>{const b=[0.5,2,8,20,34,20,8,2,0.5];new Chart(document.getElementById('dist1'),{type:'line',data:{labels:b.map((_,i)=>i),datasets:[{data:b,borderColor:PK,borderWidth:2,pointRadius:0,fill:true,backgroundColor:PKA,tension:.4}]},options:{...base}})})();
-(()=>{const d=[1,8,28,56,70,56,28,8,1].map(v=>v/70*34);br('dist2',d.map((_,i)=>i),d,d.map((_,i)=>i===4?PK:PKA))})();
-(()=>{const d=[7,16,22,22,17,10,5,2,1];br('dist3',d.map((_,i)=>i),d,d.map((_,i)=>i===2?PK:PKA))})();
-(()=>{const d=[0.1,1,3,7,12,14,12,8,4,1.5,0.5];new Chart(document.getElementById('dist4'),{type:'line',data:{labels:d.map((_,i)=>i),datasets:[{data:d,borderColor:PK,borderWidth:2,pointRadius:0,fill:true,backgroundColor:PKA,tension:.4}]},options:{...base}})})();
-(()=>{const bins=[1,3,7,13,20,28,33,28,20,13,7,3,1],curve=[2,5,10,17,24,30,33,30,24,17,10,5,2];new Chart(document.getElementById('dist5'),{type:'bar',data:{labels:bins.map((_,i)=>i),datasets:[{data:bins,backgroundColor:PKA,borderColor:PKB,borderWidth:1,borderRadius:2,order:2},{type:'line',data:curve,borderColor:PK,borderWidth:2,pointRadius:0,fill:false,tension:.45,order:1}]},options:{...base}})})();
-
-// ===== 04 Sampling & CLT =====
-(()=>{const w=[2,5,10,16,20,16,10,5,2],n=[1,2,6,18,30,18,6,2,1];new Chart(document.getElementById('s1'),{type:'line',data:{labels:w.map((_,i)=>i),datasets:[{data:w,borderColor:PKB,borderWidth:1.5,pointRadius:0,fill:false,tension:.4,borderDash:[3,3]},{data:n,borderColor:PK,borderWidth:2,pointRadius:0,fill:true,backgroundColor:PKA,tension:.4}]},options:{...base}})})();
-ln('s2',[50,35,25,18,14,11,9,7,6],true);
-(()=>{const d=[0.92,0.18,0.61,0.38,0.57,0.45,0.53,0.485,0.515,0.498,0.502,0.5],t=d.map(()=>0.5);new Chart(document.getElementById('s3'),{type:'line',data:{labels:d.map((_,i)=>i),datasets:[{data:t,borderColor:PKB,borderWidth:1.5,pointRadius:0,fill:false,borderDash:[4,3]},{data:d,borderColor:PK,borderWidth:2,pointRadius:0,fill:false,tension:.3}]},options:{...base,scales:{x:{display:false},y:{display:false,min:0,max:1}}}})})();
-(()=>{const pop=[{x:0.8,y:4.5},{x:1.6,y:2.1},{x:2.2,y:5},{x:1.1,y:3.2},{x:2.8,y:1.5},{x:3.4,y:4.2},{x:0.6,y:1.8},{x:2,y:3.6},{x:3.1,y:2.8},{x:1.4,y:5.2},{x:3.7,y:3.4},{x:0.9,y:2.6},{x:2.6,y:4.7},{x:1.9,y:1.2},{x:3.3,y:5.3}],samp=[{x:5,y:2},{x:5,y:3},{x:5,y:4}];new Chart(document.getElementById('s4'),{type:'scatter',data:{datasets:[{data:pop,backgroundColor:PKA,pointRadius:3.5},{data:samp,backgroundColor:PK,pointRadius:5,pointBorderColor:'#fff',pointBorderWidth:1}]},options:{...base,scales:{x:{display:false,min:0,max:6},y:{display:false,min:0,max:6.5}}}})})();
-(()=>{const x=[...Array(10).keys()],bias=[9,6,4.2,2.9,2,1.4,1,0.75,0.6,0.5],vari=[0.5,0.7,1,1.5,2.2,3.1,4.2,5.5,7,8.7],tot=bias.map((b,i)=>b+vari[i]);new Chart(document.getElementById('s5'),{type:'line',data:{labels:x,datasets:[{data:tot,borderColor:'#1a1a1a',borderWidth:2,pointRadius:0,fill:false,tension:.4},{data:bias,borderColor:PKC,borderWidth:1.5,pointRadius:0,fill:false,tension:.4},{data:vari,borderColor:PK,borderWidth:1.5,pointRadius:0,fill:false,tension:.4}]},options:{...base,scales:{x:{display:false},y:{display:false,min:0,max:11}}}})})();
-
-// ===== 05 Inferential =====
-(()=>{new Chart(document.getElementById('i1'),{type:'bar',data:{labels:['Low','','Mid','','High'],datasets:[{data:[null,3,5,3,null],backgroundColor:PKA,borderColor:PK,borderWidth:1.5,borderRadius:4}]},options:{...base,indexAxis:'y'}})})();
-(()=>{const b=[0.5,1.5,4,10,18,24,18,10,4,1.5,0.5];br('i2',b.map((_,i)=>i),b,b.map((_,i)=>i>=8?PK:PKA))})();
-(()=>{const b=[0.5,1.5,4,10,18,24,18,10,4,1.5,0.5];new Chart(document.getElementById('i3a'),{type:'line',data:{labels:b.map((_,i)=>i),datasets:[{data:b,borderColor:PK,borderWidth:2,pointRadius:0,fill:true,backgroundColor:PKA,tension:.4},{data:b.map((v,i)=>i>=8?v:null),borderColor:PK,borderWidth:0,fill:true,backgroundColor:PKB,tension:.4}]},options:{...base}})})();
-(()=>{new Chart(document.getElementById('i3b'),{type:'bar',data:{labels:['G1','G2'],datasets:[{data:[72,65],backgroundColor:[PK,PKA],borderRadius:6,categoryPercentage:.5}]},options:{...base,scales:{x:{display:false},y:{display:false,min:55,max:80}}}})})();
-(()=>{new Chart(document.getElementById('i3c'),{type:'scatter',data:{datasets:[{data:[{x:1,y:80},{x:2,y:75},{x:3,y:90},{x:4,y:85}],backgroundColor:PKB,pointRadius:5,pointBorderColor:PK,pointBorderWidth:1.5},{data:[{x:1,y:74},{x:2,y:68},{x:3,y:83},{x:4,y:77}],backgroundColor:PK,pointRadius:5}]},options:{...base,scales:{x:{display:false,min:0,max:5},y:{display:false,min:60,max:95}}}})})();
-(()=>{new Chart(document.getElementById('i4'),{type:'bar',data:{labels:['G1','G2'],datasets:[{data:[72,68],backgroundColor:[PK,PKA],borderRadius:6,categoryPercentage:.5}]},options:{...base,scales:{x:{display:false},y:{display:false,min:60,max:78}}}})})();
-(()=>{new Chart(document.getElementById('i5'),{type:'scatter',data:{datasets:[{data:[{x:1,y:1.5},{x:4.5,y:1.5}],type:'line',borderColor:PK,borderWidth:2.5,pointRadius:6,pointBackgroundColor:PK,showLine:true},{data:[{x:1,y:2.5},{x:3.2,y:2.5}],type:'line',borderColor:PKB,borderWidth:2,pointRadius:5,pointBackgroundColor:PKB,showLine:true}]},options:{...base,scales:{x:{display:false,min:0,max:6},y:{display:false,min:0,max:4}}}})})();
-(()=>{new Chart(document.getElementById('i6'),{type:'scatter',data:{datasets:[{data:[{x:1,y:80},{x:2,y:75},{x:3,y:90},{x:4,y:85},{x:5,y:70}],backgroundColor:PKA,pointRadius:5,pointBorderColor:PK,pointBorderWidth:1.5},{data:[{x:1,y:75},{x:2,y:70},{x:3,y:85},{x:4,y:79},{x:5,y:66}],backgroundColor:PK,pointRadius:5}]},options:{...base,scales:{x:{display:false,min:0,max:6},y:{display:false,min:60,max:95}}}})})();
-
-// ===== 06 Correlation & Regression =====
-(()=>{new Chart(document.getElementById('r1'),{type:'scatter',data:{datasets:[{data:[{x:1,y:2},{x:2,y:3.5},{x:3,y:4.2},{x:4,y:5.5},{x:5,y:6.2},{x:2.5,y:3.2},{x:3.5,y:4.8}],backgroundColor:PK,pointRadius:4}]},options:{...base,scales:{x:{display:false,min:0,max:6},y:{display:false,min:0,max:8}}}})})();
-(()=>{new Chart(document.getElementById('r2'),{type:'scatter',data:{datasets:[{data:[{x:1,y:2},{x:2,y:3.5},{x:3,y:4.2},{x:4,y:5.5},{x:5,y:6.2}],backgroundColor:PKA,pointRadius:4,pointBorderColor:PK,pointBorderWidth:1.5},{data:[{x:0,y:1},{x:6,y:7}],type:'line',borderColor:PK,borderWidth:2,pointRadius:0,showLine:true}]},options:{...base,scales:{x:{display:false,min:0,max:6},y:{display:false,min:0,max:8}}}})})();
-(()=>{new Chart(document.getElementById('r3'),{type:'scatter',data:{datasets:[{data:[{x:1,y:3},{x:2,y:-2},{x:3,y:1.5},{x:4,y:-1},{x:5,y:2},{x:6,y:-2.5}],backgroundColor:PK,pointRadius:4},{data:[{x:0,y:0},{x:7,y:0}],type:'line',borderColor:PKB,borderWidth:1.5,pointRadius:0,showLine:true,borderDash:[4,3]}]},options:{...base,scales:{x:{display:false,min:0,max:7},y:{display:false,min:-5,max:5}}}})})();
-(()=>{new Chart(document.getElementById('r4'),{type:'bar',data:{labels:[''],datasets:[{data:[0.82],backgroundColor:PK,borderRadius:4,borderSkipped:false,categoryPercentage:.4},{data:[0.18],backgroundColor:PKA,borderRadius:0}]},options:{...base,indexAxis:'y',scales:{x:{display:false,stacked:true,max:1},y:{display:false,stacked:true}}}})})();
-ln('r5',[8,6.8,5.8,5.2,4.8,4.6,4.5],false);
-(()=>{new Chart(document.getElementById('r6'),{type:'scatter',data:{datasets:[{data:[{x:2,y:4},{x:3,y:5.5},{x:4,y:6},{x:5,y:7}],backgroundColor:PKA,pointRadius:4,pointBorderColor:PK,pointBorderWidth:1},{data:[{x:13,y:3}],backgroundColor:PK,pointRadius:9,pointStyle:'star'},{data:[{x:0,y:2.5},{x:8,y:8}],type:'line',borderColor:PKA,borderWidth:1.5,pointRadius:0,showLine:true,borderDash:[3,3]},{data:[{x:0,y:3},{x:14,y:3.3}],type:'line',borderColor:PK,borderWidth:2,pointRadius:0,showLine:true}]},options:{...base,scales:{x:{display:false,min:0,max:15},y:{display:false,min:0,max:10}}}})})();
-(()=>{new Chart(document.getElementById('r7'),{type:'bar',data:{labels:['X₁','X₂','X₃'],datasets:[{data:[0.6,0.3,0.45],backgroundColor:[PK,PKB,PKA],borderRadius:4}]},options:{...base,scales:{x:{display:false},y:{display:false,min:0,max:0.8}}}})})();
-(()=>{const x=[...Array(30).keys()].map(i=>i/3);const sig=x.map(v=>1/(1+Math.exp(-(v-4.5))));new Chart(document.getElementById('r8'),{type:'line',data:{labels:x,datasets:[{data:sig,borderColor:PK,borderWidth:2,pointRadius:0,fill:true,backgroundColor:PKA,tension:.4}]},options:{...base}})})();
-br('r9',['X₁','X₂','X₃'],[1.2,8.4,2.1],[PKA,PK,PKA]);
-(()=>{const b=[0.5,2,8,20,34,20,8,2,0.5];new Chart(document.getElementById('r10'),{type:'line',data:{labels:b.map((_,i)=>i),datasets:[{data:b,borderColor:PK,borderWidth:2,pointRadius:0,fill:true,backgroundColor:PKA,tension:.4}]},options:{...base}})})();
-
-// ===== 07 Bootstrap & Simulation =====
-(()=>{const d=[3,7,13,20,25,22,14,8,4];br('b1',d.map((_,i)=>i),d,d.map(()=>PK))})();
-(()=>{const d=[...Array(16).keys()].map(i=>i>2&&i<13?20:5);br('b2',d.map((_,i)=>i),d,d.map((v,i)=>i>2&&i<13?PK:PKA))})();
-(()=>{const p=[];for(let i=0;i<35;i++)p.push({x:Math.random()*10,y:Math.random()*10});new Chart(document.getElementById('b3'),{type:'scatter',data:{datasets:[{data:p.filter(d=>Math.pow(d.x-5,2)+Math.pow(d.y-5,2)<16),backgroundColor:PK,pointRadius:3},{data:p.filter(d=>Math.pow(d.x-5,2)+Math.pow(d.y-5,2)>=16),backgroundColor:PKA,pointRadius:2}]},options:{...base,scales:{x:{display:false,min:0,max:10},y:{display:false,min:0,max:10}}}})})();
-br('b4',['σ','s','p','p̂'],[8,7.8,6,6.1],[PKA,PK,PKA,PK]);
-
-// ===== 08 Categorical & ANOVA =====
-br('cat1',['A·M','B·M','C·M','A·F','B·F','C·F'],[30,40,30,40,35,25],['rgba(232,24,122,.9)','rgba(232,24,122,.65)','rgba(232,24,122,.35)','rgba(232,24,122,.9)','rgba(232,24,122,.65)','rgba(232,24,122,.35)']);
-br('cat2',['O₁','E₁','O₂','E₂','O₃','E₃'],[40,35,60,62,25,28],[PK,PKA,PK,PKA,PK,PKA]);
-br('cat3',['R','O','Y','G','B','Br'],[10,22,12,18,28,10],[PKA,PK,PKA,PKA,PK,PKA]);
-(()=>{new Chart(document.getElementById('cat4'),{type:'bar',data:{labels:['A','B','C'],datasets:[{data:[70,85,65],backgroundColor:[PKA,PK,PKA],borderRadius:5},{data:[70,70,70],type:'line',borderColor:'rgba(0,0,0,0.2)',borderWidth:1,pointRadius:0,borderDash:[4,3]}]},options:{...base,scales:{x:{display:false},y:{display:false,min:50,max:100}}}})})();
-(()=>{new Chart(document.getElementById('cat5'),{type:'bar',data:{labels:['A','B','C'],datasets:[{data:[70,85,65],backgroundColor:[PKA,PK,PKA],borderRadius:5},{data:[70,70,70],type:'line',borderColor:'rgba(0,0,0,0.15)',borderWidth:1.5,pointRadius:0,borderDash:[4,3]}]},options:{...base,scales:{x:{display:false},y:{display:false,min:50,max:100}}}})})();
-(()=>{new Chart(document.getElementById('cat6'),{type:'bar',data:{labels:['A·M','A·F','B·M','B·F'],datasets:[{data:[80,72,65,60],backgroundColor:[PK,PKC,PKB,PKA],borderRadius:4}]},options:{...base,scales:{x:{display:false},y:{display:false,min:50,max:90}}}})})();
-(()=>{new Chart(document.getElementById('cat9'),{type:'line',data:{labels:[1,2,3,4,5,6],datasets:[{data:[60,65,70,74,77,79],borderColor:PK,borderWidth:2,pointRadius:3,pointBackgroundColor:PK,fill:false,tension:.3},{data:[58,56,55,57,56,55],borderColor:PKC,borderWidth:2,pointRadius:3,pointBackgroundColor:PKC,fill:false,tension:.3,borderDash:[3,3]}]},options:{...base,scales:{x:{display:false},y:{display:false,min:50,max:85}}}})})();
-(()=>{new Chart(document.getElementById('cat10'),{type:'bar',data:{labels:['G1·T1','G1·T2','G2·T1','G2·T2'],datasets:[{data:[70,75,65,72],backgroundColor:['rgba(232,24,122,0.9)','rgba(232,24,122,0.6)','rgba(232,24,122,0.4)','rgba(232,24,122,0.2)'],borderRadius:4}]},options:{...base,scales:{x:{display:false},y:{display:false,min:55,max:82}}}})})();
-(()=>{new Chart(document.getElementById('cat7'),{type:'bar',data:{labels:['A-B','A-C','B-C'],datasets:[{data:[15,5,10],backgroundColor:[PK,PKA,PKB],borderRadius:4}]},options:{...base,scales:{x:{display:false},y:{display:false,min:0,max:20}}}})})();
-(()=>{new Chart(document.getElementById('cat8'),{type:'bar',data:{labels:['Pop1','Pop2','Pop3'],datasets:[{data:[3,5,4],backgroundColor:PK,borderRadius:3,stack:'s'},{data:[4,3,5],backgroundColor:PKB,borderRadius:3,stack:'s'},{data:[2,4,3],backgroundColor:PKA,borderRadius:3,stack:'s'}]},options:{...base,scales:{x:{display:false,stacked:true},y:{display:false,stacked:true}}}})})();
-</script>
 </body>
 </html>

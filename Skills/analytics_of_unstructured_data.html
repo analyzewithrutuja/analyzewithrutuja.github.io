@@ -28,19 +28,13 @@ body{background:var(--bg);color:var(--text);font-family:var(--sans);font-size:15
 .formula .c{color:var(--dim)}
 .formula .k{color:var(--pk)}
 
-.ex-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:12px}
-.ex-card{background:var(--bg2);border:1px solid var(--border);border-radius:16px;padding:16px;transition:border-color .2s,box-shadow .2s}
-.ex-card:hover{border-color:var(--pkb);box-shadow:0 4px 20px rgba(232,24,122,.08)}
-.ex-label{font-size:12.5px;font-weight:600;color:var(--text);margin-bottom:10px}
-.ex-line{display:flex;align-items:center;gap:8px;font-family:var(--mono);font-size:12px;flex-wrap:wrap}
-.ex-multiline{font-family:var(--mono);font-size:11.5px;line-height:1.8}
-.ex-in{color:var(--muted)}
-.ex-arrow{color:var(--pk)}
-.ex-out{color:var(--pk);font-weight:600}
-.ex-chip{background:var(--pka);color:var(--pk);border-radius:4px;padding:1px 5px;margin:0 1px}
-.ex-pill{background:var(--pka);color:var(--pk);border-radius:20px;padding:2px 9px;font-weight:600}
-.chip-row{display:flex;flex-wrap:wrap;gap:6px;margin-top:8px}
-.chip{background:var(--pka);color:var(--pk);border:1px solid var(--pkb);border-radius:20px;padding:3px 9px;font-family:var(--mono);font-size:11px}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:14px}
+.card{background:var(--bg2);border:1px solid var(--border);border-radius:var(--rl);padding:20px 16px 16px;display:flex;flex-direction:column;align-items:center;gap:10px;transition:border-color .2s,box-shadow .2s;cursor:default}
+.card:hover{border-color:var(--pkb);box-shadow:0 4px 20px rgba(232,24,122,.08)}
+.chart-wrap{width:100%;height:64px;position:relative}
+.chart-wrap svg{width:100%;height:100%;display:block}
+.card-label{font-size:12.5px;font-weight:600;color:var(--text);text-align:center;line-height:1.35}
+.card-tag{font-size:10px;color:var(--pk);background:var(--pka);border:1px solid var(--pkb);border-radius:20px;padding:3px 10px;font-family:var(--mono);letter-spacing:.04em;text-align:center}
 
 .tag-box{background:var(--bg3);border:1px solid var(--border);border-radius:16px;padding:18px 20px}
 .tag-list{display:flex;flex-wrap:wrap;gap:8px}
@@ -58,7 +52,7 @@ body{background:var(--bg);color:var(--text);font-family:var(--sans);font-size:15
 
 footer{border-top:1px solid var(--border);padding:28px 5%;display:flex;align-items:center;justify-content:space-between;font-family:var(--mono);font-size:.7rem;color:var(--dim);max-width:900px;margin:0 auto}
 footer a{color:var(--pk);text-decoration:none}
-@media(max-width:600px){.ex-grid{grid-template-columns:1fr}}
+@media(max-width:600px){.grid{grid-template-columns:repeat(2,1fr)}}
 </style>
 </head>
 <body>
@@ -145,13 +139,93 @@ footer a{color:var(--pk);text-decoration:none}
 <div class="sec">
   <div class="sec-head"><span class="sec-num">01</span><div class="sec-title">Text Preprocessing Fundamentals</div><div class="sec-line"></div></div>
   <p class="sec-desc">Raw text is messy — every NLP pipeline starts by breaking it down, cleaning it, and normalizing it into a consistent form.</p>
-  <div class="ex-grid">
-    <div class="ex-card"><div class="ex-label">Tokenization</div><div class="ex-line"><span class="ex-in">"Tokenization is essential"</span></div><div class="chip-row"><span class="chip">Tokenization</span><span class="chip">is</span><span class="chip">essential</span></div></div>
-    <div class="ex-card"><div class="ex-label">Stopword removal</div><div class="ex-line"><span class="ex-in">the cat sat on the mat</span></div><div class="ex-line" style="margin-top:8px"><span class="ex-arrow">→</span><span class="ex-out">cat sat mat</span></div></div>
-    <div class="ex-card"><div class="ex-label">Stemming</div><div class="ex-line"><span class="ex-in">running</span><span class="ex-arrow">→</span><span class="ex-out">run</span></div></div>
-    <div class="ex-card"><div class="ex-label">Lemmatization</div><div class="ex-line"><span class="ex-in">better</span><span class="ex-arrow">→</span><span class="ex-out">good</span></div></div>
-    <div class="ex-card"><div class="ex-label">Parts of speech tagging</div><div class="ex-multiline"><span class="ex-chip">The</span><span class="ex-in">/DET </span><span class="ex-chip">fox</span><span class="ex-in">/NOUN </span><span class="ex-chip">runs</span><span class="ex-in">/VERB</span></div></div>
-    <div class="ex-card"><div class="ex-label">Text normalization</div><div class="ex-line"><span class="ex-in">Hi!! / HI / hi</span><span class="ex-arrow">→</span><span class="ex-out">hi</span></div></div>
+  <div class="grid">
+    <div class="card"><div class="chart-wrap">
+      <svg viewBox="0 0 150 64" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="The sentence Tokenization is essential splitting apart into three separate word chip boxes">
+        <defs><marker id="nl1" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="5" markerHeight="5" orient="auto-start-reverse"><path d="M2 1L8 5L2 9" fill="none" stroke="#e8187a" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></marker></defs>
+        <text x="75" y="12" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="7" fill="#666">"Tokenization is essential"</text>
+        <line x1="75" y1="18" x2="75" y2="27" stroke="#e8187a" stroke-width="1.6" marker-end="url(#nl1)"/>
+        <rect x="2" y="34" width="58" height="18" rx="4" fill="#fde7ef" stroke="#e8187a" stroke-width="1"/>
+        <text x="31" y="46" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="6.3" fill="#e8187a" font-weight="600">Tokenization</text>
+        <rect x="64" y="34" width="20" height="18" rx="4" fill="#fde7ef" stroke="#e8187a" stroke-width="1"/>
+        <text x="74" y="46" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="6.3" fill="#e8187a" font-weight="600">is</text>
+        <rect x="88" y="34" width="58" height="18" rx="4" fill="#fde7ef" stroke="#e8187a" stroke-width="1"/>
+        <text x="117" y="46" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="6.3" fill="#e8187a" font-weight="600">essential</text>
+      </svg>
+    </div><div class="card-label">Tokenization</div><div class="card-tag">sentence → 3 tokens</div></div>
+
+    <div class="card"><div class="chart-wrap">
+      <svg viewBox="0 0 150 64" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="The words the, cat, sat, on, the, mat with the stopwords the, on, the dimmed and struck through, leaving cat sat mat highlighted">
+        <defs><marker id="nl2" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="5" markerHeight="5" orient="auto-start-reverse"><path d="M2 1L8 5L2 9" fill="none" stroke="#e8187a" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></marker></defs>
+        <g font-family="JetBrains Mono, monospace" font-size="6.6">
+          <rect x="2" y="6" width="22" height="16" rx="3" fill="#f2f1ef" stroke="#ddd"/><text x="13" y="17" text-anchor="middle" fill="#bbb" text-decoration="line-through">the</text>
+          <rect x="26" y="6" width="22" height="16" rx="3" fill="#fde7ef" stroke="#e8187a"/><text x="37" y="17" text-anchor="middle" fill="#e8187a" font-weight="600">cat</text>
+          <rect x="50" y="6" width="22" height="16" rx="3" fill="#fde7ef" stroke="#e8187a"/><text x="61" y="17" text-anchor="middle" fill="#e8187a" font-weight="600">sat</text>
+          <rect x="74" y="6" width="22" height="16" rx="3" fill="#f2f1ef" stroke="#ddd"/><text x="85" y="17" text-anchor="middle" fill="#bbb" text-decoration="line-through">on</text>
+          <rect x="98" y="6" width="22" height="16" rx="3" fill="#f2f1ef" stroke="#ddd"/><text x="109" y="17" text-anchor="middle" fill="#bbb" text-decoration="line-through">the</text>
+          <rect x="122" y="6" width="22" height="16" rx="3" fill="#fde7ef" stroke="#e8187a"/><text x="133" y="17" text-anchor="middle" fill="#e8187a" font-weight="600">mat</text>
+        </g>
+        <line x1="75" y1="26" x2="75" y2="34" stroke="#e8187a" stroke-width="1.6" marker-end="url(#nl2)"/>
+        <text x="75" y="46" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="8" font-weight="700" fill="#e8187a">cat sat mat</text>
+        <text x="75" y="58" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="6" fill="#aaa">stopwords stripped</text>
+      </svg>
+    </div><div class="card-label">Stopword removal</div><div class="card-tag">stopwords stripped</div></div>
+
+    <div class="card"><div class="chart-wrap">
+      <svg viewBox="0 0 150 64" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="The word running crudely chopped at the suffix to leave the stem run">
+        <defs><marker id="nl3" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="5" markerHeight="5" orient="auto-start-reverse"><path d="M2 1L8 5L2 9" fill="none" stroke="#e8187a" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></marker></defs>
+        <text x="4" y="32" font-family="JetBrains Mono, monospace" font-size="11" fill="#444">runn<tspan fill="#ddd" text-decoration="line-through">ing</tspan></text>
+        <path d="M32,12 L27,20 L33,27 L27,34 L32,42" fill="none" stroke="#e8187a" stroke-width="1.6" stroke-dasharray="2 2" stroke-linecap="round"/>
+        <line x1="58" y1="27" x2="70" y2="27" stroke="#e8187a" stroke-width="1.6" marker-end="url(#nl3)"/>
+        <text x="76" y="33" font-family="JetBrains Mono, monospace" font-size="14" font-weight="700" fill="#e8187a">run</text>
+        <text x="75" y="58" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="6" fill="#aaa">crude suffix chop</text>
+      </svg>
+    </div><div class="card-label">Stemming</div><div class="card-tag">running → run</div></div>
+
+    <div class="card"><div class="chart-wrap">
+      <svg viewBox="0 0 150 64" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="The word better passed through a dictionary lookup icon to produce its clean base form good">
+        <defs><marker id="nl4" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="5" markerHeight="5" orient="auto-start-reverse"><path d="M2 1L8 5L2 9" fill="none" stroke="#e8187a" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></marker></defs>
+        <text x="2" y="32" font-family="JetBrains Mono, monospace" font-size="10.5" fill="#555">better</text>
+        <line x1="46" y1="27" x2="60" y2="27" stroke="#e8187a" stroke-width="1.6" marker-end="url(#nl4)"/>
+        <rect x="63" y="10" width="24" height="34" rx="2" fill="#fde7ef" stroke="#e8187a" stroke-width="1.4"/>
+        <line x1="75" y1="10" x2="75" y2="44" stroke="#e8187a" stroke-width="1"/>
+        <line x1="67" y1="18" x2="72" y2="18" stroke="#e8187a" stroke-width="0.8" opacity="0.6"/><line x1="67" y1="24" x2="72" y2="24" stroke="#e8187a" stroke-width="0.8" opacity="0.6"/><line x1="67" y1="30" x2="72" y2="30" stroke="#e8187a" stroke-width="0.8" opacity="0.6"/>
+        <line x1="78" y1="18" x2="83" y2="18" stroke="#e8187a" stroke-width="0.8" opacity="0.6"/><line x1="78" y1="24" x2="83" y2="24" stroke="#e8187a" stroke-width="0.8" opacity="0.6"/><line x1="78" y1="30" x2="83" y2="30" stroke="#e8187a" stroke-width="0.8" opacity="0.6"/>
+        <line x1="90" y1="27" x2="102" y2="27" stroke="#e8187a" stroke-width="1.6" marker-end="url(#nl4)"/>
+        <text x="106" y="32" font-family="JetBrains Mono, monospace" font-size="12" font-weight="700" fill="#e8187a">good</text>
+        <text x="75" y="58" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="6" fill="#aaa">dictionary lookup</text>
+      </svg>
+    </div><div class="card-label">Lemmatization</div><div class="card-tag">better → good</div></div>
+
+    <div class="card"><div class="chart-wrap">
+      <svg viewBox="0 0 150 64" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="The words The, fox, runs each tagged above with their part of speech DET, NOUN, VERB">
+        <text x="25" y="12" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="6.5" fill="#e8187a" font-weight="600">DET</text>
+        <rect x="5" y="18" width="40" height="20" rx="4" fill="#fde7ef" stroke="#e8187a" stroke-width="1"/>
+        <text x="25" y="32" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="9" fill="#e8187a" font-weight="600">The</text>
+        <text x="75" y="12" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="6.5" fill="#e8187a" font-weight="600">NOUN</text>
+        <rect x="55" y="18" width="40" height="20" rx="4" fill="#fde7ef" stroke="#e8187a" stroke-width="1"/>
+        <text x="75" y="32" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="9" fill="#e8187a" font-weight="600">fox</text>
+        <text x="125" y="12" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="6.5" fill="#e8187a" font-weight="600">VERB</text>
+        <rect x="105" y="18" width="40" height="20" rx="4" fill="#fde7ef" stroke="#e8187a" stroke-width="1"/>
+        <text x="125" y="32" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="9" fill="#e8187a" font-weight="600">runs</text>
+        <text x="75" y="54" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="6.5" fill="#999">The fox runs</text>
+      </svg>
+    </div><div class="card-label">Parts of speech tagging</div><div class="card-tag">DET · NOUN · VERB</div></div>
+
+    <div class="card"><div class="chart-wrap">
+      <svg viewBox="0 0 150 64" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Three messy variants Hi with two exclamation marks, HI, and hi all converging by arrows into one clean lowercase form hi">
+        <defs><marker id="nl5" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="5" markerHeight="5" orient="auto-start-reverse"><path d="M2 1L8 5L2 9" fill="none" stroke="#e8187a" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></marker></defs>
+        <text x="4" y="16" font-family="JetBrains Mono, monospace" font-size="9" fill="#999">Hi!!</text>
+        <text x="4" y="34" font-family="JetBrains Mono, monospace" font-size="9" fill="#999">HI</text>
+        <text x="4" y="52" font-family="JetBrains Mono, monospace" font-size="9" fill="#999">hi</text>
+        <path d="M28,13 Q52,13 66,29" fill="none" stroke="#e8187a" stroke-width="1.3" opacity="0.6" marker-end="url(#nl5)"/>
+        <path d="M22,31 L66,31" fill="none" stroke="#e8187a" stroke-width="1.3" opacity="0.8" marker-end="url(#nl5)"/>
+        <path d="M18,49 Q46,49 66,33" fill="none" stroke="#e8187a" stroke-width="1.3" opacity="0.6" marker-end="url(#nl5)"/>
+        <rect x="70" y="18" width="40" height="26" rx="6" fill="#e8187a"/>
+        <text x="90" y="36" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="13" font-weight="700" fill="#fff">hi</text>
+        <text x="128" y="34" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="6" fill="#aaa">clean</text>
+      </svg>
+    </div><div class="card-label">Text normalization</div><div class="card-tag">Hi!! / HI / hi → hi</div></div>
   </div>
   <div class="formula">text → <span class="k">tokens → lowercase → remove stopwords → stem / lemma</span> <span class="c">← preprocessing pipeline</span></div>
 </div>
@@ -160,11 +234,64 @@ footer a{color:var(--pk);text-decoration:none}
 <div class="sec">
   <div class="sec-head"><span class="sec-num">02</span><div class="sec-title">Text Representation &amp; Encoding</div><div class="sec-line"></div></div>
   <p class="sec-desc">Models need numbers, not words — turning cleaned text into vectors that capture frequency and importance.</p>
-  <div class="ex-grid">
-    <div class="ex-card"><div class="ex-label">One-hot encoding</div><div class="ex-line"><span class="ex-in">"cat"</span><span class="ex-arrow">→</span><span class="ex-out">[0,0,1,0,0]</span></div></div>
-    <div class="ex-card"><div class="ex-label">Bag of words</div><div class="ex-line"><span class="ex-in">the cat sat the mat</span></div><div class="ex-line" style="margin-top:8px"><span class="ex-arrow">→</span><span class="ex-out">{the: 2, cat: 1, sat: 1, mat: 1}</span></div></div>
-    <div class="ex-card"><div class="ex-label">N-grams</div><div class="ex-line"><span class="ex-in">the cat sat</span></div><div class="chip-row"><span class="chip">the cat</span><span class="chip">cat sat</span></div></div>
-    <div class="ex-card"><div class="ex-label">TF-IDF</div><div class="ex-line"><span class="ex-in">"rare"</span><span class="ex-arrow">→</span><span class="ex-out">weight 0.82</span></div><div class="ex-line"><span class="ex-in">"the"</span><span class="ex-arrow">→</span><span class="ex-out" style="color:var(--dim)">weight 0.02</span></div></div>
+  <div class="grid">
+    <div class="card"><div class="chart-wrap">
+      <svg viewBox="0 0 150 64" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="The word cat encoded as a one hot vector, a single 1 highlighted among four 0s">
+        <text x="75" y="10" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="7.5" fill="#666">"cat"</text>
+        <rect x="12" y="18" width="22" height="22" rx="3" fill="#f2f1ef" stroke="#ddd"/><text x="23" y="33" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="9" fill="#999">0</text>
+        <rect x="38" y="18" width="22" height="22" rx="3" fill="#f2f1ef" stroke="#ddd"/><text x="49" y="33" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="9" fill="#999">0</text>
+        <rect x="64" y="18" width="22" height="22" rx="3" fill="#e8187a"/><text x="75" y="33" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="9" font-weight="700" fill="#fff">1</text>
+        <rect x="90" y="18" width="22" height="22" rx="3" fill="#f2f1ef" stroke="#ddd"/><text x="101" y="33" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="9" fill="#999">0</text>
+        <rect x="116" y="18" width="22" height="22" rx="3" fill="#f2f1ef" stroke="#ddd"/><text x="127" y="33" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="9" fill="#999">0</text>
+        <text x="75" y="54" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="6.5" fill="#aaa">[0, 0, 1, 0, 0]</text>
+      </svg>
+    </div><div class="card-label">One-hot encoding</div><div class="card-tag">cat → [0,0,1,0,0]</div></div>
+
+    <div class="card"><div class="chart-wrap">
+      <svg viewBox="0 0 150 64" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="The words the, cat, sat, the, mat each annotated with their frequency count, the appearing twice">
+        <text x="75" y="10" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="6.3" fill="#999">the cat sat the mat</text>
+        <rect x="2" y="18" width="34" height="20" rx="4" fill="#fde7ef" stroke="#e8187a" stroke-width="1"/><text x="19" y="31" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="8" font-weight="600" fill="#e8187a">the</text>
+        <circle cx="32" cy="17" r="7" fill="#e8187a"/><text x="32" y="20" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="7" font-weight="700" fill="#fff">2</text>
+        <rect x="40" y="18" width="34" height="20" rx="4" fill="#fde7ef" stroke="#e8187a" stroke-width="1"/><text x="57" y="31" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="8" font-weight="600" fill="#e8187a">cat</text>
+        <circle cx="70" cy="17" r="7" fill="#e8187a"/><text x="70" y="20" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="7" font-weight="700" fill="#fff">1</text>
+        <rect x="78" y="18" width="34" height="20" rx="4" fill="#fde7ef" stroke="#e8187a" stroke-width="1"/><text x="95" y="31" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="8" font-weight="600" fill="#e8187a">sat</text>
+        <circle cx="108" cy="17" r="7" fill="#e8187a"/><text x="108" y="20" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="7" font-weight="700" fill="#fff">1</text>
+        <rect x="116" y="18" width="32" height="20" rx="4" fill="#fde7ef" stroke="#e8187a" stroke-width="1"/><text x="132" y="31" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="8" font-weight="600" fill="#e8187a">mat</text>
+        <circle cx="146" cy="17" r="7" fill="#e8187a"/><text x="146" y="20" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="7" font-weight="700" fill="#fff">1</text>
+        <text x="75" y="56" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="6" fill="#aaa">word : count</text>
+      </svg>
+    </div><div class="card-label">Bag of words</div><div class="card-tag">word : count pairs</div></div>
+
+    <div class="card"><div class="chart-wrap">
+      <svg viewBox="0 0 150 64" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="A sliding window highlighting the cat as one adjacent word pair and cat sat as the next adjacent word pair from the sentence the cat sat">
+        <rect x="8" y="4" width="42" height="16" rx="4" fill="#fde7ef" stroke="#e8187a" stroke-width="1.3"/>
+        <rect x="54" y="4" width="34" height="16" rx="4" fill="#fde7ef" stroke="#e8187a" stroke-width="1.3"/>
+        <rect x="92" y="4" width="34" height="16" rx="4" fill="#f2f1ef" stroke="#ddd" stroke-width="1"/>
+        <text x="29" y="15.5" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="7.5" fill="#e8187a" font-weight="600">the</text>
+        <text x="71" y="15.5" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="7.5" fill="#e8187a" font-weight="600">cat</text>
+        <text x="109" y="15.5" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="7.5" fill="#999">sat</text>
+        <text x="20" y="30" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="6" fill="#e8187a">(the, cat)</text>
+        <rect x="8" y="36" width="34" height="16" rx="4" fill="#f2f1ef" stroke="#ddd" stroke-width="1"/>
+        <rect x="46" y="36" width="34" height="16" rx="4" fill="#fde7ef" stroke="#e8187a" stroke-width="1.3"/>
+        <rect x="84" y="36" width="34" height="16" rx="4" fill="#fde7ef" stroke="#e8187a" stroke-width="1.3"/>
+        <text x="25" y="47.5" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="7.5" fill="#999">the</text>
+        <text x="63" y="47.5" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="7.5" fill="#e8187a" font-weight="600">cat</text>
+        <text x="101" y="47.5" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="7.5" fill="#e8187a" font-weight="600">sat</text>
+        <text x="66" y="62" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="6" fill="#e8187a">(cat, sat)</text>
+      </svg>
+    </div><div class="card-label">N-grams</div><div class="card-tag">the cat, cat sat</div></div>
+
+    <div class="card"><div class="chart-wrap">
+      <svg viewBox="0 0 150 64" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Two bars comparing tf-idf weight, the rare word rare scoring high at 0.82 and the common word the scoring low at 0.02">
+        <text x="24" y="10" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="7.5" fill="#666">"rare"</text>
+        <rect x="10" y="16" width="28" height="34" fill="#e8187a" rx="2"/>
+        <text x="24" y="58" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="7" font-weight="700" fill="#e8187a">0.82</text>
+        <text x="112" y="42" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="7.5" fill="#666">"the"</text>
+        <rect x="98" y="47" width="28" height="3" fill="#dedede" rx="1.5"/>
+        <text x="112" y="58" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="7" fill="#bbb">0.02</text>
+        <line x1="52" y1="50" x2="86" y2="50" stroke="#e2e2e2" stroke-width="1" stroke-dasharray="2 2"/>
+      </svg>
+    </div><div class="card-label">TF-IDF</div><div class="card-tag">rare .82 · the .02</div></div>
   </div>
   <div class="formula">TF-IDF(t,d) = <span class="k">tf(t,d) × log(N / df(t))</span></div>
 </div>
@@ -173,12 +300,78 @@ footer a{color:var(--pk);text-decoration:none}
 <div class="sec">
   <div class="sec-head"><span class="sec-num">03</span><div class="sec-title">Word Embeddings</div><div class="sec-line"></div></div>
   <p class="sec-desc">Instead of counting words, embeddings place them in a continuous space where meaning and context shape the geometry.</p>
-  <div class="ex-grid">
-    <div class="ex-card"><div class="ex-label">Embedding space (vector arithmetic)</div><div class="ex-multiline"><span class="ex-chip">king</span> − <span class="ex-chip">man</span> + <span class="ex-chip">woman</span> <span class="ex-arrow">≈</span> <span class="ex-out">queen</span></div></div>
-    <div class="ex-card"><div class="ex-label">Word2Vec — CBOW</div><div class="ex-line"><span class="ex-in">the ___ sat</span><span class="ex-arrow">→</span><span class="ex-out">cat</span></div></div>
-    <div class="ex-card"><div class="ex-label">Word2Vec — Skip-gram</div><div class="ex-line"><span class="ex-in">cat</span><span class="ex-arrow">→</span><span class="ex-out">the, sat</span></div></div>
-    <div class="ex-card"><div class="ex-label">Cosine similarity</div><div class="ex-line"><span class="ex-in">cos(king, queen)</span><span class="ex-arrow">=</span><span class="ex-out">0.82</span></div><div class="ex-line"><span class="ex-in">cos(king, banana)</span><span class="ex-arrow">=</span><span class="ex-out" style="color:var(--dim)">0.05</span></div></div>
-    <div class="ex-card"><div class="ex-label">GloVe</div><div class="ex-line"><span class="ex-in">co-occurs(ice, cold)</span><span class="ex-arrow">→</span><span class="ex-out">high</span></div></div>
+  <div class="grid">
+    <div class="card"><div class="chart-wrap">
+      <svg viewBox="0 0 150 64" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="A 2D vector plot showing king minus man plus woman lands close to queen, with two parallel arrows from man to king and from woman to queen">
+        <defs><marker id="nl6" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="5" markerHeight="5" orient="auto-start-reverse"><path d="M2 1L8 5L2 9" fill="none" stroke="#e8187a" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></marker></defs>
+        <line x1="6" y1="58" x2="146" y2="58" stroke="#e2e2e2" stroke-width="1"/>
+        <line x1="6" y1="58" x2="6" y2="6" stroke="#e2e2e2" stroke-width="1"/>
+        <line x1="24" y1="50" x2="58" y2="20" stroke="#e8187a" stroke-width="1.6" marker-end="url(#nl6)"/>
+        <line x1="88" y1="50" x2="122" y2="20" stroke="#e8187a" stroke-width="1.6" marker-end="url(#nl6)"/>
+        <circle cx="24" cy="50" r="2.6" fill="#999"/><text x="24" y="63" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="6.5" fill="#999">man</text>
+        <circle cx="58" cy="20" r="2.6" fill="#e8187a"/><text x="58" y="14" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="6.5" fill="#e8187a">king</text>
+        <circle cx="88" cy="50" r="2.6" fill="#999"/><text x="88" y="63" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="6.5" fill="#999">woman</text>
+        <circle cx="122" cy="20" r="3" fill="#e8187a"/><text x="122" y="14" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="6.5" font-weight="700" fill="#e8187a">queen</text>
+      </svg>
+    </div><div class="card-label">Embedding space (vector arithmetic)</div><div class="card-tag">king−man+woman≈queen</div></div>
+
+    <div class="card"><div class="chart-wrap">
+      <svg viewBox="0 0 150 64" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="The context words the and sat converging with arrows into the predicted center word cat, from the pattern the blank sat">
+        <defs><marker id="nl7" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="5" markerHeight="5" orient="auto-start-reverse"><path d="M2 1L8 5L2 9" fill="none" stroke="#e8187a" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></marker></defs>
+        <rect x="4" y="10" width="34" height="18" rx="4" fill="#f2f1ef" stroke="#ccc"/><text x="21" y="23" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="8" fill="#777">the</text>
+        <rect x="4" y="36" width="34" height="18" rx="4" fill="#f2f1ef" stroke="#ccc"/><text x="21" y="49" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="8" fill="#777">sat</text>
+        <path d="M40,19 Q64,19 76,30" fill="none" stroke="#e8187a" stroke-width="1.4" opacity="0.75" marker-end="url(#nl7)"/>
+        <path d="M40,45 Q64,45 76,34" fill="none" stroke="#e8187a" stroke-width="1.4" opacity="0.75" marker-end="url(#nl7)"/>
+        <rect x="80" y="22" width="40" height="20" rx="5" fill="#e8187a" stroke-dasharray="3 2"/>
+        <text x="100" y="36" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="9" font-weight="700" fill="#fff">cat</text>
+        <text x="100" y="56" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="6" fill="#aaa">predicted center</text>
+      </svg>
+    </div><div class="card-label">Word2Vec — CBOW</div><div class="card-tag">context → center</div></div>
+
+    <div class="card"><div class="chart-wrap">
+      <svg viewBox="0 0 150 64" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="The center word cat diverging with arrows out to two predicted context words the and sat">
+        <defs><marker id="nl8" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="5" markerHeight="5" orient="auto-start-reverse"><path d="M2 1L8 5L2 9" fill="none" stroke="#e8187a" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></marker></defs>
+        <rect x="6" y="22" width="36" height="20" rx="5" fill="#e8187a"/>
+        <text x="24" y="36" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="9" font-weight="700" fill="#fff">cat</text>
+        <path d="M44,26 Q68,26 78,15" fill="none" stroke="#e8187a" stroke-width="1.4" opacity="0.75" marker-end="url(#nl8)"/>
+        <path d="M44,38 Q68,38 78,49" fill="none" stroke="#e8187a" stroke-width="1.4" opacity="0.75" marker-end="url(#nl8)"/>
+        <rect x="82" y="6" width="34" height="18" rx="4" fill="#f2f1ef" stroke="#ccc"/><text x="99" y="19" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="8" fill="#777">the</text>
+        <rect x="82" y="40" width="34" height="18" rx="4" fill="#f2f1ef" stroke="#ccc"/><text x="99" y="53" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="8" fill="#777">sat</text>
+        <text x="24" y="56" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="6" fill="#aaa">center word</text>
+      </svg>
+    </div><div class="card-label">Word2Vec — Skip-gram</div><div class="card-tag">center → context</div></div>
+
+    <div class="card"><div class="chart-wrap">
+      <svg viewBox="0 0 150 64" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Two vectors king and queen drawn from an origin with a narrow angle between them and a cosine similarity of 0.82, against a wider faint angle to banana at 0.05">
+        <defs><marker id="nl9" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="5" markerHeight="5" orient="auto-start-reverse"><path d="M2 1L8 5L2 9" fill="none" stroke="#e8187a" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></marker></defs>
+        <line x1="10" y1="58" x2="132" y2="14" stroke="#e8187a" stroke-width="1.8" marker-end="url(#nl9)"/>
+        <text x="132" y="12" text-anchor="end" font-family="JetBrains Mono, monospace" font-size="6.5" fill="#e8187a">king</text>
+        <line x1="10" y1="58" x2="118" y2="26" stroke="#e8187a" stroke-width="1.8" opacity="0.8" marker-end="url(#nl9)"/>
+        <text x="120" y="22" font-family="JetBrains Mono, monospace" font-size="6.5" fill="#e8187a">queen</text>
+        <line x1="10" y1="58" x2="70" y2="10" stroke="#ccc" stroke-width="1.4" stroke-dasharray="2 2" marker-end="url(#nl9)"/>
+        <text x="66" y="8" font-family="JetBrains Mono, monospace" font-size="6" fill="#bbb">banana</text>
+        <path d="M32,45 A26,26 0 0,0 26,32" fill="none" stroke="#e8187a" stroke-width="1.2"/>
+        <text x="10" y="46" font-family="JetBrains Mono, monospace" font-size="7" font-weight="700" fill="#e8187a">0.82</text>
+        <text x="46" y="52" font-family="JetBrains Mono, monospace" font-size="6" fill="#bbb">vs 0.05</text>
+      </svg>
+    </div><div class="card-label">Cosine similarity</div><div class="card-tag">cos(θ) = 0.82</div></div>
+
+    <div class="card"><div class="chart-wrap">
+      <svg viewBox="0 0 150 64" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="A co-occurrence grid of the words ice and cold showing a high shared count off the diagonal">
+        <g font-family="JetBrains Mono, monospace" font-size="6.5" fill="#999">
+          <text x="46" y="10" text-anchor="middle">ice</text>
+          <text x="94" y="10" text-anchor="middle">cold</text>
+          <text x="16" y="30" text-anchor="middle">ice</text>
+          <text x="16" y="52" text-anchor="middle">cold</text>
+        </g>
+        <rect x="24" y="16" width="44" height="22" fill="#fbcfe4" stroke="#fff" stroke-width="1"/>
+        <rect x="68" y="16" width="44" height="22" fill="#e8187a" stroke="#fff" stroke-width="1"/>
+        <rect x="24" y="38" width="44" height="22" fill="#e8187a" stroke="#fff" stroke-width="1"/>
+        <rect x="68" y="38" width="44" height="22" fill="#fbcfe4" stroke="#fff" stroke-width="1"/>
+        <text x="90" y="30" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="7" font-weight="700" fill="#fff">high</text>
+        <text x="46" y="52" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="7" font-weight="700" fill="#fff">high</text>
+      </svg>
+    </div><div class="card-label">GloVe</div><div class="card-tag">co-occurs(ice, cold)</div></div>
   </div>
   <div class="formula">cos(θ) = <span class="k">(A · B) / (‖A‖ ‖B‖)</span> <span class="c">← word similarity</span></div>
 </div>
@@ -187,11 +380,59 @@ footer a{color:var(--pk);text-decoration:none}
 <div class="sec">
   <div class="sec-head"><span class="sec-num">04</span><div class="sec-title">Language Modeling &amp; Sequence Tasks</div><div class="sec-line"></div></div>
   <p class="sec-desc">Predicting what comes next — the backbone of autocomplete, translation, and text generation.</p>
-  <div class="ex-grid">
-    <div class="ex-card"><div class="ex-label">N-gram language model</div><div class="ex-line"><span class="ex-in">"the cat ___"</span><span class="ex-arrow">→</span><span class="ex-out">sat (highest P)</span></div></div>
-    <div class="ex-card"><div class="ex-label">Sequence-to-sequence</div><div class="ex-line"><span class="ex-in">"I am fine" (EN)</span></div><div class="ex-line" style="margin-top:8px"><span class="ex-arrow">→</span><span class="ex-out">"मैं ठीक हूँ" (HI)</span></div></div>
-    <div class="ex-card"><div class="ex-label">Text generation</div><div class="ex-line"><span class="ex-in">"Once upon a"</span><span class="ex-arrow">→</span><span class="ex-out">"time..."</span></div></div>
-    <div class="ex-card"><div class="ex-label">Perplexity</div><div class="ex-line"><span class="ex-in">model A: 12.4</span></div><div class="ex-line"><span class="ex-out">model B: 6.1 (better)</span></div></div>
+  <div class="grid">
+    <div class="card"><div class="chart-wrap">
+      <svg viewBox="0 0 150 64" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Given the phrase the cat blank, three candidate next words are ranked by probability with sat highlighted as the highest probability pick">
+        <text x="75" y="10" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="7" fill="#666">"the cat ___"</text>
+        <rect x="8" y="16" width="40" height="14" fill="#e8187a" rx="3"/><text x="12" y="26" font-family="JetBrains Mono, monospace" font-size="7" fill="#fff">sat .71 ✓</text>
+        <rect x="8" y="32" width="26" height="11" fill="#f2f1ef" rx="3"/><text x="12" y="40.5" font-family="JetBrains Mono, monospace" font-size="6.5" fill="#999">ran .18</text>
+        <rect x="8" y="45" width="20" height="10" fill="#f2f1ef" rx="3"/><text x="12" y="53" font-family="JetBrains Mono, monospace" font-size="6.5" fill="#bbb">slept .11</text>
+      </svg>
+    </div><div class="card-label">N-gram language model</div><div class="card-tag">the cat ___ → sat</div></div>
+
+    <div class="card"><div class="chart-wrap">
+      <svg viewBox="0 0 150 64" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="The English sentence I am fine compressed by an encoder into a context vector, expanded by a decoder into the Hindi translation">
+        <defs><marker id="nl10" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="5" markerHeight="5" orient="auto-start-reverse"><path d="M2 1L8 5L2 9" fill="none" stroke="#e8187a" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></marker></defs>
+        <text x="28" y="10" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="5" fill="#999">"I am fine" (EN)</text>
+        <rect x="4" y="16" width="34" height="24" rx="4" fill="#fbcfe4" stroke="#e8187a" stroke-width="1"/><text x="21" y="31" text-anchor="middle" font-family="Inter, sans-serif" font-weight="700" font-size="8" fill="#e8187a">Enc</text>
+        <line x1="40" y1="28" x2="52" y2="28" stroke="#e8187a" stroke-width="1.5" marker-end="url(#nl10)"/>
+        <circle cx="62" cy="28" r="9" fill="#e8187a"/>
+        <line x1="72" y1="28" x2="84" y2="28" stroke="#e8187a" stroke-width="1.5" marker-end="url(#nl10)"/>
+        <rect x="90" y="16" width="34" height="24" rx="4" fill="#f492b8" stroke="#e8187a" stroke-width="1"/><text x="107" y="31" text-anchor="middle" font-family="Inter, sans-serif" font-weight="700" font-size="8" fill="#fff">Dec</text>
+        <text x="129" y="20" font-family="JetBrains Mono, monospace" font-size="9" fill="#e8187a">मैं</text>
+        <text x="129" y="30" font-family="JetBrains Mono, monospace" font-size="9" fill="#e8187a">ठीक</text>
+        <text x="129" y="40" font-family="JetBrains Mono, monospace" font-size="9" fill="#e8187a">हूँ</text>
+        <text x="62" y="58" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="6" fill="#aaa">context vector</text>
+      </svg>
+    </div><div class="card-label">Sequence-to-sequence</div><div class="card-tag">EN → HI</div></div>
+
+    <div class="card"><div class="chart-wrap">
+      <svg viewBox="0 0 150 64" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="The tokens Once, upon, a generated one at a time autoregressively, each feeding into the next step, producing time as the newest token">
+        <defs><marker id="nl11" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="4.5" markerHeight="4.5" orient="auto-start-reverse"><path d="M2 1L8 5L2 9" fill="none" stroke="#e8187a" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></marker></defs>
+        <rect x="2" y="22" width="34" height="18" rx="4" fill="#fde7ef" stroke="#e8187a" stroke-width="1"/><text x="19" y="34" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="7" fill="#e8187a" font-weight="600">Once</text>
+        <line x1="38" y1="31" x2="46" y2="31" stroke="#e8187a" stroke-width="1.4" marker-end="url(#nl11)"/>
+        <rect x="48" y="22" width="34" height="18" rx="4" fill="#fde7ef" stroke="#e8187a" stroke-width="1"/><text x="65" y="34" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="7" fill="#e8187a" font-weight="600">upon</text>
+        <line x1="84" y1="31" x2="92" y2="31" stroke="#e8187a" stroke-width="1.4" marker-end="url(#nl11)"/>
+        <rect x="94" y="22" width="18" height="18" rx="4" fill="#fde7ef" stroke="#e8187a" stroke-width="1"/><text x="103" y="34" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="7" fill="#e8187a" font-weight="600">a</text>
+        <line x1="114" y1="31" x2="122" y2="31" stroke="#e8187a" stroke-width="1.4" marker-end="url(#nl11)"/>
+        <rect x="124" y="18" width="26" height="26" rx="5" fill="#e8187a"/><text x="137" y="34" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="7.5" font-weight="700" fill="#fff">time</text>
+        <text x="75" y="58" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="6" fill="#aaa">generated one token at a time</text>
+      </svg>
+    </div><div class="card-label">Text generation</div><div class="card-tag">Once upon a → time...</div></div>
+
+    <div class="card"><div class="chart-wrap">
+      <svg viewBox="0 0 150 64" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Two gauges comparing perplexity scores, model A at 12.4 versus model B at 6.1 which is lower and better">
+        <text x="38" y="10" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="6.5" fill="#999">model A</text>
+        <rect x="16" y="16" width="18" height="10" rx="5" fill="#f2f1ef"/>
+        <rect x="16" y="28" width="44" height="20" rx="4" fill="#f7a8c9"/>
+        <text x="38" y="42" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="9" font-weight="700" fill="#fff">12.4</text>
+        <text x="112" y="10" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="6.5" fill="#e8187a">model B</text>
+        <rect x="90" y="16" width="18" height="10" rx="5" fill="#f2f1ef"/>
+        <rect x="90" y="34" width="44" height="14" rx="4" fill="#e8187a"/>
+        <text x="112" y="45" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="9" font-weight="700" fill="#fff">6.1</text>
+        <text x="112" y="58" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="6" fill="#e8187a">better</text>
+      </svg>
+    </div><div class="card-label">Perplexity</div><div class="card-tag">A 12.4 vs B 6.1</div></div>
   </div>
   <div class="formula">Perplexity = <span class="k">2^(−1/N Σ log₂ P(wᵢ))</span></div>
 </div>
@@ -200,11 +441,56 @@ footer a{color:var(--pk);text-decoration:none}
 <div class="sec">
   <div class="sec-head"><span class="sec-num">05</span><div class="sec-title">Information Extraction</div><div class="sec-line"></div></div>
   <p class="sec-desc">Pulling structured facts — people, places, relationships — out of unstructured sentences.</p>
-  <div class="ex-grid">
-    <div class="ex-card"><div class="ex-label">Named entity recognition</div><div class="ex-multiline"><span class="ex-chip">Elon</span><span class="ex-in">ᴘᴇʀ founded </span><span class="ex-chip">SpaceX</span><span class="ex-in">ᴏʀɢ</span></div></div>
-    <div class="ex-card"><div class="ex-label">Chunking</div><div class="ex-line"><span class="ex-in">the cat sat down</span></div><div class="ex-line" style="margin-top:8px"><span class="ex-arrow">→</span><span class="ex-out">[NP the cat] [VP sat down]</span></div></div>
-    <div class="ex-card"><div class="ex-label">Dependency parsing</div><div class="ex-line"><span class="ex-in">The cat sat</span></div><div class="ex-line" style="margin-top:8px"><span class="ex-arrow">→</span><span class="ex-out">subj(cat, sat)</span></div></div>
-    <div class="ex-card"><div class="ex-label">Coreference resolution</div><div class="ex-line"><span class="ex-in">Maria said </span><span class="ex-chip">she</span><span class="ex-in"> is happy</span></div><div class="ex-line" style="margin-top:8px"><span class="ex-arrow">→</span><span class="ex-out">she = Maria</span></div></div>
+  <div class="grid">
+    <div class="card"><div class="chart-wrap">
+      <svg viewBox="0 0 150 64" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="The sentence Elon founded SpaceX with Elon highlighted and tagged PER and SpaceX highlighted and tagged ORG">
+        <text x="10" y="10" font-family="JetBrains Mono, monospace" font-size="6" fill="#e8187a">PER</text>
+        <rect x="4" y="14" width="34" height="18" rx="4" fill="#fde7ef" stroke="#e8187a" stroke-width="1.3"/>
+        <text x="21" y="26" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="8" font-weight="600" fill="#e8187a">Elon</text>
+        <text x="60" y="26" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="8" fill="#999">founded</text>
+        <text x="112" y="10" font-family="JetBrains Mono, monospace" font-size="6" fill="#e8187a">ORG</text>
+        <rect x="94" y="14" width="46" height="18" rx="4" fill="#fde7ef" stroke="#e8187a" stroke-width="1.3"/>
+        <text x="117" y="26" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="8" font-weight="600" fill="#e8187a">SpaceX</text>
+        <text x="75" y="50" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="6.3" fill="#999">"Elon founded SpaceX"</text>
+      </svg>
+    </div><div class="card-label">Named entity recognition</div><div class="card-tag">Elon [PER] SpaceX [ORG]</div></div>
+
+    <div class="card"><div class="chart-wrap">
+      <svg viewBox="0 0 150 64" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="The sentence the cat sat down bracketed into a noun phrase the cat and a verb phrase sat down">
+        <text x="75" y="12" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="7.5" fill="#666">the cat sat down</text>
+        <path d="M4,22 L4,34 L40,34 L40,22" fill="none" stroke="#e8187a" stroke-width="1.4"/>
+        <rect x="6" y="36" width="32" height="16" rx="4" fill="#fde7ef" stroke="#e8187a" stroke-width="1"/>
+        <text x="22" y="47" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="7" font-weight="700" fill="#e8187a">NP</text>
+        <path d="M46,22 L46,34 L104,34 L104,22" fill="none" stroke="#e8187a" stroke-width="1.4"/>
+        <rect x="48" y="36" width="54" height="16" rx="4" fill="#fde7ef" stroke="#e8187a" stroke-width="1"/>
+        <text x="75" y="47" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="7" font-weight="700" fill="#e8187a">VP</text>
+        <text x="22" y="60" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="6" fill="#aaa">the cat</text>
+        <text x="75" y="60" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="6" fill="#aaa">sat down</text>
+      </svg>
+    </div><div class="card-label">Chunking</div><div class="card-tag">[NP the cat][VP sat down]</div></div>
+
+    <div class="card"><div class="chart-wrap">
+      <svg viewBox="0 0 150 64" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="An arc diagram over the sentence The cat sat connecting cat to sat with a labeled subject dependency arc">
+        <defs><marker id="nl12" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="5" markerHeight="5" orient="auto-start-reverse"><path d="M2 1L8 5L2 9" fill="none" stroke="#e8187a" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></marker></defs>
+        <text x="20" y="50" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="9" fill="#666">The</text>
+        <text x="70" y="50" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="9" fill="#e8187a" font-weight="600">cat</text>
+        <text x="120" y="50" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="9" fill="#e8187a" font-weight="600">sat</text>
+        <path d="M70,42 Q95,14 120,42" fill="none" stroke="#e8187a" stroke-width="1.6" marker-end="url(#nl12)"/>
+        <text x="95" y="16" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="6.5" fill="#e8187a">subj</text>
+      </svg>
+    </div><div class="card-label">Dependency parsing</div><div class="card-tag">subj(cat, sat)</div></div>
+
+    <div class="card"><div class="chart-wrap">
+      <svg viewBox="0 0 150 64" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="The sentence Maria said she is happy with a curved arc linking the pronoun she back to the noun Maria it refers to">
+        <defs><marker id="nl13" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="5" markerHeight="5" orient="auto-start-reverse"><path d="M2 1L8 5L2 9" fill="none" stroke="#e8187a" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></marker></defs>
+        <text x="18" y="46" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="8.5" fill="#e8187a" font-weight="600">Maria</text>
+        <text x="52" y="46" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="8.5" fill="#999">said</text>
+        <text x="78" y="46" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="8.5" fill="#e8187a" font-weight="600">she</text>
+        <text x="112" y="46" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="8.5" fill="#999">is happy</text>
+        <path d="M78,38 Q50,10 18,38" fill="none" stroke="#e8187a" stroke-width="1.5" stroke-dasharray="3 2" marker-end="url(#nl13)"/>
+        <text x="48" y="14" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="6.5" fill="#e8187a">she = Maria</text>
+      </svg>
+    </div><div class="card-label">Coreference resolution</div><div class="card-tag">she = Maria</div></div>
   </div>
   <div class="formula">B-PER I-PER O O <span class="k">B-ORG</span> O <span class="c">← BIO tagging scheme</span></div>
 </div>
@@ -213,11 +499,57 @@ footer a{color:var(--pk);text-decoration:none}
 <div class="sec">
   <div class="sec-head"><span class="sec-num">06</span><div class="sec-title">Text Classification &amp; Sentiment</div><div class="sec-line"></div></div>
   <p class="sec-desc">Turning a block of text into a label — spam or not, positive or negative, this topic or that one.</p>
-  <div class="ex-grid">
-    <div class="ex-card"><div class="ex-label">Naive Bayes classifier</div><div class="ex-line"><span class="ex-in">"free money now"</span></div><div class="ex-line" style="margin-top:8px"><span class="ex-arrow">→</span><span class="ex-out">spam (98%)</span></div></div>
-    <div class="ex-card"><div class="ex-label">Sentiment analysis</div><div class="ex-line"><span class="ex-in">"loved this!"</span><span class="ex-arrow">→</span><span class="ex-pill">positive</span></div></div>
-    <div class="ex-card"><div class="ex-label">Spam detection</div><div class="ex-line"><span class="ex-in">"click to win $$$"</span></div><div class="ex-line" style="margin-top:8px"><span class="ex-arrow">→</span><span class="ex-out">spam</span></div></div>
-    <div class="ex-card"><div class="ex-label">Topic modeling (LDA)</div><div class="ex-line"><span class="ex-in">doc</span><span class="ex-arrow">→</span></div><div class="chip-row"><span class="chip">sports 60%</span><span class="chip">politics 25%</span></div></div>
+  <div class="grid">
+    <div class="card"><div class="chart-wrap">
+      <svg viewBox="0 0 150 64" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="The message free money now feeding through a probability arrow into the classified label spam at 98 percent">
+        <defs><marker id="nl14" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="5" markerHeight="5" orient="auto-start-reverse"><path d="M2 1L8 5L2 9" fill="none" stroke="#e8187a" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></marker></defs>
+        <rect x="2" y="18" width="70" height="26" rx="5" fill="#f2f1ef" stroke="#ccc" stroke-width="1"/>
+        <text x="37" y="34" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="7.5" fill="#666">"free money</text>
+        <text x="37" y="42" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="7.5" fill="#666">now"</text>
+        <line x1="76" y1="31" x2="90" y2="31" stroke="#e8187a" stroke-width="1.6" marker-end="url(#nl14)"/>
+        <text x="83" y="24" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="6" fill="#e8187a">P</text>
+        <rect x="94" y="18" width="52" height="26" rx="5" fill="#e8187a"/>
+        <text x="120" y="32" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="8" font-weight="700" fill="#fff">spam</text>
+        <text x="120" y="42" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="7" fill="#fff">98%</text>
+      </svg>
+    </div><div class="card-label">Naive Bayes classifier</div><div class="card-tag">spam (98%)</div></div>
+
+    <div class="card"><div class="chart-wrap">
+      <svg viewBox="0 0 150 64" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="The text loved this feeding an arrow into a positive sentiment pill">
+        <defs><marker id="nl15" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="5" markerHeight="5" orient="auto-start-reverse"><path d="M2 1L8 5L2 9" fill="none" stroke="#e8187a" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></marker></defs>
+        <text x="42" y="30" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="8.5" fill="#666">"loved this!"</text>
+        <line x1="4" y1="40" x2="80" y2="40" stroke="none"/>
+        <line x1="82" y1="30" x2="96" y2="30" stroke="#e8187a" stroke-width="1.6" marker-end="url(#nl15)"/>
+        <rect x="100" y="20" width="46" height="20" rx="10" fill="#e8187a"/>
+        <text x="123" y="34" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="8" font-weight="700" fill="#fff">positive</text>
+        <path d="M20,46 Q42,58 64,46" fill="none" stroke="#e8187a" stroke-width="1.6" stroke-linecap="round"/>
+      </svg>
+    </div><div class="card-label">Sentiment analysis</div><div class="card-tag">"loved this!" → positive</div></div>
+
+    <div class="card"><div class="chart-wrap">
+      <svg viewBox="0 0 150 64" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="The message click to win dollar dollar dollar feeding an arrow into a spam classification">
+        <defs><marker id="nl16" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="5" markerHeight="5" orient="auto-start-reverse"><path d="M2 1L8 5L2 9" fill="none" stroke="#e8187a" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></marker></defs>
+        <rect x="2" y="16" width="78" height="30" rx="5" fill="#f2f1ef" stroke="#ccc" stroke-width="1"/>
+        <text x="41" y="30" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="7" fill="#666">"click to win</text>
+        <text x="41" y="40" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="7" fill="#666">$$$"</text>
+        <line x1="84" y1="31" x2="98" y2="31" stroke="#e8187a" stroke-width="1.6" marker-end="url(#nl16)"/>
+        <rect x="102" y="20" width="44" height="22" rx="5" fill="#e8187a"/>
+        <text x="124" y="35" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="8.5" font-weight="700" fill="#fff">spam</text>
+      </svg>
+    </div><div class="card-label">Spam detection</div><div class="card-tag">click to win $$$ → spam</div></div>
+
+    <div class="card"><div class="chart-wrap">
+      <svg viewBox="0 0 150 64" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="A document icon fanning out into two topic proportion bars, sports at 60 percent and politics at 25 percent">
+        <defs><marker id="nl17" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="5" markerHeight="5" orient="auto-start-reverse"><path d="M2 1L8 5L2 9" fill="none" stroke="#e8187a" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></marker></defs>
+        <rect x="4" y="10" width="30" height="40" rx="3" fill="#fde7ef" stroke="#e8187a" stroke-width="1.3"/>
+        <line x1="10" y1="20" x2="28" y2="20" stroke="#e8187a" stroke-width="1" opacity="0.5"/><line x1="10" y1="27" x2="28" y2="27" stroke="#e8187a" stroke-width="1" opacity="0.5"/><line x1="10" y1="34" x2="24" y2="34" stroke="#e8187a" stroke-width="1" opacity="0.5"/>
+        <text x="19" y="58" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="6" fill="#999">doc</text>
+        <path d="M36,22 Q54,10 68,14" fill="none" stroke="#e8187a" stroke-width="1.2" opacity="0.7" marker-end="url(#nl17)"/>
+        <path d="M36,38 Q54,50 68,46" fill="none" stroke="#e8187a" stroke-width="1.2" opacity="0.7" marker-end="url(#nl17)"/>
+        <rect x="72" y="8" width="60" height="12" fill="#e8187a" rx="3"/><text x="102" y="17" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="6.3" font-weight="700" fill="#fff">sports 60%</text>
+        <rect x="72" y="42" width="46" height="12" fill="#f7a8c9" rx="3"/><text x="95" y="51" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="6.3" font-weight="700" fill="#fff">politics 25%</text>
+      </svg>
+    </div><div class="card-label">Topic modeling (LDA)</div><div class="card-tag">sports 60% · politics 25%</div></div>
   </div>
   <div class="formula">P(class | doc) = <span class="k">P(doc | class) × P(class) / P(doc)</span></div>
 </div>
@@ -226,11 +558,60 @@ footer a{color:var(--pk);text-decoration:none}
 <div class="sec">
   <div class="sec-head"><span class="sec-num">07</span><div class="sec-title">Attention &amp; Transformer-based NLP</div><div class="sec-line"></div></div>
   <p class="sec-desc">Letting a model weigh every word against every other word at once — the shift that produced modern language models.</p>
-  <div class="ex-grid">
-    <div class="ex-card"><div class="ex-label">Attention mechanism</div><div class="ex-multiline">"The animal didn't cross the street because <span class="ex-chip">it</span> was tired" — <span class="ex-out">it → animal</span></div></div>
-    <div class="ex-card"><div class="ex-label">Self-attention</div><div class="ex-line"><span class="ex-in">every word</span><span class="ex-arrow">↔</span><span class="ex-out">every other word</span></div></div>
-    <div class="ex-card"><div class="ex-label">BERT &amp; transfer learning</div><div class="ex-line"><span class="ex-in">pretrained on Wikipedia</span></div><div class="ex-line" style="margin-top:8px"><span class="ex-arrow">→</span><span class="ex-out">fine-tuned for sentiment</span></div></div>
-    <div class="ex-card"><div class="ex-label">Multi-head attention</div><div class="ex-line"><span class="ex-in">head 1: syntax</span></div><div class="ex-line"><span class="ex-in">head 2: coreference</span></div></div>
+  <div class="grid">
+    <div class="card"><div class="chart-wrap">
+      <svg viewBox="0 0 150 64" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="The sentence The animal didn't cross the street because it was tired, with a highlighted arc from the word it back to the word animal it refers to">
+        <defs><marker id="nl18" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="5" markerHeight="5" orient="auto-start-reverse"><path d="M2 1L8 5L2 9" fill="none" stroke="#e8187a" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></marker></defs>
+        <text x="6" y="46" font-family="JetBrains Mono, monospace" font-size="6.5" fill="#666">"The <tspan fill="#e8187a" font-weight="700">animal</tspan> didn't cross</text>
+        <text x="6" y="56" font-family="JetBrains Mono, monospace" font-size="6.5" fill="#666">the street because <tspan fill="#e8187a" font-weight="700">it</tspan> was tired"</text>
+        <path d="M110,50 Q90,12 40,40" fill="none" stroke="#e8187a" stroke-width="1.5" marker-end="url(#nl18)"/>
+        <text x="80" y="12" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="6.5" fill="#e8187a">it → animal</text>
+      </svg>
+    </div><div class="card-label">Attention mechanism</div><div class="card-tag">it → animal</div></div>
+
+    <div class="card"><div class="chart-wrap">
+      <svg viewBox="0 0 150 64" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="A 5 by 5 grid of self-attention scores between tokens, darker cells meaning higher attention weight, showing every word attending to every other word">
+        <g stroke="#fff" stroke-width="0.6">
+          <rect x="10" y="4" width="26" height="11.6" fill="#e8187a" opacity="0.25"/><rect x="36" y="4" width="26" height="11.6" fill="#e8187a" opacity="0.7"/><rect x="62" y="4" width="26" height="11.6" fill="#e8187a" opacity="0.15"/><rect x="88" y="4" width="26" height="11.6" fill="#e8187a" opacity="0.4"/><rect x="114" y="4" width="26" height="11.6" fill="#e8187a" opacity="0.2"/>
+          <rect x="10" y="15.6" width="26" height="11.6" fill="#e8187a" opacity="0.5"/><rect x="36" y="15.6" width="26" height="11.6" fill="#e8187a" opacity="0.9"/><rect x="62" y="15.6" width="26" height="11.6" fill="#e8187a" opacity="0.3"/><rect x="88" y="15.6" width="26" height="11.6" fill="#e8187a" opacity="0.2"/><rect x="114" y="15.6" width="26" height="11.6" fill="#e8187a" opacity="0.15"/>
+          <rect x="10" y="27.2" width="26" height="11.6" fill="#e8187a" opacity="0.2"/><rect x="36" y="27.2" width="26" height="11.6" fill="#e8187a" opacity="0.3"/><rect x="62" y="27.2" width="26" height="11.6" fill="#e8187a" opacity="0.95"/><rect x="88" y="27.2" width="26" height="11.6" fill="#e8187a" opacity="0.5"/><rect x="114" y="27.2" width="26" height="11.6" fill="#e8187a" opacity="0.25"/>
+          <rect x="10" y="38.8" width="26" height="11.6" fill="#e8187a" opacity="0.15"/><rect x="36" y="38.8" width="26" height="11.6" fill="#e8187a" opacity="0.25"/><rect x="62" y="38.8" width="26" height="11.6" fill="#e8187a" opacity="0.4"/><rect x="88" y="38.8" width="26" height="11.6" fill="#e8187a" opacity="0.85"/><rect x="114" y="38.8" width="26" height="11.6" fill="#e8187a" opacity="0.35"/>
+          <rect x="10" y="50.4" width="26" height="11.6" fill="#e8187a" opacity="0.3"/><rect x="36" y="50.4" width="26" height="11.6" fill="#e8187a" opacity="0.2"/><rect x="62" y="50.4" width="26" height="11.6" fill="#e8187a" opacity="0.3"/><rect x="88" y="50.4" width="26" height="11.6" fill="#e8187a" opacity="0.4"/><rect x="114" y="50.4" width="26" height="11.6" fill="#e8187a" opacity="0.9"/>
+        </g>
+      </svg>
+    </div><div class="card-label">Self-attention</div><div class="card-tag">token ↔ token</div></div>
+
+    <div class="card"><div class="chart-wrap">
+      <svg viewBox="0 0 150 64" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="A model pretrained on Wikipedia, then fine-tuned for the downstream task of sentiment classification">
+        <defs><marker id="nl19" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="5" markerHeight="5" orient="auto-start-reverse"><path d="M2 1L8 5L2 9" fill="none" stroke="#e8187a" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></marker></defs>
+        <rect x="2" y="14" width="60" height="30" rx="5" fill="#fbcfe4" stroke="#e8187a" stroke-width="1.3"/>
+        <text x="32" y="27" text-anchor="middle" font-family="Inter, sans-serif" font-weight="700" font-size="7.5" fill="#e8187a">Pretrain</text>
+        <text x="32" y="37" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="6" fill="#e8187a">Wikipedia</text>
+        <line x1="66" y1="29" x2="80" y2="29" stroke="#e8187a" stroke-width="1.6" marker-end="url(#nl19)"/>
+        <rect x="84" y="14" width="64" height="30" rx="5" fill="#e8187a"/>
+        <text x="116" y="27" text-anchor="middle" font-family="Inter, sans-serif" font-weight="700" font-size="7.5" fill="#fff">Fine-tune</text>
+        <text x="116" y="37" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="6" fill="#fff">sentiment</text>
+      </svg>
+    </div><div class="card-label">BERT &amp; transfer learning</div><div class="card-tag">pretrain → fine-tune</div></div>
+
+    <div class="card"><div class="chart-wrap">
+      <svg viewBox="0 0 150 64" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Two small parallel attention heatmaps, one head specializing in syntax and the other in coreference, converging into one combined output">
+        <defs><marker id="nl20" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="4.5" markerHeight="4.5" orient="auto-start-reverse"><path d="M2 1L8 5L2 9" fill="none" stroke="#e8187a" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></marker></defs>
+        <g stroke="#fff" stroke-width="0.5">
+          <rect x="4" y="8" width="13" height="13" fill="#e8187a" opacity="0.8"/><rect x="17" y="8" width="13" height="13" fill="#e8187a" opacity="0.2"/><rect x="4" y="21" width="13" height="13" fill="#e8187a" opacity="0.3"/><rect x="17" y="21" width="13" height="13" fill="#e8187a" opacity="0.6"/>
+        </g>
+        <text x="17" y="42" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="6" fill="#999">syntax</text>
+        <line x1="34" y1="18" x2="60" y2="30" stroke="#e8187a" stroke-width="1.3" opacity="0.7" marker-end="url(#nl20)"/>
+        <g stroke="#fff" stroke-width="0.5" transform="translate(0,32)">
+          <rect x="4" y="8" width="13" height="13" fill="#e8187a" opacity="0.4"/><rect x="17" y="8" width="13" height="13" fill="#e8187a" opacity="0.9"/><rect x="4" y="21" width="13" height="13" fill="#e8187a" opacity="0.25"/><rect x="17" y="21" width="13" height="13" fill="#e8187a" opacity="0.55"/>
+        </g>
+        <text x="17" y="60" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="6" fill="#999">coref</text>
+        <line x1="34" y1="46" x2="60" y2="34" stroke="#e8187a" stroke-width="1.3" opacity="0.7" marker-end="url(#nl20)"/>
+        <rect x="64" y="20" width="30" height="24" rx="5" fill="#e8187a"/>
+        <text x="79" y="35" text-anchor="middle" font-family="Inter, sans-serif" font-weight="700" font-size="7.5" fill="#fff">out</text>
+        <text x="120" y="35" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="6" fill="#aaa">concat</text>
+      </svg>
+    </div><div class="card-label">Multi-head attention</div><div class="card-tag">h1 syntax · h2 coref</div></div>
   </div>
 
   <div class="formula">Attention(Q,K,V) = <span class="k">softmax(QKᵀ / √dₖ) · V</span></div>

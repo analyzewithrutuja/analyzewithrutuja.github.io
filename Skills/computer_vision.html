@@ -1,0 +1,782 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Computer Vision Skills | Rutuja Patel</title>
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0%25' y1='0%25' x2='100%25' y2='100%25'%3E%3Cstop offset='0%25' stop-color='%23e8187a'/%3E%3Cstop offset='100%25' stop-color='%23f9004d'/%3E%3C/linearGradient%3E%3C/defs%3E%3Ccircle cx='32' cy='32' r='32' fill='url(%23g)'/%3E%3Ctext x='32' y='42' font-family='Poppins, Arial, sans-serif' font-weight='800' font-size='26' fill='white' text-anchor='middle'%3ERP%3C/text%3E%3C/svg%3E">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet"/>
+<style>
+:root{--pk:#e8187a;--pka:rgba(232,24,122,.1);--pkb:rgba(232,24,122,.2);--pkc:rgba(232,24,122,.5);--bg:#f8f7f5;--bg2:#ffffff;--bg3:#f2f1ef;--border:rgba(0,0,0,0.08);--border2:rgba(232,24,122,.25);--text:#1a1a1a;--muted:#6b6b6b;--dim:#aaaaaa;--navy:#190d26;--mono:'JetBrains Mono',monospace;--sans:'Inter',sans-serif;--r:16px;--rl:22px}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--text);font-family:var(--sans);font-size:15px;line-height:1.7}
+.backlink{display:block;max-width:900px;margin:0 auto;padding:24px 5% 0;font-family:var(--mono);font-size:.72rem}
+.backlink a{color:var(--pk);text-decoration:none}
+.backlink a:hover{text-decoration:underline}
+.hero{max-width:900px;margin:0 auto;padding:24px 5% 32px;text-align:center}
+.eyebrow{font-family:var(--mono);font-size:.68rem;letter-spacing:.14em;text-transform:uppercase;color:var(--pk);margin-bottom:14px;font-weight:500}
+.hero h1{font-size:clamp(1.6rem,4vw,2.4rem);font-weight:700;line-height:1.15;letter-spacing:-.025em;color:var(--text);margin-bottom:8px}
+.hero-sub{font-size:.95rem;color:var(--muted);max-width:480px;margin:0 auto 40px}
+.page{max-width:900px;margin:0 auto;padding:32px 5% 80px}
+.sec{margin-bottom:56px}
+.sec-head{display:flex;align-items:center;gap:14px;margin-bottom:8px}
+.sec-num{font-family:var(--mono);font-size:.68rem;color:var(--pk);font-weight:500}
+.sec-title{font-size:1.1rem;font-weight:700;color:var(--text);letter-spacing:-.01em}
+.sec-line{flex:1;height:1px;background:var(--border)}
+.sec-desc{font-size:.83rem;color:var(--muted);margin-bottom:20px;padding-left:42px}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:14px}
+.card{background:var(--bg2);border:1px solid var(--border);border-radius:var(--rl);padding:20px 16px 16px;display:flex;flex-direction:column;align-items:center;gap:10px;transition:border-color .2s,box-shadow .2s;cursor:default}
+.card:hover{border-color:var(--pkb);box-shadow:0 4px 20px rgba(232,24,122,.08)}
+.chart-wrap{width:100%;height:64px;position:relative}
+.card-label{font-size:12.5px;font-weight:600;color:var(--text);text-align:center;line-height:1.35}
+.card-tag{font-size:10px;color:var(--pk);background:var(--pka);border:1px solid var(--pkb);border-radius:20px;padding:3px 10px;font-family:var(--mono);letter-spacing:.04em}
+.formula{background:var(--bg3);border:1px solid var(--border);border-left:3px solid var(--pk);border-radius:0 var(--r) var(--r) 0;padding:12px 16px;font-family:var(--mono);font-size:.75rem;color:#555;margin:12px 0;line-height:2}
+.formula .c{color:var(--dim)}
+.formula .k{color:var(--pk)}
+.chart-wrap svg{width:100%;height:100%;display:block}
+
+/* detection pipeline signature panel */
+.tree-panel{background:var(--navy);border-radius:var(--rl);padding:28px clamp(8px,3vw,32px) 18px;margin:20px 0}
+.tree-panel svg{display:block;width:100%;height:auto}
+.tree-caption{text-align:center;font-size:.75rem;color:rgba(255,255,255,.45);font-family:var(--mono);margin-top:8px}
+.tree-legend{display:flex;flex-wrap:wrap;justify-content:center;gap:20px;padding:16px 6px 4px;font-size:.7rem;color:rgba(255,255,255,.5);font-family:var(--mono)}
+.tree-legend span{display:inline-flex;align-items:center;gap:6px}
+.tdot{width:10px;height:10px;border-radius:50%;display:inline-block;flex:none}
+.tdot.node{background:#3a3a46}
+.tdot.yes{background:var(--pk)}
+.tdot.no{background:transparent;border:2px solid var(--pk)}
+
+footer{border-top:1px solid var(--border);padding:28px 5%;display:flex;align-items:center;justify-content:space-between;font-family:var(--mono);font-size:.7rem;color:var(--dim);max-width:900px;margin:0 auto}
+footer span{color:var(--pk)}
+footer a{color:var(--pk);text-decoration:none}
+@media(max-width:600px){.grid{grid-template-columns:repeat(2,1fr)}}
+</style>
+</head>
+<body>
+
+<div class="backlink"><a href="../index.html#features">&larr; Back to portfolio</a></div>
+
+<div class="hero">
+  <h1>Computer Vision</h1>
+  <p class="hero-sub">From raw pixels to detected, segmented, and understood scenes — turning images into insight.</p>
+</div>
+
+<div class="page">
+
+<!-- 01 IMAGE FUNDAMENTALS & PREPROCESSING -->
+<div class="sec">
+  <div class="sec-head"><span class="sec-num">01</span><div class="sec-title">Image Fundamentals &amp; Preprocessing</div><div class="sec-line"></div></div>
+  <p class="sec-desc">Every vision model starts with pixels — getting color, contrast, and scale right before a network ever sees the image.</p>
+  <div class="grid">
+    <div class="card"><div class="chart-wrap">
+      <svg viewBox="0 0 150 64" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="An image split into stacked red, green and blue channel tiles">
+        <rect x="66" y="6" width="40" height="40" rx="5" fill="#3b82f6" opacity="0.88"/>
+        <rect x="54" y="14" width="40" height="40" rx="5" fill="#22c55e" opacity="0.88"/>
+        <rect x="42" y="22" width="40" height="40" rx="5" fill="#ef4444" opacity="0.92"/>
+        <text x="62" y="46" text-anchor="middle" font-family="Inter, sans-serif" font-weight="700" font-size="14" fill="#fff">R</text>
+        <text x="88" y="22" text-anchor="middle" font-family="Inter, sans-serif" font-weight="700" font-size="12" fill="#fff">G</text>
+        <text x="100" y="14" text-anchor="middle" font-family="Inter, sans-serif" font-weight="700" font-size="12" fill="#fff">B</text>
+      </svg>
+    </div><div class="card-label">Pixels &amp; Color Spaces</div><div class="card-tag">RGB · HSV · Grayscale</div></div>
+
+    <div class="card"><div class="chart-wrap">
+      <svg viewBox="0 0 150 64" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="A 3 by 3 kernel sliding across a pixel grid and producing one output value">
+        <defs><marker id="cvA1" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="5.5" markerHeight="5.5" orient="auto-start-reverse"><path d="M2 1L8 5L2 9" fill="none" stroke="#e8187a" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></marker></defs>
+        <rect x="6" y="8" width="66" height="44" fill="#f2f1ef" stroke="#ddd" stroke-width="1"/>
+        <g stroke="#ddd" stroke-width="1">
+          <line x1="17" y1="8" x2="17" y2="52"/><line x1="28" y1="8" x2="28" y2="52"/><line x1="39" y1="8" x2="39" y2="52"/><line x1="50" y1="8" x2="50" y2="52"/><line x1="61" y1="8" x2="61" y2="52"/>
+          <line x1="6" y1="19" x2="72" y2="19"/><line x1="6" y1="30" x2="72" y2="30"/><line x1="6" y1="41" x2="72" y2="41"/>
+        </g>
+        <rect x="6" y="8" width="33" height="33" fill="rgba(232,24,122,0.22)" stroke="#e8187a" stroke-width="1.8"/>
+        <rect x="17" y="8" width="33" height="33" fill="none" stroke="#e8187a" stroke-width="1.3" stroke-dasharray="3 2"/>
+        <line x1="41" y1="4" x2="47" y2="4" stroke="#e8187a" stroke-width="1.6" marker-end="url(#cvA1)"/>
+        <line x1="39" y1="24" x2="98" y2="24" stroke="#e8187a" stroke-width="1.6" stroke-dasharray="2 2" marker-end="url(#cvA1)"/>
+        <rect x="104" y="15" width="18" height="18" rx="3" fill="#e8187a"/>
+      </svg>
+    </div><div class="card-label">Convolution Operation</div><div class="card-tag">kernel · filter</div></div>
+
+    <div class="card"><div class="chart-wrap">
+      <svg viewBox="0 0 150 64" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="A solid image shape on the left and just its traced outline on the right">
+        <defs><marker id="cvA2" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="5.5" markerHeight="5.5" orient="auto-start-reverse"><path d="M2 1L8 5L2 9" fill="none" stroke="#e8187a" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></marker></defs>
+        <path d="M8,50 L24,14 L34,30 L48,8 L58,50 Z" fill="#dcdcda"/>
+        <line x1="64" y1="12" x2="64" y2="52" stroke="#e2e2e2" stroke-width="1" stroke-dasharray="2 2"/>
+        <line x1="64" y1="32" x2="82" y2="32" stroke="#e8187a" stroke-width="1.6" marker-end="url(#cvA2)"/>
+        <path d="M90,50 L106,14 L116,30 L130,8 L140,50 Z" fill="none" stroke="#e8187a" stroke-width="2.2" stroke-linejoin="round"/>
+      </svg>
+    </div><div class="card-label">Edge Detection</div><div class="card-tag">Sobel · Canny</div></div>
+
+    <div class="card"><div class="chart-wrap">
+      <svg viewBox="0 0 150 64" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="A raw 0 to 255 pixel range rescaled to a range centered on zero">
+        <defs>
+          <marker id="cvA3" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="5" markerHeight="5" orient="auto-start-reverse"><path d="M2 1L8 5L2 9" fill="none" stroke="#e8187a" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></marker>
+          <linearGradient id="cvGray" x1="0" y1="0" x2="1" y2="0"><stop offset="0%" stop-color="#eee"/><stop offset="100%" stop-color="#555"/></linearGradient>
+          <linearGradient id="cvPink" x1="0" y1="0" x2="1" y2="0"><stop offset="0%" stop-color="#fbcfe4"/><stop offset="50%" stop-color="#e8187a"/><stop offset="100%" stop-color="#fbcfe4"/></linearGradient>
+        </defs>
+        <rect x="14" y="4" width="122" height="10" rx="5" fill="url(#cvGray)"/>
+        <text x="14" y="22" font-family="JetBrains Mono, monospace" font-size="8" fill="#888">0</text>
+        <text x="75" y="22" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="8" fill="#888">128</text>
+        <text x="136" y="22" text-anchor="end" font-family="JetBrains Mono, monospace" font-size="8" fill="#888">255</text>
+        <line x1="75" y1="26" x2="75" y2="33" stroke="#e8187a" stroke-width="1.6" marker-end="url(#cvA3)"/>
+        <rect x="14" y="36" width="122" height="10" rx="5" fill="url(#cvPink)"/>
+        <text x="14" y="58" font-family="JetBrains Mono, monospace" font-size="8" fill="#e8187a">−1</text>
+        <text x="75" y="58" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="8" fill="#e8187a">0</text>
+        <text x="136" y="58" text-anchor="end" font-family="JetBrains Mono, monospace" font-size="8" fill="#e8187a">1</text>
+      </svg>
+    </div><div class="card-label">Normalization</div><div class="card-tag">(x−μ)/σ</div></div>
+
+    <div class="card"><div class="chart-wrap">
+      <svg viewBox="0 0 150 64" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="A peaked narrow histogram on the left stretched into a flat wide histogram on the right">
+        <defs><marker id="cvA4" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="5.5" markerHeight="5.5" orient="auto-start-reverse"><path d="M2 1L8 5L2 9" fill="none" stroke="#e8187a" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></marker></defs>
+        <text x="30" y="9" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="7" fill="#999">peaked</text>
+        <g fill="#d9d9d9">
+          <rect x="6" y="48" width="6" height="8"/><rect x="13" y="38" width="6" height="18"/><rect x="20" y="26" width="6" height="30"/><rect x="27" y="26" width="6" height="30"/><rect x="34" y="38" width="6" height="18"/><rect x="41" y="48" width="6" height="8"/>
+        </g>
+        <line x1="54" y1="34" x2="82" y2="34" stroke="#e8187a" stroke-width="1.6" marker-end="url(#cvA4)"/>
+        <text x="112" y="9" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="7" fill="#e8187a">flat</text>
+        <g fill="#e8187a">
+          <rect x="88" y="32" width="6" height="24"/><rect x="95" y="30" width="6" height="26"/><rect x="102" y="31" width="6" height="25"/><rect x="109" y="30" width="6" height="26"/><rect x="116" y="32" width="6" height="24"/><rect x="123" y="31" width="6" height="25"/>
+        </g>
+      </svg>
+    </div><div class="card-label">Histogram Equalization</div><div class="card-tag">contrast stretch</div></div>
+
+    <div class="card"><div class="chart-wrap">
+      <svg viewBox="0 0 150 64" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="One original image icon next to flipped, rotated and cropped copies of it">
+        <rect x="4" y="8" width="30" height="46" rx="4" fill="#fff" stroke="#cbd5e1" stroke-width="1.5"/>
+        <path d="M10,44 L19,24 L28,44 Z" fill="#9ca3af"/>
+        <rect x="42" y="8" width="30" height="46" rx="4" fill="#fde7ef" stroke="#e8187a" stroke-width="1.5"/>
+        <path d="M48,24 L57,44 L66,24 Z" fill="#e8187a" opacity="0.85"/>
+        <rect x="80" y="8" width="30" height="46" rx="4" fill="#fde7ef" stroke="#e8187a" stroke-width="1.5"/>
+        <g transform="rotate(35 95 31)"><path d="M86,44 L95,24 L104,44 Z" fill="#e8187a" opacity="0.85"/></g>
+        <rect x="118" y="8" width="30" height="46" rx="4" fill="#fde7ef" stroke="#e8187a" stroke-width="1.5"/>
+        <path d="M124,44 L133,24 L142,44 Z" fill="#e8187a" opacity="0.55"/>
+        <rect x="127" y="18" width="16" height="26" fill="none" stroke="#e8187a" stroke-width="1.4" stroke-dasharray="2 2"/>
+      </svg>
+    </div><div class="card-label">Data Augmentation</div><div class="card-tag">flip · rotate · crop · jitter</div></div>
+
+    <div class="card"><div class="chart-wrap">
+      <svg viewBox="0 0 150 64" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="A padded border added around an image grid, with a kernel jumping two cells at a time across it">
+        <defs><marker id="cvA5" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="5" markerHeight="5" orient="auto-start-reverse"><path d="M2 1L8 5L2 9" fill="none" stroke="#e8187a" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></marker></defs>
+        <rect x="10" y="6" width="60" height="50" fill="#f7f7f6" stroke="#d4d4d4" stroke-width="1" stroke-dasharray="2 2"/>
+        <rect x="20" y="16" width="40" height="30" fill="#e9e9e7" stroke="#bbb" stroke-width="1"/>
+        <rect x="10" y="6" width="30" height="30" fill="rgba(232,24,122,0.22)" stroke="#e8187a" stroke-width="1.8"/>
+        <rect x="30" y="6" width="30" height="30" fill="none" stroke="#e8187a" stroke-width="1.3" stroke-dasharray="3 2"/>
+        <line x1="26" y1="2" x2="44" y2="2" stroke="#e8187a" stroke-width="1.6" marker-end="url(#cvA5)"/>
+        <text x="86" y="24" font-family="JetBrains Mono, monospace" font-size="8" fill="#e8187a">stride 2</text>
+        <text x="86" y="40" font-family="JetBrains Mono, monospace" font-size="8" fill="#999">padding = 1</text>
+      </svg>
+    </div><div class="card-label">Padding &amp; Stride</div><div class="card-tag">(W−F+2P)/S+1</div></div>
+  </div>
+  <div class="formula">x_norm = <span class="k">(x − μ) / σ</span> <span class="c">← per-channel normalization before the CNN</span></div>
+</div>
+
+<!-- 02 CNN ARCHITECTURES FOR VISION -->
+<div class="sec">
+  <div class="sec-head"><span class="sec-num">02</span><div class="sec-title">CNN Architectures for Vision</div><div class="sec-line"></div></div>
+  <p class="sec-desc">Two decades of architecture design — each generation trading parameters and depth for a sharper decision boundary.</p>
+  <div class="grid">
+    <div class="card"><div class="chart-wrap">
+      <svg viewBox="0 0 150 64" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="A blurry handwritten digit feeding into a shallow three layer network">
+        <defs><marker id="cvA6" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="5" markerHeight="5" orient="auto-start-reverse"><path d="M2 1L8 5L2 9" fill="none" stroke="#e8187a" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></marker></defs>
+        <rect x="6" y="10" width="36" height="36" fill="#f2f1ef" stroke="#ddd"/>
+        <path d="M14,18 H32 M14,18 V28 H26 V38 H14" fill="none" stroke="#9ca3af" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"/>
+        <line x1="46" y1="28" x2="54" y2="28" stroke="#e8187a" stroke-width="1.6" marker-end="url(#cvA6)"/>
+        <rect x="60" y="14" width="16" height="34" rx="2" fill="#fbcfe4"/>
+        <rect x="82" y="19" width="14" height="24" rx="2" fill="#f492b8"/>
+        <rect x="102" y="23" width="12" height="16" rx="2" fill="#e8187a"/>
+      </svg>
+    </div><div class="card-label">LeNet-5</div><div class="card-tag">1998 · digits</div></div>
+
+    <div class="card"><div class="chart-wrap">
+      <svg viewBox="0 0 150 64" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="A deep layer stack next to a dropped neuron and a ReLU activation kink">
+        <g fill="#fbcfe4">
+          <rect x="4" y="24" width="14" height="30" rx="2"/>
+          <rect x="22" y="20" width="14" height="34" rx="2" fill="#f492b8"/>
+          <rect x="40" y="26" width="14" height="28" rx="2" fill="#e8187a"/>
+        </g>
+        <circle cx="66" cy="26" r="5" fill="none" stroke="#bbb" stroke-width="1.5"/>
+        <line x1="62" y1="22" x2="70" y2="30" stroke="#bbb" stroke-width="1.5"/>
+        <line x1="70" y1="22" x2="62" y2="30" stroke="#bbb" stroke-width="1.5"/>
+        <circle cx="66" cy="44" r="5" fill="#e8187a"/>
+        <text x="66" y="58" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="6.5" fill="#999">dropout</text>
+        <path d="M96,50 L112,50 L128,18" fill="none" stroke="#e8187a" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
+        <text x="112" y="14" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="7" fill="#e8187a">ReLU</text>
+      </svg>
+    </div><div class="card-label">AlexNet</div><div class="card-tag">2012 · ReLU + Dropout</div></div>
+
+    <div class="card"><div class="chart-wrap">
+      <svg viewBox="0 0 150 64" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Six identical small 3 by 3 kernel blocks stacked deep">
+        <rect x="4" y="16" width="18" height="32" fill="#fbcfe4" stroke="#e8187a" stroke-width="1"/>
+        <rect x="26" y="16" width="18" height="32" fill="#f7a8c9" stroke="#e8187a" stroke-width="1"/>
+        <rect x="48" y="16" width="18" height="32" fill="#f492b8" stroke="#e8187a" stroke-width="1"/>
+        <rect x="70" y="16" width="18" height="32" fill="#ec5f97" stroke="#e8187a" stroke-width="1"/>
+        <rect x="92" y="16" width="18" height="32" fill="#e8187a" stroke="#e8187a" stroke-width="1"/>
+        <rect x="114" y="16" width="18" height="32" fill="#c21463" stroke="#e8187a" stroke-width="1"/>
+      </svg>
+    </div><div class="card-label">VGG</div><div class="card-tag">3×3 convs · depth</div></div>
+
+    <div class="card"><div class="chart-wrap">
+      <svg viewBox="0 0 150 64" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Two convolution blocks in series feeding an addition node, with a curved skip connection bypassing them">
+        <defs><marker id="cvA7" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="5" markerHeight="5" orient="auto-start-reverse"><path d="M2 1L8 5L2 9" fill="none" stroke="#e8187a" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></marker></defs>
+        <rect x="14" y="24" width="24" height="20" rx="3" fill="#fbcfe4" stroke="#e8187a" stroke-width="1.3"/>
+        <rect x="63" y="24" width="24" height="20" rx="3" fill="#fbcfe4" stroke="#e8187a" stroke-width="1.3"/>
+        <circle cx="126" cy="34" r="11" fill="#e8187a"/>
+        <text x="126" y="38" text-anchor="middle" font-family="Inter, sans-serif" font-weight="700" font-size="13" fill="#fff">+</text>
+        <line x1="38" y1="34" x2="60" y2="34" stroke="#999" stroke-width="1.6" marker-end="url(#cvA7)"/>
+        <line x1="87" y1="34" x2="112" y2="34" stroke="#999" stroke-width="1.6" marker-end="url(#cvA7)"/>
+        <path d="M26,24 C26,4 126,4 126,23" fill="none" stroke="#e8187a" stroke-width="1.8" marker-end="url(#cvA7)"/>
+      </svg>
+    </div><div class="card-label">ResNet</div><div class="card-tag">skip connections</div></div>
+
+    <div class="card"><div class="chart-wrap">
+      <svg viewBox="0 0 150 64" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="One input splitting into three parallel branches with different sized filters before merging back together">
+        <circle cx="12" cy="32" r="7" fill="#9ca3af"/>
+        <line x1="19" y1="32" x2="34" y2="10" stroke="#ccc" stroke-width="1.3"/>
+        <line x1="19" y1="32" x2="34" y2="32" stroke="#ccc" stroke-width="1.3"/>
+        <line x1="19" y1="32" x2="34" y2="54" stroke="#ccc" stroke-width="1.3"/>
+        <rect x="34" y="4" width="14" height="12" rx="2" fill="#fbcfe4"/>
+        <rect x="34" y="25" width="20" height="14" rx="2" fill="#f492b8"/>
+        <rect x="34" y="46" width="28" height="16" rx="2" fill="#e8187a"/>
+        <line x1="48" y1="10" x2="120" y2="30" stroke="#ccc" stroke-width="1.3"/>
+        <line x1="54" y1="32" x2="120" y2="32" stroke="#ccc" stroke-width="1.3"/>
+        <line x1="62" y1="54" x2="120" y2="34" stroke="#ccc" stroke-width="1.3"/>
+        <circle cx="128" cy="32" r="9" fill="#9ca3af"/>
+      </svg>
+    </div><div class="card-label">Inception</div><div class="card-tag">multi-scale filters</div></div>
+
+    <div class="card"><div class="chart-wrap">
+      <svg viewBox="0 0 150 64" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="A small baseline block scaled up in width, depth and resolution at the same time">
+        <defs><marker id="cvA8" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="5" markerHeight="5" orient="auto-start-reverse"><path d="M2 1L8 5L2 9" fill="none" stroke="#e8187a" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></marker></defs>
+        <rect x="6" y="24" width="16" height="16" rx="3" fill="#fbcfe4" stroke="#e8187a" stroke-width="1.3"/>
+        <line x1="26" y1="32" x2="40" y2="32" stroke="#e8187a" stroke-width="1.6" marker-end="url(#cvA8)"/>
+        <rect x="46" y="8" width="54" height="48" rx="4" fill="#fbcfe4" stroke="#e8187a" stroke-width="1.6"/>
+        <line x1="100" y1="14" x2="112" y2="14" stroke="#e8187a" stroke-width="1.5" marker-end="url(#cvA8)"/>
+        <line x1="73" y1="56" x2="73" y2="60" stroke="#e8187a" stroke-width="1.5" marker-end="url(#cvA8)"/>
+        <line x1="106" y1="46" x2="116" y2="54" stroke="#e8187a" stroke-width="1.5" marker-end="url(#cvA8)"/>
+      </svg>
+    </div><div class="card-label">EfficientNet</div><div class="card-tag">compound scaling</div></div>
+
+    <div class="card"><div class="chart-wrap">
+      <svg viewBox="0 0 150 64" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Three channels each convolved separately, then combined by a thin 1 by 1 pointwise convolution">
+        <defs><marker id="cvA9" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="5" markerHeight="5" orient="auto-start-reverse"><path d="M2 1L8 5L2 9" fill="none" stroke="#e8187a" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></marker></defs>
+        <g fill="#fbcfe4" opacity="0.9"><rect x="4" y="6" width="16" height="16"/><rect x="4" y="24" width="16" height="16" opacity=".8"/><rect x="4" y="42" width="16" height="16" opacity=".65"/></g>
+        <g fill="none" stroke="#e8187a" stroke-width="1"><rect x="4" y="6" width="16" height="16"/><rect x="4" y="24" width="16" height="16"/><rect x="4" y="42" width="16" height="16"/></g>
+        <line x1="24" y1="14" x2="40" y2="14" stroke="#ccc" stroke-width="1.2"/>
+        <line x1="24" y1="32" x2="40" y2="32" stroke="#ccc" stroke-width="1.2"/>
+        <line x1="24" y1="50" x2="40" y2="50" stroke="#ccc" stroke-width="1.2"/>
+        <rect x="44" y="6" width="6" height="52" fill="#e8187a"/>
+        <line x1="54" y1="32" x2="68" y2="32" stroke="#e8187a" stroke-width="1.6" marker-end="url(#cvA9)"/>
+        <rect x="72" y="14" width="24" height="36" rx="3" fill="#e8187a"/>
+      </svg>
+    </div><div class="card-label">MobileNet</div><div class="card-tag">depthwise separable</div></div>
+  </div>
+  <div class="formula">stacking 3×3 convs <span class="k">grows the receptive field</span> <span class="c">← same effect as one large kernel, fewer parameters</span></div>
+</div>
+
+<!-- 03 IMAGE CLASSIFICATION & TRANSFER LEARNING -->
+<div class="sec">
+  <div class="sec-head"><span class="sec-num">03</span><div class="sec-title">Image Classification &amp; Transfer Learning</div><div class="sec-line"></div></div>
+  <p class="sec-desc">Deciding what an image shows — and standing on the shoulders of models already trained on millions of images.</p>
+  <div class="grid">
+    <div class="card"><div class="chart-wrap">
+      <svg viewBox="0 0 150 64" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Three class probabilities, cat highlighted as the highest scoring prediction with a checkmark">
+        <rect x="10" y="10" width="18" height="38" fill="#e8187a"/>
+        <text x="19" y="8" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="7" fill="#e8187a">.70</text>
+        <rect x="46" y="34" width="18" height="14" fill="#f7a8c9"/>
+        <text x="55" y="32" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="7" fill="#999">.20</text>
+        <rect x="82" y="41" width="18" height="7" fill="#fbcfe4"/>
+        <text x="91" y="39" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="7" fill="#999">.10</text>
+        <text x="19" y="58" text-anchor="middle" font-family="Inter, sans-serif" font-size="7" fill="#666">cat</text>
+        <text x="55" y="58" text-anchor="middle" font-family="Inter, sans-serif" font-size="7" fill="#999">dog</text>
+        <text x="91" y="58" text-anchor="middle" font-family="Inter, sans-serif" font-size="7" fill="#999">bird</text>
+        <path d="M114,20 l5,5 l9,-11" fill="none" stroke="#e8187a" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+    </div><div class="card-label">Softmax Classifier</div><div class="card-tag">Σp = 1</div></div>
+
+    <div class="card"><div class="chart-wrap">
+      <svg viewBox="0 0 150 64" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="A ranked list of five predictions with the correct label at rank one, counting for both top-1 and top-5">
+        <rect x="8" y="6" width="70" height="11" fill="#e8187a"/><text x="12" y="14" font-family="JetBrains Mono, monospace" font-size="7.5" fill="#fff">1. dog ✓</text>
+        <rect x="8" y="19" width="70" height="11" fill="#f2f1ef"/><text x="12" y="27" font-family="JetBrains Mono, monospace" font-size="7.5" fill="#999">2. wolf</text>
+        <rect x="8" y="32" width="70" height="11" fill="#f2f1ef"/><text x="12" y="40" font-family="JetBrains Mono, monospace" font-size="7.5" fill="#999">3. fox</text>
+        <rect x="8" y="45" width="70" height="11" fill="#f2f1ef"/><text x="12" y="53" font-family="JetBrains Mono, monospace" font-size="7.5" fill="#999">4. cat</text>
+        <text x="90" y="20" font-family="JetBrains Mono, monospace" font-size="7" fill="#e8187a">top-1 ✓</text>
+        <text x="90" y="34" font-family="JetBrains Mono, monospace" font-size="7" fill="#e8187a">top-5 ✓</text>
+      </svg>
+    </div><div class="card-label">Top-1 / Top-5 Accuracy</div><div class="card-tag">top-1 vs top-5</div></div>
+
+    <div class="card"><div class="chart-wrap">
+      <svg viewBox="0 0 150 64" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Early backbone layers frozen and gray, later layers fine-tuned and colored pink">
+        <g fill="#d8d8d6" stroke="#bbb" stroke-width="1">
+          <rect x="6" y="20" width="18" height="34" rx="2"/><rect x="28" y="20" width="18" height="34" rx="2"/><rect x="50" y="20" width="18" height="34" rx="2"/>
+        </g>
+        <g fill="#e8187a">
+          <rect x="76" y="14" width="18" height="40" rx="2"/><rect x="98" y="10" width="18" height="44" rx="2"/>
+        </g>
+        <text x="34" y="12" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="7" fill="#999">frozen</text>
+        <text x="96" y="6" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="7" fill="#e8187a">fine-tune</text>
+      </svg>
+    </div><div class="card-label">Transfer Learning</div><div class="card-tag">freeze · fine-tune</div></div>
+
+    <div class="card"><div class="chart-wrap">
+      <svg viewBox="0 0 150 64" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="A frozen pretrained backbone feeding into a small new classifier head">
+        <defs><marker id="cvA10" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="5" markerHeight="5" orient="auto-start-reverse"><path d="M2 1L8 5L2 9" fill="none" stroke="#e8187a" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></marker></defs>
+        <g fill="#d8d8d6" stroke="#bbb" stroke-width="1">
+          <rect x="4" y="18" width="16" height="36" rx="2"/><rect x="24" y="18" width="16" height="36" rx="2"/><rect x="44" y="18" width="16" height="36" rx="2"/>
+        </g>
+        <text x="32" y="10" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="5.5" fill="#999">pretrained (frozen)</text>
+        <line x1="64" y1="36" x2="78" y2="36" stroke="#e8187a" stroke-width="1.6" marker-end="url(#cvA10)"/>
+        <circle cx="100" cy="24" r="9" fill="#fbcfe4"/><circle cx="100" cy="44" r="9" fill="#fbcfe4"/>
+        <circle cx="126" cy="34" r="11" fill="#e8187a"/>
+        <line x1="109" y1="24" x2="117" y2="30" stroke="#e8187a" stroke-width="1"/>
+        <line x1="109" y1="44" x2="117" y2="38" stroke="#e8187a" stroke-width="1"/>
+        <text x="126" y="15" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="6.5" fill="#e8187a">new head</text>
+      </svg>
+    </div><div class="card-label">Feature Extraction</div><div class="card-tag">pretrained backbone</div></div>
+
+    <div class="card"><div class="chart-wrap">
+      <svg viewBox="0 0 150 64" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Three classes, each represented by only two labeled example points">
+        <g fill="#e8187a"><circle cx="20" cy="20" r="4"/><circle cx="30" cy="26" r="4"/></g>
+        <text x="25" y="42" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="6.5" fill="#999">class A</text>
+        <g fill="#f492b8"><circle cx="75" cy="14" r="4"/><circle cx="85" cy="20" r="4"/></g>
+        <text x="80" y="36" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="6.5" fill="#999">class B</text>
+        <g fill="#fbcfe4"><circle cx="125" cy="24" r="4"/><circle cx="135" cy="30" r="4"/></g>
+        <text x="130" y="46" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="6.5" fill="#999">class C</text>
+        <text x="75" y="60" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="7" fill="#e8187a">2-shot · 3-way</text>
+      </svg>
+    </div><div class="card-label">Few-Shot Learning</div><div class="card-tag">n-shot · k-way</div></div>
+
+    <div class="card"><div class="chart-wrap">
+      <svg viewBox="0 0 150 64" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="A tall majority class bar next to a short minority class bar, then the minority duplicated up to match">
+        <defs><marker id="cvA11" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="5" markerHeight="5" orient="auto-start-reverse"><path d="M2 1L8 5L2 9" fill="none" stroke="#e8187a" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></marker></defs>
+        <rect x="8" y="10" width="20" height="46" fill="#fbcfe4"/>
+        <text x="18" y="62" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="6.5" fill="#999">A: 900</text>
+        <rect x="42" y="46" width="20" height="10" fill="#f492b8"/>
+        <text x="52" y="62" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="6.5" fill="#999">B: 100</text>
+        <line x1="70" y1="34" x2="84" y2="34" stroke="#e8187a" stroke-width="1.6" marker-end="url(#cvA11)"/>
+        <rect x="90" y="10" width="20" height="46" fill="#e8187a"/>
+        <text x="100" y="62" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="6.5" fill="#e8187a">B: 900</text>
+      </svg>
+    </div><div class="card-label">Class Imbalance</div><div class="card-tag">oversample · reweight</div></div>
+  </div>
+  <div class="formula">ŷ = <span class="k">argmax(softmax(Wx + b))</span> <span class="c">← final class prediction</span></div>
+</div>
+
+<!-- 04 OBJECT DETECTION -->
+<div class="sec">
+  <div class="sec-head"><span class="sec-num">04</span><div class="sec-title">Object Detection</div><div class="sec-line"></div></div>
+  <p class="sec-desc">Not just what's in the image, but where — localizing every object with a box and a confidence score.</p>
+  <div class="grid">
+    <div class="card"><div class="chart-wrap">
+      <svg viewBox="0 0 150 64" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="An image with a bounding box drawn around an object, annotated with x, y, width and height">
+        <rect x="6" y="6" width="100" height="52" fill="#f2f1ef" stroke="#ddd"/>
+        <rect x="26" y="18" width="46" height="34" fill="none" stroke="#e8187a" stroke-width="2"/>
+        <line x1="6" y1="18" x2="26" y2="18" stroke="#999" stroke-width="1" stroke-dasharray="2 2"/>
+        <line x1="26" y1="6" x2="26" y2="18" stroke="#999" stroke-width="1" stroke-dasharray="2 2"/>
+        <text x="14" y="16" font-family="JetBrains Mono, monospace" font-size="7" fill="#999">y</text>
+        <text x="30" y="8" font-family="JetBrains Mono, monospace" font-size="7" fill="#999">x</text>
+        <line x1="26" y1="58" x2="72" y2="58" stroke="#e8187a" stroke-width="1"/>
+        <text x="49" y="63" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="7" fill="#e8187a">w</text>
+        <line x1="112" y1="18" x2="112" y2="52" stroke="#e8187a" stroke-width="1"/>
+        <text x="118" y="38" font-family="JetBrains Mono, monospace" font-size="7" fill="#e8187a">h</text>
+      </svg>
+    </div><div class="card-label">Bounding Boxes</div><div class="card-tag">x, y, w, h</div></div>
+
+    <div class="card"><div class="chart-wrap">
+      <svg viewBox="0 0 150 64" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="A predicted box and a ground truth box overlapping, with the overlap region shaded">
+        <rect x="20" y="14" width="60" height="36" fill="none" stroke="#9ca3af" stroke-width="2"/>
+        <rect x="46" y="24" width="60" height="36" fill="none" stroke="#e8187a" stroke-width="2"/>
+        <rect x="46" y="24" width="34" height="26" fill="#e8187a" opacity="0.35"/>
+        <text x="20" y="10" font-family="JetBrains Mono, monospace" font-size="6.5" fill="#999">ground truth</text>
+        <text x="106" y="62" text-anchor="end" font-family="JetBrains Mono, monospace" font-size="6.5" fill="#e8187a">predicted</text>
+      </svg>
+    </div><div class="card-label">Intersection over Union</div><div class="card-tag">overlap / union</div></div>
+
+    <div class="card"><div class="chart-wrap">
+      <svg viewBox="0 0 150 64" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Three anchor boxes of different sizes and aspect ratios centered on the same point">
+        <rect x="55" y="12" width="40" height="40" fill="none" stroke="#fbcfe4" stroke-width="1.6"/>
+        <rect x="45" y="20" width="60" height="24" fill="none" stroke="#f492b8" stroke-width="1.6"/>
+        <rect x="65" y="4" width="20" height="56" fill="none" stroke="#e8187a" stroke-width="1.6"/>
+        <circle cx="75" cy="32" r="2.5" fill="#e8187a"/>
+      </svg>
+    </div><div class="card-label">Anchor Boxes</div><div class="card-tag">multi-scale · multi-ratio</div></div>
+
+    <div class="card"><div class="chart-wrap">
+      <svg viewBox="0 0 150 64" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Many overlapping region proposal boxes narrowing down to one final detection">
+        <defs><marker id="cvA12" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="5" markerHeight="5" orient="auto-start-reverse"><path d="M2 1L8 5L2 9" fill="none" stroke="#e8187a" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></marker></defs>
+        <g fill="none" stroke="#fbcfe4" stroke-width="1.3">
+          <rect x="4" y="8" width="24" height="20"/><rect x="10" y="14" width="24" height="20"/><rect x="2" y="20" width="24" height="20"/><rect x="14" y="6" width="24" height="20"/>
+        </g>
+        <line x1="42" y1="30" x2="56" y2="30" stroke="#e8187a" stroke-width="1.6" marker-end="url(#cvA12)"/>
+        <rect x="62" y="14" width="28" height="26" fill="none" stroke="#f492b8" stroke-width="1.6"/>
+        <line x1="94" y1="27" x2="108" y2="27" stroke="#e8187a" stroke-width="1.6" marker-end="url(#cvA12)"/>
+        <rect x="114" y="16" width="26" height="24" fill="none" stroke="#e8187a" stroke-width="2.2"/>
+      </svg>
+    </div><div class="card-label">Two-Stage Detectors</div><div class="card-tag">R-CNN · Faster R-CNN</div></div>
+
+    <div class="card"><div class="chart-wrap">
+      <svg viewBox="0 0 150 64" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="A grid overlaid on an image, with one cell predicting a box in a single pass">
+        <rect x="6" y="6" width="90" height="52" fill="#f2f1ef" stroke="#ddd"/>
+        <g stroke="#ddd" stroke-width="1">
+          <line x1="36" y1="6" x2="36" y2="58"/><line x1="66" y1="6" x2="66" y2="58"/>
+          <line x1="6" y1="23" x2="96" y2="23"/><line x1="6" y1="40" x2="96" y2="40"/>
+        </g>
+        <rect x="36" y="23" width="30" height="17" fill="none" stroke="#e8187a" stroke-width="2"/>
+        <circle cx="51" cy="31" r="2" fill="#e8187a"/>
+        <text x="104" y="30" font-family="JetBrains Mono, monospace" font-size="7" fill="#e8187a">1 pass</text>
+        <text x="104" y="42" font-family="JetBrains Mono, monospace" font-size="6" fill="#999">no proposals</text>
+      </svg>
+    </div><div class="card-label">One-Stage Detectors</div><div class="card-tag">YOLO · SSD</div></div>
+
+    <div class="card"><div class="chart-wrap">
+      <svg viewBox="0 0 150 64" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Several overlapping duplicate boxes around one object reduced to a single surviving box">
+        <defs><marker id="cvA13" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="5" markerHeight="5" orient="auto-start-reverse"><path d="M2 1L8 5L2 9" fill="none" stroke="#e8187a" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></marker></defs>
+        <g fill="none" stroke="#f7a8c9" stroke-width="1.4">
+          <rect x="6" y="14" width="36" height="30"/><rect x="10" y="10" width="36" height="30"/><rect x="4" y="18" width="36" height="30"/>
+        </g>
+        <line x1="52" y1="30" x2="66" y2="30" stroke="#e8187a" stroke-width="1.6" marker-end="url(#cvA13)"/>
+        <rect x="90" y="14" width="40" height="32" fill="none" stroke="#e8187a" stroke-width="2.4"/>
+      </svg>
+    </div><div class="card-label">Non-Max Suppression</div><div class="card-tag">keep best box</div></div>
+
+    <div class="card"><div class="chart-wrap">
+      <svg viewBox="0 0 150 64" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Average precision per class with a dashed line marking the mean across all classes">
+        <g fill="#fbcfe4">
+          <rect x="8" y="20" width="14" height="36"/><rect x="28" y="8" width="14" height="48"/><rect x="48" y="30" width="14" height="26"/><rect x="68" y="16" width="14" height="40"/>
+        </g>
+        <line x1="4" y1="24" x2="86" y2="24" stroke="#e8187a" stroke-width="1.4" stroke-dasharray="3 2"/>
+        <text x="92" y="27" font-family="JetBrains Mono, monospace" font-size="7" fill="#e8187a">mAP</text>
+        <text x="15" y="63" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="6" fill="#999">A</text>
+        <text x="35" y="63" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="6" fill="#999">B</text>
+        <text x="55" y="63" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="6" fill="#999">C</text>
+        <text x="75" y="63" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="6" fill="#999">D</text>
+      </svg>
+    </div><div class="card-label">mAP</div><div class="card-tag">AP across classes</div></div>
+  </div>
+
+  <div class="tree-panel">
+    <svg viewBox="0 0 1000 380" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Object detection pipeline: an input image passes through a CNN backbone and comes out the other side with bounding boxes and class labels drawn on it">
+      <defs>
+        <marker id="od-arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+          <path d="M2 1L8 5L2 9" fill="none" stroke="#e8187a" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
+        </marker>
+      </defs>
+
+      <rect x="60" y="90" width="200" height="200" rx="8" fill="#2a2735"></rect>
+      <circle cx="130" cy="150" r="18" fill="#57576a"></circle>
+      <path d="M80 260 L150 190 L190 230 L240 170 L240 260 Z" fill="#3a3a46"></path>
+      <text x="160" y="315" text-anchor="middle" font-family="Inter, sans-serif" font-weight="700" font-size="14" fill="rgba(255,255,255,.6)">Input Image</text>
+
+      <line x1="270" y1="190" x2="360" y2="190" stroke="#e8187a" stroke-width="2.5" marker-end="url(#od-arrow)"></line>
+
+      <circle cx="440" cy="190" r="72" fill="#e8187a" opacity="0.92"></circle>
+      <circle cx="440" cy="190" r="50" fill="none" stroke="#190d26" stroke-width="2" opacity="0.5"></circle>
+      <circle cx="440" cy="190" r="30" fill="none" stroke="#190d26" stroke-width="2" opacity="0.5"></circle>
+      <text x="440" y="185" text-anchor="middle" font-family="Inter, sans-serif" font-weight="700" font-size="14" fill="#fff">CNN</text>
+      <text x="440" y="203" text-anchor="middle" font-family="Inter, sans-serif" font-weight="700" font-size="14" fill="#fff">Backbone</text>
+
+      <line x1="520" y1="190" x2="610" y2="190" stroke="#e8187a" stroke-width="2.5" marker-end="url(#od-arrow)"></line>
+
+      <rect x="640" y="90" width="300" height="200" rx="8" fill="#2a2735"></rect>
+      <circle cx="710" cy="150" r="18" fill="#57576a"></circle>
+      <path d="M660 260 L730 190 L770 230 L820 170 L820 260 Z" fill="#3a3a46"></path>
+
+      <rect x="672" y="115" width="70" height="90" fill="none" stroke="#e8187a" stroke-width="2.5" rx="3"></rect>
+      <rect x="672" y="98" width="66" height="17" fill="#e8187a"></rect>
+      <text x="705" y="111" text-anchor="middle" font-family="Inter, sans-serif" font-weight="700" font-size="10.5" fill="#fff">Dog 0.94</text>
+
+      <rect x="745" y="150" width="90" height="105" fill="none" stroke="#e8187a" stroke-width="2.5" rx="3"></rect>
+      <rect x="745" y="133" width="66" height="17" fill="#e8187a"></rect>
+      <text x="778" y="146" text-anchor="middle" font-family="Inter, sans-serif" font-weight="700" font-size="10.5" fill="#fff">Cat 0.88</text>
+
+      <text x="790" y="315" text-anchor="middle" font-family="Inter, sans-serif" font-weight="700" font-size="14" fill="rgba(255,255,255,.6)">Detected Objects</text>
+    </svg>
+    <div class="tree-caption">Image in, boxes and labels out — the detection pipeline in one pass</div>
+    <div class="tree-legend">
+      <span><i class="tdot node"></i>Image content</span>
+      <span><i class="tdot yes"></i>Predicted bounding box</span>
+      <span><i class="tdot no"></i>Class label + confidence</span>
+    </div>
+  </div>
+
+  <div class="formula">IoU = <span class="k">Area(Overlap) / Area(Union)</span> <span class="c">← a detection counts as correct when IoU ≥ 0.5</span></div>
+</div>
+
+<!-- 05 IMAGE SEGMENTATION -->
+<div class="sec">
+  <div class="sec-head"><span class="sec-num">05</span><div class="sec-title">Image Segmentation</div><div class="sec-line"></div></div>
+  <p class="sec-desc">Going past boxes to pixel-level understanding — tracing the exact outline of every object in the frame.</p>
+  <div class="grid">
+    <div class="card"><div class="chart-wrap">
+      <svg viewBox="0 0 150 64" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="An image with every pixel colored according to its predicted class region: sky, ground and object">
+        <rect x="10" y="6" width="100" height="52" fill="#bcd4f7"/>
+        <path d="M10,58 L10,40 L40,30 L70,42 L110,32 L110,58 Z" fill="#a8d8b9"/>
+        <path d="M50,58 L58,32 L72,32 L80,58 Z" fill="#e8187a"/>
+      </svg>
+    </div><div class="card-label">Semantic Segmentation</div><div class="card-tag">pixel-wise class</div></div>
+
+    <div class="card"><div class="chart-wrap">
+      <svg viewBox="0 0 150 64" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Two people of the same class, each outlined with a separate individual mask color">
+        <rect x="6" y="6" width="100" height="52" fill="#f2f1ef" stroke="#ddd"/>
+        <path d="M28,50 C24,36 26,26 34,26 C42,26 44,36 40,50 Z" fill="#e8187a" opacity="0.75"/>
+        <circle cx="34" cy="20" r="6" fill="#e8187a" opacity="0.75"/>
+        <path d="M66,50 C62,32 64,20 74,20 C84,20 86,32 82,50 Z" fill="#f492b8" opacity="0.85"/>
+        <circle cx="74" cy="14" r="6.5" fill="#f492b8" opacity="0.85"/>
+      </svg>
+    </div><div class="card-label">Instance Segmentation</div><div class="card-tag">per-object mask</div></div>
+
+    <div class="card"><div class="chart-wrap">
+      <svg viewBox="0 0 150 64" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="A U shaped network: resolution shrinks down to a bottleneck then expands back up, with skip connections linking matching levels">
+        <g stroke="#ccc" stroke-width="1.2" stroke-dasharray="2 2">
+          <line x1="10" y1="8" x2="106" y2="8"/>
+          <line x1="34" y1="20" x2="82" y2="20"/>
+        </g>
+        <path d="M10,8 L34,20 L58,32 L82,20 L106,8" fill="none" stroke="#e8187a" stroke-width="2"/>
+        <circle cx="10" cy="8" r="4.5" fill="#e8187a"/><circle cx="34" cy="20" r="4.5" fill="#f492b8"/><circle cx="58" cy="32" r="5" fill="#fbcfe4"/>
+        <circle cx="82" cy="20" r="4.5" fill="#f492b8"/><circle cx="106" cy="8" r="4.5" fill="#e8187a"/>
+        <text x="10" y="60" font-family="JetBrains Mono, monospace" font-size="6.5" fill="#999">encoder</text>
+        <text x="98" y="60" text-anchor="end" font-family="JetBrains Mono, monospace" font-size="6.5" fill="#999">decoder</text>
+      </svg>
+    </div><div class="card-label">U-Net</div><div class="card-tag">encoder → decoder + skip</div></div>
+
+    <div class="card"><div class="chart-wrap">
+      <svg viewBox="0 0 150 64" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="A bounding box around an object with a pixel mask outline drawn inside it">
+        <rect x="6" y="6" width="100" height="52" fill="#f2f1ef" stroke="#ddd"/>
+        <rect x="30" y="14" width="50" height="42" fill="none" stroke="#9ca3af" stroke-width="2"/>
+        <path d="M40,52 C36,36 38,20 55,20 C70,20 72,36 68,52 Z" fill="#e8187a" opacity="0.6" stroke="#e8187a" stroke-width="1.5"/>
+        <text x="118" y="20" font-family="JetBrains Mono, monospace" font-size="6.5" fill="#999">box</text>
+        <text x="118" y="34" font-family="JetBrains Mono, monospace" font-size="6.5" fill="#e8187a">mask</text>
+      </svg>
+    </div><div class="card-label">Mask R-CNN</div><div class="card-tag">detect + segment</div></div>
+
+    <div class="card"><div class="chart-wrap">
+      <svg viewBox="0 0 150 64" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Background regions colored by class, combined with individually outlined object instances">
+        <rect x="10" y="6" width="100" height="52" fill="#bcd4f7"/>
+        <path d="M10,58 L10,44 L110,44 L110,58 Z" fill="#a8d8b9"/>
+        <path d="M30,50 C26,36 28,26 36,26 C44,26 46,36 42,50 Z" fill="#e8187a" opacity="0.85" stroke="#e8187a" stroke-width="1.3"/>
+        <path d="M64,50 C60,32 62,20 72,20 C82,20 84,32 80,50 Z" fill="#f492b8" opacity="0.9" stroke="#e8187a" stroke-width="1.3"/>
+      </svg>
+    </div><div class="card-label">Panoptic Segmentation</div><div class="card-tag">semantic + instance</div></div>
+
+    <div class="card"><div class="chart-wrap">
+      <svg viewBox="0 0 150 64" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="A predicted mask and a ground truth mask overlapping as organic blob shapes, with the overlap region shaded darker">
+        <path d="M40,10 C60,6 74,20 68,36 C64,50 44,54 30,46 C18,40 20,16 40,10 Z" fill="#9ca3af" opacity="0.5"/>
+        <path d="M60,16 C80,14 92,28 86,44 C80,58 58,58 48,48 C40,38 44,18 60,16 Z" fill="#e8187a" opacity="0.5"/>
+      </svg>
+    </div><div class="card-label">Dice / Pixel IoU</div><div class="card-tag">2|A∩B| / (|A|+|B|)</div></div>
+  </div>
+  <div class="formula">Dice = <span class="k">2|A∩B| / (|A|+|B|)</span> <span class="c">← segmentation overlap score</span></div>
+</div>
+
+<!-- 06 ADVANCED VISION MODELS -->
+<div class="sec">
+  <div class="sec-head"><span class="sec-num">06</span><div class="sec-title">Advanced Vision Models</div><div class="sec-line"></div></div>
+  <p class="sec-desc">Beyond the standard CNN — attention, self-supervision, and generative models reshaping what vision systems can do.</p>
+  <div class="grid">
+    <div class="card"><div class="chart-wrap">
+      <svg viewBox="0 0 150 64" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="An image divided into a grid of patches, each patch flattened into a token in a sequence">
+        <defs><marker id="cvA14" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="5" markerHeight="5" orient="auto-start-reverse"><path d="M2 1L8 5L2 9" fill="none" stroke="#e8187a" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></marker></defs>
+        <g stroke="#e8187a" stroke-width="1">
+          <rect x="4" y="6" width="14" height="14" fill="#fbcfe4"/><rect x="18" y="6" width="14" height="14" fill="#f7a8c9"/><rect x="4" y="20" width="14" height="14" fill="#f492b8"/><rect x="18" y="20" width="14" height="14" fill="#e8187a"/>
+        </g>
+        <line x1="38" y1="20" x2="50" y2="20" stroke="#e8187a" stroke-width="1.4" marker-end="url(#cvA14)"/>
+        <g stroke="#e8187a" stroke-width="1">
+          <rect x="54" y="26" width="10" height="10" fill="#fbcfe4"/><rect x="68" y="26" width="10" height="10" fill="#f7a8c9"/><rect x="82" y="26" width="10" height="10" fill="#f492b8"/><rect x="96" y="26" width="10" height="10" fill="#e8187a"/>
+        </g>
+        <text x="80" y="14" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="6.5" fill="#999">token sequence</text>
+      </svg>
+    </div><div class="card-label">Vision Transformer</div><div class="card-tag">patches → tokens</div></div>
+
+    <div class="card"><div class="chart-wrap">
+      <svg viewBox="0 0 150 64" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Two augmented views of the same image pulled close together in embedding space, a different image left further away">
+        <defs><marker id="cvA15" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="4.5" markerHeight="4.5" orient="auto-start-reverse"><path d="M2 1L8 5L2 9" fill="none" stroke="#e8187a" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></marker></defs>
+        <circle cx="55" cy="30" r="6" fill="#e8187a"/>
+        <circle cx="72" cy="34" r="6" fill="#e8187a"/>
+        <line x1="61" y1="31" x2="66" y2="33" stroke="#e8187a" stroke-width="1.4" marker-end="url(#cvA15)"/>
+        <line x1="66" y1="33" x2="61" y2="31" stroke="#e8187a" stroke-width="1.4" marker-end="url(#cvA15)"/>
+        <circle cx="16" cy="14" r="6" fill="#9ca3af"/>
+        <line x1="22" y1="17" x2="46" y2="27" stroke="#ccc" stroke-width="1.2" stroke-dasharray="2 2" marker-end="url(#cvA15)"/>
+        <circle cx="126" cy="50" r="6" fill="#9ca3af"/>
+      </svg>
+    </div><div class="card-label">Self-Supervised Learning</div><div class="card-tag">SimCLR · BYOL</div></div>
+
+    <div class="card"><div class="chart-wrap">
+      <svg viewBox="0 0 150 64" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Random noise fed through a generator network to produce a fake image">
+        <defs><marker id="cvA16" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="5" markerHeight="5" orient="auto-start-reverse"><path d="M2 1L8 5L2 9" fill="none" stroke="#e8187a" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></marker></defs>
+        <g fill="#bbb">
+          <circle cx="8" cy="16" r="1.6"/><circle cx="16" cy="24" r="1.6"/><circle cx="6" cy="32" r="1.6"/><circle cx="14" cy="40" r="1.6"/><circle cx="20" cy="14" r="1.6"/><circle cx="10" cy="48" r="1.6"/>
+        </g>
+        <text x="12" y="60" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="6" fill="#999">noise z</text>
+        <line x1="28" y1="30" x2="42" y2="30" stroke="#e8187a" stroke-width="1.6" marker-end="url(#cvA16)"/>
+        <rect x="46" y="14" width="34" height="32" rx="4" fill="#fbcfe4" stroke="#e8187a" stroke-width="1.4"/>
+        <text x="63" y="34" text-anchor="middle" font-family="Inter, sans-serif" font-weight="700" font-size="9" fill="#e8187a">G</text>
+        <line x1="84" y1="30" x2="98" y2="30" stroke="#e8187a" stroke-width="1.6" marker-end="url(#cvA16)"/>
+        <path d="M104,50 L114,24 L122,36 L132,16 L140,50 Z" fill="#e8187a" opacity="0.7"/>
+      </svg>
+    </div><div class="card-label">GAN — Generator</div><div class="card-tag">fool the discriminator</div></div>
+
+    <div class="card"><div class="chart-wrap">
+      <svg viewBox="0 0 150 64" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="A real image and a fake image both fed into a discriminator that outputs real or fake">
+        <defs><marker id="cvA17" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="5" markerHeight="5" orient="auto-start-reverse"><path d="M2 1L8 5L2 9" fill="none" stroke="#e8187a" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></marker></defs>
+        <rect x="4" y="6" width="24" height="20" fill="#9ca3af" opacity="0.5"/>
+        <text x="16" y="32" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="6" fill="#999">real</text>
+        <rect x="4" y="38" width="24" height="20" fill="#e8187a" opacity="0.5"/>
+        <text x="16" y="62" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="6" fill="#e8187a">fake</text>
+        <line x1="32" y1="16" x2="52" y2="30" stroke="#ccc" stroke-width="1.2" marker-end="url(#cvA17)"/>
+        <line x1="32" y1="48" x2="52" y2="34" stroke="#ccc" stroke-width="1.2" marker-end="url(#cvA17)"/>
+        <rect x="56" y="16" width="34" height="32" rx="4" fill="#fbcfe4" stroke="#e8187a" stroke-width="1.4"/>
+        <text x="73" y="36" text-anchor="middle" font-family="Inter, sans-serif" font-weight="700" font-size="9" fill="#e8187a">D</text>
+        <line x1="94" y1="32" x2="108" y2="32" stroke="#e8187a" stroke-width="1.6" marker-end="url(#cvA17)"/>
+        <text x="112" y="26" font-family="JetBrains Mono, monospace" font-size="7" fill="#999">real?</text>
+        <text x="112" y="40" font-family="JetBrains Mono, monospace" font-size="7" fill="#e8187a">fake?</text>
+      </svg>
+    </div><div class="card-label">GAN — Discriminator</div><div class="card-tag">real vs fake</div></div>
+
+    <div class="card"><div class="chart-wrap">
+      <svg viewBox="0 0 150 64" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="A sequence of frames going from pure noise to a clean recognizable image">
+        <defs>
+          <marker id="cvA18" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="4.5" markerHeight="4.5" orient="auto-start-reverse"><path d="M2 1L8 5L2 9" fill="none" stroke="#e8187a" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></marker>
+          <pattern id="cvNoise1" width="4" height="4" patternUnits="userSpaceOnUse"><rect width="4" height="4" fill="#ddd"/><rect width="2" height="2" fill="#bbb"/><rect x="2" y="2" width="2" height="2" fill="#bbb"/></pattern>
+          <pattern id="cvNoise2" width="4" height="4" patternUnits="userSpaceOnUse"><rect width="4" height="4" fill="#f2f1ef"/><rect width="2" height="2" fill="#fbcfe4"/></pattern>
+        </defs>
+        <rect x="4" y="16" width="26" height="26" fill="url(#cvNoise1)"/>
+        <rect x="36" y="16" width="26" height="26" fill="url(#cvNoise2)"/>
+        <rect x="68" y="16" width="26" height="26" fill="#f2f1ef"/>
+        <path d="M74,38 L82,24 L88,38 Z" fill="#e8187a" opacity="0.4"/>
+        <rect x="100" y="16" width="26" height="26" fill="#f2f1ef" stroke="#e8187a" stroke-width="1"/>
+        <path d="M106,38 L114,22 L120,38 Z" fill="#e8187a"/>
+        <g stroke="#e8187a" stroke-width="1.3" marker-end="url(#cvA18)"><line x1="32" y1="29" x2="34" y2="29"/><line x1="64" y1="29" x2="66" y2="29"/><line x1="96" y1="29" x2="98" y2="29"/></g>
+      </svg>
+    </div><div class="card-label">Diffusion Models</div><div class="card-tag">noise → image</div></div>
+
+    <div class="card"><div class="chart-wrap">
+      <svg viewBox="0 0 150 64" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="A content image combined with a style texture to produce a stylized output blending both">
+        <defs>
+          <marker id="cvA19" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="4.5" markerHeight="4.5" orient="auto-start-reverse"><path d="M2 1L8 5L2 9" fill="none" stroke="#e8187a" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></marker>
+          <pattern id="cvSwirl" width="8" height="8" patternUnits="userSpaceOnUse"><path d="M0,4 Q4,0 8,4 Q4,8 0,4" fill="none" stroke="#e8187a" stroke-width="1"/></pattern>
+        </defs>
+        <rect x="2" y="10" width="30" height="30" fill="#f2f1ef" stroke="#ccc"/>
+        <path d="M8,36 L18,18 L26,36 Z" fill="#9ca3af"/>
+        <text x="17" y="48" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="6" fill="#999">content</text>
+        <text x="60" y="10" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="12" fill="#e8187a">+</text>
+        <rect x="46" y="10" width="30" height="30" fill="url(#cvSwirl)" stroke="#e8187a"/>
+        <text x="61" y="48" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="6" fill="#e8187a">style</text>
+        <line x1="80" y1="24" x2="92" y2="24" stroke="#e8187a" stroke-width="1.6" marker-end="url(#cvA19)"/>
+        <rect x="98" y="8" width="34" height="34" fill="url(#cvSwirl)" stroke="#e8187a" stroke-width="1.4"/>
+        <path d="M106,36 L118,16 L128,36 Z" fill="#e8187a" opacity="0.75"/>
+      </svg>
+    </div><div class="card-label">Neural Style Transfer</div><div class="card-tag">content + style</div></div>
+  </div>
+  <div class="formula">x_t = <span class="k">√ᾱₜ · x₀ + √(1−ᾱₜ) · ε</span> <span class="c">← diffusion forward noising step</span></div>
+</div>
+
+<!-- 07 VIDEO, TOOLS & DEPLOYMENT -->
+<div class="sec">
+  <div class="sec-head"><span class="sec-num">07</span><div class="sec-title">Video, Tools &amp; Deployment</div><div class="sec-line"></div></div>
+  <p class="sec-desc">Extending vision across time, and getting a trained model out of a notebook and into a real, running pipeline.</p>
+  <div class="grid">
+    <div class="card"><div class="chart-wrap">
+      <svg viewBox="0 0 150 64" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="A grid of small arrows showing the direction and magnitude of motion at each point in the frame">
+        <defs><marker id="cvA20" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="4" markerHeight="4" orient="auto-start-reverse"><path d="M2 1L8 5L2 9" fill="none" stroke="#e8187a" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></marker></defs>
+        <g stroke="#e8187a" stroke-width="1.4" marker-end="url(#cvA20)">
+          <line x1="12" y1="12" x2="22" y2="16"/><line x1="42" y1="10" x2="54" y2="16"/><line x1="76" y1="12" x2="90" y2="20"/><line x1="112" y1="14" x2="128" y2="24"/>
+          <line x1="12" y1="34" x2="24" y2="40"/><line x1="42" y1="32" x2="56" y2="40"/><line x1="76" y1="34" x2="92" y2="44"/><line x1="112" y1="36" x2="130" y2="48"/>
+          <line x1="12" y1="54" x2="26" y2="60"/><line x1="42" y1="52" x2="58" y2="60"/><line x1="76" y1="54" x2="94" y2="62"/>
+        </g>
+      </svg>
+    </div><div class="card-label">Optical Flow</div><div class="card-tag">motion vectors</div></div>
+
+    <div class="card"><div class="chart-wrap">
+      <svg viewBox="0 0 150 64" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="The same object's bounding box shown moving across three sequential frames, connected by a dotted trajectory">
+        <g fill="none" stroke="#ddd" stroke-width="1">
+          <rect x="2" y="4" width="42" height="56"/><rect x="54" y="4" width="42" height="56"/><rect x="106" y="4" width="42" height="56"/>
+        </g>
+        <rect x="10" y="36" width="16" height="16" fill="none" stroke="#e8187a" stroke-width="2"/>
+        <rect x="66" y="20" width="16" height="16" fill="none" stroke="#e8187a" stroke-width="2"/>
+        <rect x="122" y="10" width="16" height="16" fill="none" stroke="#e8187a" stroke-width="2"/>
+        <path d="M26,44 Q54,44 74,28 Q100,10 122,18" fill="none" stroke="#e8187a" stroke-width="1.3" stroke-dasharray="2 2"/>
+      </svg>
+    </div><div class="card-label">Object Tracking</div><div class="card-tag">SORT · DeepSORT</div></div>
+
+    <div class="card"><div class="chart-wrap">
+      <svg viewBox="0 0 150 64" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="A sequence of five video frames feeding into a single action classification label">
+        <defs><marker id="cvA21" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="5" markerHeight="5" orient="auto-start-reverse"><path d="M2 1L8 5L2 9" fill="none" stroke="#e8187a" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></marker></defs>
+        <g stroke="#e8187a" stroke-width="1">
+          <rect x="2" y="18" width="14" height="28" fill="#fbcfe4"/><rect x="18" y="18" width="14" height="28" fill="#f7a8c9"/><rect x="34" y="18" width="14" height="28" fill="#f492b8"/><rect x="50" y="18" width="14" height="28" fill="#ec5f97"/><rect x="66" y="18" width="14" height="28" fill="#e8187a"/>
+        </g>
+        <line x1="84" y1="32" x2="98" y2="32" stroke="#e8187a" stroke-width="1.6" marker-end="url(#cvA21)"/>
+        <rect x="102" y="20" width="42" height="24" rx="4" fill="#e8187a"/>
+        <text x="123" y="35" text-anchor="middle" font-family="Inter, sans-serif" font-weight="700" font-size="8" fill="#fff">"jump"</text>
+      </svg>
+    </div><div class="card-label">Action Recognition</div><div class="card-tag">temporal CNN · 3D conv</div></div>
+
+    <div class="card"><div class="chart-wrap">
+      <svg viewBox="0 0 150 64" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="An image icon with crop, filter and resize operations applied around it">
+        <rect x="8" y="14" width="36" height="30" rx="3" fill="#f2f1ef" stroke="#ccc"/>
+        <circle cx="17" cy="23" r="3" fill="#fbcfe4"/>
+        <path d="M10,42 L22,28 L30,36 L40,22 L42,42 Z" fill="#e8187a" opacity="0.5"/>
+        <g stroke="#e8187a" stroke-width="1.6" fill="none" stroke-linecap="round">
+          <path d="M62,10 L62,18 L70,18"/><path d="M62,54 L62,46 L70,46"/>
+        </g>
+        <circle cx="98" cy="30" r="13" fill="none" stroke="#e8187a" stroke-width="1.6"/>
+        <circle cx="98" cy="30" r="6" fill="#fbcfe4"/>
+        <path d="M120,14 L142,14 M120,30 L142,30 M120,46 L132,46" stroke="#e8187a" stroke-width="1.8" stroke-linecap="round"/>
+      </svg>
+    </div><div class="card-label">OpenCV</div><div class="card-tag">image ops · video I/O</div></div>
+
+    <div class="card"><div class="chart-wrap">
+      <svg viewBox="0 0 150 64" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="One input image expanding through a pipeline into many augmented output images">
+        <defs><marker id="cvA22" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="5" markerHeight="5" orient="auto-start-reverse"><path d="M2 1L8 5L2 9" fill="none" stroke="#e8187a" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></marker></defs>
+        <rect x="4" y="20" width="24" height="24" rx="3" fill="#f2f1ef" stroke="#ccc"/>
+        <path d="M8,40 L16,28 L24,40 Z" fill="#9ca3af"/>
+        <line x1="32" y1="32" x2="46" y2="32" stroke="#e8187a" stroke-width="1.6" marker-end="url(#cvA22)"/>
+        <g stroke="#e8187a" stroke-width="1">
+          <rect x="52" y="4" width="18" height="18" rx="2" fill="#fbcfe4"/><rect x="52" y="24" width="18" height="18" rx="2" fill="#f492b8"/><rect x="52" y="44" width="18" height="18" rx="2" fill="#e8187a"/>
+          <rect x="76" y="4" width="18" height="18" rx="2" fill="#f7a8c9"/><rect x="76" y="24" width="18" height="18" rx="2" fill="#ec5f97"/><rect x="76" y="44" width="18" height="18" rx="2" fill="#fbcfe4"/>
+          <rect x="100" y="14" width="18" height="18" rx="2" fill="#e8187a"/><rect x="100" y="34" width="18" height="18" rx="2" fill="#f492b8"/>
+        </g>
+      </svg>
+    </div><div class="card-label">Augmentation Pipelines</div><div class="card-tag">Albumentations</div></div>
+
+    <div class="card"><div class="chart-wrap">
+      <svg viewBox="0 0 150 64" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="A large trained model icon shrinking down through export into a small compressed icon">
+        <defs><marker id="cvA23" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="5" markerHeight="5" orient="auto-start-reverse"><path d="M2 1L8 5L2 9" fill="none" stroke="#e8187a" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></marker></defs>
+        <rect x="4" y="4" width="46" height="46" rx="5" fill="#fbcfe4" stroke="#e8187a" stroke-width="1.6"/>
+        <text x="27" y="32" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="7" fill="#e8187a">.h5</text>
+        <line x1="56" y1="27" x2="70" y2="27" stroke="#e8187a" stroke-width="1.6" marker-end="url(#cvA23)"/>
+        <rect x="76" y="14" width="28" height="28" rx="4" fill="#f492b8" stroke="#e8187a" stroke-width="1.4"/>
+        <text x="90" y="32" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="6.5" fill="#fff">onnx</text>
+        <line x1="108" y1="27" x2="118" y2="27" stroke="#e8187a" stroke-width="1.4" marker-end="url(#cvA23)"/>
+        <rect x="122" y="20" width="18" height="18" rx="3" fill="#e8187a"/>
+        <text x="131" y="32" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="6" fill="#fff">lite</text>
+      </svg>
+    </div><div class="card-label">Model Export</div><div class="card-tag">ONNX · TFLite · TensorRT</div></div>
+
+    <div class="card"><div class="chart-wrap">
+      <svg viewBox="0 0 150 64" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="A fast filmstrip of frames next to a speedometer needle pointing toward real-time frames per second">
+        <g fill="#fbcfe4" stroke="#e8187a" stroke-width="1">
+          <rect x="4" y="20" width="12" height="24"/><rect x="18" y="20" width="12" height="24" fill="#f492b8"/><rect x="32" y="20" width="12" height="24" fill="#e8187a"/>
+        </g>
+        <text x="24" y="54" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="6.5" fill="#999">frames</text>
+        <path d="M62,50 A28,28 0 0 1 118,50" fill="none" stroke="#eee" stroke-width="6"/>
+        <path d="M62,50 A28,28 0 0 1 108,26" fill="none" stroke="#e8187a" stroke-width="6"/>
+        <line x1="90" y1="50" x2="106" y2="30" stroke="#1a1a1a" stroke-width="1.8" stroke-linecap="round"/>
+        <circle cx="90" cy="50" r="3" fill="#1a1a1a"/>
+        <text x="90" y="62" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="7" fill="#e8187a">28 fps</text>
+      </svg>
+    </div><div class="card-label">Real-Time Inference</div><div class="card-tag">frames / sec</div></div>
+  </div>
+  <div class="formula">FPS = <span class="k">frames / second</span> <span class="c">← real-time video threshold ≈ 24–30 FPS</span></div>
+</div>
+
+</div>
+
+<div style="max-width:900px;margin:40px auto 0;padding:20px 5% 0;border-top:1px solid var(--border);">
+  <p style="font-size:.85rem;color:var(--text);margin:0;">That's a wrap — if you scrolled this far without skimming, you deserve a <span style="color:var(--pk); font-weight:700;">snack 🍪</span>.</p>
+</div>
+
+<footer style="justify-content:flex-start;border-top:none;">
+  <a href="../index.html">&larr; Back to portfolio</a>
+</footer>
+
+</body>
+</html>
