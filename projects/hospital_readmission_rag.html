@@ -225,6 +225,37 @@
   .callout.neutral { background: var(--card-bg); }
   .callout.neutral .dot { background: var(--gray-text); }
 
+  .ack-seal-row {
+    display: flex; align-items: center; gap: 16px;
+    margin: 24px 0 36px; padding-bottom: 24px; border-bottom: 1px solid var(--border);
+  }
+  .ack-seal {
+    width: 58px; height: 58px; border-radius: 50%; border: 2px solid var(--pink);
+    display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+    background: #fff; position: relative;
+  }
+  .ack-seal::before {
+    content: ''; position: absolute; inset: 5px; border-radius: 50%;
+    border: 1px dashed #f2a9c7;
+    animation: ack-spin 14s linear infinite;
+  }
+  .ack-seal::after {
+    content: ''; position: absolute; inset: 0; border-radius: 50%;
+    border: 2px solid var(--pink); opacity: 0;
+    animation: ack-ping 1.1s ease-out .6s 1;
+  }
+  @keyframes ack-spin { to { transform: rotate(360deg); } }
+  @keyframes ack-ping { 0% { opacity: .7; transform: scale(1); } 100% { opacity: 0; transform: scale(1.6); } }
+  @media (prefers-reduced-motion: reduce) {
+    .ack-seal::before, .ack-seal::after { animation: none; }
+  }
+  .ack-eyebrow {
+    font-family: var(--heading); font-size: 10.5px; font-weight: 700; letter-spacing: .12em;
+    text-transform: uppercase; color: var(--pink); margin-bottom: 4px;
+  }
+  .ack-main { font-size: 14px; font-weight: 600; color: var(--black); line-height: 1.45; max-width: 460px; }
+  .ack-sub { font-size: 12.5px; color: var(--gray-text); margin-top: 4px; }
+
   .chart-card { background: var(--card-bg); border-radius: 18px; padding: 20px 22px; margin-bottom: var(--s4); }
 
   .code-block {
@@ -332,6 +363,17 @@
     <span class="tag">XGBoost</span>
     <span class="tag">Hugging Face Inference</span>
     <span class="tag">Streamlit</span>
+  </div>
+
+  <div class="ack-seal-row">
+    <div class="ack-seal">
+      <svg width="26" height="26" viewBox="0 0 24 24" fill="none"><path d="M12 3L2 8l10 5 8-4v6" stroke="#e8187a" stroke-width="1.6" stroke-linejoin="round"/><path d="M6 10.5V16c0 1.5 2.5 3 6 3s6-1.5 6-3v-5.5" stroke="#e8187a" stroke-width="1.6" stroke-linejoin="round"/></svg>
+    </div>
+    <div>
+      <div class="ack-eyebrow">Acknowledgment</div>
+      <div class="ack-main">Builds upon work originally completed under the mentorship of the ASU Unit for Data Science &amp; Analytics</div>
+      <div class="ack-sub">See the <a href="hospital_readmission.html" style="color:var(--gray-text);text-decoration:underline">original readmission model</a></div>
+    </div>
   </div>
 
   <div class="app-frame" id="try-it">
