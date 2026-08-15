@@ -1,0 +1,701 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Effective Warehousing Using Computer Vision | Rutuja Patel</title>
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0%25' y1='0%25' x2='100%25' y2='100%25'%3E%3Cstop offset='0%25' stop-color='%23e8187a'/%3E%3Cstop offset='100%25' stop-color='%23f9004d'/%3E%3C/linearGradient%3E%3C/defs%3E%3Ccircle cx='32' cy='32' r='32' fill='url(%23g)'/%3E%3Ctext x='32' y='42' font-family='Poppins, Arial, sans-serif' font-weight='800' font-size='26' fill='white' text-anchor='middle'%3ERP%3C/text%3E%3C/svg%3E">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@500;600;700;800&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --pink: #e8187a;
+    --pink-tint: #FDE7EF;
+    --black: #14131A;
+    --gray-text: #6B7280;
+    --card-bg: #F4F4F3;
+    --border: #ECECEA;
+    --green: #0F9D58;
+    --green-tint: #E4F6EC;
+    --amber: #B8860B;
+    --amber-tint: #FBF3DE;
+    --red: #D93025;
+    --red-tint: #FCE9E7;
+    --heading: 'Poppins', sans-serif;
+    --body: 'Inter', -apple-system, sans-serif;
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: #FFFFFF; color: var(--black); font-family: var(--body); line-height: 1.65; }
+  .wrap { max-width: 1040px; margin: 0 auto; padding: 56px 28px 100px; }
+
+  .crumb { font-family: var(--body); font-size: 13.5px; color: var(--gray-text); margin: 0 0 28px; }
+  .crumb a { color: var(--gray-text); text-decoration: none; }
+  .crumb a:hover { color: var(--pink); }
+
+  .eyebrow { font-family: var(--body); font-size: 12.5px; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: var(--pink); margin: 0 0 10px; }
+  h1.title { font-family: var(--heading); font-weight: 800; font-size: 40px; line-height: 1.15; margin: 0 0 16px; max-width: 760px; }
+  h1.title span { color: var(--pink); }
+  .dek { font-size: 16.5px; color: var(--gray-text); max-width: 800px; margin: 0 0 24px; }
+
+  .tag-row { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 44px; }
+  .tag-github {
+    display: inline-flex; align-items: center; gap: 6px;
+    font-size: 13.5px; font-weight: 600; padding: 7px 16px; border-radius: 999px;
+    background: var(--black); color: #fff; text-decoration: none; border: 1px solid var(--black);
+  }
+  .tag-github:hover { background: var(--pink); border-color: var(--pink); color: #fff; }
+  .tag { font-size: 13.5px; font-weight: 500; padding: 7px 16px; border-radius: 999px; border: 1px solid var(--border); color: var(--black); background: #fff; }
+  .tag.filled { background: var(--pink); color: #fff; border-color: var(--pink); }
+
+  .section { margin-bottom: 64px; }
+  .section-eyebrow { font-family: var(--body); font-size: 12.5px; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: var(--pink); margin: 0 0 8px; }
+  h2.section-title { font-family: var(--heading); font-weight: 700; font-size: 26px; margin: 0 0 10px; }
+  h3.sub-title { font-family: var(--heading); font-weight: 700; font-size: 18px; margin: 28px 0 10px; }
+  .section-desc { font-size: 15px; color: var(--gray-text); max-width: 800px; margin: 0 0 28px; }
+
+  .stat-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 12px; margin-bottom: 32px; }
+  .stat-card { background: var(--card-bg); border-radius: 16px; padding: 18px 20px; }
+  .stat-num { font-family: var(--heading); font-weight: 700; font-size: 24px; margin: 0 0 4px; }
+  .stat-label { font-size: 12.5px; color: var(--gray-text); margin: 0; }
+
+  .kpi-strip { display: grid; grid-template-columns: repeat(auto-fit, minmax(130px, 1fr)); gap: 12px; margin-bottom: 28px; }
+  .kpi-card { background: var(--card-bg); border-radius: 14px; padding: 16px 18px; }
+  .kpi-num { font-family: var(--heading); font-weight: 700; font-size: 22px; margin: 0 0 3px; }
+  .kpi-label { font-size: 11.5px; color: var(--gray-text); margin: 0; }
+
+  .field-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)); gap: 12px; }
+  .field-card { background: var(--card-bg); border-radius: 16px; padding: 18px 20px; }
+  .field-top { display: flex; align-items: center; gap: 10px; margin-bottom: 8px; }
+  .field-name { font-weight: 600; font-size: 14.5px; flex: 1; }
+  .field-count { font-size: 11.5px; font-weight: 600; background: rgba(255,255,255,0.6); padding: 2px 9px; border-radius: 999px; flex-shrink: 0; }
+  .field-desc { font-size: 12.5px; margin: 0; opacity: 0.85; }
+  .c-purple { background: #EEEDFE; color: #3C3489; }
+  .c-teal   { background: #E1F5EE; color: #085041; }
+  .c-coral  { background: #FAECE7; color: #712B13; }
+  .c-pink2  { background: #FBEAF0; color: #72243E; }
+  .c-amber  { background: #FAEEDA; color: #633806; }
+  .c-green  { background: #EAF3DE; color: #27500A; }
+  .c-red    { background: #FCEBEB; color: #791F1F; }
+  .c-blue   { background: #E8F0FE; color: #1A4480; }
+
+  .quality-table { background: var(--card-bg); border-radius: 16px; overflow: hidden; }
+  .quality-head { display: grid; grid-template-columns: 1.3fr 2.5fr; column-gap: 20px; padding: 12px 20px; font-size: 11.5px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em; color: var(--gray-text); }
+  .quality-row { display: grid; grid-template-columns: 1.3fr 2.5fr; column-gap: 20px; align-items: center; padding: 14px 20px; background: #fff; font-size: 13.5px; }
+  .quality-row:first-of-type { border-top-left-radius: 16px; border-top-right-radius: 16px; }
+  .quality-row:last-of-type { border-bottom-left-radius: 16px; border-bottom-right-radius: 16px; }
+  .quality-val { font-weight: 600; }
+  .status-pill { font-size: 11.5px; font-weight: 600; padding: 4px 12px; border-radius: 999px; display: inline-block; width: fit-content; }
+  .status-red { background: var(--red-tint); color: var(--red); }
+  .status-amber { background: var(--amber-tint); color: var(--amber); }
+  .status-green { background: var(--green-tint); color: var(--green); }
+
+  .callout { display: flex; gap: 10px; align-items: flex-start; background: var(--pink-tint); border-radius: 14px; padding: 14px 18px; margin-top: 20px; }
+  .callout p { font-size: 13.5px; color: var(--black); margin: 0; }
+  .callout .dot { width: 6px; height: 6px; border-radius: 50%; background: var(--pink); margin-top: 7px; flex-shrink: 0; }
+
+  .chart-row { display: grid; gap: 14px; margin-bottom: 14px; }
+  .chart-row.hero { grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); align-items: start; }
+  .chart-card { background: var(--card-bg); border-radius: 18px; padding: 20px 22px; }
+  .chart-title { font-weight: 700; font-size: 15.5px; margin: 0 0 3px; }
+  .chart-sub { font-size: 12.5px; color: var(--gray-text); margin: 0 0 18px; }
+  .bar-row { display: flex; align-items: center; gap: 10px; margin-bottom: 10px; }
+  .bar-row:last-child { margin-bottom: 0; }
+  .bar-label { width: 110px; font-size: 12.5px; color: var(--black); flex-shrink: 0; }
+  .bar-track { flex: 1; background: #fff; border-radius: 5px; height: 22px; overflow: hidden; }
+  .bar-fill { height: 100%; border-radius: 5px; display: flex; align-items: center; padding-left: 8px; }
+  .bar-fill span { font-size: 11.5px; font-weight: 600; }
+  .bar-val { width: 40px; font-size: 12.5px; font-weight: 600; text-align: right; flex-shrink: 0; }
+
+  .donut-wrap { display: flex; align-items: center; gap: 28px; flex-wrap: wrap; }
+  .donut-legend { display: flex; flex-direction: column; gap: 10px; }
+  .legend-row { display: flex; align-items: center; gap: 10px; font-size: 13.5px; }
+  .legend-swatch { width: 12px; height: 12px; border-radius: 4px; flex-shrink: 0; }
+  .legend-name { width: 116px; color: var(--black); flex-shrink: 0; }
+  .legend-val { font-weight: 600; color: var(--gray-text); font-size: 12.5px; }
+
+  .point-list { display: flex; flex-direction: column; gap: 10px; }
+  .point { display: flex; gap: 8px; align-items: flex-start; }
+  .point .dot { width: 5px; height: 5px; border-radius: 50%; background: var(--pink); margin-top: 7px; flex-shrink: 0; }
+  .point p { font-size: 13.5px; color: var(--black); margin: 0; line-height: 1.6; }
+
+  .img-card { background: var(--card-bg); border-radius: 18px; padding: 16px; margin-bottom: 14px; }
+  .img-card img { width: 100%; height: auto; border-radius: 12px; display: block; }
+  .img-caption { font-size: 12.5px; color: var(--gray-text); margin: 10px 4px 0; }
+  .img-row { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 14px; }
+
+  .dg-wrap { overflow-x: auto; margin-bottom: 8px; position: relative; }
+  .dg-wrap svg { min-width: 600px; }
+  .dg-wrap::after {
+    content: '';
+    position: absolute; top: 0; right: 0; bottom: 8px; width: 28px;
+    background: linear-gradient(to right, transparent, rgba(255,255,255,0.95));
+    pointer-events: none;
+  }
+  .dg-arrow { stroke: var(--gray-text); fill: none; stroke-width: 1; stroke-linejoin: round; stroke-linecap: round; }
+  .dg-th { font-family: var(--body); font-size: 13px; font-weight: 600; }
+  .dg-ts { font-family: var(--body); font-size: 11px; }
+  .dg-box rect { fill: #fff; stroke: var(--border); stroke-width: 1; filter: drop-shadow(0 2px 3px rgba(20,19,26,0.10)); }
+  .dg-box .dg-th { fill: var(--black); }
+  .dgc-blue rect { fill: #E8F0FE; stroke: #1A4480; stroke-width: 1.5; filter: drop-shadow(0 2px 3px rgba(20,19,26,0.10)); }
+  .dgc-blue .dg-th { fill: #1A4480; }
+  .legend-dot { display: inline-block; width: 10px; height: 10px; border-radius: 3px; margin-right: 6px; vertical-align: -1px; }
+
+  .quote-block { font-family: var(--heading); font-weight: 600; font-size: 17px; line-height: 1.5; color: var(--black); border-left: 3px solid var(--pink); padding-left: 18px; margin: 0 0 28px; }
+
+  @media (max-width: 640px) {
+    h1.title { font-size: 30px; }
+    .quality-head { display: none !important; }
+    .quality-row { grid-template-columns: 1fr !important; row-gap: 4px; font-size: 12.5px; }
+    .field-grid { grid-template-columns: 1fr !important; }
+  }
+
+  .to-top { position: fixed; bottom: 24px; right: 24px; z-index: 60; width: 44px; height: 44px; border-radius: 50%; background: var(--pink); color: #fff; border: none; display: flex; align-items: center; justify-content: center; font-size: 18px; cursor: pointer; box-shadow: 0 4px 16px rgba(232,24,122,.35); opacity: 0; pointer-events: none; transition: opacity .2s ease, transform .2s ease; }
+  .to-top.show { opacity: 1; pointer-events: auto; }
+  .to-top:hover { transform: translateY(-2px); }
+</style>
+</head>
+<body>
+<button class="to-top" id="toTop" aria-label="Back to top">↑</button>
+<div class="wrap">
+
+  <p class="crumb"><a href="https://analyzewithrutuja.github.io/#portfolio">← Back to portfolio</a></p>
+
+  <p class="eyebrow">Computer Vision · Final Project (CIS 515)</p>
+  <h1 class="title">Effective Warehousing Using <span>Computer Vision</span></h1>
+  <p class="dek">
+    ASU's Pitchforks dining hall spends 6–8 hours a day manually counting inventory.
+    A YOLOv8 object-detection model, fine-tuned from a 428-image self-collected dataset,
+    prototypes the core computer-vision component of an automated alternative.
+  </p>
+
+  <div class="tag-row">
+    <a class="tag-github" href="https://github.com/analyzewithrutuja/inventory_optimization" target="_blank" rel="noopener">View code on GitHub</a>
+    <span class="tag">Python</span>
+    <span class="tag">YOLOv8</span>
+    <span class="tag">OpenCV</span>
+    <span class="tag">FastSAM</span>
+    <span class="tag">Transfer Learning</span>
+    <span class="tag">Object Detection</span>
+    <span class="tag">Data Augmentation</span>
+  </div>
+
+  <!-- 00 Problem -->
+  <div class="section">
+    <p class="section-eyebrow">00 · Problem / Opportunity</p>
+    <h2 class="section-title">A 6–8 hour manual count, every day</h2>
+    <p class="section-desc">Pitchforks dining hall needs a consistent supply of perishable and packaged
+    items to serve fresh, hygienic meals every day. Today, that supply is tracked entirely by hand.</p>
+
+    <div class="quote-block">"Staff spend 6–8 hours manually counting inventory to ensure nothing goes out of stock — time-consuming, labor-intensive, and error-prone."</div>
+
+    <div class="dg-wrap">
+<svg viewBox="0 0 900 190" role="img" style="width:100%;" aria-label="Illustration of the manual inventory-counting problem: a clock showing 6 to 8 hours per day, an arrow to a warehouse shelf stacked with boxes, an arrow to a clipboard checklist representing manual tally, and a final arrow to an error icon representing miscounts">
+<defs><marker id="prob-arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M2 1L8 5L2 9" fill="none" stroke="context-stroke" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></marker></defs>
+
+<!-- clock -->
+<circle cx="90" cy="80" r="52" fill="#FDE7EF" stroke="#e8187a" stroke-width="2.5"/>
+<circle cx="90" cy="80" r="3" fill="#e8187a"/>
+<line x1="90" y1="80" x2="90" y2="46" stroke="#e8187a" stroke-width="3" stroke-linecap="round"/>
+<line x1="90" y1="80" x2="115" y2="92" stroke="#e8187a" stroke-width="3" stroke-linecap="round"/>
+<text x="90" y="150" text-anchor="middle" class="dg-th" fill="var(--black)">6–8 hrs / day</text>
+<text x="90" y="167" text-anchor="middle" class="dg-ts" fill="var(--gray-text)">spent counting stock</text>
+<line x1="150" y1="80" x2="192" y2="80" class="dg-arrow" marker-end="url(#prob-arrow)"/>
+
+<!-- shelf with boxes -->
+<rect x="200" y="45" width="160" height="8" fill="#B0B0B0" rx="2"/>
+<rect x="200" y="95" width="160" height="8" fill="#B0B0B0" rx="2"/>
+<rect x="200" y="45" width="8" height="80" fill="#B0B0B0"/>
+<rect x="352" y="45" width="8" height="80" fill="#B0B0B0"/>
+<rect x="215" y="22" width="26" height="24" fill="#E8F0FE" stroke="#1A4480"/>
+<rect x="246" y="18" width="26" height="28" fill="#EEEDFE" stroke="#3C3489"/>
+<rect x="277" y="24" width="26" height="22" fill="#FAEEDA" stroke="#633806"/>
+<rect x="215" y="60" width="26" height="26" fill="#E1F5EE" stroke="#085041"/>
+<rect x="246" y="58" width="26" height="28" fill="#FAECE7" stroke="#712B13"/>
+<rect x="308" y="20" width="26" height="26" fill="#FCEBEB" stroke="#791F1F"/>
+<text x="280" y="150" text-anchor="middle" class="dg-th" fill="var(--black)">Warehouse Shelf</text>
+<text x="280" y="167" text-anchor="middle" class="dg-ts" fill="var(--gray-text)">perishable + packaged items</text>
+<line x1="370" y1="80" x2="412" y2="80" class="dg-arrow" marker-end="url(#prob-arrow)"/>
+
+<!-- clipboard -->
+<rect x="440" y="35" width="80" height="95" rx="6" fill="#fff" stroke="var(--border)" stroke-width="1.5"/>
+<rect x="465" y="30" width="30" height="12" rx="3" fill="#B0B0B0"/>
+<line x1="452" y1="60" x2="508" y2="60" stroke="var(--border)" stroke-width="2"/>
+<line x1="452" y1="78" x2="508" y2="78" stroke="var(--border)" stroke-width="2"/>
+<line x1="452" y1="96" x2="490" y2="96" stroke="var(--border)" stroke-width="2"/>
+<path d="M453 59 l4 4 l7 -8" stroke="#0F9D58" stroke-width="2.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M453 77 l4 4 l7 -8" stroke="#0F9D58" stroke-width="2.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+<text x="480" y="150" text-anchor="middle" class="dg-th" fill="var(--black)">Manual Tally</text>
+<text x="480" y="167" text-anchor="middle" class="dg-ts" fill="var(--gray-text)">pen, paper, memory</text>
+<line x1="530" y1="80" x2="572" y2="80" class="dg-arrow" marker-end="url(#prob-arrow)"/>
+
+<!-- error / risk -->
+<circle cx="640" cy="80" r="42" fill="#FCE9E7" stroke="#D93025" stroke-width="2.5"/>
+<text x="640" y="80" text-anchor="middle" dominant-baseline="central" font-size="42" font-weight="800" fill="#D93025" font-family="Poppins">!</text>
+<text x="640" y="150" text-anchor="middle" class="dg-th" fill="var(--black)">Miscounts</text>
+<text x="640" y="167" text-anchor="middle" class="dg-ts" fill="var(--gray-text)">stock-outs / over-order</text>
+
+<!-- outcome band -->
+<rect x="720" y="55" width="160" height="50" rx="10" fill="#FBF3DE" stroke="#B8860B" stroke-width="1.5"/>
+<text x="800" y="76" text-anchor="middle" class="dg-th" fill="#633806">Slower,</text>
+<text x="800" y="93" text-anchor="middle" class="dg-th" fill="#633806">costlier ops</text>
+<line x1="682" y1="80" x2="712" y2="80" class="dg-arrow" marker-end="url(#prob-arrow)"/>
+</svg>
+    </div>
+
+    <h3 class="sub-title">Why this matters</h3>
+    <p class="section-desc" style="margin-bottom:14px;">Automating inventory tracking reduces the labor hours spent on a purely
+    administrative task, cuts the chance of human counting error, and speeds up the restock-decision cycle —
+    more accurate, more frequent counts mean less food waste and more consistent food quality.</p>
+
+    <div class="field-grid">
+      <div class="field-card c-blue">
+        <div class="field-top"><span class="field-name">Dining staff</span></div>
+        <p class="field-desc">Reduced manual workload frees time for higher-value work — cleanliness, food quality — not role elimination.</p>
+      </div>
+      <div class="field-card c-teal">
+        <div class="field-top"><span class="field-name">University administration</span></div>
+        <p class="field-desc">Better visibility into material inflow/outflow supports ASU's sustainability and waste-reduction goals.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- 01 E2E Solution -->
+  <div class="section">
+    <p class="section-eyebrow">01 · Proposed Solution</p>
+    <h2 class="section-title">End-to-end product flow</h2>
+    <p class="section-desc">A shelf camera captures an image; a CV model detects and counts each visible product;
+    counts are compared against expected par levels; a dashboard alerts staff when something is running low.
+    Only the highlighted stage is this project's technical focus — everything else is non-CV integration work.</p>
+
+    <div class="dg-wrap">
+<svg viewBox="0 0 1080 210" role="img" style="width:100%;" aria-label="Flow diagram: shelf camera to image capture to YOLOv8 CV model detection and counting to inventory count aggregator to low-stock alert dashboard to dining staff restocking action">
+<defs><marker id="e2e-arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M2 1L8 5L2 9" fill="none" stroke="context-stroke" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></marker></defs>
+
+<g class="dg-box"><rect x="10" y="60" width="180" height="90" rx="12"/>
+<text class="dg-th" x="100" y="98" text-anchor="middle" dominant-baseline="central">Shelf Camera</text>
+<text class="dg-ts" x="100" y="118" text-anchor="middle" dominant-baseline="central" fill="var(--gray-text)">image capture</text></g>
+<line x1="190" y1="105" x2="222" y2="105" class="dg-arrow" marker-end="url(#e2e-arrow)"/>
+
+<g class="dgc-blue"><rect x="230" y="50" width="200" height="110" rx="12"/>
+<text class="dg-th" x="330" y="88" text-anchor="middle" dominant-baseline="central">YOLOv8 CV Model</text>
+<text class="dg-ts" x="330" y="108" text-anchor="middle" dominant-baseline="central" fill="#1A4480">product detection</text>
+<text class="dg-ts" x="330" y="124" text-anchor="middle" dominant-baseline="central" fill="#1A4480">+ per-class count</text></g>
+<line x1="430" y1="105" x2="462" y2="105" class="dg-arrow" marker-end="url(#e2e-arrow)"/>
+
+<g class="dg-box"><rect x="470" y="60" width="190" height="90" rx="12"/>
+<text class="dg-th" x="565" y="98" text-anchor="middle" dominant-baseline="central">Count Aggregator</text>
+<text class="dg-ts" x="565" y="118" text-anchor="middle" dominant-baseline="central" fill="var(--gray-text)">vs. par levels</text></g>
+<line x1="660" y1="105" x2="692" y2="105" class="dg-arrow" marker-end="url(#e2e-arrow)"/>
+
+<g class="dg-box"><rect x="700" y="60" width="180" height="90" rx="12"/>
+<text class="dg-th" x="790" y="98" text-anchor="middle" dominant-baseline="central">Low-Stock Alert</text>
+<text class="dg-ts" x="790" y="118" text-anchor="middle" dominant-baseline="central" fill="var(--gray-text)">dashboard</text></g>
+<line x1="880" y1="105" x2="912" y2="105" class="dg-arrow" marker-end="url(#e2e-arrow)"/>
+
+<g class="dg-box"><rect x="920" y="60" width="155" height="90" rx="12"/>
+<text class="dg-th" x="997" y="98" text-anchor="middle" dominant-baseline="central">Dining Staff</text>
+<text class="dg-ts" x="997" y="118" text-anchor="middle" dominant-baseline="central" fill="var(--gray-text)">restocking action</text></g>
+
+<text x="330" y="185" text-anchor="middle" font-family="Inter" font-size="12" fill="var(--gray-text)"><tspan class="legend-dot" fill="#1A4480">■</tspan> blue = this project's CV component &nbsp;&nbsp; gray = non-CV integration (out of scope)</text>
+</svg>
+    </div>
+
+    <div class="callout">
+      <span class="dot"></span>
+      <p><strong>Why CV is essential:</strong> the core bottleneck is a human visually recognizing and counting
+      products. A CV model performs exactly that task without a human present — no other component in the
+      pipeline can replace that role.</p>
+    </div>
+  </div>
+
+  <!-- 02 dataset / proxy note -->
+  <div class="section">
+    <p class="section-eyebrow">02 · Data Acquisition</p>
+    <h2 class="section-title">A proxy dataset, by necessity</h2>
+    <p class="section-desc">Direct access to Pitchforks' real warehouse inventory wasn't available within the
+    project timeline. To still validate the full pipeline end-to-end, the team photographed <strong>5 packaged
+    grocery products readily on hand</strong> as a representative stand-in. Every step below — collection,
+    annotation, training, evaluation, live testing — transfers directly to Pitchforks' real inventory by
+    re-running the same pipeline on photos of its actual stock.</p>
+
+    <div class="stat-grid">
+      <div class="stat-card"><p class="stat-num">435</p><p class="stat-label">raw photos collected</p></div>
+      <div class="stat-card"><p class="stat-num">5</p><p class="stat-label">product classes</p></div>
+      <div class="stat-card"><p class="stat-num">428</p><p class="stat-label">clean images after review</p></div>
+      <div class="stat-card"><p class="stat-num">7</p><p class="stat-label">excluded (blurry / mislabeled)</p></div>
+    </div>
+
+    <div class="chart-card" style="max-width:540px;">
+      <p class="chart-title">Class distribution</p>
+      <p class="chart-sub">428 clean images across 5 products — mild imbalance (69–100 per class), revisited in Section 05</p>
+      <div class="donut-wrap">
+        <svg viewBox="0 0 200 200" width="180" height="180" role="img" aria-label="Donut chart of the 428-image dataset by product class: Corn Flakes 100 images 23 percent, Indomie 98 images 23 percent, Barilla 89 images 21 percent, Keya Piri Piri 72 images 17 percent, Nut Bars 69 images 16 percent">
+          <g transform="rotate(-90 100 100)">
+            <circle cx="100" cy="100" r="70" fill="none" stroke="#e8187a" stroke-width="32" stroke-dasharray="102.76 439.82" stroke-dashoffset="0"/>
+            <circle cx="100" cy="100" r="70" fill="none" stroke="#1A4480" stroke-width="32" stroke-dasharray="100.71 439.82" stroke-dashoffset="-102.76"/>
+            <circle cx="100" cy="100" r="70" fill="none" stroke="#3C3489" stroke-width="32" stroke-dasharray="91.46 439.82" stroke-dashoffset="-203.47"/>
+            <circle cx="100" cy="100" r="70" fill="none" stroke="#B8860B" stroke-width="32" stroke-dasharray="73.99 439.82" stroke-dashoffset="-294.93"/>
+            <circle cx="100" cy="100" r="70" fill="none" stroke="#AD5A32" stroke-width="32" stroke-dasharray="70.91 439.82" stroke-dashoffset="-368.92"/>
+          </g>
+          <text x="100" y="94" text-anchor="middle" class="dg-th" style="font-size:22px;" fill="var(--black)">428</text>
+          <text x="100" y="114" text-anchor="middle" class="dg-ts" fill="var(--gray-text)">images</text>
+        </svg>
+        <div class="donut-legend">
+          <div class="legend-row"><span class="legend-swatch" style="background:#e8187a;"></span><span class="legend-name">Corn Flakes</span><span class="legend-val">100 · 23%</span></div>
+          <div class="legend-row"><span class="legend-swatch" style="background:#1A4480;"></span><span class="legend-name">Indomie</span><span class="legend-val">98 · 23%</span></div>
+          <div class="legend-row"><span class="legend-swatch" style="background:#3C3489;"></span><span class="legend-name">Barilla</span><span class="legend-val">89 · 21%</span></div>
+          <div class="legend-row"><span class="legend-swatch" style="background:#B8860B;"></span><span class="legend-name">Keya Piri Piri</span><span class="legend-val">72 · 17%</span></div>
+          <div class="legend-row"><span class="legend-swatch" style="background:#AD5A32;"></span><span class="legend-name">Nut Bars</span><span class="legend-val">69 · 16%</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 03 annotation -->
+  <div class="section">
+    <p class="section-eyebrow">03 · Model Development — Annotation</p>
+    <h2 class="section-title">Auto-annotating 428 images with FastSAM</h2>
+    <p class="section-desc">Manually drawing 428 bounding boxes was avoided in favor of automated annotation using
+    <strong>FastSAM</strong> (a lightweight Segment-Anything model), prompted to segment "the object at the image
+    center." Annotation quality didn't converge in one pass — it evolved through 8 iterations as new failure
+    modes appeared:</p>
+
+    <div class="quality-table">
+      <div class="quality-head"><span>Problem observed</span><span>Fix applied</span></div>
+      <div class="quality-row"><span>Single center-point prompt grabbed only a sub-part of the object</span><span class="quality-val">Select largest candidate mask within a 3–85% frame-area band</span></div>
+      <div class="quality-row"><span>Background clutter merged into the mask</span><span class="quality-val">Added 4 corner points as negative prompts</span></div>
+      <div class="quality-row"><span>Corner-negative prompt sometimes returned no mask</span><span class="quality-val">Fallback to plain center-point prompt</span></div>
+      <div class="quality-row"><span>Nut Bars: 80% of pilot batch flagged (elongated shape)</span><span class="quality-val">5-point cross prompt with mask union</span></div>
+      <div class="quality-row"><span>Cross-prompt regressed 35 previously-correct images</span><span class="quality-val">Hybrid: single-point primary, cross-prompt retry only on flagged images</span></div>
+      <div class="quality-row"><span>Flagging threshold itself was miscalibrated</span><span class="quality-val">Recalibrated 20% → 10%; flags dropped 107 → 52</span></div>
+      <div class="quality-row"><span>Remaining flagged boxes were loose/oversized</span><span class="quality-val">GrabCut refinement, kept only where it measurably helped</span></div>
+      <div class="quality-row"><span>Final 34 flagged images</span><span class="quality-val">Manual review — 7 excluded (unusable / mislabeled)</span></div>
+    </div>
+
+    <div class="callout">
+      <span class="dot"></span>
+      <p>Combining automated segmentation, classical foreground extraction (GrabCut), and threshold
+      recalibration with a final targeted manual review produced a clean dataset far faster than manually
+      annotating all 435 images — while still catching pre-existing data-labeling issues no bounding-box
+      method alone could have found.</p>
+    </div>
+  </div>
+
+  <!-- 04 split + training -->
+  <div class="section">
+    <p class="section-eyebrow">04 · Model Development — Training</p>
+    <h2 class="section-title">Class-stratified split, transfer learning</h2>
+    <p class="section-desc">The 428 images were split 70% / 20% / 10% <em>per class</em> (stratified), using
+    <code>n_train = ⌊0.7n⌋, n_val = ⌊0.2n⌋, n_test = n − n_train − n_val</code> so every class keeps the same
+    proportion in all three sets and no image is dropped or double-counted.</p>
+
+    <div class="stat-grid">
+      <div class="stat-card"><p class="stat-num">298</p><p class="stat-label">train images</p></div>
+      <div class="stat-card"><p class="stat-num">83</p><p class="stat-label">validation images</p></div>
+      <div class="stat-card"><p class="stat-num">47</p><p class="stat-label">held-out test images</p></div>
+    </div>
+
+    <div class="quality-table" style="margin-bottom:28px;">
+      <div class="quality-head" style="grid-template-columns: 1.4fr 1fr 1fr 1fr 1fr;"><span>Class</span><span>n</span><span>Train (70%)</span><span>Val (20%)</span><span>Test (10%)</span></div>
+      <div class="quality-row" style="grid-template-columns: 1.4fr 1fr 1fr 1fr 1fr;"><span>Corn Flakes</span><span class="quality-val">100</span><span class="quality-val">70</span><span class="quality-val">20</span><span class="quality-val">10</span></div>
+      <div class="quality-row" style="grid-template-columns: 1.4fr 1fr 1fr 1fr 1fr;"><span>Indomie</span><span class="quality-val">98</span><span class="quality-val">68</span><span class="quality-val">19</span><span class="quality-val">11</span></div>
+      <div class="quality-row" style="grid-template-columns: 1.4fr 1fr 1fr 1fr 1fr;"><span>Barilla</span><span class="quality-val">89</span><span class="quality-val">62</span><span class="quality-val">17</span><span class="quality-val">10</span></div>
+      <div class="quality-row" style="grid-template-columns: 1.4fr 1fr 1fr 1fr 1fr;"><span>Keya Piri Piri</span><span class="quality-val">72</span><span class="quality-val">50</span><span class="quality-val">14</span><span class="quality-val">8</span></div>
+      <div class="quality-row" style="grid-template-columns: 1.4fr 1fr 1fr 1fr 1fr;"><span>Nut Bars</span><span class="quality-val">69</span><span class="quality-val">48</span><span class="quality-val">13</span><span class="quality-val">8</span></div>
+      <div class="quality-row" style="grid-template-columns: 1.4fr 1fr 1fr 1fr 1fr; font-weight:700; background:var(--card-bg);"><span>Total</span><span>428</span><span>298</span><span>83</span><span>47</span></div>
+    </div>
+
+    <p class="section-desc">A YOLOv8n (nano) model, pretrained on COCO, was fine-tuned via transfer learning
+    (θ₀ = θ<sub>COCO</sub>, not random init) rather than trained from scratch — the model already knows generic
+    visual features (edges, textures, shapes); only the product-specific final layers need real retraining,
+    which is what makes strong results possible on under 300 training images.</p>
+
+    <div class="kpi-strip">
+      <div class="kpi-card"><p class="kpi-num">YOLOv8n</p><p class="kpi-label">3.0M params, 8.2 GFLOPs</p></div>
+      <div class="kpi-card"><p class="kpi-num">50</p><p class="kpi-label">epochs (CPU, 416px, batch 8)</p></div>
+      <div class="kpi-card"><p class="kpi-num">0.85 hr</p><p class="kpi-label">training time</p></div>
+      <div class="kpi-card"><p class="kpi-num">3</p><p class="kpi-label">loss components</p></div>
+    </div>
+
+    <p class="section-desc" style="margin-bottom:8px;"><code>L = λ_box·L_box(CIoU) + λ_cls·L_cls(BCE) + λ_dfl·L_dfl</code></p>
+    <div style="font-size:13.5px; line-height:1.8; margin-bottom:8px;">
+      <p style="margin:0 0 6px;"><strong>Box loss (CIoU)</strong> — penalizes position/size/aspect-ratio error, using IoU plus center-distance and aspect-ratio penalty terms so the gradient stays informative even before boxes overlap.</p>
+      <p style="margin:0 0 6px;"><strong>Classification loss (BCE)</strong> — penalizes wrong or low-confidence class predictions.</p>
+      <p style="margin:0;"><strong>Distribution Focal Loss</strong> — sharpens the anchor-free box-edge regression.</p>
+    </div>
+
+    <p class="chart-title" style="margin-top:32px; margin-bottom:4px;">Under the hood: how the network is structured</p>
+    <p class="section-desc">YOLOv8n is a <strong>convolutional neural network</strong> — 129 layers, ~3 million learnable
+    parameters. Each layer is a bank of small filters sliding over the image, each neuron computing
+    <code>y = f(Σ wᵢxᵢ + b)</code> where <code>f</code> is the SiLU activation. Stacked together, early layers
+    learn generic features (edges, textures) and deeper layers combine them into object-level concepts —
+    the same generic-to-specific progression that makes transfer learning from COCO work at all.</p>
+
+    <div class="dg-wrap" style="overflow-x:auto; margin: 10px 0 18px;">
+<svg viewBox="0 0 940 175" role="img" style="width:100%; min-width:640px;" aria-label="Model architecture flow: input image goes into the backbone, which extracts features through convolution and C2f blocks; the neck fuses those features across scales via upsampling and concatenation; the head predicts boxes and classes at each grid cell; producing the final output of bounding boxes with class labels and confidence scores">
+<defs><marker id="arch-arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M2 1L8 5L2 9" fill="none" stroke="context-stroke" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></marker></defs>
+
+<g class="dg-box"><rect x="10" y="35" width="150" height="90" rx="10"/>
+<text x="85" y="70" text-anchor="middle" class="dg-th">Input Image</text>
+<text x="85" y="88" text-anchor="middle" class="dg-ts">416×416×3</text>
+<text x="85" y="103" text-anchor="middle" class="dg-ts">raw pixels</text></g>
+<line x1="160" y1="80" x2="198" y2="80" class="dg-arrow" marker-end="url(#arch-arrow)"/>
+
+<g class="dgc-blue"><rect x="200" y="30" width="190" height="100" rx="10"/>
+<text x="295" y="58" text-anchor="middle" class="dg-th">Backbone</text>
+<text x="295" y="76" text-anchor="middle" class="dg-ts">Conv + C2f blocks</text>
+<text x="295" y="92" text-anchor="middle" class="dg-ts">edges → textures</text>
+<text x="295" y="107" text-anchor="middle" class="dg-ts">→ object-level features</text></g>
+<line x1="390" y1="80" x2="428" y2="80" class="dg-arrow" marker-end="url(#arch-arrow)"/>
+
+<g class="dgc-blue"><rect x="430" y="30" width="190" height="100" rx="10"/>
+<text x="525" y="58" text-anchor="middle" class="dg-th">Neck (FPN)</text>
+<text x="525" y="76" text-anchor="middle" class="dg-ts">Upsample + Concat</text>
+<text x="525" y="92" text-anchor="middle" class="dg-ts">fuses features across</text>
+<text x="525" y="107" text-anchor="middle" class="dg-ts">3 scales — small &amp; large objects</text></g>
+<line x1="620" y1="80" x2="658" y2="80" class="dg-arrow" marker-end="url(#arch-arrow)"/>
+
+<g class="dgc-blue"><rect x="660" y="30" width="170" height="100" rx="10"/>
+<text x="745" y="58" text-anchor="middle" class="dg-th">Head (Detect)</text>
+<text x="745" y="76" text-anchor="middle" class="dg-ts">per grid cell:</text>
+<text x="745" y="92" text-anchor="middle" class="dg-ts">box coords (CIoU/DFL)</text>
+<text x="745" y="107" text-anchor="middle" class="dg-ts">+ class probs (BCE)</text></g>
+<line x1="830" y1="80" x2="868" y2="80" class="dg-arrow" marker-end="url(#arch-arrow)"/>
+
+<g class="dg-box"><rect x="870" y="35" width="60" height="90" rx="10"/>
+<text x="900" y="65" text-anchor="middle" class="dg-th" style="font-size:11px;">Output</text>
+<text x="900" y="83" text-anchor="middle" class="dg-ts" style="font-size:9.5px;">box +</text>
+<text x="900" y="96" text-anchor="middle" class="dg-ts" style="font-size:9.5px;">class +</text>
+<text x="900" y="109" text-anchor="middle" class="dg-ts" style="font-size:9.5px;">conf.</text></g>
+
+<text x="475" y="155" text-anchor="middle" class="dg-ts" fill="var(--gray-text)">3,011,823 learnable parameters — all three blue stages, tuned together every training step</text>
+</svg>
+    </div>
+
+    <p class="chart-title" style="margin-top:8px; margin-bottom:4px;">Under the hood: how training finds those parameters</p>
+    <p class="section-desc">Training is a <strong>minimization problem</strong>: find the ~3M weights θ that make the
+    loss L(θ) as small as possible. With millions of dimensions, solving <code>dL/dθ = 0</code> directly isn't
+    possible — instead, gradient descent takes small steps toward a minimum:</p>
+    <p class="section-desc" style="margin-top:-8px;"><code>θ ← θ − η·∇L(θ)</code> — always moving opposite the
+    gradient (steepest increase), i.e. toward lower loss.</p>
+
+    <div class="chart-card" style="max-width:640px;">
+      <p class="chart-title" style="margin-bottom:8px;">Minima, maxima, saddle points</p>
+      <div class="point-list">
+        <div class="point"><span class="dot"></span><p><strong>Minimum</strong> — loss is locally lowest; this is what training seeks. Box loss went from 0.89 → 0.41 over the actual 50-epoch run (Section 05 charts).</p></div>
+        <div class="point"><span class="dot"></span><p><strong>Maximum</strong> — loss is locally highest; never a training target.</p></div>
+        <div class="point"><span class="dot"></span><p><strong>Saddle point</strong> — a minimum along one direction, a maximum along another; common in high-dimensional loss landscapes and a place training can stall. <strong>Momentum</strong> (<code>AdamW momentum=0.9</code>, seen in the actual training run) helps carry the update through these.</p></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 05 validation -->
+  <div class="section">
+    <p class="section-eyebrow">05 · Validation</p>
+    <h2 class="section-title">Held-out test-set results</h2>
+    <p class="section-desc">On the 47-image test split — never touched during training or for any training decision:</p>
+
+    <div class="chart-row hero">
+      <div class="chart-card hero">
+        <p class="chart-title">Precision vs. Recall, by class</p>
+        <p class="chart-sub">top-right corner = ideal. Barilla is the only class pulled away from the cluster.</p>
+        <svg viewBox="0 0 320 230" role="img" style="width:100%; max-width:320px; display:block; margin:4px auto 0;" aria-label="Scatter plot of precision versus recall for each product class. Corn Flakes, Indomie, Keya Piri Piri, and Nut Bars all cluster near the top-right corner near perfect precision and recall. Barilla sits noticeably lower and to the left at 0.899 precision and 0.892 recall.">
+          <line x1="60" y1="20" x2="60" y2="200" stroke="#C6C6C4" stroke-width="1.5"/>
+          <line x1="60" y1="200" x2="300" y2="200" stroke="#C6C6C4" stroke-width="1.5"/>
+          <line x1="120" y1="20" x2="120" y2="200" stroke="#D9D9D7" stroke-width="1" stroke-dasharray="3 3"/>
+          <line x1="180" y1="20" x2="180" y2="200" stroke="#D9D9D7" stroke-width="1" stroke-dasharray="3 3"/>
+          <line x1="240" y1="20" x2="240" y2="200" stroke="#D9D9D7" stroke-width="1" stroke-dasharray="3 3"/>
+          <line x1="60" y1="65" x2="300" y2="65" stroke="#D9D9D7" stroke-width="1" stroke-dasharray="3 3"/>
+          <line x1="60" y1="110" x2="300" y2="110" stroke="#D9D9D7" stroke-width="1" stroke-dasharray="3 3"/>
+          <line x1="60" y1="155" x2="300" y2="155" stroke="#D9D9D7" stroke-width="1" stroke-dasharray="3 3"/>
+
+          <text x="60" y="214" text-anchor="middle" class="dg-ts" fill="var(--gray-text)">.85</text>
+          <text x="120" y="214" text-anchor="middle" class="dg-ts" fill="var(--gray-text)">.90</text>
+          <text x="180" y="214" text-anchor="middle" class="dg-ts" fill="var(--gray-text)">.95</text>
+          <text x="240" y="214" text-anchor="middle" class="dg-ts" fill="var(--gray-text)">1.0</text>
+          <text x="300" y="214" text-anchor="middle" class="dg-ts" fill="var(--gray-text)"></text>
+          <text x="160" y="226" text-anchor="middle" class="dg-ts" fill="var(--gray-text)">Precision →</text>
+          <text x="18" y="20" class="dg-ts" fill="var(--gray-text)">1.0</text>
+          <text x="18" y="65" class="dg-ts" fill="var(--gray-text)">.95</text>
+          <text x="18" y="110" class="dg-ts" fill="var(--gray-text)">.90</text>
+          <text x="18" y="155" class="dg-ts" fill="var(--gray-text)">.85</text>
+          <text x="14" y="110" transform="rotate(-90 14 110)" text-anchor="middle" class="dg-ts" fill="var(--gray-text)">Recall →</text>
+
+          <circle cx="268" cy="20" r="7" fill="#e8187a"/>
+          <text x="268" y="10" text-anchor="middle" class="dg-ts" fill="var(--black)">Corn Flakes</text>
+          <circle cx="300" cy="125.6" r="7" fill="#1A4480"/>
+          <text x="278" y="120" text-anchor="end" class="dg-ts" fill="var(--black)">Indomie</text>
+          <circle cx="237.6" cy="20" r="7" fill="#B8860B"/>
+          <text x="220" y="34" text-anchor="end" class="dg-ts" fill="var(--black)">Keya Piri Piri</text>
+          <circle cx="300" cy="36.8" r="7" fill="#AD5A32"/>
+          <text x="278" y="48" text-anchor="end" class="dg-ts" fill="var(--black)">Nut Bars</text>
+          <circle cx="138.4" cy="149.6" r="8" fill="#3C3489"/>
+          <text x="138.4" y="170" text-anchor="middle" class="dg-th" fill="#3C3489">Barilla</text>
+        </svg>
+      </div>
+      <div class="chart-card hero">
+        <p class="chart-title">Overall (all classes)</p>
+        <p class="chart-sub">the headline numbers</p>
+        <div class="bar-row"><span class="bar-label">Precision</span><div class="bar-track"><div class="bar-fill c-blue" style="width:96.8%"><span>0.968</span></div></div></div>
+        <div class="bar-row"><span class="bar-label">Recall</span><div class="bar-track"><div class="bar-fill c-blue" style="width:95.8%"><span>0.958</span></div></div></div>
+        <div class="bar-row"><span class="bar-label">mAP@0.5</span><div class="bar-track"><div class="bar-fill c-blue" style="width:97.3%"><span>0.973</span></div></div></div>
+        <div class="bar-row"><span class="bar-label">mAP@0.5:0.95</span><div class="bar-track"><div class="bar-fill c-blue" style="width:82.8%"><span>0.828</span></div></div></div>
+      </div>
+    </div>
+
+    <div class="callout" style="background: var(--card-bg); margin-top:0; margin-bottom:24px;">
+      <span class="dot"></span>
+      <p><strong>Reading these bars:</strong> mAP@0.5 asks "did the model find the object at all, with a
+      roughly-correct box?" — every class except Barilla scores 0.995, essentially perfect. mAP@0.5:0.95 is
+      the stricter version, averaging that same question across ten IoU thresholds from 0.5 up to 0.95, so it
+      also grades <em>how tightly</em> the box fits — which is why every class's second number is lower than
+      its first.</p>
+    </div>
+
+    <div class="quality-table" style="margin-bottom:20px;">
+      <div class="quality-head" style="grid-template-columns: 1.4fr 1fr 1fr 1fr 1.2fr;"><span>Class</span><span>Precision</span><span>Recall</span><span>mAP@0.5</span><span>mAP@0.5:0.95</span></div>
+      <div class="quality-row" style="grid-template-columns: 1.4fr 1fr 1fr 1fr 1.2fr;"><span>Barilla</span><span class="quality-val">0.899</span><span class="quality-val">0.892</span><span class="quality-val">0.886</span><span class="quality-val">0.767</span></div>
+      <div class="quality-row" style="grid-template-columns: 1.4fr 1fr 1fr 1fr 1.2fr;"><span>Corn Flakes</span><span class="quality-val">0.980</span><span class="quality-val">1.000</span><span class="quality-val">0.995</span><span class="quality-val">0.776</span></div>
+      <div class="quality-row" style="grid-template-columns: 1.4fr 1fr 1fr 1fr 1.2fr;"><span>Indomie</span><span class="quality-val">1.000</span><span class="quality-val">0.912</span><span class="quality-val">0.995</span><span class="quality-val">0.886</span></div>
+      <div class="quality-row" style="grid-template-columns: 1.4fr 1fr 1fr 1fr 1.2fr;"><span>Keya Piri Piri</span><span class="quality-val">0.961</span><span class="quality-val">1.000</span><span class="quality-val">0.995</span><span class="quality-val">0.974</span></div>
+      <div class="quality-row" style="grid-template-columns: 1.4fr 1fr 1fr 1fr 1.2fr;"><span>Nut Bars</span><span class="quality-val">1.000</span><span class="quality-val">0.986</span><span class="quality-val">0.995</span><span class="quality-val">0.737</span></div>
+      <div class="quality-row" style="grid-template-columns: 1.4fr 1fr 1fr 1fr 1.2fr; font-weight:700; background:var(--card-bg);"><span>Overall</span><span>0.968</span><span>0.958</span><span>0.973</span><span>0.828</span></div>
+    </div>
+
+    <div class="img-card">
+      <img src="../images/inventory_optimization/confusion_matrix_styled.png" alt="Confusion matrix showing predicted versus true class for all five products on the 47-image test set, with a clean diagonal and zero off-diagonal entries between any two products">
+      <p class="chart-title" style="margin-top:14px;">What this tells us</p>
+      <div class="point-list">
+        <div class="point"><span class="dot"></span><p>Every off-diagonal cell between two <em>products</em> is zero — the model has never once mistaken one product for another. Barilla, Corn Flakes, Indomie, Keya Piri Piri, and Nut Bars are fully visually distinct to it.</p></div>
+        <div class="point"><span class="dot"></span><p>The predicted counts match the true test-set counts per class exactly (e.g. 11/11 Indomie, 10/10 Corn Flakes) — nothing is being over- or under-counted within this matrix.</p></div>
+        <div class="point"><span class="dot"></span><p>Barilla's lower mAP@0.5:0.95 (Section 05) isn't cross-product confusion — the raw counts here are perfect. The gap comes from a few loosely-fit boxes and background false positives/negatives (Section 4, Barilla's known annotation issues), which this class-vs-class matrix doesn't capture.</p></div>
+      </div>
+    </div>
+
+    <div class="img-card" style="margin-top:14px;">
+      <img src="../images/inventory_optimization/results_styled.png" alt="Four training curve panels over 50 epochs: box loss and classification loss both decreasing steadily for train and validation, precision and recall both rising and converging above 0.9, and mAP at 0.5 and mAP at 0.5 to 0.95 both rising and plateauing">
+      <p class="chart-title" style="margin-top:14px;">What this tells us</p>
+      <div class="point-list">
+        <div class="point"><span class="dot"></span><p><strong>Box &amp; Classification Loss</strong> fall smoothly for both train (pink) and validation (blue) with no divergence between the two lines — a sign the model is genuinely learning the task, not just memorizing the 298 training images (which would show val loss rising while train loss keeps falling).</p></div>
+        <div class="point"><span class="dot"></span><p><strong>Precision &amp; Recall</strong> both climb fast in the first ~15 epochs (transfer learning doing its job) then converge tightly around 0.9–0.95 — the model isn't trading one off for the other.</p></div>
+        <div class="point"><span class="dot"></span><p><strong>mAP@0.5</strong> plateaus near 0.95 by epoch 20; the stricter <strong>mAP@0.5:0.95</strong> keeps climbing more gradually to ~0.85 — consistent with box localization (how tightly boxes fit) taking longer to refine than simply finding the right object.</p></div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- 06 live demo -->
+  <div class="section">
+    <p class="section-eyebrow">06 · Live Proof-of-Concept Demo</p>
+    <h2 class="section-title">Real-time webcam detection</h2>
+    <p class="section-desc">A live webcam demo runs the fine-tuned model against a real-time camera feed — the
+    same end-to-end action a deployed shelf camera would perform. Single-item shots were detected reliably and
+    with high confidence across all 5 classes: Barilla 0.97, Corn Flakes 0.95, Keya Piri Piri 0.97, Nut Bars
+    0.87, Indomie 0.79.</p>
+
+    <div class="img-row">
+      <div class="img-card"><img src="../images/inventory_optimization/barilla_single.png" alt="Live webcam detection of a Barilla pasta box, correctly classified with 0.97 confidence"><p class="img-caption">Barilla — 0.97 confidence</p></div>
+      <div class="img-card"><img src="../images/inventory_optimization/corn_flakes_single.png" alt="Live webcam detection of a Corn Flakes box, correctly classified with 0.95 confidence"><p class="img-caption">Corn Flakes — 0.95 confidence</p></div>
+      <div class="img-card"><img src="../images/inventory_optimization/indomie_single.png" alt="Live webcam detection of an Indomie instant noodles packet, correctly classified with 0.79 confidence"><p class="img-caption">Indomie — 0.79 confidence</p></div>
+      <div class="img-card"><img src="../images/inventory_optimization/keya_piri_piri_single.png" alt="Live webcam detection of a Keya Piri Piri spice bottle, correctly classified with 0.97 confidence"><p class="img-caption">Keya Piri Piri — 0.97 confidence</p></div>
+      <div class="img-card"><img src="../images/inventory_optimization/nut_bars_single.png" alt="Live webcam detection of a Nut Bars package held in hand, correctly classified with 0.87 confidence"><p class="img-caption">Nut Bars — 0.87 confidence</p></div>
+    </div>
+  </div>
+
+  <!-- 07 limitations -->
+  <div class="section">
+    <p class="section-eyebrow">07 · Limitations &amp; Mitigation</p>
+    <h2 class="section-title">Multi-object detection wasn't free</h2>
+    <p class="section-desc">Every training image contained exactly one centered product, so the model was never
+    shown two objects in one frame. Placing multiple products in the same shot exposed this directly:</p>
+
+    <p class="chart-title" style="margin-bottom:10px;">Failure mode 1 — items placed touching/close together get merged</p>
+    <div class="img-row">
+      <div class="img-card"><img src="../images/inventory_optimization/limitation_full_cluster.jpg" alt="Four different grocery products placed close together, all merged into a single bounding box labeled corn_flakes"><p class="img-caption">4 distinct items (Barilla, Nut Bars, Keya Piri Piri, Indomie) merged into <strong>one</strong> box, <strong>one</strong> label — "corn_flakes 0.97". The other 3 products get no detection at all.</p></div>
+      <div class="img-card"><img src="../images/inventory_optimization/limitation_partial_multi.jpg" alt="Three grocery products - Barilla, Keya Piri Piri, and Corn Flakes - where Barilla is misclassified as keya_piri_piri and the other two are correct"><p class="img-caption">A 3-item shot (Barilla, Keya Piri Piri, Corn Flakes): here 3 boxes appear, but Barilla is <strong>misclassified</strong> as "keya_piri_piri 0.81" — the model still confuses adjacent items even when it does separate them.</p></div>
+    </div>
+
+    <h3 class="sub-title">Mitigation: synthetic copy-paste data, without new photography</h3>
+    <p class="section-desc">Rather than shooting and re-annotating new multi-object photos, synthetic
+    multi-object training images were generated automatically from the existing single-item images and their
+    already-known bounding boxes: crop a product using its existing box, paste it onto another training image,
+    derive the new box purely from paste-position arithmetic — no manual re-labeling needed.</p>
+
+    <div class="quality-table" style="margin-bottom:20px;">
+      <div class="quality-head"><span>Round</span><span>Result</span></div>
+      <div class="quality-row"><span>Round 1 — 174 spaced pairs/triples</span><span class="quality-val">Genuine improvement: 3-item frames that used to merge now split into 3 correct boxes. Test mAP@0.5 only dropped 0.973 → 0.962.</span></div>
+      <div class="quality-row"><span>Round 2 — 83 dense 3–5-item rows</span><span class="quality-val">Diminishing/negative returns: real-photo confidence calibration measurably degraded without reliably fixing the dense-cluster case.</span></div>
+    </div>
+
+    <p class="chart-title" style="margin-bottom:10px;">After Round 1 — same item combinations, re-tested</p>
+    <div class="img-row">
+      <div class="img-card"><img src="../images/inventory_optimization/mitigation_success.jpg" alt="Three different grocery products - Barilla, Keya Piri Piri, and Corn Flakes - each correctly detected with separate bounding boxes and correct class labels after the Round 1 fix"><p class="img-caption"><strong>Full success</strong> — Barilla 0.78, Keya Piri Piri 0.84, Corn Flakes 0.93: all 3 correctly separated <em>and</em> correctly classified.</p></div>
+      <div class="img-card"><img src="../images/inventory_optimization/round1_partial_misclass.jpg" alt="Barilla, Keya Piri Piri, and Corn Flakes with two overlapping corn_flakes labels and one keya_piri_piri label, showing Barilla still misclassified after round 1 retraining"><p class="img-caption"><strong>Partial success</strong> — same 3 products, different shot: now 3 boxes appear (up from 1 before Round 1), but Barilla is still mislabeled "corn_flakes". Spatial separation improved; classification confusion on Barilla did not fully resolve.</p></div>
+    </div>
+
+    <p class="chart-title" style="margin-bottom:10px;">After Round 2 — the regression that led to reverting it</p>
+    <div class="img-card" style="max-width:480px; margin-left:auto; margin-right:auto;">
+      <img src="../images/inventory_optimization/round2_confidence_regression.jpg" alt="Five grocery products placed together where the Round 2 model only detects one item, Indomie, at 0.66 confidence, missing Barilla, Corn Flakes, Keya Piri Piri, and Nut Bars entirely">
+      <p class="img-caption">All 5 products in frame, Round 2 model: only <strong>Indomie 0.66</strong> is reported above the 0.5 confidence cutoff. Probing down to conf=0.05 showed the model still had weak signal for the rest (corn_flakes 0.21, barilla 0.19, keya_piri_piri 0.16) — the detections exist, just below a usable confidence.</p>
+    </div>
+
+    <div class="callout">
+      <span class="dot"></span>
+      <p><strong>Decision:</strong> the Round 1 model was kept as final. <strong>Key learning:</strong> synthetic
+      copy-paste augmentation has a sweet spot on a small dataset — useful in moderation, but pushing it further
+      to force a harder scenario can cost more in real-world confidence calibration than it gains. A production
+      system needing reliable dense-cluster counting should collect a modest number of <em>real</em>
+      multi-object photos instead of pushing synthetic augmentation further.</p>
+    </div>
+  </div>
+
+  <!-- 08 bias/ethics/privacy/security -->
+  <div class="section">
+    <p class="section-eyebrow">08 · Responsible Use</p>
+    <h2 class="section-title">Bias, ethics, privacy &amp; security</h2>
+
+    <div class="quality-table">
+      <div class="quality-head"><span>Consideration</span><span>Detail</span></div>
+      <div class="quality-row"><span>Bias</span><span class="quality-val">All photos taken by one team in a small number of locations with specific packaging — not different lighting, packaging damage, or brands. Class sizes range 69–100, and the weakest class (Barilla) correlates with that imbalance.</span></div>
+      <div class="quality-row"><span>Ethics</span><span class="quality-val">Intended to redeploy staff time to higher-value work, not eliminate roles. Any real rollout should involve dining staff directly, both to set expectations and because they know the edge cases the model will hit.</span></div>
+      <div class="quality-row"><span>Privacy</span><span class="quality-val">A shelf-facing camera risks incidentally capturing staff. Framing should be scoped to shelving only, with no facial recognition or identity-linked processing, and a clear retention policy.</span></div>
+      <div class="quality-row"><span>Security</span><span class="quality-val">Model weights and any live feed should be access-controlled; raw images shouldn't go to third-party services without review. Physical tampering (rearranging stock to distort counts) is a real attack surface to design against.</span></div>
+    </div>
+  </div>
+
+  <!-- 09 maintenance / next -->
+  <div class="section">
+    <p class="section-eyebrow">09 · Post-Deployment</p>
+    <h2 class="section-title">What maintaining this in production looks like</h2>
+    <p class="section-desc">As new products are added to the warehouse, a modest number of new photos would run
+    through the same FastSAM auto-annotation pipeline, and the model periodically re-fine-tuned from its
+    existing checkpoint — not retrained from scratch, so each update stays in the same under-an-hour range seen
+    throughout this project. Per-class detection confidence is worth monitoring over time as a signal for when
+    re-training is actually needed.</p>
+  </div>
+
+  <!-- References -->
+  <div class="section">
+    <p class="section-eyebrow">10 · References</p>
+    <h2 class="section-title">Sources</h2>
+    <div style="font-size:13.5px; line-height:2; color: var(--gray-text);">
+      <p style="margin:0;">Jocher, G., Chaurasia, A., Qiu, J. — <em>Ultralytics YOLOv8</em>, docs.ultralytics.com</p>
+      <p style="margin:0;">Zhao, X. et al. — <em>Fast Segment Anything (FastSAM)</em>, github.com/CASIA-IVA-Lab/FastSAM</p>
+      <p style="margin:0;">Kirillov, A. et al. — <em>Segment Anything</em>, Meta AI Research, 2023</p>
+      <p style="margin:0;">CIS 515 <em>Project Proposal Guidelines</em> and <em>Final Project Deck and Presentation Guidelines</em> (course materials)</p>
+    </div>
+  </div>
+
+  <div style="border-top:1px solid var(--border); padding-top:20px; margin-top:8px;"></div>
+  <p class="crumb" style="margin-top:0; padding-top:8px;"><a href="https://analyzewithrutuja.github.io/#portfolio" style="color:var(--pink); font-weight:600;">← Back to portfolio</a></p>
+
+</div>
+
+<script>
+  const toTopBtn = document.getElementById('toTop');
+  window.addEventListener('scroll', () => {
+    toTopBtn.classList.toggle('show', window.scrollY > 600);
+  }, { passive: true });
+  toTopBtn.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
+</script>
+</body>
+</html>
