@@ -380,17 +380,17 @@
     <iframe
       src="https://hospital-readmission-assistant.streamlit.app/?embed=true"
       style="width:100%;height:560px;border:none;display:block"
-      title="Diabetes Readmission Risk Assistant — live app">
+      title="Diabetes Readmission Risk Assistant: live app">
     </iframe>
   </div>
   <div class="callout" style="margin-top:0; margin-bottom:var(--s7);">
     <span class="dot"></span>
-    <p>Tip: the box may look small once you open "Fill in patient details" inside the app —
+    <p>Tip: the box may look small once you open "Fill in patient details" inside the app:
     <span class="resize-hint-desktop">drag the bottom-right corner to make it bigger</span>
     <span class="resize-hint-mobile">scroll within the box, or open it full-screen using the button above</span>.
     The app may take 10–20 seconds to wake up if it hasn't been used recently. If it doesn't load,
     <a href="https://hospital-readmission-assistant.streamlit.app/" target="_blank" rel="noopener">open it directly in a new tab</a>.
-    Press the pink send button to submit your question — pressing Enter on your keyboard won't work.</p>
+    Press the pink send button to submit your question, since pressing Enter on your keyboard won't work.</p>
   </div>
 
   <div class="section">
@@ -398,7 +398,7 @@
     <h2 class="section-title">Try these examples</h2>
     <p class="section-desc">Not sure what to type into the app above? Start with one of these.</p>
 
-    <p class="chart-title">Example questions — by answer length</p>
+    <p class="chart-title">Example questions: by answer length</p>
     <p class="chart-sub">Grouped by how much detail to expect back, not by importance.</p>
 
     <div class="field-grid" style="margin-bottom:var(--s4);">
@@ -429,7 +429,7 @@
     </div>
 
     <p class="chart-title">Example patient details to try</p>
-    <p class="chart-sub">Color here tracks risk level on purpose — it's the one place color carries meaning.</p>
+    <p class="chart-sub">Color here tracks risk level on purpose: it's the one place color carries meaning.</p>
 
     <div class="field-grid">
       <div class="field-card">
@@ -465,7 +465,7 @@
   <div class="section" id="s01">
     <p class="section-eyebrow">01 · Why</p>
     <h2 class="section-title">A risk score alone isn't actionable</h2>
-    <p class="section-desc">Two working systems, built separately, that were never actually talking to each other — until this project connected them.</p>
+    <p class="section-desc">Two working systems, built separately, that were never actually talking to each other. This project connected them.</p>
 
     <div class="field-grid">
       <div class="field-card">
@@ -474,13 +474,13 @@
       </div>
       <div class="field-card">
         <p class="field-name">What guidelines give you</p>
-        <p class="field-desc">Hundreds of pages of correct, generic advice — the same page whether the patient is 25 or 85, first admission or fifth. No way to ask "what applies to this patient" without reading it all yourself.</p>
+        <p class="field-desc">Hundreds of pages of correct, generic advice: the same page whether the patient is 25 or 85, first admission or fifth. No way to ask "what applies to this patient" without reading it all yourself.</p>
       </div>
     </div>
 
     <div class="callout">
       <span class="dot"></span>
-      <p>The RAG layer sits between them: retrieve the guideline sections relevant to a question, combine them with this patient's specific risk factors, and let a language model produce one answer that's both evidence-grounded and personalized — instead of picking one property or the other.</p>
+      <p>The RAG layer sits between them: retrieve the guideline sections relevant to a question, combine them with this patient's specific risk factors, and let a language model produce one answer that's both evidence-grounded and personalized, instead of picking one property or the other.</p>
     </div>
   </div>
 
@@ -508,7 +508,7 @@
     <div class="field-grid">
       <div class="field-card">
         <p class="field-name">Target user</p>
-        <p class="field-desc">A care team member preparing a discharge plan — not the patient directly, and not a replacement for clinical judgment.</p>
+        <p class="field-desc">A care team member preparing a discharge plan, not the patient directly, and not a replacement for clinical judgment.</p>
       </div>
       <div class="field-card">
         <p class="field-name">Success criteria</p>
@@ -520,17 +520,17 @@
   <div class="section" id="s03">
     <p class="section-eyebrow">03 · Sources</p>
     <h2 class="section-title">Building the knowledge base</h2>
-    <p class="section-desc">46 documents across five organizations — chosen for direct relevance to hospital discharge planning, not just topical overlap.</p>
-    <p class="section-desc">Both peer-reviewed papers use the same UCI Diabetes 130-US Hospitals dataset as the readmission model — chosen deliberately so results could be cross-checked against published benchmarks, not just against themselves.</p>
+    <p class="section-desc">46 documents across five organizations, chosen for direct relevance to hospital discharge planning, not just topical overlap.</p>
+    <p class="section-desc">Both peer-reviewed papers use the same UCI Diabetes 130-US Hospitals dataset as the readmission model, chosen deliberately so results could be cross-checked against published benchmarks, not just against themselves.</p>
 
     <p class="chart-title">What each source actually contributes</p>
-    <p class="chart-sub">Not every source plays the same role — clinical protocol, patient-facing explanation, and statistical benchmark each serve a different purpose in the final answer.</p>
+    <p class="chart-sub">Not every source plays the same role: clinical protocol, patient-facing explanation, and statistical benchmark each serve a different purpose in the final answer.</p>
 
     <div class="dtable">
       <div class="dhead cols-3g"><span>Source</span><span>What it contributes</span><span>Docs</span></div>
       <div class="drow cols-3g">
         <span data-label="Source" class="dval">ADA</span>
-        <span data-label="What it contributes" class="dcell-muted">Detailed clinical guidelines — glycemic targets, medication protocols, hospital discharge care</span>
+        <span data-label="What it contributes" class="dcell-muted">Detailed clinical guidelines: glycemic targets, medication protocols, hospital discharge care</span>
         <span data-label="Docs" class="dnum">30</span>
       </div>
       <div class="drow cols-3g">
@@ -545,7 +545,7 @@
       </div>
       <div class="drow cols-3g">
         <span data-label="Source" class="dval">Mayo Clinic</span>
-        <span data-label="What it contributes" class="dcell-muted">Patient-facing, easy-to-understand explanations — diet, exercise, symptoms</span>
+        <span data-label="What it contributes" class="dcell-muted">Patient-facing, easy-to-understand explanations: diet, exercise, symptoms</span>
         <span data-label="Docs" class="dnum">9</span>
       </div>
       <div class="drow cols-3g">
@@ -557,14 +557,14 @@
 
     <div class="callout">
       <span class="dot"></span>
-      <p>When a query comes in, the system retrieves the relevant chunks from these 46 documents, combines them with the patient's risk score from the ML model, and the LLM generates a personalized, evidence-based answer — cited back to its source (e.g. "Source: ADA Section 16"). Without these documents, the LLM would answer from its own training data alone — generic and unverifiable. With them, every recommendation is traceable to a trusted medical source.</p>
+      <p>When a query comes in, the system retrieves the relevant chunks from these 46 documents, combines them with the patient's risk score from the ML model, and the LLM generates a personalized, evidence-based answer: cited back to its source (e.g. "Source: ADA Section 16"). Without these documents, the LLM would answer from its own training data alone: generic and unverifiable. With them, every recommendation is traceable to a trusted medical source.</p>
     </div>
   </div>
 
   <div class="section" id="s04">
     <p class="section-eyebrow">04 · Pipeline</p>
     <h2 class="section-title">How the pieces connect</h2>
-    <p class="section-desc">Two tracks run in parallel — one builds the knowledge base, the other assesses the patient — then converge into a single prompt for the LLM.</p>
+    <p class="section-desc">Two tracks run in parallel: one builds the knowledge base, the other assesses the patient. Both converge into a single prompt for the LLM.</p>
 
     <div class="chart-card">
       <svg width="100%" viewBox="0 0 900 500" role="img" aria-label="Pipeline diagram: document track and patient track converge into a combined prompt sent to the LLM, producing the final answer">
@@ -598,7 +598,7 @@
         <line x1="450" y1="294" x2="450" y2="322" stroke="#e8187a" stroke-width="2" marker-end="url(#pf-arrow)"/>
         <rect x="270" y="322" width="360" height="56" rx="12" fill="#F4F4F3" stroke="#E4E4E2" filter="url(#pf-shadow)"/>
         <text x="450" y="344" text-anchor="middle" font-family="Poppins, sans-serif" font-weight="600" font-size="15" fill="#14131A">LLM generation</text>
-        <text x="450" y="364" text-anchor="middle" font-family="Inter, sans-serif" font-size="12.5" fill="#545B6B">Hugging Face — Llama-3.1-8B-Instruct</text>
+        <text x="450" y="364" text-anchor="middle" font-family="Inter, sans-serif" font-size="12.5" fill="#545B6B">Hugging Face: Llama-3.1-8B-Instruct</text>
         <line x1="450" y1="378" x2="450" y2="406" stroke="#e8187a" stroke-width="2" marker-end="url(#pf-arrow)"/>
         <rect x="270" y="406" width="360" height="56" rx="12" fill="#FDE7EF" stroke="none" filter="url(#pf-shadow)"/>
         <text x="450" y="428" text-anchor="middle" font-family="Poppins, sans-serif" font-weight="600" font-size="15" fill="#b91261">Final answer</text>
@@ -610,7 +610,7 @@
   <div class="section" id="s05">
     <p class="section-eyebrow">05 · Building the Dataset</p>
     <h2 class="section-title">File types & quality checks</h2>
-    <p class="section-desc">Two file types are accepted, three bugs were caught before they reached the vector database — none of it by luck.</p>
+    <p class="section-desc">Two file types are accepted, and three bugs were caught before they reached the vector database. None of it was by luck.</p>
 
     <p class="chart-title">What file types this RAG accepts</p>
     <p class="chart-sub">The pipeline accepts only <code>.pdf</code> and <code>.txt</code>. Anything else is skipped, not errored on.</p>
@@ -618,52 +618,52 @@
     <span class="cm">continue</span>  <span class="cm"># skip anything that isn't PDF or TXT</span></div>
 
     <p class="chart-title">Why only these two</p>
-    <p class="chart-sub">Every source guideline was already published in one of these formats — no conversion pipeline needed.</p>
+    <p class="chart-sub">Every source guideline was already published in one of these formats: no conversion pipeline needed.</p>
     <div class="field-grid" style="margin-bottom:var(--s3);">
-      <div class="field-card"><p class="field-name">PDF is the native format</p><p class="field-desc">ADA, WHO, CDC, and Mayo Clinic all release official documents as PDFs — already the source format, no conversion needed.</p></div>
-      <div class="field-card"><p class="field-name">TXT was a rare fallback</p><p class="field-desc">Used only once — for a paywalled research paper where just the abstract was saved as plain text.</p></div>
+      <div class="field-card"><p class="field-name">PDF is the native format</p><p class="field-desc">ADA, WHO, CDC, and Mayo Clinic all release official documents as PDFs: already the source format, no conversion needed.</p></div>
+      <div class="field-card"><p class="field-name">TXT was a rare fallback</p><p class="field-desc">Used only once: for a paywalled research paper where just the abstract was saved as plain text.</p></div>
       <div class="field-card"><p class="field-name">pypdf covers the scope</p><p class="field-desc">Reliably extracts text without OCR. Supporting images or slide decks would have meant separate pipelines for unnecessary complexity.</p></div>
-      <div class="field-card"><p class="field-name">One process, every document</p><p class="field-desc">Every file goes through the same extract → chunk process — consistency keeps the pipeline simple and predictable.</p></div>
+      <div class="field-card"><p class="field-name">One process, every document</p><p class="field-desc">Every file goes through the same extract → chunk process: consistency keeps the pipeline simple and predictable.</p></div>
     </div>
 
     <div class="callout" style="margin-bottom:var(--s4);">
       <span class="dot"></span>
-      <p>This restriction is also what protected the pipeline from one of the bugs below — a file accidentally saved as <code>.jpg</code> instead of <code>.pdf</code> was silently skipped rather than crashing or corrupting the dataset.</p>
+      <p>This restriction is also what protected the pipeline from one of the bugs below: a file accidentally saved as <code>.jpg</code> instead of <code>.pdf</code> was silently skipped rather than crashing or corrupting the dataset.</p>
     </div>
 
     <p class="chart-title">Bugs the pipeline caught before they mattered</p>
     <p class="chart-sub">A naive pipeline run straight from download to embeddings would have silently included bad data. All three were caught by verification steps built into the process.</p>
 
     <div class="source-grid">
-      <div class="source-card problem"><p class="source-name">Exact duplicate file</p><p class="source-role"><code>cdc_ndep.pdf</code> and <code>cdc_national_diabetes_education_program.pdf</code> were the same document under two names. Caught by hashing (MD5) the extracted text of every file — two names, identical hash.</p></div>
-      <div class="source-card problem"><p class="source-name">Corrupted file</p><p class="source-role">A research paper saved as <code>.txt</code> actually held raw unreadable PDF binary. Caught by inspecting sample chunk text — the "chunks" were gibberish. Would have produced 245 chunks of pure noise undetected.</p></div>
-      <div class="source-card problem"><p class="source-name">Wrong file format</p><p class="source-role">A WHO document was saved as a <code>.jpg</code> screenshot instead of a PDF. Caught by checking file sizes — an 18 KB "document" for a multi-page PDF was an obvious red flag.</p></div>
+      <div class="source-card problem"><p class="source-name">Exact duplicate file</p><p class="source-role"><code>cdc_ndep.pdf</code> and <code>cdc_national_diabetes_education_program.pdf</code> were the same document under two names. Caught by hashing (MD5) the extracted text of every file: two names, identical hash.</p></div>
+      <div class="source-card problem"><p class="source-name">Corrupted file</p><p class="source-role">A research paper saved as <code>.txt</code> actually held raw unreadable PDF binary. Caught by inspecting sample chunk text: the "chunks" were gibberish. Would have produced 245 chunks of pure noise undetected.</p></div>
+      <div class="source-card problem"><p class="source-name">Wrong file format</p><p class="source-role">A WHO document was saved as a <code>.jpg</code> screenshot instead of a PDF. Caught by checking file sizes: an 18 KB "document" for a multi-page PDF was an obvious red flag.</p></div>
     </div>
 
     <div class="callout">
       <span class="dot"></span>
-      <p>Fix applied pipeline-wide: hash-based duplicate detection plus a readability check (printable-character ratio, binary-marker detection) run on every file before the expensive chunking step — constant-time regardless of collection size, so it scales the same at 46 documents or 46,000.</p>
+      <p>Fix applied pipeline-wide: hash-based duplicate detection plus a readability check (printable-character ratio, binary-marker detection) run on every file before the expensive chunking step, constant-time regardless of collection size, so it scales the same at 46 documents or 46,000.</p>
     </div>
   </div>
 
   <div class="section" id="s06">
     <p class="section-eyebrow">06 · Preprocessing</p>
     <h2 class="section-title">Recursive chunking</h2>
-    <p class="section-desc">Splitting on paragraph boundaries first, falling back to sentences only when needed — never cutting a clinical value mid-number.</p>
+    <p class="section-desc">Splitting on paragraph boundaries first, falling back to sentences only when needed, never cutting a clinical value mid-number.</p>
 
     <p class="chart-title">What is chunking, and why does the type matter</p>
-    <p class="chart-sub">A fixed-length split (cut every N words, regardless of what's there) risks separating a threshold from its unit — "180" on one side of a cut, "mg/dL" on the other. Recursive chunking tries the most natural boundary first and only falls back to a smaller one if the piece is still too large:</p>
+    <p class="chart-sub">A fixed-length split (cut every N words, regardless of what's there) risks separating a threshold from its unit: "180" on one side of a cut, "mg/dL" on the other. Recursive chunking tries the most natural boundary first and only falls back to a smaller one if the piece is still too large:</p>
     <div class="code-block">separators = [<span class="cm">"\n\n", "\n", ". ", " ", ""</span>]  <span class="cm"># tried in this order</span>
 chunk_size = <span class="cm">350 words</span>   overlap = <span class="cm">60 words</span></div>
 
-    <p class="chart-title">Other chunking approaches — and why they weren't the right fit</p>
+    <p class="chart-title">Other chunking approaches, and why they weren't the right fit</p>
     <p class="chart-sub">Four ways to split text into chunks, and the tradeoff each one makes.</p>
     <div class="dtable" style="margin-bottom:var(--s4);">
       <div class="dhead cols-3e"><span>Type</span><span>What it does</span><span>Why it wasn't chosen</span></div>
       <div class="drow cols-3e">
         <span data-label="Type">Fixed-size</span>
         <span data-label="What it does" class="dcell-muted">Cuts every N words regardless of content</span>
-        <span data-label="Why it wasn't chosen" class="dcell-muted">Risks splitting medical values (e.g. "140-180 mg/dL") mid-cut — clinically risky</span>
+        <span data-label="Why it wasn't chosen" class="dcell-muted">Risks splitting medical values (e.g. "140-180 mg/dL") mid-cut: clinically risky</span>
       </div>
       <div class="drow cols-3e">
         <span data-label="Type">Semantic chunking</span>
@@ -673,12 +673,12 @@ chunk_size = <span class="cm">350 words</span>   overlap = <span class="cm">60 w
       <div class="drow cols-3e">
         <span data-label="Type">Document-structure-based</span>
         <span data-label="What it does" class="dcell-muted">Splits only on headings/sections</span>
-        <span data-label="Why it wasn't chosen" class="dcell-muted">Some sections (e.g. ADA Section 16) are too long alone — still need further splitting</span>
+        <span data-label="Why it wasn't chosen" class="dcell-muted">Some sections (e.g. ADA Section 16) are too long alone, so they still need further splitting</span>
       </div>
       <div class="drow cols-3e hl-green">
         <span data-label="Type" class="dval">Recursive chunking <span class="status-pill status-green" style="margin-left:6px;">Used</span></span>
         <span data-label="What it does">Tries paragraph → sentence → word, in that order</span>
-        <span data-label="Why it wasn't chosen">Best of both — respects natural boundaries, with a reliable fallback</span>
+        <span data-label="Why it wasn't chosen">Best of both: respects natural boundaries, with a reliable fallback</span>
       </div>
     </div>
 
@@ -686,7 +686,7 @@ chunk_size = <span class="cm">350 words</span>   overlap = <span class="cm">60 w
     <p class="chart-sub">Retrieval's entire job is finding chunks whose meaning matches a query. That depends on two things:</p>
     <div class="field-grid" style="margin-bottom:var(--s4);">
       <div class="field-card"><p class="field-name">One complete idea per chunk</p><p class="field-desc">Poor chunking splits an idea across two chunks, and retrieval returns incomplete context.</p></div>
-      <div class="field-card"><p class="field-name">Not too small, not too large</p><p class="field-desc">Too small loses context; too large dilutes the similarity score by mixing in unrelated sub-topics — seen earlier when a 350-word chunk scored lower similarity because it covered multiple sub-points.</p></div>
+      <div class="field-card"><p class="field-name">Not too small, not too large</p><p class="field-desc">Too small loses context; too large dilutes the similarity score by mixing in unrelated sub-topics, as seen earlier when a 350-word chunk scored lower similarity because it covered multiple sub-points.</p></div>
     </div>
 
     <p class="chart-title">Why recursive chunking specifically fit this project</p>
@@ -706,12 +706,12 @@ chunk_size = <span class="cm">350 words</span>   overlap = <span class="cm">60 w
   <div class="section" id="s07">
     <p class="section-eyebrow">07 · Embeddings & Retrieval</p>
     <h2 class="section-title">Meaning as numbers</h2>
-    <p class="section-desc"><code>all-MiniLM-L6-v2</code> converts each chunk into a 384-number vector, positioned so that semantically similar text ends up numerically close — regardless of exact wording.</p>
+    <p class="section-desc"><code>all-MiniLM-L6-v2</code> converts each chunk into a 384-number vector, positioned so that semantically similar text ends up numerically close, regardless of exact wording.</p>
 
     <p class="chart-title">The math behind retrieval</p>
     <div class="code-block">cosine_similarity(A, B) = (A · B) / (|A| × |B|)</div>
 
-    <p class="chart-title">Worked example — actual numbers</p>
+    <p class="chart-title">Worked example: actual numbers</p>
     <p class="chart-sub">Using 3 numbers per vector to keep the math visible (real embeddings use 384, same formula):</p>
     <div class="code-block">"high blood sugar"  → [0.8, 0.6, 0.1]
 "hyperglycemia"      → [0.75, 0.65, 0.05]
@@ -733,52 +733,52 @@ chunk_size = <span class="cm">350 words</span>   overlap = <span class="cm">60 w
 
     <div class="callout neutral" style="margin-bottom:var(--s4);">
       <span class="dot"></span>
-      <p>How the model learned this: it was never told which words are related. It trained on masked-word prediction across millions of sentences — words that consistently appear in similar contexts (like "high blood sugar" and "hyperglycemia," both near "insulin," "diabetes," "levels") end up with similar number patterns, discovered from context alone.</p>
+      <p>How the model learned this: it was never told which words are related. It trained on masked-word prediction across millions of sentences: words that consistently appear in similar contexts (like "high blood sugar" and "hyperglycemia," both near "insulin," "diabetes," "levels") end up with similar number patterns, discovered from context alone.</p>
     </div>
 
     <p class="chart-title">What our actual retrieval returned</p>
     <p class="chart-sub">Query tested: "What should be included in a discharge plan for a high-risk diabetes patient?"</p>
     <div class="dtable" style="margin-bottom:var(--s2);">
       <div class="dhead cols-3c"><span>Rank</span><span>Source</span><span>Similarity</span></div>
-      <div class="drow cols-3c"><span data-label="Rank">1</span><span data-label="Source">ADA — Section 16, Diabetes Care in the Hospital</span><span data-label="Similarity" class="dval dnum">0.468</span></div>
-      <div class="drow cols-3c"><span data-label="Rank">2</span><span data-label="Source">ADA — Diabetes Care in Hospital</span><span data-label="Similarity" class="dval dnum">0.464</span></div>
-      <div class="drow cols-3c"><span data-label="Rank">3</span><span data-label="Source">ADA — Diabetes Care in Hospital</span><span data-label="Similarity" class="dval dnum">0.327</span></div>
-      <div class="drow cols-3c"><span data-label="Rank">4</span><span data-label="Source">ADA — Diabetes Care in Hospital</span><span data-label="Similarity" class="dval dnum">0.318</span></div>
-      <div class="drow cols-3c"><span data-label="Rank">5</span><span data-label="Source">ADA — Diabetes Care in Hospital</span><span data-label="Similarity" class="dval dnum">0.276</span></div>
+      <div class="drow cols-3c"><span data-label="Rank">1</span><span data-label="Source">ADA: Section 16, Diabetes Care in the Hospital</span><span data-label="Similarity" class="dval dnum">0.468</span></div>
+      <div class="drow cols-3c"><span data-label="Rank">2</span><span data-label="Source">ADA: Diabetes Care in Hospital</span><span data-label="Similarity" class="dval dnum">0.464</span></div>
+      <div class="drow cols-3c"><span data-label="Rank">3</span><span data-label="Source">ADA: Diabetes Care in Hospital</span><span data-label="Similarity" class="dval dnum">0.327</span></div>
+      <div class="drow cols-3c"><span data-label="Rank">4</span><span data-label="Source">ADA: Diabetes Care in Hospital</span><span data-label="Similarity" class="dval dnum">0.318</span></div>
+      <div class="drow cols-3c"><span data-label="Rank">5</span><span data-label="Source">ADA: Diabetes Care in Hospital</span><span data-label="Similarity" class="dval dnum">0.276</span></div>
     </div>
-    <p class="section-desc" style="margin-bottom:var(--s4);">Rank 1 covered hospital-to-outpatient transition guidance; Rank 2 covered medication reconciliation. All 5 results came from ADA specifically — the source most directly focused on hospital discharge protocol.</p>
+    <p class="section-desc" style="margin-bottom:var(--s4);">Rank 1 covered hospital-to-outpatient transition guidance; Rank 2 covered medication reconciliation. All 5 results came from ADA specifically: the source most directly focused on hospital discharge protocol.</p>
 
     <p class="chart-title">Why 0.468, not 0.9+ like the worked example above</p>
-    <p class="chart-sub">Two genuine reasons — not a bug:</p>
+    <p class="chart-sub">Two genuine reasons, not a bug:</p>
     <div class="field-grid" style="margin-bottom:var(--s3);">
-      <div class="field-card"><p class="field-name">1. Length and topic dilution</p><p class="field-desc">The worked example compared two short, single-topic phrases. A real chunk is a 350-word paragraph covering multiple sub-aspects of discharge planning at once. An embedding averages across every token in the chunk, so when only part of a chunk directly matches the query, the surrounding context spreads the vector rather than keeping it tightly focused. It's topic diversity, not word count, that dilutes the score — a 350-word chunk repeating one single idea would still score high.</p></div>
+      <div class="field-card"><p class="field-name">1. Length and topic dilution</p><p class="field-desc">The worked example compared two short, single-topic phrases. A real chunk is a 350-word paragraph covering multiple sub-aspects of discharge planning at once. An embedding averages across every token in the chunk, so when only part of a chunk directly matches the query, the surrounding context spreads the vector rather than keeping it tightly focused. It's topic diversity, not word count, that dilutes the score: a 350-word chunk repeating one single idea would still score high.</p></div>
       <div class="field-card"><p class="field-name">2. Query vs. chunk structure mismatch</p><p class="field-desc">A question ("What should be included...?") and a paragraph of instructions ("Tailor a structured discharge plan...") have different grammatical shapes. The extra question-words in the query don't have counterparts in the chunk, nudging the vectors slightly apart even when the underlying meaning matches well.</p></div>
     </div>
 
     <div class="callout neutral" style="margin-bottom:var(--s4);">
       <span class="dot"></span>
-      <p>A larger, paid embedding model would normalize this gap better and likely show higher absolute numbers for the same match — but the ranking (which chunk is most relevant) would stay the same.</p>
+      <p>A larger, paid embedding model would normalize this gap better and likely show higher absolute numbers for the same match, but the ranking (which chunk is most relevant) would stay the same.</p>
     </div>
 
     <div class="dtable" style="margin-bottom:var(--s2);">
       <div class="dhead cols-3b"><span>Similarity range</span><span>What it typically means</span></div>
-      <div class="drow cols-3b"><span data-label="Similarity range" class="dval dnum">0.7+</span><span data-label="Meaning" class="dcell-muted">Very strong match — rare, near-identical wording</span></div>
-      <div class="drow cols-3b hl-green"><span data-label="Similarity range" class="dval dnum">0.4 – 0.6</span><span data-label="Meaning">Genuinely relevant — normal range for real document retrieval</span></div>
+      <div class="drow cols-3b"><span data-label="Similarity range" class="dval dnum">0.7+</span><span data-label="Meaning" class="dcell-muted">Very strong match: rare, near-identical wording</span></div>
+      <div class="drow cols-3b hl-green"><span data-label="Similarity range" class="dval dnum">0.4 – 0.6</span><span data-label="Meaning">Genuinely relevant: normal range for real document retrieval</span></div>
       <div class="drow cols-3b"><span data-label="Similarity range" class="dval dnum">0.2 – 0.4</span><span data-label="Meaning" class="dcell-muted">Weak or tangential relation</span></div>
       <div class="drow cols-3b"><span data-label="Similarity range" class="dval dnum">Below 0</span><span data-label="Meaning" class="dcell-muted">Unrelated</span></div>
     </div>
-    <p class="section-desc" style="margin-bottom:var(--s4);">0.468 sits squarely in the "genuinely relevant" range — production RAG systems commonly treat 0.3–0.5 as good retrieval when queries are short and source documents are long paragraphs.</p>
+    <p class="section-desc" style="margin-bottom:var(--s4);">0.468 sits squarely in the "genuinely relevant" range: production RAG systems commonly treat 0.3–0.5 as good retrieval when queries are short and source documents are long paragraphs.</p>
 
     <div class="callout neutral">
       <span class="dot"></span>
-      <p>Verifying it wasn't a retrieval failure: chunk embeddings were reduced to 2D (PCA) and the actual top-5 retrieved chunks were plotted against the query point. They clustered tightly around it regardless of source — confirming the lower scores were expected model behavior, not a bug.</p>
+      <p>Verifying it wasn't a retrieval failure: chunk embeddings were reduced to 2D (PCA) and the actual top-5 retrieved chunks were plotted against the query point. They clustered tightly around it regardless of source, confirming the lower scores were expected model behavior, not a bug.</p>
     </div>
   </div>
 
   <div class="section" id="s08">
     <p class="section-eyebrow">08 · Personalization Layer</p>
     <h2 class="section-title">Connecting the two projects</h2>
-    <p class="section-desc">The XGBoost readmission model's own output becomes retrieval context — not a separate, disconnected number sitting next to the chatbot.</p>
+    <p class="section-desc">The XGBoost readmission model's own output becomes retrieval context, not a separate, disconnected number sitting next to the chatbot.</p>
 
     <p class="chart-title">The flow</p>
     <div class="chart-card">
@@ -811,21 +811,21 @@ chunk_size = <span class="cm">350 words</span>   overlap = <span class="cm">60 w
     <p class="chart-title">What the model actually looks at</p>
     <div class="callout neutral" style="margin-bottom:var(--s4);">
       <span class="dot"></span>
-      <p>The model draws on ~40+ columns from the patient record — prior hospital usage (admissions, emergency visits, outpatient visits), current admission details (time in hospital, discharge disposition), clinical utilization (lab procedures, medication count, diagnoses), diagnosis category, lab results, and the status of 23 individual diabetes medications. Race and gender were deliberately excluded during training to avoid the model learning demographic bias — it decides based on clinical and utilization history alone. The strongest predictors: prior inpatient admissions, discharge disposition, medication count, and length of stay.</p>
+      <p>The model draws on ~40+ columns from the patient record: prior hospital usage (admissions, emergency visits, outpatient visits), current admission details (time in hospital, discharge disposition), clinical utilization (lab procedures, medication count, diagnoses), diagnosis category, lab results, and the status of 23 individual diabetes medications. Race and gender were deliberately excluded during training to avoid the model learning demographic bias, so it decides based on clinical and utilization history alone. The strongest predictors: prior inpatient admissions, discharge disposition, medication count, and length of stay.</p>
     </div>
 
     <p class="chart-title">Rule-based flags</p>
-    <p class="chart-sub">A small set of rules converts raw model output into explicit priority flags — deliberately rule-based rather than left to the LLM's judgment, since consistency matters more than nuance for safety-relevant triggers.</p>
+    <p class="chart-sub">A small set of rules converts raw model output into explicit priority flags: deliberately rule-based rather than left to the LLM's judgment, since consistency matters more than nuance for safety-relevant triggers.</p>
     <div class="dtable" style="margin-bottom:var(--s4);">
       <div class="dhead cols-3d"><span>Condition</span><span>Flag raised</span></div>
-      <div class="drow cols-3d"><span data-label="Condition">risk_score ≥ 0.6</span><span data-label="Flag raised" class="dcell-muted">High readmission risk — early follow-up within 7 days</span></div>
-      <div class="drow cols-3d"><span data-label="Condition">medications &gt; 10</span><span data-label="Flag raised" class="dcell-muted">Polypharmacy — medication reconciliation critical</span></div>
+      <div class="drow cols-3d"><span data-label="Condition">risk_score ≥ 0.6</span><span data-label="Flag raised" class="dcell-muted">High readmission risk: early follow-up within 7 days</span></div>
+      <div class="drow cols-3d"><span data-label="Condition">medications &gt; 10</span><span data-label="Flag raised" class="dcell-muted">Polypharmacy: medication reconciliation critical</span></div>
       <div class="drow cols-3d"><span data-label="Condition">discharged home + prior admissions &gt; 2</span><span data-label="Flag raised" class="dcell-muted">Consider home health referral</span></div>
-      <div class="drow cols-3d"><span data-label="Condition">A1C &gt; 7</span><span data-label="Flag raised" class="dcell-muted">Poor glycemic control — reinforce self-management education</span></div>
+      <div class="drow cols-3d"><span data-label="Condition">A1C &gt; 7</span><span data-label="Flag raised" class="dcell-muted">Poor glycemic control: reinforce self-management education</span></div>
     </div>
 
     <p class="chart-title">Why preprocessing has to happen again for every new patient</p>
-    <p class="chart-sub">A trained model doesn't remember the data it was trained on — a <code>.pkl</code> file stores only learned weights, not a memory of past inputs. The same filtering rule used during training (dropping rows with missing diagnosis codes) has to be reapplied every time a new patient is scored:</p>
+    <p class="chart-sub">A trained model doesn't remember the data it was trained on: a <code>.pkl</code> file stores only learned weights, not a memory of past inputs. The same filtering rule used during training (dropping rows with missing diagnosis codes) has to be reapplied every time a new patient is scored:</p>
     <div class="code-block"><span class="cm"># Training (once): raw data → filter/clean → train model → save</span>
 <span class="cm"># Prediction (every time): new patient → SAME filter/clean → trained model → prediction</span></div>
 
@@ -835,16 +835,16 @@ df[<span class="cm">'payer_code'</span>] = df[<span class="cm">'payer_code'</spa
 
 <span class="cm"># Rows dropped entirely if missing</span>
 df = df.dropna(subset=[<span class="cm">'diag_1', 'diag_2', 'diag_3'</span>])</div>
-    <p class="section-desc" style="margin-bottom:var(--s4);">For fields like <code>payer_code</code>, "Unknown" is a genuinely valid category. A missing diagnosis code can't be meaningfully filled — it's the core clinical signal driving readmission risk, and training followed the same drop-if-missing rule.</p>
+    <p class="section-desc" style="margin-bottom:var(--s4);">For fields like <code>payer_code</code>, "Unknown" is a genuinely valid category. A missing diagnosis code can't be meaningfully filled: it's the core clinical signal driving readmission risk, and training followed the same drop-if-missing rule.</p>
 
     <p class="chart-title">One extra step needed here that training didn't require</p>
     <div class="code-block">df_encoded = df_encoded.reindex(columns=model_columns, fill_value=<span class="cm">0</span>)</div>
-    <p class="section-desc" style="margin-bottom:var(--s4);">Training one-hot encoded all 101,766 rows together, so every possible category naturally became a column. Encoding a single patient row at a time means a rare category the patient doesn't have simply won't get created — even though the trained model still expects that column to exist. <code>reindex()</code> fills in any missing expected columns with 0, keeping the input format identical to what the model was trained on.</p>
+    <p class="section-desc" style="margin-bottom:var(--s4);">Training one-hot encoded all 101,766 rows together, so every possible category naturally became a column. Encoding a single patient row at a time means a rare category the patient doesn't have simply won't get created, even though the trained model still expects that column to exist. <code>reindex()</code> fills in any missing expected columns with 0, keeping the input format identical to what the model was trained on.</p>
 
     <p class="chart-title">A bug that caught itself</p>
     <p class="chart-sub">Filtering out rows with missing diagnosis codes broke the alignment between a row's label (its original ID) and its position (1st, 2nd, 3rd... remaining row after filtering). The first version of the test function used <code>.iloc</code>, which selects by position:</p>
     <div class="code-block">sample_patient_raw = valid_rows.iloc[[38790]]  <span class="cm"># BUG: treats 38790 as a position, not a label</span></div>
-    <p class="section-desc">This silently returned a different patient. No error, no crash — the code ran fine.</p>
+    <p class="section-desc">This silently returned a different patient. No error, no crash: the code ran fine.</p>
     <p class="section-desc" style="margin-bottom:var(--s2);">How it was caught: the same patient's risk score, computed two different ways, didn't match.</p>
 
     <div class="dtable" style="margin-bottom:var(--s2);">
@@ -857,8 +857,8 @@ df = df.dropna(subset=[<span class="cm">'diag_1', 'diag_2', 'diag_3'</span>])</d
     <div class="code-block">sample_patient_raw = valid_rows.loc[[38790]]  <span class="cm"># FIX: selects by actual row label</span></div>
     <p class="section-desc" style="margin-bottom:var(--s4);">After the fix, patient 38790's risk score came out consistently at 55.4%.</p>
 
-    <p class="chart-title">Validation — real patients, real difference</p>
-    <p class="chart-sub">The low-risk patient triggered minimal flags; the high-risk patient triggered both polypharmacy and home-health flags — confirming the personalization layer responds to actual patient data, not a fixed template.</p>
+    <p class="chart-title">Validation: real patients, real difference</p>
+    <p class="chart-sub">The low-risk patient triggered minimal flags; the high-risk patient triggered both polypharmacy and home-health flags, confirming the personalization layer responds to actual patient data, not a fixed template.</p>
     <div class="dtable">
       <div class="dhead cols-5"><span>Patient</span><span>Risk score</span><span>Prior admissions</span><span>Medications</span><span>Flags triggered</span></div>
       <div class="drow cols-5"><span data-label="Patient">A</span><span data-label="Risk score" class="dval dnum">12.6%</span><span data-label="Prior admissions" class="dnum">0</span><span data-label="Medications" class="dnum">11</span><span data-label="Flags triggered" class="dcell-muted">Polypharmacy only</span></div>
@@ -869,7 +869,7 @@ df = df.dropna(subset=[<span class="cm">'diag_1', 'diag_2', 'diag_3'</span>])</d
   <div class="section" id="s09">
     <p class="section-eyebrow">09 · Output</p>
     <h2 class="section-title">Generation</h2>
-    <p class="section-desc">Same question, two real patients from the dataset — same guideline sources, genuinely different answers.</p>
+    <p class="section-desc">Same question, two real patients from the dataset: same guideline sources, genuinely different answers.</p>
 
     <p class="chart-title">Low risk vs high risk, side by side</p>
     <div class="field-grid" style="margin-bottom:var(--s3);">
@@ -888,7 +888,7 @@ df = df.dropna(subset=[<span class="cm">'diag_1', 'diag_2', 'diag_3'</span>])</d
         <p class="field-name">Escalated recommendations</p>
         <ul class="field-desc">
           <li>Same base recommendations, plus:</li>
-          <li><strong>Home health referral</strong> — explicitly flagged</li>
+          <li><strong>Home health referral</strong>: explicitly flagged</li>
           <li>Follow-up in <strong>1–2 weeks</strong>, not 1 month</li>
           <li>Dedicated "Prioritization of Flagged Concerns" section</li>
         </ul>
@@ -897,17 +897,17 @@ df = df.dropna(subset=[<span class="cm">'diag_1', 'diag_2', 'diag_3'</span>])</d
 
     <div class="callout" style="margin-bottom:var(--s4);">
       <span class="dot"></span>
-      <p>Every recommendation carries a source citation (organization + filename), and the prompt explicitly instructs the model to say when guidelines don't cover something rather than filling the gap — plus a standing disclaimer that output is decision support, not a replacement for clinical judgment.</p>
+      <p>Every recommendation carries a source citation (organization + filename), and the prompt explicitly instructs the model to say when guidelines don't cover something rather than filling the gap, plus a standing disclaimer that output is decision support, not a replacement for clinical judgment.</p>
     </div>
 
     <p class="chart-title">Choosing an LLM provider</p>
-    <p class="section-desc">The final choice was Hugging Face's free Inference API (<code>meta-llama/Llama-3.1-8B-Instruct</code>) — selected after a few other providers hit signup or billing roadblocks, since it worked end-to-end without requiring a paid plan.</p>
+    <p class="section-desc">The final choice was Hugging Face's free Inference API (<code>meta-llama/Llama-3.1-8B-Instruct</code>), selected after a few other providers hit signup or billing roadblocks, since it worked end-to-end without requiring a paid plan.</p>
   </div>
 
   <div class="section" id="s10">
     <p class="section-eyebrow">10 · Shipping It</p>
     <h2 class="section-title">From notebook to live app</h2>
-    <p class="section-desc">Streamlit Community Cloud, with the entire pipeline — retrieval, personalization, generation — running behind one page.</p>
+    <p class="section-desc">Streamlit Community Cloud, with the entire pipeline (retrieval, personalization, generation) running behind one page.</p>
 
     <p class="chart-title">Architecture</p>
     <div class="chart-card">
@@ -951,30 +951,30 @@ df = df.dropna(subset=[<span class="cm">'diag_1', 'diag_2', 'diag_3'</span>])</d
     <div class="source-grid">
       <div class="source-card problem"><p class="source-name">1. Missing dependencies</p><p class="source-role">First deploy crashed with <code>ModuleNotFoundError</code> for <code>xgboost</code>, since the pickled model needs the library installed to unpickle, not just to train. <strong>Fix:</strong> added <code>xgboost</code> and <code>scikit-learn</code> to <code>requirements.txt</code>.</p></div>
       <div class="source-card problem"><p class="source-name">2. Hidden dependency</p><p class="source-role">A second crash surfaced <code>No module named 'torchvision'</code>, pulled in internally by <code>sentence-transformers</code> even though the app never touches images. <strong>Fix:</strong> added <code>torchvision</code> to <code>requirements.txt</code>.</p></div>
-      <div class="source-card problem"><p class="source-name">3. Public repo, private token</p><p class="source-role">The Hugging Face token couldn't be hardcoded (repo is public on GitHub) or asked from every visitor (adds friction). <strong>Fix:</strong> moved to Streamlit Cloud's encrypted Secrets store (<code>st.secrets["HF_TOKEN"]</code>) — never exposed in the repo or shown in the UI.</p></div>
+      <div class="source-card problem"><p class="source-name">3. Public repo, private token</p><p class="source-role">The Hugging Face token couldn't be hardcoded (repo is public on GitHub) or asked from every visitor (adds friction). <strong>Fix:</strong> moved to Streamlit Cloud's encrypted Secrets store (<code>st.secrets["HF_TOKEN"]</code>): never exposed in the repo or shown in the UI.</p></div>
     </div>
 
     <p class="chart-title">A CSS lesson worth keeping</p>
     <div class="callout neutral" style="margin-bottom:12px;">
       <span class="dot"></span>
-      <p>Several rounds of styling the send button used the modern <code>:has()</code> CSS selector. It looked correct and produced no errors — it just silently did nothing, because <code>:has()</code> isn't universally supported across browser versions, and an unsupported selector doesn't fail loudly, it's just ignored. Switching to <code>:focus-within</code> and <code>:last-child</code> (both universally supported) fixed what multiple rounds of pixel-tweaking couldn't.</p>
+      <p>Several rounds of styling the send button used the modern <code>:has()</code> CSS selector. It looked correct and produced no errors: it just silently did nothing, because <code>:has()</code> isn't universally supported across browser versions, and an unsupported selector doesn't fail loudly, it's just ignored. Switching to <code>:focus-within</code> and <code>:last-child</code> (both universally supported) fixed what multiple rounds of pixel-tweaking couldn't.</p>
     </div>
     <p class="section-desc" style="margin-bottom:var(--s4);">Separately, Streamlit's official <code>key=</code> parameter (which generates a stable <code>.st-key-&lt;name&gt;</code> CSS class) turned out to be far more reliable for custom styling than guessing at Streamlit's internal DOM structure.</p>
 
     <p class="chart-title">Why an iframe embed, not a rebuild</p>
-    <p class="section-desc">The live app is embedded on this page via <code>&lt;iframe src="...?embed=true"&gt;</code> — Streamlit's officially supported embed method — rather than rebuilding the UI in plain HTML. True auto-resizing isn't possible across origins without the embedded site sending a resize signal, which Community Cloud embeds don't do — so the box is manually resizable instead (drag the corner) as a practical compromise.</p>
+    <p class="section-desc">The live app is embedded on this page via <code>&lt;iframe src="...?embed=true"&gt;</code>, Streamlit's officially supported embed method, rather than rebuilding the UI in plain HTML. True auto-resizing isn't possible across origins without the embedded site sending a resize signal, which Community Cloud embeds don't do, so the box is manually resizable instead (drag the corner) as a practical compromise.</p>
   </div>
 
   <div class="section" id="s11">
     <p class="section-eyebrow">11 · Honesty Check</p>
     <h2 class="section-title">Limitations</h2>
-    <p class="section-desc">Same standard applied here as in the readmission model — state the gaps rather than gloss over them.</p>
+    <p class="section-desc">Same standard applied here as in the readmission model: state the gaps rather than gloss over them.</p>
 
     <div class="dtable" style="margin-bottom:var(--s4);">
       <div class="dhead cols-3f"><span>Limitation</span><span>What it means</span><span>Severity</span></div>
       <div class="drow cols-3f">
         <span data-label="Limitation">Free embedding model</span>
-        <span data-label="What it means" class="dcell-muted">Smaller, less precise than paid alternatives — retrieval ranking stays correct, but similarity scores read lower (~0.4–0.6, not 0.9+) than a larger model would produce for the same match</span>
+        <span data-label="What it means" class="dcell-muted">Smaller, less precise than paid alternatives: retrieval ranking stays correct, but similarity scores read lower (~0.4–0.6, not 0.9+) than a larger model would produce for the same match</span>
         <span data-label="Severity"><span class="status-pill status-amber">Medium</span></span>
       </div>
       <div class="drow cols-3f">
@@ -984,7 +984,7 @@ df = df.dropna(subset=[<span class="cm">'diag_1', 'diag_2', 'diag_3'</span>])</d
       </div>
       <div class="drow cols-3f">
         <span data-label="Limitation">Guidelines are ADA/WHO/CDC/Mayo only</span>
-        <span data-label="What it means" class="dcell-muted">No hospital-specific protocols or medication formularies — general guidance, not a substitute for local clinical policy</span>
+        <span data-label="What it means" class="dcell-muted">No hospital-specific protocols or medication formularies: general guidance, not a substitute for local clinical policy</span>
         <span data-label="Severity"><span class="status-pill status-blue">By design</span></span>
       </div>
       <div class="drow cols-3f hl-red">
@@ -994,19 +994,19 @@ df = df.dropna(subset=[<span class="cm">'diag_1', 'diag_2', 'diag_3'</span>])</d
       </div>
       <div class="drow cols-3f">
         <span data-label="Limitation">No auto-resizing embed</span>
-        <span data-label="What it means" class="dcell-muted">The embedded app box on this page can't automatically grow when the patient form expands — a cross-origin browser restriction, not a bug — visitors can drag-resize it manually</span>
+        <span data-label="What it means" class="dcell-muted">The embedded app box on this page can't automatically grow when the patient form expands, which is a cross-origin browser restriction, not a bug. Visitors can drag-resize it manually instead</span>
         <span data-label="Severity"><span class="status-pill status-blue">By design</span></span>
       </div>
     </div>
 
     <div class="callout">
       <span class="dot"></span>
-      <p><strong>Bottom line:</strong> this is a working proof-of-concept that demonstrates the architecture end-to-end — a real predictive model, real retrieval over real guidelines, and a real personalization layer connecting them. It is not clinically validated, and the same "screening aid, not diagnostic tool" framing from the base model applies here with equal force.</p>
+      <p><strong>Bottom line:</strong> this is a working proof-of-concept that demonstrates the architecture end-to-end: a real predictive model, real retrieval over real guidelines, and a real personalization layer connecting them. It is not clinically validated, and the same "screening aid, not diagnostic tool" framing from the base model applies here with equal force.</p>
     </div>
   </div>
 
   <div style="border-top:1px solid var(--border); padding-top:20px; margin-top:8px;"></div>
-  <p style="font-size:13.5px; color:var(--black); margin:0 0 8px;">That's a wrap — if you scrolled this far without skimming, you deserve a <span style="color:var(--pink); font-weight:700;">snack 🍪</span>.</p>
+  <p style="font-size:13.5px; color:var(--black); margin:0 0 8px;">That's a wrap. If you scrolled this far without skimming, you deserve a <span style="color:var(--pink); font-weight:700;">snack 🍪</span>.</p>
   <p class="crumb" style="margin-top:0; padding-top:8px;"><a href="/#portfolio" style="color:var(--pink); font-weight:600;">← Back to portfolio</a></p>
 
 </div>

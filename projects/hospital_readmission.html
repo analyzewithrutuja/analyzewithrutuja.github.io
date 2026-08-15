@@ -419,7 +419,7 @@
   <h1 class="title">Hospital Readmission of <span>Diabetic Patients</span></h1>
   <p class="dek">
     101,766 hospital encounters, 130 U.S. hospitals, one question: which patients
-    are most likely to come back within 30 days — and can that be predicted early enough to act on?
+    are most likely to come back within 30 days, and can that be predicted early enough to act on?
   </p>
 
   <div class="tag-row">
@@ -448,15 +448,15 @@
   <div class="section">
     <p class="section-eyebrow">00 · The idea, first</p>
     <h2 class="section-title">Why does this hospital rank #1?</h2>
-    <p class="section-desc">Before any dataset, model, or chart — here's the core idea behind this whole project, told as a conversation. "Feature importance" is really just what an experienced doctor already does by instinct.</p>
+    <p class="section-desc">Before any dataset, model, or chart: here's the core idea behind this whole project, told as a conversation. "Feature importance" is really just what an experienced doctor already does by instinct.</p>
 
     <div class="comic-strip">
-      <img src="../images/comic_grid.png" alt="Eight-panel comic: Dr. Karen explains what makes St. Mercy Hospital number one for diabetes care — reading each patient's full record, weighing prior admissions as the strongest signal, followed by discharge location, medications, and age, and how data science surfaces high-risk cases so she can make the same call sooner">
+      <img src="../images/comic_grid.png" alt="Eight-panel comic: Dr. Karen explains what makes St. Mercy Hospital number one for diabetes care: reading each patient's full record, weighing prior admissions as the strongest signal, followed by discharge location, medications, and age, and how data science surfaces high-risk cases so she can make the same call sooner">
     </div>
 
     <div class="callout">
       <span class="dot"></span>
-      <p>The rest of this page shows exactly how that intuition gets tested, measured, and turned into an actual model — starting with the manual process below.</p>
+      <p>The rest of this page shows exactly how that intuition gets tested, measured, and turned into an actual model. It starts with the manual process below.</p>
     </div>
   </div>
   <!-- ===== END COMIC SECTION ===== -->
@@ -464,7 +464,7 @@
   <div class="section">
     <p class="section-eyebrow">01 · Before data science</p>
     <h2 class="section-title">The manual discharge process</h2>
-    <p class="section-desc">Before any model gets involved, here's how a diabetic patient's hospital stay actually flows — entirely on clinical judgment, with no automated risk score anywhere in the loop.</p>
+    <p class="section-desc">Before any model gets involved, here's how a diabetic patient's hospital stay actually flows: entirely on clinical judgment, with no automated risk score anywhere in the loop.</p>
 
     <div class="dg-wrap">
 <svg viewBox="0 0 680 850" role="img" style="width:100%;" aria-label="Process map of the manual, pre-data-science hospital discharge workflow">
@@ -587,16 +587,16 @@
 
     <div class="callout">
       <span class="dot"></span>
-      <p>This is the baseline the project measures itself against: no systematic risk flagging, no proactive follow-up scheduling, and discharge decisions made purely on clinical judgment. The predictive model built later in this project is meant to sit inside this same flow — not replace it.</p>
+      <p>This is the baseline the project measures itself against: no systematic risk flagging, no proactive follow-up scheduling, and discharge decisions made purely on clinical judgment. The predictive model built later in this project is meant to sit inside this same flow, not replace it.</p>
     </div>
 
-    <p class="chart-title" style="margin-bottom:2px; margin-top:24px;">How data science helps — in this same process</p>
-    <p class="chart-sub" style="margin-bottom:14px;">Three points (marked in pink above) where a predictive model plugs in — not replacing any step, just adding a signal at moments that already exist.</p>
+    <p class="chart-title" style="margin-bottom:2px; margin-top:24px;">How data science helps in this same process</p>
+    <p class="chart-sub" style="margin-bottom:14px;">Three points (marked in pink above) where a predictive model plugs in, not replacing any step, just adding a signal at moments that already exist.</p>
 
     <div style="font-size:13.5px; line-height:1.8; margin-bottom:20px;">
-      <p style="margin:0 0 8px;"><strong>1. At registration</strong> — prior visit history and admission type are already known the moment a patient is admitted. A model can compute an initial risk score right here, before any test results come in.</p>
-      <p style="margin:0 0 8px;"><strong>2. At physician assessment</strong> — instead of every patient being reviewed in arrival order, flagged high-risk patients get looked at first.</p>
-      <p style="margin:0;"><strong>3. At the discharge decision</strong> — this is where it matters most. Today this call is made on judgment alone. A risk score here means high-risk patients get extra follow-up scheduled <em>before</em> they leave, not after they've already come back.</p>
+      <p style="margin:0 0 8px;"><strong>1. At registration</strong>: prior visit history and admission type are already known the moment a patient is admitted. A model can compute an initial risk score right here, before any test results come in.</p>
+      <p style="margin:0 0 8px;"><strong>2. At physician assessment</strong>: instead of every patient being reviewed in arrival order, flagged high-risk patients get looked at first.</p>
+      <p style="margin:0;"><strong>3. At the discharge decision</strong>: this is where it matters most. Today this call is made on judgment alone. A risk score here means high-risk patients get extra follow-up scheduled <em>before</em> they leave, not after they've already come back.</p>
     </div>
 
     <p class="chart-title" style="margin-bottom:2px;">What this could realistically deliver</p>
@@ -608,11 +608,11 @@
       </div>
       <div class="quality-row" style="grid-template-columns: 1.1fr 2fr;">
         <span>Prioritization</span>
-        <span style="font-size:12.5px; color:var(--gray-text);">staff can't deep-review every patient during multiple emergencies — the model surfaces ~57% of genuine readmissions automatically</span>
+        <span style="font-size:12.5px; color:var(--gray-text);">staff can't deep-review every patient during multiple emergencies, so the model surfaces ~57% of genuine readmissions automatically</span>
       </div>
       <div class="quality-row" style="grid-template-columns: 1.1fr 2fr;">
         <span>Consistency</span>
-        <span style="font-size:12.5px; color:var(--gray-text);">human judgment varies by doctor, day, and fatigue — a model applies the same criteria to every patient</span>
+        <span style="font-size:12.5px; color:var(--gray-text);">human judgment varies by doctor, day, and fatigue, while a model applies the same criteria to every patient</span>
       </div>
       <div class="quality-row" style="grid-template-columns: 1.1fr 2fr;">
         <span>Better resource allocation</span>
@@ -620,24 +620,24 @@
       </div>
       <div class="quality-row" style="grid-template-columns: 1.1fr 2fr;">
         <span>Auditable &amp; improvable</span>
-        <span style="font-size:12.5px; color:var(--gray-text);">a doctor's gut feel can't be traced or re-checked — a model's decisions can be tracked and improved over time</span>
+        <span style="font-size:12.5px; color:var(--gray-text);">a doctor's gut feel can't be traced or re-checked, while a model's decisions can be tracked and improved over time</span>
       </div>
       <div class="quality-row" style="grid-template-columns: 1.1fr 2fr;">
         <span>Cost reduction potential</span>
-        <span style="font-size:12.5px; color:var(--gray-text);">every readmission costs the hospital in beds, staff, and resources — catching genuine cases earlier can lower that cost</span>
+        <span style="font-size:12.5px; color:var(--gray-text);">every readmission costs the hospital in beds, staff, and resources, so catching genuine cases earlier can lower that cost</span>
       </div>
     </div>
 
     <div class="callout">
       <span class="dot"></span>
-      <p><strong>Caveat:</strong> these benefits are conditional, not guaranteed — they depend on the model being deployed correctly. As covered in <strong>Section 08 · Limitations</strong>, this is currently a proof-of-concept, not a validated clinical tool. The benefits above are real, but only once the remaining gaps (patient-level leakage, expired-patient contamination) are addressed.</p>
+      <p><strong>Caveat:</strong> these benefits are conditional, not guaranteed, because they depend on the model being deployed correctly. As covered in <strong>Section 08 · Limitations</strong>, this is currently a proof-of-concept, not a validated clinical tool. The benefits above are real, but only once the remaining gaps (patient-level leakage, expired-patient contamination) are addressed.</p>
     </div>
   </div>
 
   <div class="section">
     <p class="section-eyebrow">02 · Intake</p>
     <h2 class="section-title">Dataset overview</h2>
-    <p class="section-desc">Before any model gets built, here's what's actually in the data — and where it can't be fully trusted.</p>
+    <p class="section-desc">Before any model gets built, here's what's actually in the data, and where it can't be fully trusted.</p>
 
     <div class="stat-grid">
       <div class="stat-card"><p class="stat-num">101,766</p><p class="stat-label">Hospital encounters</p></div>
@@ -670,11 +670,11 @@
       </div>
       <div class="field-card c-teal">
         <div class="field-top"><span class="field-name">Medications</span><span class="field-count">23</span></div>
-        <p class="field-desc">One column per diabetes drug — steady, up, down, none</p>
+        <p class="field-desc">One column per diabetes drug: steady, up, down, none</p>
       </div>
       <div class="field-card c-red">
         <div class="field-top"><span class="field-name">Outcome (target)</span><span class="field-count">1</span></div>
-        <p class="field-desc">Readmitted — no, after 30 days, within 30 days</p>
+        <p class="field-desc">Readmitted: no, after 30 days, within 30 days</p>
       </div>
     </div>
   </div>
@@ -682,22 +682,22 @@
   <div class="section">
     <p class="section-eyebrow">03 · Quality check</p>
     <h2 class="section-title">Data quality flags</h2>
-    <p class="section-desc">What needs to be known before trusting any number downstream — every analysis in this project accounts for these.</p>
+    <p class="section-desc">What needs to be known before trusting any number downstream: every analysis in this project accounts for these.</p>
 
     <div class="quality-table">
       <div class="quality-head"><span>Field</span><span>Result</span><span>Flag</span></div>
       <div class="quality-row">
-        <span>Weight — missing</span>
+        <span>Weight: missing</span>
         <span class="quality-val">97%</span>
         <span class="status-pill status-red">drop</span>
       </div>
       <div class="quality-row">
-        <span>Medical specialty — missing</span>
+        <span>Medical specialty: missing</span>
         <span class="quality-val">49%</span>
         <span class="status-pill status-red">high</span>
       </div>
       <div class="quality-row">
-        <span>Payer code — missing</span>
+        <span>Payer code: missing</span>
         <span class="quality-val">40%</span>
         <span class="status-pill status-amber">caution</span>
       </div>
@@ -712,7 +712,7 @@
         <span class="status-pill status-amber">caution</span>
       </div>
       <div class="quality-row">
-        <span>Race — missing</span>
+        <span>Race: missing</span>
         <span class="quality-val">2,273 rows</span>
         <span class="status-pill status-green">minor</span>
       </div>
@@ -720,14 +720,14 @@
 
     <div class="callout">
       <span class="dot"></span>
-      <p>Repeat encounters mean a patient can appear in both a training set and a test set unless the data is split by patient, not by row — a leakage risk addressed later in the modeling section.</p>
+      <p>Repeat encounters mean a patient can appear in both a training set and a test set unless the data is split by patient, not by row: a leakage risk addressed later in the modeling section.</p>
     </div>
   </div>
 
   <div class="section">
     <p class="section-eyebrow">04 · Transparency</p>
     <h2 class="section-title">Data ethics &amp; feature exclusion</h2>
-    <p class="section-desc">Before any pattern gets shown or any model gets trained, here's what was deliberately left out — and why. Three different reasons, not one.</p>
+    <p class="section-desc">Before any pattern gets shown or any model gets trained, here's what was deliberately left out, and why. Three different reasons, not one.</p>
 
     <div class="quality-table">
       <div class="quality-head"><span>Column</span><span>Reason</span><span>Category</span></div>
@@ -759,8 +759,8 @@
     </div>
 
     <p class="section-desc" style="margin-top:24px;">
-      Two other high-missingness columns — <strong>payer_code (40% missing)</strong> and
-      <strong>medical_specialty (49% missing)</strong> — were <em>not</em> dropped. They were kept
+      Two other high-missingness columns, <strong>payer_code (40% missing)</strong> and
+      <strong>medical_specialty (49% missing)</strong>, were <em>not</em> dropped. They were kept
       and their missing values labeled "Unknown," since that absence can itself be informative
       rather than just noise.
     </p>
@@ -768,10 +768,10 @@
     <div class="callout">
       <span class="dot"></span>
       <p><strong>On the fairness exclusion:</strong> removing race and gender from the model means
-      neither variable can directly drive a prediction — but this is a partial safeguard, not a
+      neither variable can directly drive a prediction, but this is a partial safeguard, not a
       complete one. Other fields (discharge disposition, admission source) can act as indirect
       proxies for demographic patterns. Race and gender are still shown in the exploratory analysis
-      below, deliberately, because the disparities in the raw data are worth seeing — they're just
+      below, deliberately, because the disparities in the raw data are worth seeing, but they're just
       not used to make the model's decisions.</p>
     </div>
   </div>
@@ -779,7 +779,7 @@
   <div class="section">
     <p class="section-eyebrow">05 · Exploration</p>
     <h2 class="section-title">Exploratory data analysis</h2>
-    <p class="section-desc">Five views into the data, ordered by how much they actually explain — the two biggest risk signals first, context second, a null result last.</p>
+    <p class="section-desc">Five views into the data, ordered by how much they actually explain: the two biggest risk signals first, context second, a null result last.</p>
 
     <div class="kpi-strip">
       <div class="kpi-card"><p class="kpi-num">11.2%</p><p class="kpi-label">30-day readmit rate</p></div>
@@ -791,7 +791,7 @@
     <div class="chart-row hero">
       <div class="chart-card hero">
         <p class="chart-title">Prior inpatient visits → readmission risk</p>
-        <p class="chart-sub">the single strongest signal in the data — risk nearly 5× from 0 to 6+ prior visits</p>
+        <p class="chart-sub">the single strongest signal in the data: risk nearly 5× from 0 to 6+ prior visits</p>
         <div class="bar-row"><span class="bar-label">0 visits</span><div class="bar-track"><div class="bar-fill c-green" style="width:21%"><span>8.4%</span></div></div><span class="bar-val">67,630</span></div>
         <div class="bar-row"><span class="bar-label">1–2 visits</span><div class="bar-track"><div class="bar-fill c-teal" style="width:36%"><span>14.2%</span></div></div><span class="bar-val">27,087</span></div>
         <div class="bar-row"><span class="bar-label">3–5 visits</span><div class="bar-track"><div class="bar-fill c-amber" style="width:57%"><span>22.8%</span></div></div><span class="bar-val">5,845</span></div>
@@ -830,54 +830,54 @@
         <p class="chart-title">A null result worth noting</p>
         <p class="chart-sub">A1C blood sugar control test</p>
         <p style="font-size: 13.5px; margin:0 0 6px;">Normal: <strong>9.7%</strong> readmit &nbsp;·&nbsp; &gt;7: <strong>10.0%</strong> &nbsp;·&nbsp; &gt;8: <strong>9.9%</strong></p>
-        <p style="font-size:12.5px; color:var(--gray-text); margin:0;">Practically flat. A clinically important test turns out to carry almost no predictive signal on its own — matching its very low feature importance in the model built later.</p>
+        <p style="font-size:12.5px; color:var(--gray-text); margin:0;">Practically flat. A clinically important test turns out to carry almost no predictive signal on its own, which matches its very low feature importance in the model built later.</p>
       </div>
     </div>
 
     <div class="so-what">
       <span class="dot"></span>
-      <p>The two hero charts explain why the predictive model leans so heavily on <strong>utilization history</strong> and <strong>discharge destination</strong> — not point-in-time lab results like A1C.</p>
+      <p>The two hero charts explain why the predictive model leans so heavily on <strong>utilization history</strong> and <strong>discharge destination</strong>, not point-in-time lab results like A1C.</p>
     </div>
   </div>
 
   <div class="section">
     <p class="section-eyebrow">06 · Inference</p>
     <h2 class="section-title">Statistical modeling</h2>
-    <p class="section-desc">Before any variable earns a place in the predictive model, it has to prove it isn't just noise. Race and gender are excluded from this step too — see the data ethics section above.</p>
+    <p class="section-desc">Before any variable earns a place in the predictive model, it has to prove it isn't just noise. Race and gender are excluded from this step too. See the data ethics section above.</p>
 
     <p style="font-size: 14.5px; line-height: 1.7; margin: 0 0 20px;">
-      Not every question can be answered the same way — the right test depends on what kind of thing is being compared.
+      Not every question can be answered the same way. The right test depends on what kind of thing is being compared.
       If both things are <strong>categories</strong> (like age group and whether someone was readmitted), a
       <strong>chi-square test</strong> asks whether the groups look meaningfully different, or if the pattern could
       be chance. If one thing is a category and the other is an <strong>actual number</strong> (like length of stay
       in days), a <strong>t-test</strong> compares the average between the two groups instead. Once individual
       variables pass this screening, the ones that matter get combined into one <strong>logistic regression
-      model</strong> — because in real patients, several factors act together, not in isolation.
+      model</strong>, because in real patients, several factors act together, not in isolation.
     </p>
 
-    <p class="chart-title" style="margin-bottom:2px;">Decision logic — by variable type</p>
+    <p class="chart-title" style="margin-bottom:2px;">Decision logic, by variable type</p>
     <p class="chart-sub" style="margin-bottom:12px;">This is the general rule, before any specific data gets involved.</p>
     <div class="quality-table" style="margin-bottom:24px;">
       <div class="quality-head" style="grid-template-columns: 1.3fr 1.3fr 2.4fr;"><span>X (independent)</span><span>Y (dependent)</span><span>Test</span></div>
       <div class="quality-row" style="grid-template-columns: 1.3fr 1.3fr 2.4fr;">
         <span>Categorical (groups)</span>
         <span>Categorical (groups)</span>
-        <span style="font-size:12.5px; color:var(--gray-text);"><strong style="color:var(--black);">Chi-square</strong> — both variables are buckets, so only counts can be compared, not averages</span>
+        <span style="font-size:12.5px; color:var(--gray-text);"><strong style="color:var(--black);">Chi-square</strong>: both variables are buckets, so only counts can be compared, not averages</span>
       </div>
       <div class="quality-row" style="grid-template-columns: 1.3fr 1.3fr 2.4fr;">
         <span>Categorical (2 groups)</span>
         <span>Continuous (number)</span>
-        <span style="font-size:12.5px; color:var(--gray-text);"><strong style="color:var(--black);">T-test</strong> — one side is a group, the other an actual number, so averages get compared</span>
+        <span style="font-size:12.5px; color:var(--gray-text);"><strong style="color:var(--black);">T-test</strong>: one side is a group, the other an actual number, so averages get compared</span>
       </div>
       <div class="quality-row" style="grid-template-columns: 1.3fr 1.3fr 2.4fr;">
         <span>Categorical (3+ groups)</span>
         <span>Continuous</span>
-        <span style="font-size:12.5px; color:var(--gray-text);"><strong style="color:var(--black);">ANOVA</strong> — a t-test only works for 2 groups; 3 or more needs ANOVA</span>
+        <span style="font-size:12.5px; color:var(--gray-text);"><strong style="color:var(--black);">ANOVA</strong>: a t-test only works for 2 groups; 3 or more needs ANOVA</span>
       </div>
       <div class="quality-row" style="grid-template-columns: 1.3fr 1.3fr 2.4fr;">
         <span>Multiple X's together</span>
         <span>Categorical (binary)</span>
-        <span style="font-size:12.5px; color:var(--gray-text);"><strong style="color:var(--black);">Logistic regression</strong> — used when several variables' combined effect needs to be seen at once</span>
+        <span style="font-size:12.5px; color:var(--gray-text);"><strong style="color:var(--black);">Logistic regression</strong>: used when several variables' combined effect needs to be seen at once</span>
       </div>
     </div>
 
@@ -906,7 +906,7 @@
     </div>
     <div class="callout" style="margin-top:0; margin-bottom:24px;">
       <span class="dot"></span>
-      <p>For the length-of-stay test, X and Y flip relative to the other two rows — the question here is "what was the average stay <em>among</em> readmitted patients," not "does stay length predict readmission." Same test, reversed framing.</p>
+      <p>For the length-of-stay test, X and Y flip relative to the other two rows: the question here is "what was the average stay <em>among</em> readmitted patients," not "does stay length predict readmission." Same test, reversed framing.</p>
     </div>
 
     <div class="field-grid" style="margin-bottom: 20px;">
@@ -943,51 +943,51 @@
 
     <div class="field-grid" style="margin-top: 20px;">
       <div class="field-card c-amber">
-        <p class="field-name" style="margin-bottom:6px;">Age — what it means clinically</p>
+        <p class="field-name" style="margin-bottom:6px;">Age: what it means clinically</p>
         <p class="field-desc">Age is a proxy for slower recovery, more comorbidities, and less support at home. Elderly patients need thorough discharge planning, not just medical clearance.</p>
       </div>
       <div class="field-card c-amber">
-        <p class="field-name" style="margin-bottom:6px;">Diabetes meds — what it means clinically</p>
-        <p class="field-desc">Medication management quality after discharge genuinely affects outcomes. Discharge counseling on proper use isn't a formality — it measurably matters.</p>
+        <p class="field-name" style="margin-bottom:6px;">Diabetes meds: what it means clinically</p>
+        <p class="field-desc">Medication management quality after discharge genuinely affects outcomes. Discharge counseling on proper use isn't a formality. It measurably matters.</p>
       </div>
       <div class="field-card c-amber">
-        <p class="field-name" style="margin-bottom:6px;">Length of stay — what it means clinically</p>
-        <p class="field-desc">A longer-than-expected stay is itself an early warning sign — a signal for extra discharge attention, not just a scheduling detail.</p>
+        <p class="field-name" style="margin-bottom:6px;">Length of stay: what it means clinically</p>
+        <p class="field-desc">A longer-than-expected stay is itself an early warning sign, a signal for extra discharge attention, not just a scheduling detail.</p>
       </div>
     </div>
 
     <div class="callout">
       <span class="dot"></span>
-      <p>No single factor is enough on its own to flag a patient — age, medication history, and stay length only become a useful risk picture once combined. That combination is what the predictive model does next.</p>
+      <p>No single factor is enough on its own to flag a patient. Age, medication history, and stay length only become a useful risk picture once combined. That combination is what the predictive model does next.</p>
     </div>
   </div>
 
   <div class="section">
     <p class="section-eyebrow">07 · Prediction</p>
     <h2 class="section-title">Predictive modeling</h2>
-    <p class="section-desc">Statistical tests confirm that individual factors matter. This is where they get combined into one number per patient — an actual, usable risk score, not just a group-level association.</p>
+    <p class="section-desc">Statistical tests confirm that individual factors matter. This is where they get combined into one number per patient, an actual, usable risk score, not just a group-level association.</p>
 
     <div class="callout" style="margin-bottom: 24px;">
       <span class="dot"></span>
-      <p><strong>Why this matters for this dataset specifically:</strong> knowing "age is statistically associated with readmission" doesn't tell a care team what to do with the patient in front of them right now. A predictive model turns dozens of individual signals into a single risk score for one specific person — which is what actually makes a screening tool usable.</p>
+      <p><strong>Why this matters for this dataset specifically:</strong> knowing "age is statistically associated with readmission" doesn't tell a care team what to do with the patient in front of them right now. A predictive model turns dozens of individual signals into a single risk score for one specific person, which is what actually makes a screening tool usable.</p>
     </div>
 
     <div class="field-card c-blue" style="margin-bottom: 28px;">
-      <p class="field-name" style="margin-bottom:8px; color:#1A4480;">How does the model actually learn this — is it told what's medically important?</p>
+      <p class="field-name" style="margin-bottom:8px; color:#1A4480;">How does the model actually learn this? Is it told what's medically important?</p>
       <p class="field-desc" style="opacity:1; color:#1A4480; margin-bottom:10px;">
         No. Nothing is told to the model about which factors are clinically important. It only works because
-        every patient in this dataset is <strong>historical</strong> — the actual outcome (readmitted or not)
+        every patient in this dataset is <strong>historical</strong>: the actual outcome (readmitted or not)
         is already known. The model compares patients with a given trait against patients without it, and
         checks whether their real outcomes actually differed.
       </p>
       <p class="field-desc" style="opacity:1; color:#1A4480; margin-bottom:10px;">
         <strong>Analogy:</strong> imagine being handed 1,000 old exam sheets, each with the student's answers
         <em>and</em> their final grade already written on it. If students who got Question 5 right tended to
-        have higher grades, you'd notice that pattern yourself — nobody had to tell you Question 5 mattered.
+        have higher grades, you'd notice that pattern yourself. Nobody had to tell you Question 5 mattered.
         The model does the same thing with patient data, using statistics instead of eyeballing it.
       </p>
       <p class="field-desc" style="opacity:1; color:#1A4480;">
-        This is also why a clinically important test like A1C ended up with a small weight — the model checked,
+        This is also why a clinically important test like A1C ended up with a small weight. The model checked,
         and its statistical relationship with readmission was weak in this data, regardless of its medical
         significance. The model only learns statistical patterns, not clinical seriousness.
       </p>
@@ -1005,7 +1005,7 @@
       <div class="quality-row" style="grid-template-columns: 1.2fr 1.2fr 1.4fr;">
         <span>Readmitted patients stayed longer</span>
         <span style="color:var(--gray-text); font-size:12.5px;">describes a pattern, doesn't combine it with other factors</span>
-        <span style="color:var(--gray-text); font-size:12.5px;">combines all 189 signals — age, meds, history — into one number</span>
+        <span style="color:var(--gray-text); font-size:12.5px;">combines all 189 signals (age, meds, history) into one number</span>
       </div>
       <div class="quality-row" style="grid-template-columns: 1.2fr 1.2fr 1.4fr;">
         <span>No single factor is enough alone</span>
@@ -1015,43 +1015,43 @@
     </div>
 
     <p class="chart-title" style="margin-bottom:2px;">Why these three models, specifically</p>
-    <p class="chart-sub" style="margin-bottom:12px;">Each one exists to answer a different question about this dataset — run in order of increasing complexity.</p>
+    <p class="chart-sub" style="margin-bottom:12px;">Each one exists to answer a different question about this dataset, run in order of increasing complexity.</p>
     <div class="quality-table" style="margin-bottom:24px;">
       <div class="quality-head" style="grid-template-columns: 1fr 1fr 2fr;"><span>Model</span><span>Role</span><span>Why chosen for this data</span></div>
       <div class="quality-row" style="grid-template-columns: 1fr 1fr 2fr;">
         <span>Logistic Regression</span>
         <span class="status-pill status-green">baseline</span>
-        <span style="color:var(--gray-text); font-size:12.5px;">the target is genuinely binary (readmit or not), and every weight is directly interpretable — sets the floor every other model has to beat</span>
+        <span style="color:var(--gray-text); font-size:12.5px;">the target is genuinely binary (readmit or not), and every weight is directly interpretable, which sets the floor every other model has to beat</span>
       </div>
       <div class="quality-row" style="grid-template-columns: 1fr 1fr 2fr;">
         <span>Random Forest</span>
         <span class="status-pill status-amber">non-linear check</span>
-        <span style="color:var(--gray-text); font-size:12.5px;">real patients don't follow straight lines — age and prior visits together can compound beyond what fixed weights capture</span>
+        <span style="color:var(--gray-text); font-size:12.5px;">real patients don't follow straight lines, so age and prior visits together can compound beyond what fixed weights capture</span>
       </div>
       <div class="quality-row" style="grid-template-columns: 1fr 1fr 2fr;">
         <span>XGBoost</span>
         <span class="status-pill status-red">performance ceiling</span>
-        <span style="color:var(--gray-text); font-size:12.5px;">the standard for tabular healthcare data — directly targets the patients earlier models got wrong, instead of treating every case equally</span>
+        <span style="color:var(--gray-text); font-size:12.5px;">the standard for tabular healthcare data, which directly targets the patients earlier models got wrong, instead of treating every case equally</span>
       </div>
     </div>
 
     <div class="callout" style="margin-bottom: 28px;">
       <span class="dot"></span>
-      <p><strong>What this means for the final decision:</strong> running all three isn't redundant — it's what lets this project claim <strong>XGBoost is the right choice with evidence</strong>, not just picked because it's popular. Because XGBoost won on both AUC (0.672) and recall (58.0%) — the metric that matters most for catching real readmissions — it becomes the model recommended for actual screening use. Logistic Regression stays valuable as the explainable fallback when a clinician needs to see the reasoning in plain weights, not just a score.</p>
+      <p><strong>What this means for the final decision:</strong> running all three isn't redundant: it's what lets this project claim <strong>XGBoost is the right choice with evidence</strong>, not just picked because it's popular. Because XGBoost won on both AUC (0.672) and recall (58.0%), the metric that matters most for catching real readmissions, it becomes the model recommended for actual screening use. Logistic Regression stays valuable as the explainable fallback when a clinician needs to see the reasoning in plain weights, not just a score.</p>
     </div>
 
     <p class="chart-title" style="margin-bottom:2px;">The three models, in full</p>
-    <p class="chart-sub" style="margin-bottom:16px;">Same 189 input features each time — the general concept behind each model, then how it actually performed on this data.</p>
+    <p class="chart-sub" style="margin-bottom:16px;">Same 189 input features each time: the general concept behind each model, then how it actually performed on this data.</p>
 
     <!-- LOGISTIC REGRESSION -->
     <div class="chart-card" style="margin-bottom: 20px;">
       <p class="chart-title" style="color:#3C3489;">1. Logistic Regression</p>
-      <p style="font-size: 13.5px; margin:8px 0 10px; color:var(--gray-text);"><strong style="color:var(--black);">The concept:</strong> fit one smooth S-shaped curve that converts any combination of inputs into a probability between 0 and 1 — no matter how extreme the inputs, the output can never leave that range.</p>
+      <p style="font-size: 13.5px; margin:8px 0 10px; color:var(--gray-text);"><strong style="color:var(--black);">The concept:</strong> fit one smooth S-shaped curve that converts any combination of inputs into a probability between 0 and 1. No matter how extreme the inputs, the output can never leave that range.</p>
       <p style="font-family:'IBM Plex Mono',monospace; font-size: 13.5px; margin:8px 0 14px; color:var(--black);">P = 1 / (1 + e<sup>&minus;(&beta;&#8320;+&beta;&#8321;x&#8321;+...+&beta;&#8345;x&#8345;)</sup>)</p>
       <div style="display:grid; grid-template-columns: 60px 1fr; gap:6px 12px; font-size:12.5px; color:var(--gray-text); margin-bottom:14px;">
         <strong style="color:var(--black);">P</strong><span>readmission probability, forced between 0 and 1 by the sigmoid</span>
-        <strong style="color:var(--black);">&beta;&#8320;</strong><span>intercept — the baseline when every feature is at its average</span>
-        <strong style="color:var(--black);">&beta;&#8321;...&beta;&#8345;</strong><span>learned weight per feature — never assigned by hand</span>
+        <strong style="color:var(--black);">&beta;&#8320;</strong><span>intercept: the baseline when every feature is at its average</span>
+        <strong style="color:var(--black);">&beta;&#8321;...&beta;&#8345;</strong><span>learned weight per feature: never assigned by hand</span>
         <strong style="color:var(--black);">x&#8321;...x&#8345;</strong><span>the 189 input features for one patient</span>
       </div>
       <p style="font-size: 13.5px; margin:0 0 14px;"><strong>On this dataset:</strong> <code>class_weight='balanced'</code> (only 11.2% of patients are readmitted, so the minority class gets extra weight) · same 189 features as the other two models.</p>
@@ -1096,7 +1096,7 @@
       <p style="font-size:12.5px; color:var(--gray-text); margin:10px 0 20px;">Result: 65.5% accuracy · 0.645 AUC · 53.7% recall</p>
 
       <p style="font-weight:600; font-size:14px; margin:0 0 2px;">Walking through one real patient</p>
-      <p style="font-size:12.5px; color:var(--gray-text); margin:0 0 12px;">A simplified 5-feature version of the formula, applied to an actual patient from the dataset — small enough to follow by hand.</p>
+      <p style="font-size:12.5px; color:var(--gray-text); margin:0 0 12px;">A simplified 5-feature version of the formula, applied to an actual patient from the dataset, small enough to follow by hand.</p>
       <div style="display:grid; grid-template-columns: 1.4fr 1fr 1fr; gap:8px 16px; font-size: 13.5px; margin-bottom:16px;">
         <strong>Feature</strong><strong>This patient</strong><strong>Weight (&beta;)</strong>
         <span>Prior inpatient visits</span><span>3</span><span>0.377</span>
@@ -1108,21 +1108,21 @@
       <p style="font-family:'IBM Plex Mono',monospace; font-size: 12.5px; color:var(--gray-text); margin:0 0 12px;">P = 1 / (1 + e<sup>&minus;(&minus;0.066 + 0.377z&#8321; + 0.094z&#8322; + 0.055z&#8323; + 0.059z&#8324; + 0.011z&#8325;)</sup>) &nbsp;=&nbsp; <strong style="color:var(--black);">0.666</strong></p>
       <div class="so-what" style="margin-top:0; padding-top:12px;">
         <span class="dot"></span>
-        <p>Model predicted a <strong>66.6% chance of readmission</strong> for this patient — flagged high-risk. This patient was, in fact, readmitted within 30 days. The dominant driver was the 3 prior inpatient visits, which carried by far the largest weight.</p>
+        <p>Model predicted a <strong>66.6% chance of readmission</strong> for this patient, flagged high-risk. This patient was, in fact, readmitted within 30 days. The dominant driver was the 3 prior inpatient visits, which carried by far the largest weight.</p>
       </div>
     </div>
 
     <!-- RANDOM FOREST -->
     <div class="chart-card" style="margin-bottom: 20px;">
       <p class="chart-title" style="color:#085041;">2. Random Forest</p>
-      <p style="font-size: 13.5px; margin:8px 0 10px; color:var(--gray-text);"><strong style="color:var(--black);">The concept:</strong> grow many decision trees independently, each on a random slice of the data, then let them vote — a crowd of imperfect trees averages out to something more reliable than any single tree.</p>
+      <p style="font-size: 13.5px; margin:8px 0 10px; color:var(--gray-text);"><strong style="color:var(--black);">The concept:</strong> grow many decision trees independently, each on a random slice of the data, then let them vote. A crowd of imperfect trees averages out to something more reliable than any single tree.</p>
       <p style="font-family:'IBM Plex Mono',monospace; font-size: 13.5px; margin:8px 0 14px; color:var(--black);">&#375; = mode { T&#8321;(x), T&#8322;(x), ..., T&#8322;&#8320;&#8320;(x) }</p>
       <div style="display:grid; grid-template-columns: 60px 1fr; gap:6px 12px; font-size:12.5px; color:var(--gray-text); margin-bottom:14px;">
-        <strong style="color:var(--black);">&#375;</strong><span>final prediction — the majority vote across all trees</span>
+        <strong style="color:var(--black);">&#375;</strong><span>final prediction: the majority vote across all trees</span>
         <strong style="color:var(--black);">T&#8321;...T&#8322;&#8320;&#8320;</strong><span>200 independent decision trees, each seeing a random slice of data</span>
         <strong style="color:var(--black);">mode</strong><span>the most common answer among all 200 trees</span>
       </div>
-      <p style="font-size: 13.5px; margin:0 0 10px;"><strong>Why chosen for this data:</strong> real patients don't follow straight lines — risk from age and prior visits together can compound beyond what Logistic Regression's fixed weights can capture. Random Forest catches these interactions, and averaging 200 trees resists overfitting to noise.</p>
+      <p style="font-size: 13.5px; margin:0 0 10px;"><strong>Why chosen for this data:</strong> real patients don't follow straight lines, so risk from age and prior visits together can compound beyond what Logistic Regression's fixed weights can capture. Random Forest catches these interactions, and averaging 200 trees resists overfitting to noise.</p>
       <p style="font-size: 13.5px; margin:0 0 14px;"><strong>On this dataset:</strong> <code>n_estimators=200</code> (number of trees) · <code>max_depth=10</code> (caps how deep each tree can split, preventing memorization) · <code>class_weight='balanced'</code>.</p>
 
       <div class="dg-wrap">
@@ -1171,7 +1171,7 @@
       </div>
 
       <p style="font-weight:600; font-size:14px; margin:16px 0 2px;">Which features carry the most weight</p>
-      <p style="font-size:12.5px; color:var(--gray-text); margin:0 0 12px;">Learned entirely from data during training — not assigned by hand.</p>
+      <p style="font-size:12.5px; color:var(--gray-text); margin:0 0 12px;">Learned entirely from data during training, not assigned by hand.</p>
       <div class="quality-table">
         <div class="quality-head"><span>Feature</span><span>Importance</span><span>Rank</span></div>
         <div class="quality-row"><span>Prior inpatient visits</span><span class="quality-val">0.211</span><span class="status-pill status-red">#1</span></div>
@@ -1185,14 +1185,14 @@
     <!-- XGBOOST -->
     <div class="chart-card" style="margin-bottom: 24px;">
       <p class="chart-title" style="color:#633806;">3. XGBoost</p>
-      <p style="font-size: 13.5px; margin:8px 0 10px; color:var(--gray-text);"><strong style="color:var(--black);">The concept:</strong> build trees one at a time instead of all at once — each new tree looks specifically at what the previous trees got wrong, and nudges the prediction closer to the truth.</p>
+      <p style="font-size: 13.5px; margin:8px 0 10px; color:var(--gray-text);"><strong style="color:var(--black);">The concept:</strong> build trees one at a time instead of all at once. Each new tree looks specifically at what the previous trees got wrong, and nudges the prediction closer to the truth.</p>
       <p style="font-family:'IBM Plex Mono',monospace; font-size: 13.5px; margin:8px 0 14px; color:var(--black);">&#375;<sup>(t)</sup> = &#375;<sup>(t&minus;1)</sup> + &eta;&middot;f<sub>t</sub>(x)</p>
       <div style="display:grid; grid-template-columns: 60px 1fr; gap:6px 12px; font-size:12.5px; color:var(--gray-text); margin-bottom:14px;">
         <strong style="color:var(--black);">&#375;<sup>(t)</sup></strong><span>prediction after adding the t-th tree</span>
-        <strong style="color:var(--black);">&eta;</strong><span>learning rate — how aggressively each tree corrects</span>
+        <strong style="color:var(--black);">&eta;</strong><span>learning rate: how aggressively each tree corrects</span>
         <strong style="color:var(--black);">f<sub>t</sub>(x)</strong><span>the new tree, trained specifically on the previous tree's residual errors</span>
       </div>
-      <p style="font-size: 13.5px; margin:0 0 10px;"><strong>Why chosen for this data:</strong> unlike Random Forest's independent trees, XGBoost directly targets the patients the previous tree got wrong — it's the standard for tabular healthcare data and consistently the strongest performer here.</p>
+      <p style="font-size: 13.5px; margin:0 0 10px;"><strong>Why chosen for this data:</strong> unlike Random Forest's independent trees, XGBoost directly targets the patients the previous tree got wrong. It's the standard for tabular healthcare data and consistently the strongest performer here.</p>
       <p style="font-size: 13.5px; margin:0 0 14px;"><strong>On this dataset:</strong> <code>scale_pos_weight</code> (XGBoost's equivalent of class balancing) · same 189 features.</p>
 
       <div class="dg-wrap">
@@ -1229,9 +1229,9 @@
 <text class="dg-ts" x="340" y="332" text-anchor="middle" dominant-baseline="central">actual readmit_30=1 &mdash; match &#10003;</text></g>
 </svg>
       </div>
-      <p style="font-size:12.5px; color:var(--gray-text); margin:10px 0 20px;">Result: 66.0% accuracy · <strong>0.672 AUC</strong> · <strong>58.0% recall</strong> — best of the three</p>
+      <p style="font-size:12.5px; color:var(--gray-text); margin:10px 0 20px;">Result: 66.0% accuracy · <strong>0.672 AUC</strong> · <strong>58.0% recall</strong>, best of the three</p>
 
-      <p style="font-weight:600; font-size:14px; margin:0 0 2px;">Confusion matrix — out of 100 patients</p>
+      <p style="font-weight:600; font-size:14px; margin:0 0 2px;">Confusion matrix, out of 100 patients</p>
       <p style="font-size:12.5px; color:var(--gray-text); margin:0 0 12px;">What XGBoost actually gets right and wrong, at the default 0.5 threshold.</p>
       <div style="display:grid; grid-template-columns: 100px 1fr 1fr; gap:8px; align-items:center;">
         <div></div>
@@ -1260,13 +1260,13 @@
       </div>
       <div class="so-what" style="margin-top:14px; padding-top:12px;">
         <span class="dot"></span>
-        <p>Of 35 patients flagged "high risk," only 6 actually return — the honest trade-off of prioritizing recall over precision in a screening context.</p>
+        <p>Of 35 patients flagged "high risk," only 6 actually return, the honest trade-off of prioritizing recall over precision in a screening context.</p>
       </div>
     </div>
 
     <div class="field-card c-coral" style="margin-bottom: 24px;">
       <p class="field-name" style="margin-bottom:6px;">The limitation worth stating plainly</p>
-      <p class="field-desc">A model can only learn patterns that already exist in its training data — it has no concept of "clinical seriousness," only "statistical pattern in past outcomes." A rare but genuinely dangerous condition with too few past examples may get underweighted, not because it doesn't matter medically, but because the model never saw enough of it to learn the pattern. This is the core difference between a doctor's judgment and a model's prediction.</p>
+      <p class="field-desc">A model can only learn patterns that already exist in its training data. It has no concept of "clinical seriousness," only "statistical pattern in past outcomes." A rare but genuinely dangerous condition with too few past examples may get underweighted, not because it doesn't matter medically, but because the model never saw enough of it to learn the pattern. This is the core difference between a doctor's judgment and a model's prediction.</p>
     </div>
 
     <p class="chart-title" style="margin-bottom:2px;">So which model actually won?</p>
@@ -1284,11 +1284,11 @@
     </div>
     <div class="callout" style="margin-bottom: 24px;">
       <span class="dot"></span>
-      <p><strong>XGBoost wins</strong> — not on raw accuracy (Random Forest edges it there), but on AUC and recall, the two metrics that matter most on imbalanced healthcare data like this. Missing a genuinely at-risk patient costs more than a false alarm, and recall is exactly what tracks that. Logistic Regression stays useful as the explainable fallback when a clinician needs to see the reasoning in plain weights.</p>
+      <p><strong>XGBoost wins</strong>, not on raw accuracy (Random Forest edges it there), but on AUC and recall, the two metrics that matter most on imbalanced healthcare data like this. Missing a genuinely at-risk patient costs more than a false alarm, and recall is exactly what tracks that. Logistic Regression stays useful as the explainable fallback when a clinician needs to see the reasoning in plain weights.</p>
     </div>
 
     <p class="chart-title" style="margin-bottom:2px;">Are these numbers stable, or just a lucky split?</p>
-    <p class="chart-sub" style="margin-bottom:14px;">5-fold cross-validation, run separately to check — full methodology in the Limitations section below.</p>
+    <p class="chart-sub" style="margin-bottom:14px;">5-fold cross-validation, run separately to check: full methodology in the Limitations section below.</p>
 
     <div class="dg-wrap" style="margin-bottom:16px;">
 <svg viewBox="0 0 680 260" role="img" style="width:100%;" aria-label="Range plot comparing single train test split AUC against 5 fold cross validated AUC for all three models, showing they land within 0.005 of each other">
@@ -1334,21 +1334,21 @@
         <span>XGBoost</span><span class="quality-val">0.672</span><span class="quality-val">0.671 ± 0.005</span><span class="status-pill status-green">stable</span>
       </div>
     </div>
-    <p style="font-size:12.5px; color:var(--gray-text); margin:0 0 24px;">Every model lands within 0.005 of its single-split result — the numbers above weren't a lucky split. Full cross-validation code and methodology are in <strong>Section 09 · Limitations</strong>.</p>
+    <p style="font-size:12.5px; color:var(--gray-text); margin:0 0 24px;">Every model lands within 0.005 of its single-split result. The numbers above weren't a lucky split. Full cross-validation code and methodology are in <strong>Section 09 · Limitations</strong>.</p>
 
   </div>
 
   <div class="section">
     <p class="section-eyebrow">08 · Honesty check</p>
     <h2 class="section-title">Limitations & honest assessment</h2>
-    <p class="section-desc">The gap between a portfolio-stage analysis and a clinically deployable tool — stated plainly rather than glossed over.</p>
+    <p class="section-desc">The gap between a portfolio-stage analysis and a clinically deployable tool, stated plainly rather than glossed over.</p>
 
-    <p class="chart-title" style="margin-bottom:2px;">High severity — directly affects the reported numbers</p>
+    <p class="chart-title" style="margin-bottom:2px;">High severity: directly affects the reported numbers</p>
     <div class="quality-table" style="margin-bottom:20px;">
       <div class="quality-head"><span>Issue</span><span>What it means</span><span>Flag</span></div>
       <div class="quality-row">
         <span>Patient-level data leakage</span>
-        <span style="font-size:12.5px; color:var(--gray-text);">16,773 patients had multiple encounters; the split was done by row, not by patient — the same patient could appear in both train and test</span>
+        <span style="font-size:12.5px; color:var(--gray-text);">16,773 patients had multiple encounters; the split was done by row, not by patient, so the same patient could appear in both train and test</span>
         <span class="status-pill status-red">high</span>
       </div>
       <div class="quality-row">
@@ -1359,7 +1359,7 @@
     </div>
 
     <p class="chart-title" style="margin-bottom:2px;">Resolved during this project</p>
-    <p class="chart-sub" style="margin-bottom:12px;">Cross-validation was flagged as missing, then actually run — real numbers, not a caveat.</p>
+    <p class="chart-sub" style="margin-bottom:12px;">Cross-validation was flagged as missing, then actually run: real numbers, not a caveat.</p>
     <div class="quality-table" style="margin-bottom:20px;">
       <div class="quality-head" style="grid-template-columns: 1.4fr 1fr 1fr 0.8fr;"><span>Model</span><span>Single-split AUC</span><span>5-fold CV AUC</span><span>Flag</span></div>
       <div class="quality-row" style="grid-template-columns: 1.4fr 1fr 1fr 0.8fr;">
@@ -1383,15 +1383,15 @@
     </div>
     <div class="callout" style="margin-bottom:20px;">
       <span class="dot"></span>
-      <p>5-fold stratified cross-validation was run for all three models. Every cross-validated AUC lands within 0.004–0.005 of its single-split counterpart, with low variance (±0.005–0.006) — confirming the original results reflect genuine model performance, not a lucky train/test split. XGBoost remains the strongest model on both AUC and recall (57.2% ± 1.2%) even under cross-validation.</p>
+      <p>5-fold stratified cross-validation was run for all three models. Every cross-validated AUC lands within 0.004–0.005 of its single-split counterpart, with low variance (±0.005–0.006), confirming the original results reflect genuine model performance, not a lucky train/test split. XGBoost remains the strongest model on both AUC and recall (57.2% ± 1.2%) even under cross-validation.</p>
     </div>
 
-    <p class="chart-title" style="margin-bottom:2px;">Medium severity — affects how far the results generalize</p>
+    <p class="chart-title" style="margin-bottom:2px;">Medium severity: affects how far the results generalize</p>
     <div class="quality-table" style="margin-bottom:20px;">
       <div class="quality-head"><span>Issue</span><span>What it means</span><span>Flag</span></div>
       <div class="quality-row">
         <span>Dataset is 15+ years old</span>
-        <span style="font-size:12.5px; color:var(--gray-text);">1999–2008 — today's diabetes medications and discharge protocols aren't reflected here</span>
+        <span style="font-size:12.5px; color:var(--gray-text);">1999–2008: today's diabetes medications and discharge protocols aren't reflected here</span>
         <span class="status-pill status-amber">medium</span>
       </div>
       <div class="quality-row">
@@ -1401,19 +1401,19 @@
       </div>
       <div class="quality-row">
         <span>No external hospital validation</span>
-        <span style="font-size:12.5px; color:var(--gray-text);">all training and testing happened inside this same 130-hospital dataset — performance on a genuinely new hospital is untested</span>
+        <span style="font-size:12.5px; color:var(--gray-text);">all training and testing happened inside this same 130-hospital dataset, so performance on a genuinely new hospital is untested</span>
         <span class="status-pill status-amber">medium</span>
       </div>
     </div>
 
     <div class="callout">
       <span class="dot"></span>
-      <p><strong>Bottom line:</strong> this is a genuine proof-of-concept, not a production-ready or clinically validated tool. Cross-validation has now been verified — that's no longer an open question. The two remaining priorities before any further claims would be excluding expired/hospice patients and re-validating with a patient-level, not row-level, split. Used correctly, this model is a <strong>screening aid</strong> that helps a care team decide who to look at first — not a <strong>diagnostic tool</strong> that makes the call on its own.</p>
+      <p><strong>Bottom line:</strong> this is a genuine proof-of-concept, not a production-ready or clinically validated tool. Cross-validation has now been verified. That's no longer an open question. The two remaining priorities before any further claims would be excluding expired/hospice patients and re-validating with a patient-level, not row-level, split. Used correctly, this model is a <strong>screening aid</strong> that helps a care team decide who to look at first, not a <strong>diagnostic tool</strong> that makes the call on its own.</p>
     </div>
   </div>
 
   <div style="border-top:1px solid var(--border); padding-top:20px; margin-top:8px;"></div>
-  <p style="font-size:13.5px; color:var(--black); margin:0 0 8px;">That's a wrap — if you scrolled this far without skimming, you deserve a <span style="color:var(--pink); font-weight:700;">snack 🍪</span>.</p>
+  <p style="font-size:13.5px; color:var(--black); margin:0 0 8px;">That's a wrap. If you scrolled this far without skimming, you deserve a <span style="color:var(--pink); font-weight:700;">snack 🍪</span>.</p>
   <p class="crumb" style="margin-top:0; padding-top:8px;"><a href="/#portfolio" style="color:var(--pink); font-weight:600;">← Back to portfolio</a></p>
 
 </div>
