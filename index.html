@@ -23,7 +23,7 @@
   --pink: #e8187a;
   --pink2: #f9004d;
   --pink-grad: linear-gradient(135deg, #e8187a, #f9004d);
-  --muted: #7a7a8c;
+  --muted: #656577;
   --border: #e0e0e0;
   --text: #190d26;
   --font: 'Poppins', sans-serif;
@@ -65,6 +65,19 @@ body{background:var(--bg);color:var(--text);font-family:var(--font);overflow-x:h
   transition:opacity .2s,transform .2s;
 }
 .nav-cta:hover{opacity:.9;transform:translateY(-1px)}
+.nav-toggle{
+  display:none;background:none;border:none;cursor:pointer;
+  width:38px;height:38px;padding:0;align-items:center;justify-content:center;flex-shrink:0;
+}
+.nav-toggle span{display:block;width:20px;height:2px;background:var(--navy);border-radius:2px;position:relative;transition:background .2s}
+.nav-toggle span::before,.nav-toggle span::after{
+  content:'';position:absolute;left:0;width:20px;height:2px;background:var(--navy);border-radius:2px;transition:transform .2s;
+}
+.nav-toggle span::before{top:-6px}
+.nav-toggle span::after{top:6px}
+.nav-toggle.open span{background:transparent}
+.nav-toggle.open span::before{transform:translateY(6px) rotate(45deg)}
+.nav-toggle.open span::after{transform:translateY(-6px) rotate(-45deg)}
 
 /* -- HERO -- */
 #hero{
@@ -188,17 +201,26 @@ h1.hero-heading .pink{color:var(--pink);font-weight:900}
   background:var(--white);border:1.5px solid var(--border);
   border-radius:16px;padding:28px 24px;
   transition:all .3s;cursor:default;
+  position:relative;overflow:hidden;color:inherit;text-decoration:none;
+}
+a.service-card{cursor:pointer}
+.service-card::after{
+  content:'';position:absolute;top:-40px;right:-40px;width:100px;height:100px;border-radius:50%;
+  background:radial-gradient(circle,rgba(232,24,122,.35),transparent 70%);opacity:0;transition:opacity .3s;pointer-events:none;
 }
 .service-card:hover{
-  border-color:var(--pink);transform:translateY(-5px);
+  border-color:transparent;transform:translateY(-5px);
   box-shadow:0 12px 40px rgba(232,24,122,.15);
 }
+.service-card:hover::after{opacity:1}
 .service-icon{
   width:50px;height:50px;border-radius:12px;
   display:flex;align-items:center;justify-content:center;font-size:1.3rem;margin-bottom:16px;
+  position:relative;z-index:1;transition:transform .3s;
 }
-.service-title{font-size:.95rem;font-weight:700;color:var(--navy);margin-bottom:8px}
-.service-desc{font-size:.78rem;color:var(--muted);line-height:1.7}
+.service-card:hover .service-icon{transform:scale(1.12) rotate(-6deg)}
+.service-title{font-size:.95rem;font-weight:700;color:var(--navy);margin-bottom:8px;position:relative;z-index:1}
+.service-desc{font-size:.78rem;color:var(--muted);line-height:1.7;position:relative;z-index:1}
 
 /* -- PORTFOLIO -- */
 .portfolio-filter{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:36px}
@@ -214,12 +236,16 @@ h1.hero-heading .pink{color:var(--pink);font-weight:900}
 .portfolio-card{
   background:var(--white);border-radius:16px;overflow:hidden;
   border:1.5px solid var(--border);transition:all .3s;
+  display:block;color:inherit;text-decoration:none;
 }
+a.portfolio-card{cursor:pointer}
 .portfolio-card:hover{transform:translateY(-6px);box-shadow:var(--shadow-lg);border-color:transparent}
 .portfolio-thumb{
   height:190px;display:flex;align-items:center;justify-content:center;
   font-size:2.5rem;position:relative;overflow:hidden;
 }
+.portfolio-thumb img,.portfolio-thumb svg{transition:transform .4s ease}
+.portfolio-card:hover .portfolio-thumb img,.portfolio-card:hover .portfolio-thumb svg{transform:scale(1.1)}
 .thumb-cat{
   position:absolute;top:12px;left:12px;
   font-size:.58rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;
@@ -231,8 +257,9 @@ h1.hero-heading .pink{color:var(--pink);font-weight:900}
 .portfolio-meta{display:flex;align-items:center;justify-content:space-between}
 .p-tags{display:flex;gap:5px;flex-wrap:wrap}
 .p-tag{font-size:.6rem;padding:3px 8px;border-radius:4px;border:1px solid var(--border);color:var(--muted);font-weight:500}
-.portfolio-link{font-size:.72rem;color:var(--pink);text-decoration:none;font-weight:700}
+.portfolio-link{font-size:.72rem;color:var(--pink);text-decoration:none;font-weight:700;display:inline-block;transition:transform .25s}
 .portfolio-link:hover{color:var(--pink2)}
+.portfolio-card:hover .portfolio-link,.service-card:hover .portfolio-link{transform:translateX(4px)}
 
 /* -- RESUME -- */
 .resume-tabs{
@@ -343,7 +370,15 @@ footer .pink{color:var(--pink)}
 /* -- RESPONSIVE -- */
 @media(max-width:960px){
   .topnav{padding:0 24px}
-  .nav-links{display:none}
+  .nav-toggle{display:flex}
+  .nav-links{
+    display:flex;flex-direction:column;gap:0;
+    position:absolute;top:70px;left:0;right:0;
+    background:var(--white);box-shadow:0 12px 24px rgba(0,0,0,.08);
+    max-height:0;overflow:hidden;transition:max-height .25s ease;
+  }
+  .nav-links.open{max-height:320px}
+  .nav-links a{padding:14px 24px;border-bottom:1px solid var(--border)}
   #hero{flex-direction:column;padding:60px 24px;text-align:center;gap:40px}
   .hero-content{padding-right:0;max-width:100%}
   .hero-social-wrap{justify-content:center}
@@ -373,7 +408,7 @@ footer .pink{color:var(--pink)}
   </div>
   <span class="logo-name">The Data said, "..;..,..!"</span>
   </a>
-  <ul class="nav-links">
+  <ul class="nav-links" id="navLinks">
     <li><a href="#hero" class="active">Home</a></li>
     <li><a href="#features">Skills</a></li>
     <li><a href="#portfolio">Projects</a></li>
@@ -381,6 +416,7 @@ footer .pink{color:var(--pink)}
     <li><a href="#contact">Contact</a></li>
   </ul>
   <a href="#contact" class="nav-cta">Let's Analyze Together</a>
+  <button class="nav-toggle" id="navToggle" aria-label="Toggle menu" aria-expanded="false" aria-controls="navLinks"><span></span></button>
 </header>
 
 <!-- HERO -->
@@ -398,7 +434,7 @@ footer .pink{color:var(--pink)}
         <div class="social-icons">
           <!-- <a href="#" class="social-icon" title="Facebook">f</a> -->
           <!-- <a href="#" class="social-icon" title="Instagram">ig</a> -->
-          <a href="https://www.linkedin.com/in/rutuja-patel-analyst/" class="social-icon" title="LinkedIn">in</a>
+          <a href="https://www.linkedin.com/in/rutuja-patel-analyst/" class="social-icon" title="LinkedIn" target="_blank" rel="noopener">in</a>
           <a href="https://github.com/analyzewithrutuja" class="social-icon" title="GitHub" target="_blank" rel="noopener">
             <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
               <path d="M12 .5C5.73.5.5 5.73.5 12c0 5.08 3.29 9.39 7.86 10.91.58.1.79-.25.79-.56 0-.28-.01-1.02-.02-2-3.2.7-3.88-1.54-3.88-1.54-.52-1.33-1.28-1.68-1.28-1.68-1.04-.71.08-.7.08-.7 1.15.08 1.76 1.18 1.76 1.18 1.03 1.76 2.7 1.25 3.36.96.1-.75.4-1.25.73-1.54-2.56-.29-5.25-1.28-5.25-5.7 0-1.26.45-2.29 1.18-3.1-.12-.29-.51-1.46.11-3.04 0 0 .97-.31 3.18 1.18a11 11 0 0 1 5.8 0c2.2-1.49 3.17-1.18 3.17-1.18.63 1.58.24 2.75.12 3.04.74.81 1.18 1.84 1.18 3.1 0 4.43-2.7 5.4-5.27 5.69.41.36.78 1.06.78 2.14 0 1.55-.01 2.79-.01 3.17 0 .31.21.67.8.56A10.51 10.51 0 0 0 23.5 12C23.5 5.73 18.27.5 12 .5z"/>
@@ -447,7 +483,7 @@ footer .pink{color:var(--pink)}
   <div class="services-grid">
 
     <!-- 1. Statistical Analysis -->
-    <div class="service-card anim" style="display:flex;flex-direction:column;">
+    <a href="Skills/statistical_analysis.html" class="service-card anim" style="display:flex;flex-direction:column;">
     <div class="service-icon" style="background:#ffffff">
       <svg width="32" height="32" viewBox="0 0 24 24" fill="none">
         <path d="M3 3v18h18" stroke="#e8187a" stroke-width="1.5" stroke-linecap="round"/>
@@ -459,11 +495,11 @@ footer .pink{color:var(--pink)}
     </div>
     <div class="service-title">Statistical Analysis</div>
     <p class="service-desc" style="flex:1">Hypothesis testing, regression, probability, and inference — the rigorous backbone that separates a confident conclusion from a lucky guess.</p>
-    <a href="Skills/statistical_analysis.html" class="portfolio-link" style="display:block;margin-top:16px;font-size:.72rem;text-align:right;">View →</a>
-  </div>
+    <span class="portfolio-link" style="display:block;margin-top:16px;font-size:.72rem;text-align:right;">View →</span>
+  </a>
 
     <!-- 2. Python for Data Analysis -->
-    <div class="service-card anim" style="display:flex;flex-direction:column;">
+    <a href="Skills/python_for_data_analysis.html" class="service-card anim" style="display:flex;flex-direction:column;">
       <div class="service-icon" style="background:#ffffff">
         <svg width="32" height="32" viewBox="0 0 24 24" fill="none">
           <path d="M8 6L3 12l5 6" stroke="#e8187a" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
@@ -473,11 +509,11 @@ footer .pink{color:var(--pink)}
       </div>
       <div class="service-title">Python for Data Analysis</div>
       <p class="service-desc" style="flex:1">From language fundamentals to NumPy, Pandas, and SciPy — the full Python toolkit for wrangling, analyzing, and drawing insight from real-world data.</p>
-      <a href="Skills/python_for_data_analysis.html" class="portfolio-link" style="display:block;margin-top:16px;font-size:.72rem;text-align:right;">View →</a>
-    </div>
+      <span class="portfolio-link" style="display:block;margin-top:16px;font-size:.72rem;text-align:right;">View →</span>
+    </a>
 
     <!-- 3. Machine Learning -->
-    <div class="service-card anim" style="display:flex;flex-direction:column;">
+    <a href="Skills/machine_learning_for_data_analytics.html" class="service-card anim" style="display:flex;flex-direction:column;">
       <div class="service-icon" style="background:#ffffff">
         <svg width="32" height="32" viewBox="0 0 24 24" fill="none">
           <circle cx="12" cy="12" r="3" stroke="#e8187a" stroke-width="1.5"/>
@@ -490,11 +526,11 @@ footer .pink{color:var(--pink)}
       </div>
       <div class="service-title">Machine Learning</div>
       <p class="service-desc" style="flex:1">Building and evaluating supervised and unsupervised models — classification, clustering, and regression — to solve real-world business problems at scale.</p>
-      <a href="Skills/machine_learning_for_data_analytics.html" class="portfolio-link" style="display:block;margin-top:12px;font-size:.72rem;text-align:right;">View &rarr;</a>
-    </div>
+      <span class="portfolio-link" style="display:block;margin-top:12px;font-size:.72rem;text-align:right;">View &rarr;</span>
+    </a>
 
     <!-- 4. Deep Learning -->
-    <div class="service-card anim" style="display:flex;flex-direction:column;">
+    <a href="Skills/deep_learning.html" class="service-card anim" style="display:flex;flex-direction:column;">
       <div class="service-icon" style="background:#ffffff">
         <svg width="32" height="32" viewBox="0 0 24 24" fill="none">
           <circle cx="4" cy="6" r="1.8" stroke="#e8187a" stroke-width="1.5"/>
@@ -512,11 +548,11 @@ footer .pink{color:var(--pink)}
       </div>
       <div class="service-title">Deep Learning</div>
       <p class="service-desc" style="flex:1">Designing and training neural networks for complex pattern recognition — going beyond traditional ML when the data demands deeper structure.</p>
-      <a href="Skills/deep_learning.html" class="portfolio-link" style="display:block;margin-top:16px;font-size:.72rem;text-align:right;">View →</a>
-    </div>
+      <span class="portfolio-link" style="display:block;margin-top:16px;font-size:.72rem;text-align:right;">View →</span>
+    </a>
 
     <!-- 5. Analytics of Unstructured Data -->
-    <div class="service-card anim" style="display:flex;flex-direction:column;">
+    <a href="Skills/analytics_of_unstructured_data.html" class="service-card anim" style="display:flex;flex-direction:column;">
       <div class="service-icon" style="background:#ffffff">
         <svg width="32" height="32" viewBox="0 0 24 24" fill="none">
           <path d="M4 4h10a2 2 0 012 2v5a2 2 0 01-2 2H8l-4 3V6a2 2 0 012-2z" stroke="#e8187a" stroke-width="1.5" stroke-linejoin="round"/>
@@ -525,11 +561,11 @@ footer .pink{color:var(--pink)}
       </div>
       <div class="service-title">Analytics of Unstructured Data</div>
       <p class="service-desc" style="flex:1">Extracting insight from text, language, and other unstructured data — through NLP, sentiment analysis, topic modeling, and retrieval-based techniques.</p>
-      <a href="Skills/analytics_of_unstructured_data.html" class="portfolio-link" style="display:block;margin-top:16px;font-size:.72rem;text-align:right;">View →</a>
-    </div>
+      <span class="portfolio-link" style="display:block;margin-top:16px;font-size:.72rem;text-align:right;">View →</span>
+    </a>
 
     <!-- 6. Computer Vision -->
-    <div class="service-card anim" style="display:flex;flex-direction:column;">
+    <a href="Skills/computer_vision.html" class="service-card anim" style="display:flex;flex-direction:column;">
       <div class="service-icon" style="background:#ffffff">
         <svg width="32" height="32" viewBox="0 0 24 24" fill="none">
           <path d="M2 12c2.5-5 6.5-8 10-8s7.5 3 10 8c-2.5 5-6.5 8-10 8s-7.5-3-10-8z" stroke="#e8187a" stroke-width="1.5" stroke-linejoin="round"/>
@@ -539,8 +575,8 @@ footer .pink{color:var(--pink)}
       </div>
       <div class="service-title">Computer Vision</div>
       <p class="service-desc" style="flex:1">Applying deep learning to extract meaning from images and visual data — from classification to object detection, turning pixels into insight.</p>
-      <a href="Skills/computer_vision.html" class="portfolio-link" style="display:block;margin-top:16px;font-size:.72rem;text-align:right;">View →</a>
-    </div>
+      <span class="portfolio-link" style="display:block;margin-top:16px;font-size:.72rem;text-align:right;">View →</span>
+    </a>
 
 
     <!-- 7. Power BI & Tableau -->
@@ -608,7 +644,7 @@ footer .pink{color:var(--pink)}
   <div class="portfolio-grid">
 
     <!-- Project 1 -->
-    <div class="portfolio-card anim" data-cat="analysis">
+    <a href="projects/hospital_readmission.html" class="portfolio-card anim" data-cat="analysis">
       <div class="portfolio-thumb" style="background:#FAFAF8; overflow:hidden;">
         <div class="thumb-cat">Data Analysis</div>
         <img src="images/project_hospital_readmission.png" alt="Hospital Readmission of Diabetic Patients project thumbnail" style="width:100%;height:100%;object-fit:contain;object-position:center;">
@@ -618,13 +654,13 @@ footer .pink{color:var(--pink)}
         <p class="portfolio-desc">Predicted 30-day hospital readmission for 100,000+ diabetic patients.<br>From messy data to a cross-validated model — with the full process documented, gaps and all.</p>
         <div class="portfolio-meta">
           <div class="p-tags"></div>
-          <a href="projects/hospital_readmission.html" class="portfolio-link">View →</a>
+          <span class="portfolio-link">View →</span>
         </div>
       </div>
-    </div>
+    </a>
 
     <!-- Project 2 -->
-    <div class="portfolio-card anim" data-cat="analysis">
+    <a href="projects/hospital_readmission_rag.html" class="portfolio-card anim" data-cat="analysis">
       <div class="portfolio-thumb" style="background:#FAFAF8; overflow:hidden; padding:0 16px;">
         <div class="thumb-cat">RAG Application</div>
         <svg width="100%" height="100%" viewBox="0 0 680 260" role="img" style="display:block;" preserveAspectRatio="xMidYMid meet">
@@ -693,13 +729,13 @@ footer .pink{color:var(--pink)}
         <p class="portfolio-desc">A live RAG application that predicts 30-day readmission risk and answers care questions using ADA, WHO, CDC, and Mayo Clinic guidelines.<br>Built on top of the readmission model above — try it live.</p>
         <div class="portfolio-meta">
           <div class="p-tags"></div>
-          <a href="projects/hospital_readmission_rag.html" class="portfolio-link">View →</a>
+          <span class="portfolio-link">View →</span>
         </div>
       </div>
-    </div>
+    </a>
 
     <!-- Project 1.5 -->
-    <div class="portfolio-card anim" data-cat="analysis">
+    <a href="projects/fast_fashion_vs_slow_fashion.html" class="portfolio-card anim" data-cat="analysis">
       <div class="portfolio-thumb" style="background:#FAFAF8; overflow:hidden;">
         <div class="thumb-cat">Data Analysis</div>
         <img src="images/Fashion/index.png" alt="Split illustration: a crowded fast-fashion clothing rack on the left in blue, and a single elegant bespoke dress on a tailor's mannequin with measuring tape and pins on the right in coral" style="width:100%;height:100%;object-fit:contain;object-position:center;">
@@ -709,13 +745,13 @@ footer .pink{color:var(--pink)}
         <p class="portfolio-desc">65,729 Yelp reviews across 3,100 clothing businesses in 11 U.S. metros.<br>Fast Fashion's share of customer attention has shrunk for a decade — the data behind that claim, end to end.</p>
         <div class="portfolio-meta">
           <div class="p-tags"></div>
-          <a href="projects/fast_fashion_vs_slow_fashion.html" class="portfolio-link">View →</a>
+          <span class="portfolio-link">View →</span>
         </div>
       </div>
-    </div>
+    </a>
 
     <!-- Project 1.6 -->
-    <div class="portfolio-card anim" data-cat="analysis">
+    <a href="projects/reviewer_network_analysis.html" class="portfolio-card anim" data-cat="analysis">
       <div class="portfolio-thumb" style="background:#FAFAF8; overflow:hidden;">
         <div class="thumb-cat">Data Analysis</div>
         <img src="images/Fashion/index_network.png" alt="Flat illustration of a social network graph: pastel-colored profile-icon circles connected by dashed lines, radiating outward from one large central hub avatar" style="width:100%;height:100%;object-fit:contain;object-position:center;">
@@ -725,13 +761,13 @@ footer .pink{color:var(--pink)}
         <p class="portfolio-desc">46,236 Yelp reviewers, 135,151 friendships, mapped as a real graph.<br>Elite reviewers turn out to be ~44&times; more socially connected — not just better raters.</p>
         <div class="portfolio-meta">
           <div class="p-tags"></div>
-          <a href="projects/reviewer_network_analysis.html" class="portfolio-link">View →</a>
+          <span class="portfolio-link">View →</span>
         </div>
       </div>
-    </div>
+    </a>
 
     <!-- Project 3 -->
-    <div class="portfolio-card anim" data-cat="optimization">
+    <a href="projects/inventory_optimization_using_open_cv.html" class="portfolio-card anim" data-cat="optimization">
       <div class="portfolio-thumb" style="background:#FAFAF8; overflow:hidden;">
         <div class="thumb-cat">Computer Vision</div>
         <img src="images/inventory_optimization/index.png" alt="Line-art illustration of a warehouse inventory scan: hands holding a phone camera detecting a box with a pink bounding box and confidence score, warehouse shelving with boxes on either side" style="width:100%;height:100%;object-fit:cover;object-position:center;">
@@ -741,29 +777,10 @@ footer .pink{color:var(--pink)}
         <p class="portfolio-desc">A YOLOv8 detector fine-tuned to automate inventory counting for ASU's Pitchforks dining hall — currently a 6–8 hour manual task.<br>FastSAM auto-annotation, transfer learning, and a documented experiment in fixing multi-object detection with synthetic data.</p>
         <div class="portfolio-meta">
           <div class="p-tags"></div>
-          <a href="projects/inventory_optimization_using_open_cv.html" class="portfolio-link">View →</a>
+          <span class="portfolio-link">View →</span>
         </div>
       </div>
-    </div>
-
-    <!-- Project 4 -->
-    <div class="portfolio-card anim" data-cat="visualization">
-      <div class="portfolio-thumb" style="background:#f5f5f5;flex-direction:column;gap:6px;">
-        <div class="thumb-cat">Visualization</div>
-        <span style="font-size:.72rem;color:#aaa;font-family:'Poppins',sans-serif;text-align:center;padding:0 20px">📸 Documentation in progress — image coming soon</span>
-      </div>
-      <div class="portfolio-body">
-        <div class="portfolio-title">Housing Eviction Trends in Arizona</div>
-        <p class="portfolio-desc">Add your project description here — what problem did you solve and what was the outcome?</p>
-        <div class="portfolio-meta">
-          <div class="p-tags">
-            <span class="p-tag">Tableau</span>
-            <span class="p-tag">Add Tool</span>
-          </div>
-          <!-- <a href="#" class="portfolio-link">View →</a> -->
-        </div>
-      </div>
-    </div>
+    </a>
 
     <!-- Project 5 -->
     <div class="portfolio-card anim" data-cat="analysis">
@@ -777,25 +794,6 @@ footer .pink{color:var(--pink)}
         <div class="portfolio-meta">
           <div class="p-tags">
             <span class="p-tag">SQL</span>
-            <span class="p-tag">Add Tool</span>
-          </div>
-          <!-- <a href="#" class="portfolio-link">View →</a> -->
-        </div>
-      </div>
-    </div>
-
-    <!-- Project 6 -->
-    <div class="portfolio-card anim" data-cat="analysis">
-      <div class="portfolio-thumb" style="background:#f5f5f5;flex-direction:column;gap:6px;">
-        <div class="thumb-cat">Data Analysis</div>
-        <span style="font-size:.72rem;color:#aaa;font-family:'Poppins',sans-serif;text-align:center;padding:0 20px">📸 Documentation in progress — image coming soon</span>
-      </div>
-      <div class="portfolio-body">
-        <div class="portfolio-title">Fashion vs Fast Fashion</div>
-        <p class="portfolio-desc">Add your project description here — what problem did you solve and what was the outcome?</p>
-        <div class="portfolio-meta">
-          <div class="p-tags">
-            <span class="p-tag">Python</span>
             <span class="p-tag">Add Tool</span>
           </div>
           <!-- <a href="#" class="portfolio-link">View →</a> -->
@@ -1026,6 +1024,20 @@ footer .pink{color:var(--pink)}
 </script>
 
 <script>
+const navToggle=document.getElementById('navToggle');
+const navLinksEl=document.getElementById('navLinks');
+if(navToggle&&navLinksEl){
+  navToggle.addEventListener('click',()=>{
+    const isOpen=navLinksEl.classList.toggle('open');
+    navToggle.classList.toggle('open',isOpen);
+    navToggle.setAttribute('aria-expanded',isOpen);
+  });
+  navLinksEl.querySelectorAll('a').forEach(a=>a.addEventListener('click',()=>{
+    navLinksEl.classList.remove('open');
+    navToggle.classList.remove('open');
+    navToggle.setAttribute('aria-expanded','false');
+  }));
+}
 function switchTab(id,btn){
   document.querySelectorAll('.tab-pane').forEach(p=>p.classList.remove('active'));
   document.querySelectorAll('.resume-tab').forEach(b=>b.classList.remove('active'));
