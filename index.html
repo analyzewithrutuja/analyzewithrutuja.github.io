@@ -223,13 +223,6 @@ a.service-card{cursor:pointer}
 .service-desc{font-size:.78rem;color:var(--muted);line-height:1.7;position:relative;z-index:1}
 
 /* -- PORTFOLIO -- */
-.portfolio-filter{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:36px}
-.filter-btn{
-  padding:7px 20px;border-radius:25px;border:1.5px solid var(--border);
-  background:transparent;color:var(--muted);font-size:.75rem;font-family:var(--font);
-  font-weight:500;cursor:pointer;transition:all .2s;
-}
-.filter-btn.active,.filter-btn:hover{background:var(--pink-grad);color:white;border-color:transparent}
 .portfolio-grid{
   display:grid;grid-template-columns:repeat(auto-fill,minmax(290px,1fr));gap:24px;
 }
@@ -635,12 +628,6 @@ footer .pink{color:var(--pink)}
   <div class="section-eyebrow">Proof of Work</div>
   <h2 class="section-title">Projects, <span>Not Promises</span></h2>
   <p class="section-sub">Dig into the documented projects below — full process, no shortcuts. Each one walks through what I did, why I made those choices, and how I arrived at the final conclusion.</p>
-  <div class="portfolio-filter">
-    <button class="filter-btn active" onclick="filterPortfolio('all',this)">All</button>
-    <button class="filter-btn" onclick="filterPortfolio('analysis',this)">Data Analysis</button>
-    <button class="filter-btn" onclick="filterPortfolio('optimization',this)">Optimization</button>
-    <button class="filter-btn" onclick="filterPortfolio('visualization',this)">Visualization</button>
-  </div>
   <div class="portfolio-grid">
 
     <!-- Project 1 -->
@@ -1044,13 +1031,6 @@ function switchTab(id,btn){
   document.getElementById('tab-'+id).classList.add('active');
   btn.classList.add('active');
   if(id==='experience') animateBars();
-}
-function filterPortfolio(cat,btn){
-  document.querySelectorAll('.filter-btn').forEach(b=>b.classList.remove('active'));
-  btn.classList.add('active');
-  document.querySelectorAll('.portfolio-card').forEach(c=>{
-    c.style.display=(cat==='all'||c.dataset.cat===cat)?'':'none';
-  });
 }
 const animEls=document.querySelectorAll('.anim');
 const obs=new IntersectionObserver((entries)=>{
