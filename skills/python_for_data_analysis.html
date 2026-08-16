@@ -51,7 +51,7 @@ body{background:var(--bg);color:var(--text);font-family:var(--sans);font-size:15
 <!-- 01 PYTHON FOUNDATIONS -->
 <div class="sec">
   <div class="sec-head"><span class="sec-num">01</span><div class="sec-title">Python Foundations</div><div class="sec-line"></div></div>
-  <p class="sec-desc">The core building blocks — how Python names values, branches, repeats, and packages logic into reusable functions.</p>
+  <p class="sec-desc">The core building blocks: how Python names values, branches, repeats, and packages logic into reusable functions.</p>
   <div class="grid">
 
     <div class="card"><div class="chart-wrap">
@@ -143,7 +143,7 @@ body{background:var(--bg);color:var(--text);font-family:var(--sans);font-size:15
 <!-- 02 DATA STRUCTURES -->
 <div class="sec">
   <div class="sec-head"><span class="sec-num">02</span><div class="sec-title">Data Structures</div><div class="sec-line"></div></div>
-  <p class="sec-desc">Python's built-in containers — mutable, immutable, ordered, and keyed — each suited to a different shape of data.</p>
+  <p class="sec-desc">Python's built-in containers (mutable, immutable, ordered, and keyed), each suited to a different shape of data. Generators are the odd one out: lazy, computing each value only when asked instead of building the whole sequence upfront.</p>
   <div class="grid">
 
     <div class="card"><div class="chart-wrap">
@@ -214,7 +214,7 @@ body{background:var(--bg);color:var(--text);font-family:var(--sans);font-size:15
         <circle cx="98" cy="32" r="10" fill="none" stroke="#e8187a" stroke-width="1.6" stroke-dasharray="2 2"/><text x="98" y="36" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="8" fill="#e8187a">?</text>
         <text x="122" y="36" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="7" fill="#999">lazy…</text>
       </svg>
-    </div><div class="card-label">Iterators &amp; Generators</div><div class="card-tag">yield x</div></div>
+    </div><div class="card-label">Iterators &amp; Generators</div><div class="card-tag">yield x: lazy, on demand</div></div>
 
     <div class="card"><div class="chart-wrap">
       <svg viewBox="0 0 150 64" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="A module file being imported with an arrow into a main script">
@@ -236,7 +236,7 @@ body{background:var(--bg);color:var(--text);font-family:var(--sans);font-size:15
 <!-- 03 OBJECT-ORIENTED PROGRAMMING -->
 <div class="sec">
   <div class="sec-head"><span class="sec-num">03</span><div class="sec-title">Object-Oriented Programming</div><div class="sec-line"></div></div>
-  <p class="sec-desc">Bundling data and behavior together — classes as blueprints, objects as their living instances.</p>
+  <p class="sec-desc">Bundling data and behavior together: classes as blueprints, objects as their living instances.</p>
   <div class="grid">
 
     <div class="card"><div class="chart-wrap">
@@ -302,7 +302,7 @@ body{background:var(--bg);color:var(--text);font-family:var(--sans);font-size:15
 <!-- 04 DATA I/O & TEXT PROCESSING -->
 <div class="sec">
   <div class="sec-head"><span class="sec-num">04</span><div class="sec-title">Data I/O &amp; Text Processing</div><div class="sec-line"></div></div>
-  <p class="sec-desc">Moving data between the outside world and Python — reading files, parsing formats, and shaping text.</p>
+  <p class="sec-desc">Moving data between the outside world and Python: reading files, parsing formats, and shaping text.</p>
   <div class="grid">
 
     <div class="card"><div class="chart-wrap">
@@ -384,7 +384,7 @@ body{background:var(--bg);color:var(--text);font-family:var(--sans);font-size:15
 <!-- 05 NUMPY -->
 <div class="sec">
   <div class="sec-head"><span class="sec-num">05</span><div class="sec-title">NumPy &mdash; Numerical Computing</div><div class="sec-line"></div></div>
-  <p class="sec-desc">Vectorized arrays and fast element-wise math — the numerical foundation everything else in the stack builds on.</p>
+  <p class="sec-desc">Vectorized arrays and fast element-wise math: the numerical foundation everything else in the stack builds on. Broadcasting is the part that trips people up first: NumPy stretches a smaller array's shape to match a larger one without actually copying data, so a (3,1) array plus a (1,4) array becomes (3,4).</p>
   <div class="grid">
 
     <div class="card"><div class="chart-wrap">
@@ -502,7 +502,7 @@ body{background:var(--bg);color:var(--text);font-family:var(--sans);font-size:15
 <!-- 06 PANDAS -->
 <div class="sec">
   <div class="sec-head"><span class="sec-num">06</span><div class="sec-title">Pandas &mdash; Wrangling &amp; Analysis</div><div class="sec-line"></div></div>
-  <p class="sec-desc">Labeled, tabular data at scale — reading, cleaning, reshaping, and summarizing rows and columns with a few method calls.</p>
+  <p class="sec-desc">Labeled, tabular data at scale: reading, cleaning, reshaping, and summarizing rows and columns with a few method calls.</p>
   <div class="grid">
 
     <div class="card"><div class="chart-wrap">
@@ -642,7 +642,7 @@ body{background:var(--bg);color:var(--text);font-family:var(--sans);font-size:15
 <!-- 07 SCIPY -->
 <div class="sec">
   <div class="sec-head"><span class="sec-num">07</span><div class="sec-title">SciPy &mdash; Scientific Computing</div><div class="sec-line"></div></div>
-  <p class="sec-desc">Higher-level scientific tools built on NumPy — optimization, interpolation, and the statistical tests that turn numbers into conclusions.</p>
+  <p class="sec-desc">Higher-level scientific tools built on NumPy: optimization, interpolation, and the statistical tests that turn numbers into conclusions.</p>
   <div class="grid">
 
     <div class="card"><div class="chart-wrap">
@@ -711,7 +711,7 @@ body{background:var(--bg);color:var(--text);font-family:var(--sans);font-size:15
 <!-- 08 ALGORITHMS & DATA STRUCTURES -->
 <div class="sec">
   <div class="sec-head"><span class="sec-num">08</span><div class="sec-title">Algorithms &amp; Data Structures</div><div class="sec-line"></div></div>
-  <p class="sec-desc">Classic structures and algorithms underneath every library call — how data is stored, searched, and sorted efficiently.</p>
+  <p class="sec-desc">Classic structures and algorithms underneath every library call: how data is stored, searched, and sorted efficiently.</p>
   <div class="grid">
 
     <div class="card"><div class="chart-wrap">

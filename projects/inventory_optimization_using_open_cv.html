@@ -185,7 +185,7 @@
     <p class="section-desc">Pitchforks dining hall needs a consistent supply of perishable and packaged
     items to serve fresh, hygienic meals every day. Today, that supply is tracked entirely by hand.</p>
 
-    <div class="quote-block">"Staff spend 6–8 hours manually counting inventory to ensure nothing goes out of stock — time-consuming, labor-intensive, and error-prone."</div>
+    <div class="quote-block">"Staff spend 6–8 hours manually counting inventory to ensure nothing goes out of stock: time-consuming, labor-intensive, and error-prone."</div>
 
     <div class="dg-wrap">
 <svg viewBox="0 0 900 190" role="img" style="width:100%;" aria-label="Illustration of the manual inventory-counting problem: a clock showing 6 to 8 hours per day, an arrow to a warehouse shelf stacked with boxes, an arrow to a clipboard checklist representing manual tally, and a final arrow to an error icon representing miscounts">
@@ -243,13 +243,13 @@
 
     <h3 class="sub-title">Why this matters</h3>
     <p class="section-desc" style="margin-bottom:14px;">Automating inventory tracking reduces the labor hours spent on a purely
-    administrative task, cuts the chance of human counting error, and speeds up the restock-decision cycle —
-    more accurate, more frequent counts mean less food waste and more consistent food quality.</p>
+    administrative task, cuts the chance of human counting error, and speeds up the restock-decision cycle.
+    More accurate, more frequent counts mean less food waste and more consistent food quality.</p>
 
     <div class="field-grid">
       <div class="field-card c-blue">
         <div class="field-top"><span class="field-name">Dining staff</span></div>
-        <p class="field-desc">Reduced manual workload frees time for higher-value work — cleanliness, food quality — not role elimination.</p>
+        <p class="field-desc">Reduced manual workload frees time for higher-value work, like cleanliness and food quality, not role elimination.</p>
       </div>
       <div class="field-card c-teal">
         <div class="field-top"><span class="field-name">University administration</span></div>
@@ -264,7 +264,7 @@
     <h2 class="section-title">End-to-end product flow</h2>
     <p class="section-desc">A shelf camera captures an image; a CV model detects and counts each visible product;
     counts are compared against expected par levels; a dashboard alerts staff when something is running low.
-    Only the highlighted stage is this project's technical focus — everything else is non-CV integration work.</p>
+    Only the highlighted stage is this project's technical focus. Everything else is non-CV integration work.</p>
 
     <div class="dg-wrap">
 <svg viewBox="0 0 1080 210" role="img" style="width:100%;" aria-label="Flow diagram: shelf camera to image capture to YOLOv8 CV model detection and counting to inventory count aggregator to low-stock alert dashboard to dining staff restocking action">
@@ -302,7 +302,7 @@
     <div class="callout">
       <span class="dot"></span>
       <p><strong>Why CV is essential:</strong> the core bottleneck is a human visually recognizing and counting
-      products. A CV model performs exactly that task without a human present — no other component in the
+      products. A CV model performs exactly that task without a human present. No other component in the
       pipeline can replace that role.</p>
     </div>
   </div>
@@ -313,8 +313,8 @@
     <h2 class="section-title">A proxy dataset, by necessity</h2>
     <p class="section-desc">Direct access to Pitchforks' real warehouse inventory wasn't available within the
     project timeline. To still validate the full pipeline end-to-end, the team photographed <strong>5 packaged
-    grocery products readily on hand</strong> as a representative stand-in. Every step below — collection,
-    annotation, training, evaluation, live testing — transfers directly to Pitchforks' real inventory by
+    grocery products readily on hand</strong> as a representative stand-in. Every step below (collection,
+    annotation, training, evaluation, live testing) transfers directly to Pitchforks' real inventory by
     re-running the same pipeline on photos of its actual stock.</p>
 
     <div class="stat-grid">
@@ -326,7 +326,7 @@
 
     <div class="chart-card" style="max-width:540px;">
       <p class="chart-title">Class distribution</p>
-      <p class="chart-sub">428 clean images across 5 products — mild imbalance (69–100 per class), revisited in Section 05</p>
+      <p class="chart-sub">428 clean images across 5 products: mild imbalance (69–100 per class), revisited in Section 05</p>
       <div class="donut-wrap">
         <svg viewBox="0 0 200 200" width="180" height="180" role="img" aria-label="Donut chart of the 428-image dataset by product class: Corn Flakes 100 images 23 percent, Indomie 98 images 23 percent, Barilla 89 images 21 percent, Keya Piri Piri 72 images 17 percent, Nut Bars 69 images 16 percent">
           <g transform="rotate(-90 100 100)">
@@ -352,11 +352,11 @@
 
   <!-- 03 annotation -->
   <div class="section">
-    <p class="section-eyebrow">03 · Model Development — Annotation</p>
+    <p class="section-eyebrow">03 · Model Development: Annotation</p>
     <h2 class="section-title">Auto-annotating 428 images with FastSAM</h2>
     <p class="section-desc">Manually drawing 428 bounding boxes was avoided in favor of automated annotation using
     <strong>FastSAM</strong> (a lightweight Segment-Anything model), prompted to segment "the object at the image
-    center." Annotation quality didn't converge in one pass — it evolved through 8 iterations as new failure
+    center." Annotation quality didn't converge in one pass. It evolved through 8 iterations as new failure
     modes appeared:</p>
 
     <div class="quality-table">
@@ -368,21 +368,21 @@
       <div class="quality-row"><span>Cross-prompt regressed 35 previously-correct images</span><span class="quality-val">Hybrid: single-point primary, cross-prompt retry only on flagged images</span></div>
       <div class="quality-row"><span>Flagging threshold itself was miscalibrated</span><span class="quality-val">Recalibrated 20% → 10%; flags dropped 107 → 52</span></div>
       <div class="quality-row"><span>Remaining flagged boxes were loose/oversized</span><span class="quality-val">GrabCut refinement, kept only where it measurably helped</span></div>
-      <div class="quality-row"><span>Final 34 flagged images</span><span class="quality-val">Manual review — 7 excluded (unusable / mislabeled)</span></div>
+      <div class="quality-row"><span>Final 34 flagged images</span><span class="quality-val">Manual review: 7 excluded (unusable / mislabeled)</span></div>
     </div>
 
     <div class="callout">
       <span class="dot"></span>
       <p>Combining automated segmentation, classical foreground extraction (GrabCut), and threshold
       recalibration with a final targeted manual review produced a clean dataset far faster than manually
-      annotating all 435 images — while still catching pre-existing data-labeling issues no bounding-box
+      annotating all 435 images, while still catching pre-existing data-labeling issues no bounding-box
       method alone could have found.</p>
     </div>
   </div>
 
   <!-- 04 split + training -->
   <div class="section">
-    <p class="section-eyebrow">04 · Model Development — Training</p>
+    <p class="section-eyebrow">04 · Model Development: Training</p>
     <h2 class="section-title">Class-stratified split, transfer learning</h2>
     <p class="section-desc">The 428 images were split 70% / 20% / 10% <em>per class</em> (stratified), using
     <code>n_train = ⌊0.7n⌋, n_val = ⌊0.2n⌋, n_test = n − n_train − n_val</code> so every class keeps the same
@@ -405,7 +405,7 @@
     </div>
 
     <p class="section-desc">A YOLOv8n (nano) model, pretrained on COCO, was fine-tuned via transfer learning
-    (θ₀ = θ<sub>COCO</sub>, not random init) rather than trained from scratch — the model already knows generic
+    (θ<sub>0</sub> = θ<sub>COCO</sub>, not random init) rather than trained from scratch. The model already knows generic
     visual features (edges, textures, shapes); only the product-specific final layers need real retraining,
     which is what makes strong results possible on under 300 training images.</p>
 
@@ -418,17 +418,17 @@
 
     <p class="section-desc" style="margin-bottom:8px;"><code>L = λ_box·L_box(CIoU) + λ_cls·L_cls(BCE) + λ_dfl·L_dfl</code></p>
     <div style="font-size:13.5px; line-height:1.8; margin-bottom:8px;">
-      <p style="margin:0 0 6px;"><strong>Box loss (CIoU)</strong> — penalizes position/size/aspect-ratio error, using IoU plus center-distance and aspect-ratio penalty terms so the gradient stays informative even before boxes overlap.</p>
-      <p style="margin:0 0 6px;"><strong>Classification loss (BCE)</strong> — penalizes wrong or low-confidence class predictions.</p>
-      <p style="margin:0;"><strong>Distribution Focal Loss</strong> — sharpens the anchor-free box-edge regression.</p>
+      <p style="margin:0 0 6px;"><strong>Box loss (CIoU)</strong>: penalizes position/size/aspect-ratio error, using IoU plus center-distance and aspect-ratio penalty terms so the gradient stays informative even before boxes overlap.</p>
+      <p style="margin:0 0 6px;"><strong>Classification loss (BCE)</strong>: penalizes wrong or low-confidence class predictions.</p>
+      <p style="margin:0;"><strong>Distribution Focal Loss</strong>: sharpens the anchor-free box-edge regression (unlike older detectors that predict offsets from a fixed set of preset anchor-box shapes, this one predicts each box's edges directly for every grid location).</p>
     </div>
 
     <p class="chart-title" style="margin-top:32px; margin-bottom:4px;">Under the hood: how the network is structured</p>
-    <p class="section-desc">YOLOv8n is a <strong>convolutional neural network</strong> — 129 layers, ~3 million learnable
+    <p class="section-desc">YOLOv8n is a <strong>convolutional neural network</strong>: 129 layers, ~3 million learnable
     parameters. Each layer is a bank of small filters sliding over the image, each neuron computing
     <code>y = f(Σ wᵢxᵢ + b)</code> where <code>f</code> is the SiLU activation. Stacked together, early layers
-    learn generic features (edges, textures) and deeper layers combine them into object-level concepts —
-    the same generic-to-specific progression that makes transfer learning from COCO work at all.</p>
+    learn generic features (edges, textures) and deeper layers combine them into object-level concepts.
+    This is the same generic-to-specific progression that makes transfer learning from COCO work at all.</p>
 
     <div class="dg-wrap" style="overflow-x:auto; margin: 10px 0 18px;">
 <svg viewBox="0 0 940 175" role="img" style="width:100%; min-width:640px;" aria-label="Model architecture flow: input image goes into the backbone, which extracts features through convolution and C2f blocks; the neck fuses those features across scales via upsampling and concatenation; the head predicts boxes and classes at each grid cell; producing the final output of bounding boxes with class labels and confidence scores">
@@ -451,7 +451,7 @@
 <text x="525" y="58" text-anchor="middle" class="dg-th">Neck (FPN)</text>
 <text x="525" y="76" text-anchor="middle" class="dg-ts">Upsample + Concat</text>
 <text x="525" y="92" text-anchor="middle" class="dg-ts">fuses features across</text>
-<text x="525" y="107" text-anchor="middle" class="dg-ts">3 scales — small &amp; large objects</text></g>
+<text x="525" y="107" text-anchor="middle" class="dg-ts">3 scales: small &amp; large objects</text></g>
 <line x1="620" y1="80" x2="658" y2="80" class="dg-arrow" marker-end="url(#arch-arrow)"/>
 
 <g class="dgc-blue"><rect x="660" y="30" width="170" height="100" rx="10"/>
@@ -467,23 +467,22 @@
 <text x="900" y="96" text-anchor="middle" class="dg-ts" style="font-size:9.5px;">class +</text>
 <text x="900" y="109" text-anchor="middle" class="dg-ts" style="font-size:9.5px;">conf.</text></g>
 
-<text x="475" y="155" text-anchor="middle" class="dg-ts" fill="var(--gray-text)">3,011,823 learnable parameters — all three blue stages, tuned together every training step</text>
+<text x="475" y="155" text-anchor="middle" class="dg-ts" fill="var(--gray-text)">3,011,823 learnable parameters: all three blue stages, tuned together every training step</text>
 </svg>
     </div>
 
     <p class="chart-title" style="margin-top:8px; margin-bottom:4px;">Under the hood: how training finds those parameters</p>
     <p class="section-desc">Training is a <strong>minimization problem</strong>: find the ~3M weights θ that make the
     loss L(θ) as small as possible. With millions of dimensions, solving <code>dL/dθ = 0</code> directly isn't
-    possible — instead, gradient descent takes small steps toward a minimum:</p>
-    <p class="section-desc" style="margin-top:-8px;"><code>θ ← θ − η·∇L(θ)</code> — always moving opposite the
+    possible. Instead, gradient descent takes small steps toward a minimum:</p>
+    <p class="section-desc" style="margin-top:-8px;"><code>θ ← θ − η·∇L(θ)</code>: always moving opposite the
     gradient (steepest increase), i.e. toward lower loss.</p>
 
     <div class="chart-card" style="max-width:640px;">
       <p class="chart-title" style="margin-bottom:8px;">Minima, maxima, saddle points</p>
       <div class="point-list">
-        <div class="point"><span class="dot"></span><p><strong>Minimum</strong> — loss is locally lowest; this is what training seeks. Box loss went from 0.89 → 0.41 over the actual 50-epoch run (Section 05 charts).</p></div>
-        <div class="point"><span class="dot"></span><p><strong>Maximum</strong> — loss is locally highest; never a training target.</p></div>
-        <div class="point"><span class="dot"></span><p><strong>Saddle point</strong> — a minimum along one direction, a maximum along another; common in high-dimensional loss landscapes and a place training can stall. <strong>Momentum</strong> (<code>AdamW momentum=0.9</code>, seen in the actual training run) helps carry the update through these.</p></div>
+        <div class="point"><span class="dot"></span><p><strong>Minimum</strong>: loss is locally lowest; this is what training seeks. Box loss went from 0.89 → 0.41 over the actual 50-epoch run (Section 05 charts).</p></div>
+        <div class="point"><span class="dot"></span><p><strong>Saddle point</strong>: a minimum along one direction, a maximum along another; common in high-dimensional loss landscapes and a place training can stall. <strong>Momentum</strong> (<code>AdamW momentum=0.9</code>, seen in the actual training run) helps carry the update through these.</p></div>
       </div>
     </div>
   </div>
@@ -492,7 +491,7 @@
   <div class="section">
     <p class="section-eyebrow">05 · Validation</p>
     <h2 class="section-title">Held-out test-set results</h2>
-    <p class="section-desc">On the 47-image test split — never touched during training or for any training decision:</p>
+    <p class="section-desc">On the 47-image test split, never touched during training or for any training decision:</p>
 
     <div class="chart-row hero">
       <div class="chart-card hero">
@@ -530,6 +529,7 @@
           <text x="278" y="48" text-anchor="end" class="dg-ts" fill="var(--black)">Nut Bars</text>
           <circle cx="138.4" cy="149.6" r="8" fill="#3C3489"/>
           <text x="138.4" y="170" text-anchor="middle" class="dg-th" fill="#3C3489">Barilla</text>
+          <text x="138.4" y="183" text-anchor="middle" class="dg-ts" fill="#3C3489">P 0.899 · R 0.892</text>
         </svg>
       </div>
       <div class="chart-card hero">
@@ -545,9 +545,9 @@
     <div class="callout" style="background: var(--card-bg); margin-top:0; margin-bottom:24px;">
       <span class="dot"></span>
       <p><strong>Reading these bars:</strong> mAP@0.5 asks "did the model find the object at all, with a
-      roughly-correct box?" — every class except Barilla scores 0.995, essentially perfect. mAP@0.5:0.95 is
+      roughly-correct box?" Every class except Barilla scores 0.995, essentially perfect. mAP@0.5:0.95 is
       the stricter version, averaging that same question across ten IoU thresholds from 0.5 up to 0.95, so it
-      also grades <em>how tightly</em> the box fits — which is why every class's second number is lower than
+      also grades <em>how tightly</em> the box fits, which is why every class's second number is lower than
       its first.</p>
     </div>
 
@@ -565,19 +565,20 @@
       <img src="../images/inventory_optimization/confusion_matrix_styled.png" alt="Confusion matrix showing predicted versus true class for all five products on the 47-image test set, with a clean diagonal and zero off-diagonal entries between any two products">
       <p class="chart-title" style="margin-top:14px;">What this tells us</p>
       <div class="point-list">
-        <div class="point"><span class="dot"></span><p>Every off-diagonal cell between two <em>products</em> is zero — the model has never once mistaken one product for another. Barilla, Corn Flakes, Indomie, Keya Piri Piri, and Nut Bars are fully visually distinct to it.</p></div>
-        <div class="point"><span class="dot"></span><p>The predicted counts match the true test-set counts per class exactly (e.g. 11/11 Indomie, 10/10 Corn Flakes) — nothing is being over- or under-counted within this matrix.</p></div>
-        <div class="point"><span class="dot"></span><p>Barilla's lower mAP@0.5:0.95 (Section 05) isn't cross-product confusion — the raw counts here are perfect. The gap comes from a few loosely-fit boxes and background false positives/negatives (Section 4, Barilla's known annotation issues), which this class-vs-class matrix doesn't capture.</p></div>
+        <div class="point"><span class="dot"></span><p>Every off-diagonal cell between two <em>products</em> is zero. The model has never once mistaken one product for another. Barilla, Corn Flakes, Indomie, Keya Piri Piri, and Nut Bars are fully visually distinct to it.</p></div>
+        <div class="point"><span class="dot"></span><p>The predicted counts match the true test-set counts per class exactly (e.g. 11/11 Indomie, 10/10 Corn Flakes), so nothing is being over- or under-counted within this matrix.</p></div>
+        <div class="point"><span class="dot"></span><p>Barilla's lower mAP@0.5:0.95 (Section 05) isn't cross-product confusion. The raw counts here are perfect. The gap comes from a few loosely-fit boxes and background false positives/negatives (Section 4, Barilla's known annotation issues), which this class-vs-class matrix doesn't capture.</p></div>
       </div>
     </div>
 
     <div class="img-card" style="margin-top:14px;">
       <img src="../images/inventory_optimization/results_styled.png" alt="Four training curve panels over 50 epochs: box loss and classification loss both decreasing steadily for train and validation, precision and recall both rising and converging above 0.9, and mAP at 0.5 and mAP at 0.5 to 0.95 both rising and plateauing">
+      <p class="img-caption">Panel layout: top row: box loss (left), classification loss (right) · bottom row: precision/recall (left), mAP@0.5 and mAP@0.5:0.95 (right).</p>
       <p class="chart-title" style="margin-top:14px;">What this tells us</p>
       <div class="point-list">
-        <div class="point"><span class="dot"></span><p><strong>Box &amp; Classification Loss</strong> fall smoothly for both train (pink) and validation (blue) with no divergence between the two lines — a sign the model is genuinely learning the task, not just memorizing the 298 training images (which would show val loss rising while train loss keeps falling).</p></div>
-        <div class="point"><span class="dot"></span><p><strong>Precision &amp; Recall</strong> both climb fast in the first ~15 epochs (transfer learning doing its job) then converge tightly around 0.9–0.95 — the model isn't trading one off for the other.</p></div>
-        <div class="point"><span class="dot"></span><p><strong>mAP@0.5</strong> plateaus near 0.95 by epoch 20; the stricter <strong>mAP@0.5:0.95</strong> keeps climbing more gradually to ~0.85 — consistent with box localization (how tightly boxes fit) taking longer to refine than simply finding the right object.</p></div>
+        <div class="point"><span class="dot"></span><p><strong>Box &amp; Classification Loss</strong> fall smoothly for both train (pink) and validation (blue) with no divergence between the two lines: a sign the model is genuinely learning the task, not just memorizing the 298 training images (which would show val loss rising while train loss keeps falling).</p></div>
+        <div class="point"><span class="dot"></span><p><strong>Precision &amp; Recall</strong> both climb fast in the first ~15 epochs (transfer learning doing its job) then converge tightly around 0.9–0.95. The model isn't trading one off for the other.</p></div>
+        <div class="point"><span class="dot"></span><p><strong>mAP@0.5</strong> plateaus near 0.95 by epoch 20; the stricter <strong>mAP@0.5:0.95</strong> keeps climbing more gradually to ~0.85, consistent with box localization (how tightly boxes fit) taking longer to refine than simply finding the right object.</p></div>
       </div>
     </div>
 
@@ -587,17 +588,17 @@
   <div class="section">
     <p class="section-eyebrow">06 · Live Proof-of-Concept Demo</p>
     <h2 class="section-title">Real-time webcam detection</h2>
-    <p class="section-desc">A live webcam demo runs the fine-tuned model against a real-time camera feed — the
+    <p class="section-desc">A live webcam demo runs the fine-tuned model against a real-time camera feed. This is the
     same end-to-end action a deployed shelf camera would perform. Single-item shots were detected reliably and
     with high confidence across all 5 classes: Barilla 0.97, Corn Flakes 0.95, Keya Piri Piri 0.97, Nut Bars
     0.87, Indomie 0.79.</p>
 
     <div class="img-row">
-      <div class="img-card"><img src="../images/inventory_optimization/barilla_single.png" alt="Live webcam detection of a Barilla pasta box, correctly classified with 0.97 confidence"><p class="img-caption">Barilla — 0.97 confidence</p></div>
-      <div class="img-card"><img src="../images/inventory_optimization/corn_flakes_single.png" alt="Live webcam detection of a Corn Flakes box, correctly classified with 0.95 confidence"><p class="img-caption">Corn Flakes — 0.95 confidence</p></div>
-      <div class="img-card"><img src="../images/inventory_optimization/indomie_single.png" alt="Live webcam detection of an Indomie instant noodles packet, correctly classified with 0.79 confidence"><p class="img-caption">Indomie — 0.79 confidence</p></div>
-      <div class="img-card"><img src="../images/inventory_optimization/keya_piri_piri_single.png" alt="Live webcam detection of a Keya Piri Piri spice bottle, correctly classified with 0.97 confidence"><p class="img-caption">Keya Piri Piri — 0.97 confidence</p></div>
-      <div class="img-card"><img src="../images/inventory_optimization/nut_bars_single.png" alt="Live webcam detection of a Nut Bars package held in hand, correctly classified with 0.87 confidence"><p class="img-caption">Nut Bars — 0.87 confidence</p></div>
+      <div class="img-card"><img src="../images/inventory_optimization/barilla_single.png" alt="Live webcam detection of a Barilla pasta box, correctly classified with 0.97 confidence"><p class="img-caption">Barilla: 0.97 confidence</p></div>
+      <div class="img-card"><img src="../images/inventory_optimization/corn_flakes_single.png" alt="Live webcam detection of a Corn Flakes box, correctly classified with 0.95 confidence"><p class="img-caption">Corn Flakes: 0.95 confidence</p></div>
+      <div class="img-card"><img src="../images/inventory_optimization/indomie_single.png" alt="Live webcam detection of an Indomie instant noodles packet, correctly classified with 0.79 confidence"><p class="img-caption">Indomie: 0.79 confidence</p></div>
+      <div class="img-card"><img src="../images/inventory_optimization/keya_piri_piri_single.png" alt="Live webcam detection of a Keya Piri Piri spice bottle, correctly classified with 0.97 confidence"><p class="img-caption">Keya Piri Piri: 0.97 confidence</p></div>
+      <div class="img-card"><img src="../images/inventory_optimization/nut_bars_single.png" alt="Live webcam detection of a Nut Bars package held in hand, correctly classified with 0.87 confidence"><p class="img-caption">Nut Bars: 0.87 confidence</p></div>
     </div>
   </div>
 
@@ -608,40 +609,40 @@
     <p class="section-desc">Every training image contained exactly one centered product, so the model was never
     shown two objects in one frame. Placing multiple products in the same shot exposed this directly:</p>
 
-    <p class="chart-title" style="margin-bottom:10px;">Failure mode 1 — items placed touching/close together get merged</p>
+    <p class="chart-title" style="margin-bottom:10px;">Failure mode 1: items placed touching/close together get merged</p>
     <div class="img-row">
-      <div class="img-card"><img src="../images/inventory_optimization/limitation_full_cluster.jpg" alt="Four different grocery products placed close together, all merged into a single bounding box labeled corn_flakes"><p class="img-caption">4 distinct items (Barilla, Nut Bars, Keya Piri Piri, Indomie) merged into <strong>one</strong> box, <strong>one</strong> label — "corn_flakes 0.97". The other 3 products get no detection at all.</p></div>
-      <div class="img-card"><img src="../images/inventory_optimization/limitation_partial_multi.jpg" alt="Three grocery products - Barilla, Keya Piri Piri, and Corn Flakes - where Barilla is misclassified as keya_piri_piri and the other two are correct"><p class="img-caption">A 3-item shot (Barilla, Keya Piri Piri, Corn Flakes): here 3 boxes appear, but Barilla is <strong>misclassified</strong> as "keya_piri_piri 0.81" — the model still confuses adjacent items even when it does separate them.</p></div>
+      <div class="img-card"><img src="../images/inventory_optimization/limitation_full_cluster.jpg" alt="Four different grocery products placed close together, all merged into a single bounding box labeled corn_flakes"><p class="img-caption">4 distinct items (Barilla, Nut Bars, Keya Piri Piri, Indomie) merged into <strong>one</strong> box, <strong>one</strong> label: "corn_flakes 0.97". The other 3 products get no detection at all.</p></div>
+      <div class="img-card"><img src="../images/inventory_optimization/limitation_partial_multi.jpg" alt="Three grocery products - Barilla, Keya Piri Piri, and Corn Flakes - where Barilla is misclassified as keya_piri_piri and the other two are correct"><p class="img-caption">A 3-item shot (Barilla, Keya Piri Piri, Corn Flakes): here 3 boxes appear, but Barilla is <strong>misclassified</strong> as "keya_piri_piri 0.81". The model still confuses adjacent items even when it does separate them.</p></div>
     </div>
 
     <h3 class="sub-title">Mitigation: synthetic copy-paste data, without new photography</h3>
     <p class="section-desc">Rather than shooting and re-annotating new multi-object photos, synthetic
     multi-object training images were generated automatically from the existing single-item images and their
     already-known bounding boxes: crop a product using its existing box, paste it onto another training image,
-    derive the new box purely from paste-position arithmetic — no manual re-labeling needed.</p>
+    derive the new box purely from paste-position arithmetic: no manual re-labeling needed.</p>
 
     <div class="quality-table" style="margin-bottom:20px;">
       <div class="quality-head"><span>Round</span><span>Result</span></div>
-      <div class="quality-row"><span>Round 1 — 174 spaced pairs/triples</span><span class="quality-val">Genuine improvement: 3-item frames that used to merge now split into 3 correct boxes. Test mAP@0.5 only dropped 0.973 → 0.962.</span></div>
-      <div class="quality-row"><span>Round 2 — 83 dense 3–5-item rows</span><span class="quality-val">Diminishing/negative returns: real-photo confidence calibration measurably degraded without reliably fixing the dense-cluster case.</span></div>
+      <div class="quality-row"><span>Round 1: 174 spaced pairs/triples</span><span class="quality-val">Genuine improvement: 3-item frames that used to merge now split into 3 correct boxes. Test mAP@0.5 only dropped 0.973 → 0.962.</span></div>
+      <div class="quality-row"><span>Round 2: 83 dense 3–5-item rows</span><span class="quality-val">Diminishing/negative returns: real-photo confidence calibration measurably degraded without reliably fixing the dense-cluster case.</span></div>
     </div>
 
-    <p class="chart-title" style="margin-bottom:10px;">After Round 1 — same item combinations, re-tested</p>
+    <p class="chart-title" style="margin-bottom:10px;">After Round 1: same item combinations, re-tested</p>
     <div class="img-row">
-      <div class="img-card"><img src="../images/inventory_optimization/mitigation_success.jpg" alt="Three different grocery products - Barilla, Keya Piri Piri, and Corn Flakes - each correctly detected with separate bounding boxes and correct class labels after the Round 1 fix"><p class="img-caption"><strong>Full success</strong> — Barilla 0.78, Keya Piri Piri 0.84, Corn Flakes 0.93: all 3 correctly separated <em>and</em> correctly classified.</p></div>
-      <div class="img-card"><img src="../images/inventory_optimization/round1_partial_misclass.jpg" alt="Barilla, Keya Piri Piri, and Corn Flakes with two overlapping corn_flakes labels and one keya_piri_piri label, showing Barilla still misclassified after round 1 retraining"><p class="img-caption"><strong>Partial success</strong> — same 3 products, different shot: now 3 boxes appear (up from 1 before Round 1), but Barilla is still mislabeled "corn_flakes". Spatial separation improved; classification confusion on Barilla did not fully resolve.</p></div>
+      <div class="img-card"><img src="../images/inventory_optimization/mitigation_success.jpg" alt="Three different grocery products - Barilla, Keya Piri Piri, and Corn Flakes - each correctly detected with separate bounding boxes and correct class labels after the Round 1 fix"><p class="img-caption"><strong>Full success</strong>: Barilla 0.78, Keya Piri Piri 0.84, Corn Flakes 0.93: all 3 correctly separated <em>and</em> correctly classified.</p></div>
+      <div class="img-card"><img src="../images/inventory_optimization/round1_partial_misclass.jpg" alt="Barilla, Keya Piri Piri, and Corn Flakes with two overlapping corn_flakes labels and one keya_piri_piri label, showing Barilla still misclassified after round 1 retraining"><p class="img-caption"><strong>Partial success</strong>: same 3 products, different shot: now 3 boxes appear (up from 1 before Round 1), but Barilla is still mislabeled "corn_flakes". Spatial separation improved; classification confusion on Barilla did not fully resolve.</p></div>
     </div>
 
-    <p class="chart-title" style="margin-bottom:10px;">After Round 2 — the regression that led to reverting it</p>
+    <p class="chart-title" style="margin-bottom:10px;">After Round 2: the regression that led to reverting it</p>
     <div class="img-card" style="max-width:480px; margin-left:auto; margin-right:auto;">
       <img src="../images/inventory_optimization/round2_confidence_regression.jpg" alt="Five grocery products placed together where the Round 2 model only detects one item, Indomie, at 0.66 confidence, missing Barilla, Corn Flakes, Keya Piri Piri, and Nut Bars entirely">
-      <p class="img-caption">All 5 products in frame, Round 2 model: only <strong>Indomie 0.66</strong> is reported above the 0.5 confidence cutoff. Probing down to conf=0.05 showed the model still had weak signal for the rest (corn_flakes 0.21, barilla 0.19, keya_piri_piri 0.16) — the detections exist, just below a usable confidence.</p>
+      <p class="img-caption">All 5 products in frame, Round 2 model: only <strong>Indomie 0.66</strong> is reported above the 0.5 confidence cutoff. Probing down to conf=0.05 showed the model still had weak signal for the rest (corn_flakes 0.21, barilla 0.19, keya_piri_piri 0.16). The detections exist, just below a usable confidence.</p>
     </div>
 
     <div class="callout">
       <span class="dot"></span>
       <p><strong>Decision:</strong> the Round 1 model was kept as final. <strong>Key learning:</strong> synthetic
-      copy-paste augmentation has a sweet spot on a small dataset — useful in moderation, but pushing it further
+      copy-paste augmentation has a sweet spot on a small dataset: useful in moderation, but pushing it further
       to force a harder scenario can cost more in real-world confidence calibration than it gains. A production
       system needing reliable dense-cluster counting should collect a modest number of <em>real</em>
       multi-object photos instead of pushing synthetic augmentation further.</p>
@@ -655,7 +656,7 @@
 
     <div class="quality-table">
       <div class="quality-head"><span>Consideration</span><span>Detail</span></div>
-      <div class="quality-row"><span>Bias</span><span class="quality-val">All photos taken by one team in a small number of locations with specific packaging — not different lighting, packaging damage, or brands. Class sizes range 69–100, and the weakest class (Barilla) correlates with that imbalance.</span></div>
+      <div class="quality-row"><span>Bias</span><span class="quality-val">All photos taken by one team in a small number of locations with specific packaging, not different lighting, packaging damage, or brands. Class sizes range 69–100, and the weakest class (Barilla) correlates with that imbalance.</span></div>
       <div class="quality-row"><span>Ethics</span><span class="quality-val">Intended to redeploy staff time to higher-value work, not eliminate roles. Any real rollout should involve dining staff directly, both to set expectations and because they know the edge cases the model will hit.</span></div>
       <div class="quality-row"><span>Privacy</span><span class="quality-val">A shelf-facing camera risks incidentally capturing staff. Framing should be scoped to shelving only, with no facial recognition or identity-linked processing, and a clear retention policy.</span></div>
       <div class="quality-row"><span>Security</span><span class="quality-val">Model weights and any live feed should be access-controlled; raw images shouldn't go to third-party services without review. Physical tampering (rearranging stock to distort counts) is a real attack surface to design against.</span></div>
@@ -668,7 +669,7 @@
     <h2 class="section-title">What maintaining this in production looks like</h2>
     <p class="section-desc">As new products are added to the warehouse, a modest number of new photos would run
     through the same FastSAM auto-annotation pipeline, and the model periodically re-fine-tuned from its
-    existing checkpoint — not retrained from scratch, so each update stays in the same under-an-hour range seen
+    existing checkpoint, not retrained from scratch, so each update stays in the same under-an-hour range seen
     throughout this project. Per-class detection confidence is worth monitoring over time as a signal for when
     re-training is actually needed.</p>
   </div>
@@ -678,9 +679,9 @@
     <p class="section-eyebrow">10 · References</p>
     <h2 class="section-title">Sources</h2>
     <div style="font-size:13.5px; line-height:2; color: var(--gray-text);">
-      <p style="margin:0;">Jocher, G., Chaurasia, A., Qiu, J. — <em>Ultralytics YOLOv8</em>, docs.ultralytics.com</p>
-      <p style="margin:0;">Zhao, X. et al. — <em>Fast Segment Anything (FastSAM)</em>, github.com/CASIA-IVA-Lab/FastSAM</p>
-      <p style="margin:0;">Kirillov, A. et al. — <em>Segment Anything</em>, Meta AI Research, 2023</p>
+      <p style="margin:0;">Jocher, G., Chaurasia, A., Qiu, J.: <em>Ultralytics YOLOv8</em>, docs.ultralytics.com</p>
+      <p style="margin:0;">Zhao, X. et al.: <em>Fast Segment Anything (FastSAM)</em>, github.com/CASIA-IVA-Lab/FastSAM</p>
+      <p style="margin:0;">Kirillov, A. et al.: <em>Segment Anything</em>, Meta AI Research, 2023</p>
       <p style="margin:0;">CIS 515 <em>Project Proposal Guidelines</em> and <em>Final Project Deck and Presentation Guidelines</em> (course materials)</p>
     </div>
   </div>

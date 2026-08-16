@@ -59,7 +59,7 @@ footer a{color:var(--pk);text-decoration:none}
 
 <div class="hero">
   <h1>Computer Vision</h1>
-  <p class="hero-sub">From raw pixels to detected, segmented, and understood scenes — turning images into insight.</p>
+  <p class="hero-sub">From raw pixels to detected, segmented, and understood scenes: turning images into insight.</p>
 </div>
 
 <div class="page">
@@ -67,7 +67,7 @@ footer a{color:var(--pk);text-decoration:none}
 <!-- 01 IMAGE FUNDAMENTALS & PREPROCESSING -->
 <div class="sec">
   <div class="sec-head"><span class="sec-num">01</span><div class="sec-title">Image Fundamentals &amp; Preprocessing</div><div class="sec-line"></div></div>
-  <p class="sec-desc">Every vision model starts with pixels — getting color, contrast, and scale right before a network ever sees the image.</p>
+  <p class="sec-desc">Every vision model starts with pixels: getting color, contrast, and scale right before a network ever sees the image. The convolution and stride math below is what later determines a detector's receptive field (how much of the image each prediction actually "sees"), so getting it right here shapes everything downstream in a detection or segmentation pipeline.</p>
   <div class="grid">
     <div class="card"><div class="chart-wrap">
       <svg viewBox="0 0 150 64" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="An image split into stacked red, green and blue channel tiles">
@@ -173,7 +173,7 @@ footer a{color:var(--pk);text-decoration:none}
 <!-- 02 CNN ARCHITECTURES FOR VISION -->
 <div class="sec">
   <div class="sec-head"><span class="sec-num">02</span><div class="sec-title">CNN Architectures for Vision</div><div class="sec-line"></div></div>
-  <p class="sec-desc">Two decades of architecture design — each generation trading parameters and depth for a sharper decision boundary.</p>
+  <p class="sec-desc">Two decades of architecture design: each generation trading parameters and depth for a sharper decision boundary.</p>
   <div class="grid">
     <div class="card"><div class="chart-wrap">
       <svg viewBox="0 0 150 64" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="A blurry handwritten digit feeding into a shallow three layer network">
@@ -276,7 +276,7 @@ footer a{color:var(--pk);text-decoration:none}
 <!-- 03 IMAGE CLASSIFICATION & TRANSFER LEARNING -->
 <div class="sec">
   <div class="sec-head"><span class="sec-num">03</span><div class="sec-title">Image Classification &amp; Transfer Learning</div><div class="sec-line"></div></div>
-  <p class="sec-desc">Deciding what an image shows — and standing on the shoulders of models already trained on millions of images.</p>
+  <p class="sec-desc">Deciding what an image shows, and standing on the shoulders of models already trained on millions of images. In vision work, transfer learning usually means taking an ImageNet-pretrained backbone (ResNet, EfficientNet) and swapping just the head: freeze the early layers that already recognize edges and textures, then fine-tune the later ones for your specific classes or detection task.</p>
   <div class="grid">
     <div class="card"><div class="chart-wrap">
       <svg viewBox="0 0 150 64" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Three class probabilities, cat highlighted as the highest scoring prediction with a checkmark">
@@ -364,7 +364,7 @@ footer a{color:var(--pk);text-decoration:none}
 <!-- 04 OBJECT DETECTION -->
 <div class="sec">
   <div class="sec-head"><span class="sec-num">04</span><div class="sec-title">Object Detection</div><div class="sec-line"></div></div>
-  <p class="sec-desc">Not just what's in the image, but where — localizing every object with a box and a confidence score.</p>
+  <p class="sec-desc">Not just what's in the image, but where: localizing every object with a box and a confidence score.</p>
   <div class="grid">
     <div class="card"><div class="chart-wrap">
       <svg viewBox="0 0 150 64" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="An image with a bounding box drawn around an object, annotated with x, y, width and height">
@@ -490,7 +490,7 @@ footer a{color:var(--pk);text-decoration:none}
 
       <text x="790" y="315" text-anchor="middle" font-family="Inter, sans-serif" font-weight="700" font-size="14" fill="rgba(255,255,255,.6)">Detected Objects</text>
     </svg>
-    <div class="tree-caption">Image in, boxes and labels out — the detection pipeline in one pass</div>
+    <div class="tree-caption">Image in, boxes and labels out: the detection pipeline in one pass</div>
     <div class="tree-legend">
       <span><i class="tdot node"></i>Image content</span>
       <span><i class="tdot yes"></i>Predicted bounding box</span>
@@ -504,7 +504,7 @@ footer a{color:var(--pk);text-decoration:none}
 <!-- 05 IMAGE SEGMENTATION -->
 <div class="sec">
   <div class="sec-head"><span class="sec-num">05</span><div class="sec-title">Image Segmentation</div><div class="sec-line"></div></div>
-  <p class="sec-desc">Going past boxes to pixel-level understanding — tracing the exact outline of every object in the frame.</p>
+  <p class="sec-desc">Going past boxes to pixel-level understanding: tracing the exact outline of every object in the frame.</p>
   <div class="grid">
     <div class="card"><div class="chart-wrap">
       <svg viewBox="0 0 150 64" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="An image with every pixel colored according to its predicted class region: sky, ground and object">
@@ -570,7 +570,7 @@ footer a{color:var(--pk);text-decoration:none}
 <!-- 06 ADVANCED VISION MODELS -->
 <div class="sec">
   <div class="sec-head"><span class="sec-num">06</span><div class="sec-title">Advanced Vision Models</div><div class="sec-line"></div></div>
-  <p class="sec-desc">Beyond the standard CNN — attention, self-supervision, and generative models reshaping what vision systems can do.</p>
+  <p class="sec-desc">Beyond the standard CNN: attention, self-supervision, and generative models reshaping what vision systems can do. GANs and diffusion models earn their keep here by generating and augmenting image data itself (synthesizing extra training examples for a rare class, or upsampling weak frames) rather than the general-purpose synthesis those same architectures do elsewhere.</p>
   <div class="grid">
     <div class="card"><div class="chart-wrap">
       <svg viewBox="0 0 150 64" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="An image divided into a grid of patches, each patch flattened into a token in a sequence">
@@ -612,7 +612,7 @@ footer a{color:var(--pk);text-decoration:none}
         <line x1="84" y1="30" x2="98" y2="30" stroke="#e8187a" stroke-width="1.6" marker-end="url(#cvA16)"/>
         <path d="M104,50 L114,24 L122,36 L132,16 L140,50 Z" fill="#e8187a" opacity="0.7"/>
       </svg>
-    </div><div class="card-label">GAN — Generator</div><div class="card-tag">fool the discriminator</div></div>
+    </div><div class="card-label">GAN: Generator</div><div class="card-tag">fool the discriminator</div></div>
 
     <div class="card"><div class="chart-wrap">
       <svg viewBox="0 0 150 64" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="A real image and a fake image both fed into a discriminator that outputs real or fake">
@@ -629,7 +629,7 @@ footer a{color:var(--pk);text-decoration:none}
         <text x="112" y="26" font-family="JetBrains Mono, monospace" font-size="7" fill="#999">real?</text>
         <text x="112" y="40" font-family="JetBrains Mono, monospace" font-size="7" fill="#e8187a">fake?</text>
       </svg>
-    </div><div class="card-label">GAN — Discriminator</div><div class="card-tag">real vs fake</div></div>
+    </div><div class="card-label">GAN: Discriminator</div><div class="card-tag">real vs fake</div></div>
 
     <div class="card"><div class="chart-wrap">
       <svg viewBox="0 0 150 64" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="A sequence of frames going from pure noise to a clean recognizable image">

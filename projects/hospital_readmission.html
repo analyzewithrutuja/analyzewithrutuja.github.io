@@ -427,8 +427,6 @@
     <span class="tag">Python</span>
     <span class="tag">scikit-learn</span>
     <span class="tag">XGBoost</span>
-    <span class="tag">SHAP</span>
-    <span class="tag">K-Means</span>
     <span class="tag">Statistics</span>
     <span class="tag">Healthcare Analytics</span>
   </div>
@@ -448,7 +446,7 @@
   <div class="section">
     <p class="section-eyebrow">00 · The idea, first</p>
     <h2 class="section-title">Why does this hospital rank #1?</h2>
-    <p class="section-desc">Before any dataset, model, or chart: here's the core idea behind this whole project, told as a conversation. "Feature importance" is really just what an experienced doctor already does by instinct.</p>
+    <p class="section-desc">Here's the core idea behind this whole project, told as a conversation, before any dataset, model, or chart shows up. "Feature importance" is really just what an experienced doctor already does by instinct.</p>
 
     <div class="comic-strip">
       <img src="../images/comic_grid.png" alt="Eight-panel comic: Dr. Karen explains what makes St. Mercy Hospital number one for diabetes care: reading each patient's full record, weighing prior admissions as the strongest signal, followed by discharge location, medications, and age, and how data science surfaces high-risk cases so she can make the same call sooner">
@@ -464,7 +462,7 @@
   <div class="section">
     <p class="section-eyebrow">01 · Before data science</p>
     <h2 class="section-title">The manual discharge process</h2>
-    <p class="section-desc">Before any model gets involved, here's how a diabetic patient's hospital stay actually flows: entirely on clinical judgment, with no automated risk score anywhere in the loop.</p>
+    <p class="section-desc">No model is involved yet in what follows. This is how a diabetic patient's hospital stay actually flows today: entirely on clinical judgment, with no automated risk score anywhere in the loop.</p>
 
     <div class="dg-wrap">
 <svg viewBox="0 0 680 850" role="img" style="width:100%;" aria-label="Process map of the manual, pre-data-science hospital discharge workflow">
@@ -637,7 +635,7 @@
   <div class="section">
     <p class="section-eyebrow">02 · Intake</p>
     <h2 class="section-title">Dataset overview</h2>
-    <p class="section-desc">Before any model gets built, here's what's actually in the data, and where it can't be fully trusted.</p>
+    <p class="section-desc">What's actually in the data, and where it can't be fully trusted, matters before any model gets built. Here's the breakdown.</p>
 
     <div class="stat-grid">
       <div class="stat-card"><p class="stat-num">101,766</p><p class="stat-label">Hospital encounters</p></div>
@@ -727,7 +725,7 @@
   <div class="section">
     <p class="section-eyebrow">04 · Transparency</p>
     <h2 class="section-title">Data ethics &amp; feature exclusion</h2>
-    <p class="section-desc">Before any pattern gets shown or any model gets trained, here's what was deliberately left out, and why. Three different reasons, not one.</p>
+    <p class="section-desc">What got deliberately left out, and why, comes before any pattern is shown or model is trained. Three different reasons, not one.</p>
 
     <div class="quality-table">
       <div class="quality-head"><span>Column</span><span>Reason</span><span>Category</span></div>
@@ -800,11 +798,11 @@
 
       <div class="chart-card hero">
         <p class="chart-title">Discharge disposition → readmission risk</p>
-        <p class="chart-sub">where a patient goes next predicts almost as strongly as their history does</p>
-        <div class="bar-row"><span class="bar-label">Home</span><div class="bar-track"><div class="bar-fill c-green" style="width:34%"><span>9.3%</span></div></div><span class="bar-val">60,234</span></div>
-        <div class="bar-row"><span class="bar-label">Home + care</span><div class="bar-track"><div class="bar-fill c-teal" style="width:46%"><span>12.7%</span></div></div><span class="bar-val">12,902</span></div>
-        <div class="bar-row"><span class="bar-label">SNF</span><div class="bar-track"><div class="bar-fill c-amber" style="width:53%"><span>14.7%</span></div></div><span class="bar-val">13,954</span></div>
-        <div class="bar-row"><span class="bar-label">Rehab</span><div class="bar-track"><div class="bar-fill c-red" style="width:100%"><span>27.7%</span></div></div><span class="bar-val">1,993</span></div>
+        <p class="chart-sub">where a patient goes next predicts almost as strongly as their history does (scaled to the same 39.8% max as the chart on the left, for a fair comparison)</p>
+        <div class="bar-row"><span class="bar-label">Home</span><div class="bar-track"><div class="bar-fill c-green" style="width:23%"><span>9.3%</span></div></div><span class="bar-val">60,234</span></div>
+        <div class="bar-row"><span class="bar-label">Home + care</span><div class="bar-track"><div class="bar-fill c-teal" style="width:32%"><span>12.7%</span></div></div><span class="bar-val">12,902</span></div>
+        <div class="bar-row"><span class="bar-label">SNF</span><div class="bar-track"><div class="bar-fill c-amber" style="width:37%"><span>14.7%</span></div></div><span class="bar-val">13,954</span></div>
+        <div class="bar-row"><span class="bar-label">Rehab</span><div class="bar-track"><div class="bar-fill c-red" style="width:70%"><span>27.7%</span></div></div><span class="bar-val">1,993</span></div>
       </div>
     </div>
 
@@ -843,7 +841,7 @@
   <div class="section">
     <p class="section-eyebrow">06 · Inference</p>
     <h2 class="section-title">Statistical modeling</h2>
-    <p class="section-desc">Before any variable earns a place in the predictive model, it has to prove it isn't just noise. Race and gender are excluded from this step too. See the data ethics section above.</p>
+    <p class="section-desc">Every variable has to prove it isn't just noise before it earns a place in the predictive model. Race and gender are excluded from this step too; see the data ethics section above.</p>
 
     <p style="font-size: 14.5px; line-height: 1.7; margin: 0 0 20px;">
       Not every question can be answered the same way. The right test depends on what kind of thing is being compared.
@@ -1037,7 +1035,7 @@
 
     <div class="callout" style="margin-bottom: 28px;">
       <span class="dot"></span>
-      <p><strong>What this means for the final decision:</strong> running all three isn't redundant: it's what lets this project claim <strong>XGBoost is the right choice with evidence</strong>, not just picked because it's popular. Because XGBoost won on both AUC (0.672) and recall (58.0%), the metric that matters most for catching real readmissions, it becomes the model recommended for actual screening use. Logistic Regression stays valuable as the explainable fallback when a clinician needs to see the reasoning in plain weights, not just a score.</p>
+      <p><strong>What this means for the final decision:</strong> running all three isn't redundant: it's what lets this project claim <strong>XGBoost is the right choice with evidence</strong>, not just picked because it's popular. Because XGBoost won on both AUC (0.672), which measures how well the model ranks readmitted patients above non-readmitted ones across every possible threshold (0.5 is random guessing, 1.0 is perfect separation), and recall (58.0%), the metric that matters most for catching real readmissions, it becomes the model recommended for actual screening use. Logistic Regression stays valuable as the explainable fallback when a clinician needs to see the reasoning in plain weights, not just a score.</p>
     </div>
 
     <p class="chart-title" style="margin-bottom:2px;">The three models, in full</p>
@@ -1093,6 +1091,7 @@
 <line x1="380" y1="335" x2="410" y2="335" stroke="#D85A30" stroke-width="2.5"/><text class="dg-ts" x="418" y="339">fitted probability</text>
 </svg>
       </div>
+      <p style="font-size:11.5px; color:var(--gray-text); margin:6px 0 0; font-style:italic;">Illustrative example: these ~24 plotted points are for visualizing the curve, not the full ~20,000-row test set.</p>
       <p style="font-size:12.5px; color:var(--gray-text); margin:10px 0 20px;">Result: 65.5% accuracy · 0.645 AUC · 53.7% recall</p>
 
       <p style="font-weight:600; font-size:14px; margin:0 0 2px;">Walking through one real patient</p>
@@ -1258,6 +1257,7 @@
           <p style="font-size: 11.5px; margin:3px 0 0;">caught</p>
         </div>
       </div>
+      <p style="font-size:11.5px; color:var(--gray-text); margin:8px 0 0;">(rounded to whole patients out of 100; actual recall is 58.0%, not the ~54.5% these rounded counts alone would suggest)</p>
       <div class="so-what" style="margin-top:14px; padding-top:12px;">
         <span class="dot"></span>
         <p>Of 35 patients flagged "high risk," only 6 actually return, the honest trade-off of prioritizing recall over precision in a screening context.</p>
@@ -1322,19 +1322,7 @@
 </svg>
     </div>
 
-    <div class="quality-table" style="margin-bottom:24px;">
-      <div class="quality-head" style="grid-template-columns: 1.4fr 1fr 1fr 0.8fr;"><span>Model</span><span>Single-split AUC</span><span>5-fold CV AUC</span><span>Flag</span></div>
-      <div class="quality-row" style="grid-template-columns: 1.4fr 1fr 1fr 0.8fr;">
-        <span>Logistic Regression</span><span class="quality-val">0.645</span><span class="quality-val">0.641 ± 0.006</span><span class="status-pill status-green">stable</span>
-      </div>
-      <div class="quality-row" style="grid-template-columns: 1.4fr 1fr 1fr 0.8fr;">
-        <span>Random Forest</span><span class="quality-val">0.657</span><span class="quality-val">0.655 ± 0.006</span><span class="status-pill status-green">stable</span>
-      </div>
-      <div class="quality-row" style="grid-template-columns: 1.4fr 1fr 1fr 0.8fr;">
-        <span>XGBoost</span><span class="quality-val">0.672</span><span class="quality-val">0.671 ± 0.005</span><span class="status-pill status-green">stable</span>
-      </div>
-    </div>
-    <p style="font-size:12.5px; color:var(--gray-text); margin:0 0 24px;">Every model lands within 0.005 of its single-split result. The numbers above weren't a lucky split. Full cross-validation code and methodology are in <strong>Section 09 · Limitations</strong>.</p>
+    <p style="font-size:12.5px; color:var(--gray-text); margin:0 0 24px;">Every model lands within 0.005 of its single-split result, as the cross-validation table in <strong>Section 08 · Limitations</strong> below shows. The numbers weren't a lucky split.</p>
 
   </div>
 

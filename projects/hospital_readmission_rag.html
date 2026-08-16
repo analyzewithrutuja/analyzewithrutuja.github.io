@@ -352,7 +352,7 @@
   <div class="stat-strip">
     <div><p class="stat-num">46</p><p class="stat-label">source documents</p></div>
     <div><p class="stat-num">2,456</p><p class="stat-label">retrieval chunks</p></div>
-    <div><p class="stat-num">0.468</p><p class="stat-label">avg. retrieval similarity</p></div>
+    <div><p class="stat-num">0.468</p><p class="stat-label">avg. retrieval similarity (genuinely relevant, see §07)</p></div>
   </div>
 
   <div class="tag-row">
@@ -465,7 +465,7 @@
   <div class="section" id="s01">
     <p class="section-eyebrow">01 · Why</p>
     <h2 class="section-title">A risk score alone isn't actionable</h2>
-    <p class="section-desc">Two working systems, built separately, that were never actually talking to each other. This project connected them.</p>
+    <p class="section-desc">This project exists because two systems, built separately, were never actually talking to each other. Connecting them was the point.</p>
 
     <div class="field-grid">
       <div class="field-card">
@@ -492,7 +492,7 @@
     <div class="dtable" style="margin-bottom:var(--s3);">
       <div class="dhead cols-2"><span>In scope</span><span>Out of scope</span></div>
       <div class="drow cols-2">
-        <span data-label="In scope">Diet, exercise, and medication guidance for T2D</span>
+        <span data-label="In scope">Diet, exercise, and medication guidance for T2D (type 2 diabetes)</span>
         <span data-label="Out of scope" class="dcell-muted">Diagnosis or treatment decisions</span>
       </div>
       <div class="drow cols-2">
@@ -540,7 +540,7 @@
       </div>
       <div class="drow cols-3g">
         <span data-label="Source" class="dval">CDC</span>
-        <span data-label="What it contributes" class="dcell-muted">Self-management education (DSMES), prevention programs, clinical guidance</span>
+        <span data-label="What it contributes" class="dcell-muted">Self-management education (DSMES: Diabetes Self-Management Education and Support), prevention programs, clinical guidance</span>
         <span data-label="Docs" class="dnum">7</span>
       </div>
       <div class="drow cols-3g">
@@ -564,7 +564,7 @@
   <div class="section" id="s04">
     <p class="section-eyebrow">04 · Pipeline</p>
     <h2 class="section-title">How the pieces connect</h2>
-    <p class="section-desc">Two tracks run in parallel: one builds the knowledge base, the other assesses the patient. Both converge into a single prompt for the LLM.</p>
+    <p class="section-desc">One track builds the knowledge base, another assesses the patient, running in parallel the whole way. Both converge into a single prompt for the LLM.</p>
 
     <div class="chart-card">
       <svg width="100%" viewBox="0 0 900 500" role="img" aria-label="Pipeline diagram: document track and patient track converge into a combined prompt sent to the LLM, producing the final answer">
@@ -610,7 +610,7 @@
   <div class="section" id="s05">
     <p class="section-eyebrow">05 · Building the Dataset</p>
     <h2 class="section-title">File types & quality checks</h2>
-    <p class="section-desc">Two file types are accepted, and three bugs were caught before they reached the vector database. None of it was by luck.</p>
+    <p class="section-desc">This pipeline accepts only two file types, and along the way, three bugs were caught before they ever reached the vector database. None of it was by luck.</p>
 
     <p class="chart-title">What file types this RAG accepts</p>
     <p class="chart-sub">The pipeline accepts only <code>.pdf</code> and <code>.txt</code>. Anything else is skipped, not errored on.</p>
@@ -751,8 +751,8 @@ chunk_size = <span class="cm">350 words</span>   overlap = <span class="cm">60 w
     <p class="chart-title">Why 0.468, not 0.9+ like the worked example above</p>
     <p class="chart-sub">Two genuine reasons, not a bug:</p>
     <div class="field-grid" style="margin-bottom:var(--s3);">
-      <div class="field-card"><p class="field-name">1. Length and topic dilution</p><p class="field-desc">The worked example compared two short, single-topic phrases. A real chunk is a 350-word paragraph covering multiple sub-aspects of discharge planning at once. An embedding averages across every token in the chunk, so when only part of a chunk directly matches the query, the surrounding context spreads the vector rather than keeping it tightly focused. It's topic diversity, not word count, that dilutes the score: a 350-word chunk repeating one single idea would still score high.</p></div>
-      <div class="field-card"><p class="field-name">2. Query vs. chunk structure mismatch</p><p class="field-desc">A question ("What should be included...?") and a paragraph of instructions ("Tailor a structured discharge plan...") have different grammatical shapes. The extra question-words in the query don't have counterparts in the chunk, nudging the vectors slightly apart even when the underlying meaning matches well.</p></div>
+      <div class="field-card"><p class="field-name">1. Length and topic dilution</p><p class="field-desc">The worked example compared two short, single-topic phrases, but a real chunk is a 350-word paragraph covering several sub-aspects of discharge planning at once. Because an embedding averages across every token, only part of a chunk matching the query spreads the vector, so it's topic diversity, not word count, that dilutes the score.</p></div>
+      <div class="field-card"><p class="field-name">2. Query vs. chunk structure mismatch</p><p class="field-desc">A question like "What should be included...?" and a paragraph of instructions have different grammatical shapes, so the extra question-words don't have counterparts in the chunk. That mismatch nudges the vectors slightly apart even when the underlying meaning matches well.</p></div>
     </div>
 
     <div class="callout neutral" style="margin-bottom:var(--s4);">
@@ -869,7 +869,7 @@ df = df.dropna(subset=[<span class="cm">'diag_1', 'diag_2', 'diag_3'</span>])</d
   <div class="section" id="s09">
     <p class="section-eyebrow">09 · Output</p>
     <h2 class="section-title">Generation</h2>
-    <p class="section-desc">Same question, two real patients from the dataset: same guideline sources, genuinely different answers.</p>
+    <p class="section-desc">The same question goes to two real patients from the dataset: same guideline sources, genuinely different answers.</p>
 
     <p class="chart-title">Low risk vs high risk, side by side</p>
     <div class="field-grid" style="margin-bottom:var(--s3);">
@@ -909,7 +909,8 @@ df = df.dropna(subset=[<span class="cm">'diag_1', 'diag_2', 'diag_3'</span>])</d
     <h2 class="section-title">From notebook to live app</h2>
     <p class="section-desc">Streamlit Community Cloud, with the entire pipeline (retrieval, personalization, generation) running behind one page.</p>
 
-    <p class="chart-title">Architecture</p>
+    <p class="chart-title">Architecture <span style="font-weight:500; color:var(--gray-text); font-size:var(--fs-small);">(deployment view)</span></p>
+    <p class="chart-sub">Same pipeline as the conceptual diagram in Section 04, now with implementation-level detail: the Streamlit intake form and the actual components behind each stage.</p>
     <div class="chart-card">
       <svg width="100%" viewBox="0 0 900 540" role="img" aria-label="Architecture diagram: patient intake form leads to XGBoost risk prediction, which feeds ChromaDB retrieval and personalization flags in parallel, both combining into the Hugging Face LLM, producing the cited personalized answer">
         <defs>
