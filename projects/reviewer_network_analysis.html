@@ -173,10 +173,36 @@
   .to-top:hover { transform: translateY(-2px); }
 
   @media (max-width: 640px) {
+    .wrap { padding: 40px 18px 72px; }
     h1.title { font-size: 30px; }
     .quality-head { display: none !important; }
     .quality-row { grid-template-columns: 1fr !important; row-gap: 4px; font-size: 12.5px; }
     .field-grid { grid-template-columns: 1fr !important; }
+    /* auto-fit minmax() floors (300px hero / 220px secondary) can force a
+       track wider than very narrow phones; pin to one column instead of
+       letting the minimum cause horizontal overflow. One chart-row hero
+       also pins its own fixed 2-column ratio via inline style, which needs
+       its own selector to override. */
+    .chart-row.hero { grid-template-columns: 1fr !important; }
+    .chart-row.secondary { grid-template-columns: 1fr !important; }
+    div[style*="grid-template-columns: 1.1fr 1fr"] { grid-template-columns: 1fr !important; }
+
+    /* A few SVG charts are wide (viewBox 680–900) and sit directly in a
+       .chart-card with no .dg-wrap scroll wrapper, so width:100% squashes
+       their data-label text illegibly small on a phone. Give them a
+       scrollable floor instead, matching the .dg-wrap diagrams elsewhere. */
+    .chart-card { overflow-x: auto; }
+    .chart-card > svg[viewBox="0 0 680 300"] { min-width: 560px; }
+    .chart-card > svg[viewBox="0 0 420 460"] { min-width: 380px; }
+    .chart-card > svg[viewBox="0 0 900 190"] { min-width: 640px; }
+  }
+
+  @media (max-width: 420px) {
+    .wrap { padding: 32px 14px 56px; }
+    h1.title { font-size: 26px; }
+    h2.section-title { font-size: 22px; }
+    .bar-label { width: 84px; font-size: 11.5px; }
+    .bar-val { width: 60px; font-size: 11.5px; }
   }
 </style>
 </head>

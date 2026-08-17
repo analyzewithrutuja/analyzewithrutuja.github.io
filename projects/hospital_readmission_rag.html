@@ -303,7 +303,7 @@
   /* ============ RESPONSIVE — the actual fix ============ */
   @media (max-width: 640px) {
     h1.title { font-size: 30px; }
-    .wrap { padding-top: var(--s5); }
+    .wrap { padding-top: var(--s5); padding-left: 16px; padding-right: 16px; }
     .source-grid { grid-template-columns: 1fr; }
     .app-frame { min-height: 600px; }
     .resize-hint-desktop { display: none; }
@@ -329,6 +329,25 @@
       color: var(--gray-text-soft);
       margin-top: 4px;
     }
+
+    /* The three architecture/pipeline SVGs (viewBox 900 wide) render their
+       text illegibly small once width:100% squashes them into a ~330px
+       phone screen. Give them a scrollable floor instead of letting them
+       shrink, same fix already used for the .dg-wrap diagrams elsewhere
+       on the site. */
+    .chart-card { overflow-x: auto; }
+    .chart-card svg[viewBox$=" 900 500"],
+    .chart-card svg[viewBox$=" 900 80"],
+    .chart-card svg[viewBox$=" 900 540"] {
+      min-width: 640px;
+      width: 640px;
+    }
+  }
+
+  @media (max-width: 420px) {
+    .wrap { padding-left: 14px; padding-right: 14px; }
+    h1.title { font-size: 26px; }
+    h2.section-title { font-size: 22px; }
   }
 </style>
 </head>

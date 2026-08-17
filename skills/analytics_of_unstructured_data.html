@@ -52,7 +52,25 @@ body{background:var(--bg);color:var(--text);font-family:var(--sans);font-size:15
 
 footer{border-top:1px solid var(--border);padding:28px 5%;display:flex;align-items:center;justify-content:space-between;font-family:var(--mono);font-size:.7rem;color:var(--dim);max-width:900px;margin:0 auto}
 footer a{color:var(--pk);text-decoration:none}
-@media(max-width:600px){.grid{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:600px){
+  .grid{grid-template-columns:repeat(2,1fr)}
+  .card{min-width:0}
+  .card-tag,.card-label{overflow-wrap:break-word;word-break:break-word;white-space:normal;max-width:100%}
+  .sec-desc{padding-left:24px}
+  .tag-box{padding:16px}
+  a[href="../index.html#features"]{padding:8px 0;display:inline-block}
+  .tree-panel{overflow-x:auto;-webkit-overflow-scrolling:touch}
+  .tree-panel svg{width:auto;min-width:720px}
+  .tree-panel::-webkit-scrollbar{height:6px}
+  .tree-panel::-webkit-scrollbar-thumb{background:rgba(232,24,122,.5);border-radius:3px}
+  .tree-panel::-webkit-scrollbar-track{background:rgba(255,255,255,.08)}
+}
+@media(max-width:420px){
+  .hero{padding:20px 6% 24px}
+  .page{padding:24px 6% 60px}
+  .sec-desc{padding-left:0}
+  .formula{padding:10px 12px;font-size:.7rem}
+}
 </style>
 </head>
 <body>

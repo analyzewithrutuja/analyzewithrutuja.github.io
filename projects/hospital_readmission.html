@@ -326,6 +326,7 @@
   }
 
   @media (max-width: 640px) {
+    .wrap { padding: 40px 18px 72px; }
     h1.title { font-size: 30px; }
     /* !important is required here because many quality-row/quality-head
        instances set their own column count via inline style, which would
@@ -338,6 +339,25 @@
       font-size: 12.5px;
     }
     .field-grid { grid-template-columns: 1fr !important; }
+    /* A few small definition-style grids and one 3-column walkthrough table
+       are built inline (no shared class), so they need their own selector
+       here rather than piggybacking on .quality-row above. */
+    div[style*="1.4fr 1fr 1fr;"] { grid-template-columns: 1fr !important; row-gap: 3px !important; }
+    div[style*="100px 1fr 1fr"] { grid-template-columns: 68px 1fr 1fr !important; gap: 6px !important; }
+    .ack-seal-row { gap: 12px; }
+    .ack-seal { width: 46px; height: 46px; }
+  }
+
+  @media (max-width: 420px) {
+    .wrap { padding: 32px 14px 56px; }
+    h1.title { font-size: 26px; }
+    h2.section-title { font-size: 22px; }
+    div[style*="100px 1fr 1fr"] { grid-template-columns: 1fr !important; }
+    /* auto-fit minmax() floors (300px hero / 220px secondary) can force a
+       track wider than very narrow phones; pin to one column instead of
+       letting the minimum cause horizontal overflow. */
+    .chart-row.hero { grid-template-columns: 1fr !important; }
+    .chart-row.secondary { grid-template-columns: 1fr !important; }
   }
   /* Scroll-cue: fades the right edge of any horizontally-scrollable diagram
      so it's visible there's more content to scroll to, on any screen width

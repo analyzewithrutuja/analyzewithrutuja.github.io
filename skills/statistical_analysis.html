@@ -58,7 +58,21 @@ nav{position:sticky;top:0;z-index:100;background:rgba(248,247,245,.95);backdrop-
 .pill{font-family:var(--mono);font-size:.63rem;color:var(--muted);background:var(--bg3);border:1px solid var(--border);border-radius:5px;padding:2px 7px}
 footer{border-top:1px solid var(--border);padding:28px 5%;display:flex;align-items:center;justify-content:space-between;font-family:var(--mono);font-size:.7rem;color:var(--dim)}
 footer span{color:var(--pk)}
-@media(max-width:600px){.grid{grid-template-columns:repeat(2,1fr)}.nav-links{gap:14px}.hstat{min-width:80px}}
+@media(max-width:600px){
+  .grid{grid-template-columns:repeat(2,1fr)}
+  .nav-links{gap:14px}
+  .hstat{min-width:80px}
+  .card{min-width:0}
+  .card-tag,.card-label{overflow-wrap:break-word;word-break:break-word;white-space:normal;max-width:100%}
+  .sec-desc{padding-left:24px}
+  a[href="../index.html#features"]{padding:8px 0;display:inline-block}
+}
+@media(max-width:420px){
+  .hero{padding:28px 6% 24px}
+  .page{padding:24px 6% 32px}
+  .sec-desc{padding-left:0}
+  .formula{padding:10px 12px;font-size:.7rem}
+}
 </style>
 </head>
 <body>

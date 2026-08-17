@@ -34,7 +34,19 @@ body{background:var(--bg);color:var(--text);font-family:var(--sans);font-size:15
 .formula{background:var(--bg3);border:1px solid var(--border);border-left:3px solid var(--pk);border-radius:0 var(--r) var(--r) 0;padding:12px 16px;font-family:var(--mono);font-size:.75rem;color:#555;margin:12px 0;line-height:2}
 .formula .c{color:var(--dim)}
 .formula .k{color:var(--pk)}
-@media(max-width:520px){.grid{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:520px){
+  .grid{grid-template-columns:repeat(2,1fr)}
+  .card{min-width:0}
+  .card-tag,.card-label{overflow-wrap:break-word;word-break:break-word;white-space:normal;max-width:100%}
+  .sec-desc{padding-left:24px}
+  a[href="../index.html#features"]{padding:8px 0;display:inline-block}
+}
+@media(max-width:420px){
+  .hero{padding:28px 6% 8px}
+  .page{padding:24px 6% 32px}
+  .sec-desc{padding-left:0}
+  .formula{padding:10px 12px;font-size:.7rem}
+}
 </style>
 </head>
 <body>
