@@ -192,6 +192,15 @@ h1.hero-heading .pink{color:var(--pink);font-weight:900}
 }
 .section-title span{color:var(--pink)}
 .section-sub{font-size:.85rem;color:var(--muted);line-height:1.75;max-width:500px;margin-bottom:50px}
+.resume-download-btn{
+  display:inline-flex;align-items:center;gap:8px;
+  background:var(--pink-grad);color:white;text-decoration:none;
+  padding:10px 22px;border-radius:5px;
+  font-family:var(--font);font-size:.75rem;font-weight:700;
+  letter-spacing:.06em;text-transform:uppercase;
+  margin-bottom:32px;transition:opacity .2s,transform .2s;
+}
+.resume-download-btn:hover{opacity:.9;transform:translateY(-1px)}
 
 /* -- WHAT I DO -- */
 .services-grid{
@@ -795,6 +804,10 @@ footer .pink{color:var(--pink)}
 <section id="resume" class="section">
   <div class="section-eyebrow">p < 0.05 (I'm statistically significant)</div>
   <h2 class="section-title">My <span>Resume</span></h2>
+  <a href="Rutuja_Patel_Resume.pdf" download class="resume-download-btn">
+    <svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M12 3v12m0 0l-4-4m4 4l4-4M4 19h16" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    Download Resume
+  </a>
   <!--
   <div class="resume-tabs">
     <button class="resume-tab active" onclick="switchTab('education',this)">Education & Experience</button>
@@ -842,7 +855,8 @@ footer .pink{color:var(--pink)}
             <div class="timeline-title">ERP Data Assistant</div>
             <div class="timeline-org">Hexaplast Industries</div>
             <p class="timeline-desc">
-              • Worked as a junior data-handling assistant, structuring both unstructured and structured data — office documents, sales contracts, spreadsheets, and real-time order data — across departments to support ERP system implementation and reporting.
+              • Worked as a junior data-handling assistant, structuring both unstructured and structured data — office documents, sales contracts, spreadsheets, and real-time order data — across departments to support ERP system implementation and reporting.<br>
+              • Used SQL, Python, and Excel to manage, clean, and structure this data efficiently.
             </p>
           </div>
 
