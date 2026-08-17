@@ -257,6 +257,10 @@
   .ack-sub { font-size: 12.5px; color: var(--gray-text); margin-top: 4px; }
 
   .chart-card { background: var(--card-bg); border-radius: 18px; padding: 20px 22px; margin-bottom: var(--s4); }
+  /* Explicit mobile-only "swipe" hint for the horizontally-scrollable
+     architecture SVGs below: on a real phone the native scrollbar is often
+     invisible until touched, so a fade alone isn't enough of a cue. */
+  .dg-hint { display: none; }
 
   .code-block {
     position: relative;
@@ -335,12 +339,26 @@
        phone screen. Give them a scrollable floor instead of letting them
        shrink, same fix already used for the .dg-wrap diagrams elsewhere
        on the site. */
-    .chart-card { overflow-x: auto; }
+    .chart-card { overflow-x: auto; position: relative; }
     .chart-card svg[viewBox$=" 900 500"],
     .chart-card svg[viewBox$=" 900 80"],
     .chart-card svg[viewBox$=" 900 540"] {
       min-width: 640px;
       width: 640px;
+    }
+    /* Fade cue on the right edge signals more content when scrollable,
+       same treatment as the .dg-wrap diagrams elsewhere on the site. */
+    .chart-card::after {
+      content: '';
+      position: absolute; top: 0; right: 0; bottom: 8px; width: 36px;
+      background: linear-gradient(to right, transparent, rgba(244,244,243,0.98) 70%);
+      pointer-events: none;
+    }
+    .dg-hint {
+      display: inline-flex; align-items: center; gap: 6px;
+      font-size: 11.5px; font-weight: 600; color: var(--pink);
+      background: var(--pink-tint); border-radius: 999px;
+      padding: 5px 12px; margin: 0 0 8px; width: fit-content;
     }
   }
 
@@ -585,6 +603,7 @@
     <h2 class="section-title">How the pieces connect</h2>
     <p class="section-desc">One track builds the knowledge base, another assesses the patient, running in parallel the whole way. Both converge into a single prompt for the LLM.</p>
 
+    <p class="dg-hint">↔ Swipe to see full diagram</p>
     <div class="chart-card">
       <svg width="100%" viewBox="0 0 900 500" role="img" aria-label="Pipeline diagram: document track and patient track converge into a combined prompt sent to the LLM, producing the final answer">
         <defs>
@@ -800,6 +819,7 @@ chunk_size = <span class="cm">350 words</span>   overlap = <span class="cm">60 w
     <p class="section-desc">The XGBoost readmission model's own output becomes retrieval context, not a separate, disconnected number sitting next to the chatbot.</p>
 
     <p class="chart-title">The flow</p>
+    <p class="dg-hint">↔ Swipe to see full diagram</p>
     <div class="chart-card">
       <svg width="100%" viewBox="0 0 900 80" role="img" aria-label="Flow diagram: real patient row goes to XGBoost which predicts risk score, then rule-based flags are applied, then injected into the LLM prompt">
         <defs>
@@ -930,6 +950,7 @@ df = df.dropna(subset=[<span class="cm">'diag_1', 'diag_2', 'diag_3'</span>])</d
 
     <p class="chart-title">Architecture <span style="font-weight:500; color:var(--gray-text); font-size:var(--fs-small);">(deployment view)</span></p>
     <p class="chart-sub">Same pipeline as the conceptual diagram in Section 04, now with implementation-level detail: the Streamlit intake form and the actual components behind each stage.</p>
+    <p class="dg-hint">↔ Swipe to see full diagram</p>
     <div class="chart-card">
       <svg width="100%" viewBox="0 0 900 540" role="img" aria-label="Architecture diagram: patient intake form leads to XGBoost risk prediction, which feeds ChromaDB retrieval and personalization flags in parallel, both combining into the Hugging Face LLM, producing the cited personalized answer">
         <defs>

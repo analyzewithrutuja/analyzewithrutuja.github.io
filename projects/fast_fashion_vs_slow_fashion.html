@@ -116,8 +116,20 @@
   .c-blue   { background: #E8F0FE; color: #1A4480; }
 
   .dg-wrap { overflow-x: auto; margin-bottom: 8px; position: relative; }
-  .dg-wrap::after { content: ''; position: absolute; top: 0; right: 0; bottom: 8px; width: 28px; background: linear-gradient(to right, transparent, rgba(255,255,255,0.95)); pointer-events: none; }
+  .dg-wrap::after { content: ''; position: absolute; top: 0; right: 0; bottom: 8px; width: 36px; background: linear-gradient(to right, transparent, rgba(255,255,255,0.98) 70%); pointer-events: none; }
   .dg-wrap svg { min-width: 600px; }
+  /* Explicit mobile-only "swipe" hint: on a real phone the native scrollbar
+     is often invisible until touched, so the fade alone isn't enough to
+     signal these hand-built diagrams scroll horizontally. */
+  .dg-hint { display: none; }
+  @media (max-width: 640px) {
+    .dg-hint {
+      display: inline-flex; align-items: center; gap: 6px;
+      font-size: 11.5px; font-weight: 600; color: var(--pink);
+      background: var(--pink-tint); border-radius: 999px;
+      padding: 5px 12px; margin: 0 0 8px; width: fit-content;
+    }
+  }
   .dg-line { stroke: var(--gray-text); stroke-width: 0.75; opacity: 0.6; }
   .dg-arrow { stroke: var(--gray-text); fill: none; stroke-width: 1; stroke-linejoin: round; stroke-linecap: round; }
   .dg-lane-label { font-family: var(--body); font-size: 12.5px; fill: var(--gray-text); }
@@ -341,6 +353,7 @@
       the label describes a store's overall business model, not every single thing it sells. Every business shown here
       already passed Step 1, so a "no" all the way down still lands on Fast Fashion, never an unclassified dead end.</p>
 
+      <p class="dg-hint">↔ Swipe to see full diagram</p>
       <div class="dg-wrap">
 <svg viewBox="0 0 680 330" role="img" style="width:100%;" aria-label="Decision flow classifying each business into Fast Fashion, Slow Fashion, or Mixed Retail based on its Yelp categories">
 <desc>A business's categories string is checked in order: if it contains Department Stores, it is classified Mixed Retail. Otherwise if it contains Bespoke Clothing, Bridal, or Formal Wear, it is classified Slow Fashion. Otherwise if it contains Women's, Men's, or Children's Clothing, it is classified Fast Fashion.</desc>
@@ -515,6 +528,7 @@
 
       <p class="chart-title" style="margin:20px 0 2px;">The pipeline</p>
       <p class="chart-sub" style="margin-bottom:10px;">Five steps, no training involved: the same fixed dictionary and rules run on every review.</p>
+      <p class="dg-hint">↔ Swipe to see full diagram</p>
       <div class="dg-wrap">
 <svg viewBox="0 0 700 140" role="img" style="width:100%;" aria-label="VADER pipeline: review text goes through lexicon lookup, then rule adjustments for negation and degree, then normalization into a compound score, producing a positive, neutral, or negative label">
 <desc>Review text is looked up word-by-word against a ~7,500-word valence lexicon. Grammar-aware rules then adjust the scores for negation, degree modifiers, and contrastive conjunctions. The adjusted scores are summed and normalized into a compound score from -1 to 1, which is thresholded into a positive, neutral, or negative label.</desc>
@@ -612,6 +626,7 @@
 
       <p class="chart-title" style="margin:20px 0 2px;">The pipeline</p>
       <p class="chart-sub" style="margin-bottom:10px;">Same five-step shape as VADER's pipeline above, but every step runs through the network: no hand-written rules anywhere in this chain.</p>
+      <p class="dg-hint">↔ Swipe to see full diagram</p>
       <div class="dg-wrap">
 <svg viewBox="0 0 700 140" role="img" style="width:100%;" aria-label="BERT pipeline: review text is tokenized, passed through transformer layers with attention, then a classification head produces a label and confidence score">
 <desc>Review text is split into WordPiece tokens, truncated to 256 tokens. The tokens pass through six transformer layers where each word's meaning is computed using the context of every other word in the sentence. A classification head then outputs a positive and negative score, converted by softmax into a label and confidence, which this project turns into a signed compound score for comparison with VADER.</desc>
@@ -726,6 +741,7 @@
 
       <p class="chart-title" style="margin:20px 0 2px;">The pipeline</p>
       <p class="chart-sub" style="margin-bottom:10px;">Run once across all 65,729 reviews and tips, then compared per fashion_type group.</p>
+      <p class="dg-hint">↔ Swipe to see full diagram</p>
       <div class="dg-wrap">
 <svg viewBox="0 0 700 140" role="img" style="width:100%;" aria-label="TF-IDF pipeline: reviews are counted for term frequency, weighted by inverse document frequency, then ranked to find each group's distinctive terms">
 <desc>All reviews are tokenized into a shared vocabulary. Each word's raw frequency within a group is counted, then multiplied by an inverse-document-frequency weight that suppresses words common across all groups. The resulting scores are ranked per group to surface the most distinctive terms.</desc>

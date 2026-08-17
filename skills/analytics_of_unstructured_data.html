@@ -42,6 +42,7 @@ body{background:var(--bg);color:var(--text);font-family:var(--sans);font-size:15
 
 .tree-panel{background:var(--navy);border-radius:var(--rl);padding:28px clamp(8px,3vw,32px) 18px;margin:20px 0}
 .tree-panel svg{display:block;width:100%;height:auto}
+.tree-swipe-hint{display:none}
 .tree-caption{text-align:center;font-size:.75rem;color:rgba(255,255,255,.45);font-family:var(--mono);margin-top:8px}
 .tree-legend{display:flex;flex-wrap:wrap;justify-content:center;gap:20px;padding:16px 6px 4px;font-size:.7rem;color:rgba(255,255,255,.5);font-family:var(--mono)}
 .tree-legend span{display:inline-flex;align-items:center;gap:6px}
@@ -64,6 +65,7 @@ footer a{color:var(--pk);text-decoration:none}
   .tree-panel::-webkit-scrollbar{height:6px}
   .tree-panel::-webkit-scrollbar-thumb{background:rgba(232,24,122,.5);border-radius:3px}
   .tree-panel::-webkit-scrollbar-track{background:rgba(255,255,255,.08)}
+  .tree-swipe-hint{display:flex;align-items:center;justify-content:center;gap:6px;width:max-content;max-width:100%;margin:0 0 14px;padding:5px 13px;background:rgba(232,24,122,.16);border:1px solid rgba(232,24,122,.4);border-radius:20px;color:#f492b8;font-family:var(--mono);font-size:.68rem;letter-spacing:.02em}
 }
 @media(max-width:420px){
   .hero{padding:20px 6% 24px}
@@ -91,6 +93,7 @@ footer a{color:var(--pk);text-decoration:none}
   <p class="sec-desc">Every level below builds on the one beneath it: from raw text cleanup to transformer-based language models, feeding into Machine Learning and Deep Learning.</p>
 
   <div class="tree-panel">
+    <div class="tree-swipe-hint">&#8596; swipe to see full diagram</div>
     <svg viewBox="0 0 1000 780" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="A stepped pyramid roadmap of NLP, from Level 1 text preprocessing at the base, through vectorization, embeddings, ANN fundamentals, sequence models, up to Transformers and BERT at the top, feeding into Machine Learning and Deep Learning">
       <g font-family="JetBrains Mono, monospace" font-size="13" fill="rgba(255,255,255,.55)">
         <line x1="700" y1="40" x2="760" y2="40" stroke="rgba(255,255,255,.35)" stroke-width="1.5"></line>

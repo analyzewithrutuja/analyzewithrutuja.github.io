@@ -365,9 +365,21 @@
   .dg-wrap { position: relative; }
   .dg-wrap::after {
     content: '';
-    position: absolute; top: 0; right: 0; bottom: 8px; width: 28px;
-    background: linear-gradient(to right, transparent, rgba(255,255,255,0.95));
+    position: absolute; top: 0; right: 0; bottom: 8px; width: 36px;
+    background: linear-gradient(to right, transparent, rgba(255,255,255,0.98) 70%);
     pointer-events: none;
+  }
+  /* Explicit mobile-only "swipe" hint: on a real phone the native scrollbar
+     is often invisible until touched, so the fade alone isn't enough to
+     signal these hand-built diagrams scroll horizontally. */
+  .dg-hint { display: none; }
+  @media (max-width: 640px) {
+    .dg-hint {
+      display: inline-flex; align-items: center; gap: 6px;
+      font-size: 11.5px; font-weight: 600; color: var(--pink);
+      background: var(--pink-tint); border-radius: 999px;
+      padding: 5px 12px; margin: 0 0 8px; width: fit-content;
+    }
   }
   .kpi-strip {
     display: grid;
@@ -484,6 +496,7 @@
     <h2 class="section-title">The manual discharge process</h2>
     <p class="section-desc">No model is involved yet in what follows. This is how a diabetic patient's hospital stay actually flows today: entirely on clinical judgment, with no automated risk score anywhere in the loop.</p>
 
+    <p class="dg-hint">↔ Swipe to see full diagram</p>
     <div class="dg-wrap">
 <svg viewBox="0 0 680 850" role="img" style="width:100%;" aria-label="Process map of the manual, pre-data-science hospital discharge workflow">
 <desc>A patient is admitted, registered by type, assessed by a physician who orders tests and medications, monitored, and checked for stability in a loop back to reassessment if needed. Once stable, a manual discharge decision with no automated risk score routes to five outcome pills in the patient lane: home, home with care, skilled nursing facility, other facility, and hospice or expired.</desc>
@@ -1074,6 +1087,7 @@
       </div>
       <p style="font-size: 13.5px; margin:0 0 14px;"><strong>On this dataset:</strong> <code>class_weight='balanced'</code> (only 11.2% of patients are readmitted, so the minority class gets extra weight) · same 189 features as the other two models.</p>
 
+      <p class="dg-hint">↔ Swipe to see full diagram</p>
       <div class="dg-wrap">
 <svg viewBox="0 0 680 380" role="img" style="width:100%;" aria-label="Logistic regression S-curve fit to patient readmission data">
 <desc>Scattered dots represent patients ordered by combined risk score, colored green for not readmitted and red for readmitted, with an S-shaped curve fitted through them, a dashed threshold line at 0.5, an inflection point marker, and one example patient annotated.</desc>
@@ -1144,6 +1158,7 @@
       <p style="font-size: 13.5px; margin:0 0 10px;"><strong>Why chosen for this data:</strong> real patients don't follow straight lines, so risk from age and prior visits together can compound beyond what Logistic Regression's fixed weights can capture. Random Forest catches these interactions, and averaging 200 trees resists overfitting to noise.</p>
       <p style="font-size: 13.5px; margin:0 0 14px;"><strong>On this dataset:</strong> <code>n_estimators=200</code> (number of trees) · <code>max_depth=10</code> (caps how deep each tree can split, preventing memorization) · <code>class_weight='balanced'</code>.</p>
 
+      <p class="dg-hint">↔ Swipe to see full diagram</p>
       <div class="dg-wrap">
 <svg viewBox="0 0 680 340" role="img" style="width:100%;" aria-label="Random Forest splitting data into subsets and voting">
 <desc>All 100,244 patient records split into random subsets, each feeding one of 200 independent decision trees limited to depth 10, voting together for a final majority decision.</desc>
@@ -1214,6 +1229,7 @@
       <p style="font-size: 13.5px; margin:0 0 10px;"><strong>Why chosen for this data:</strong> unlike Random Forest's independent trees, XGBoost directly targets the patients the previous tree got wrong. It's the standard for tabular healthcare data and consistently the strongest performer here.</p>
       <p style="font-size: 13.5px; margin:0 0 14px;"><strong>On this dataset:</strong> <code>scale_pos_weight</code> (XGBoost's equivalent of class balancing) · same 189 features.</p>
 
+      <p class="dg-hint">↔ Swipe to see full diagram</p>
       <div class="dg-wrap">
 <svg viewBox="0 0 680 370" role="img" style="width:100%;" aria-label="XGBoost residual error on readmit_30 shrinking across trees to a final decision">
 <desc>Predicting readmit_30, whether a patient returns within 30 days. For a patient whose actual value is 1, tree 1 predicts 0.30, error 0.70. Tree 2 corrects to 0.50, error 0.50. Tree 3 corrects to 0.68, error 0.32. The final probability crosses the 0.5 threshold, producing a high risk decision that matches the actual outcome.</desc>
@@ -1310,6 +1326,7 @@
     <p class="chart-title" style="margin-bottom:2px;">Are these numbers stable, or just a lucky split?</p>
     <p class="chart-sub" style="margin-bottom:14px;">5-fold cross-validation, run separately to check: full methodology in the Limitations section below.</p>
 
+    <p class="dg-hint">↔ Swipe to see full diagram</p>
     <div class="dg-wrap" style="margin-bottom:16px;">
 <svg viewBox="0 0 680 260" role="img" style="width:100%;" aria-label="Range plot comparing single train test split AUC against 5 fold cross validated AUC for all three models, showing they land within 0.005 of each other">
 <desc>Each model shows a diamond marker for its single-split AUC and a circle with error bar for its cross-validated AUC mean plus or minus one standard deviation, all closely overlapping.</desc>
