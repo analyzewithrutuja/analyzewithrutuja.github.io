@@ -287,14 +287,16 @@
   }
 
   .ack-seal-row {
-    display: flex; align-items: center; gap: 16px;
-    margin: 24px 0 36px; padding-bottom: 24px; border-bottom: 1px solid var(--border);
+    display: flex; align-items: flex-start; gap: 16px;
+    margin: 24px 0 36px; padding: 22px 24px; border-radius: 16px;
+    background: #FAFAF8;
   }
   .ack-seal {
     width: 58px; height: 58px; border-radius: 50%; border: 2px solid var(--pink);
     display: flex; align-items: center; justify-content: center; flex-shrink: 0;
     background: #fff; position: relative;
   }
+  .ack-body { flex: 1; min-width: 0; }
   .ack-seal::before {
     content: ''; position: absolute; inset: 5px; border-radius: 50%;
     border: 1px dashed var(--pink-tint-strong, #f2a9c7);
@@ -310,13 +312,18 @@
   @media (prefers-reduced-motion: reduce) {
     .ack-seal::before, .ack-seal::after { animation: none; }
   }
+  .ack-top-row { display: flex; justify-content: space-between; align-items: baseline; gap: 12px; margin-bottom: 6px; }
   .ack-eyebrow {
     font-family: var(--heading); font-size: 10.5px; font-weight: 700; letter-spacing: .12em;
-    text-transform: uppercase; color: var(--pink); margin-bottom: 4px;
+    text-transform: uppercase; color: var(--pink);
   }
   .ack-main { font-size: 14px; font-weight: 600; color: var(--black); line-height: 1.45; max-width: 460px; }
-  .ack-sub { font-size: 12.5px; color: var(--gray-text); margin-top: 4px; }
-  .ack-sub .ack-dot { margin: 0 6px; color: var(--border); }
+  .ack-date { font-size: 12px; color: var(--gray-text); white-space: nowrap; flex-shrink: 0; }
+  .ack-mentors { display: flex; flex-wrap: wrap; gap: 10px; margin: 12px 0 4px; }
+  .ack-mentor-chip { background: #fff; border-radius: 10px; padding: 8px 14px; }
+  .ack-mentor-name { font-size: 12.5px; font-weight: 700; color: var(--black); }
+  .ack-mentor-title { display: block; font-size: 11px; color: var(--gray-text); margin-top: 2px; }
+  @media (max-width: 480px) { .ack-seal-row { flex-wrap: wrap; } }
 
   .next-badge {
     display: inline-flex; align-items: center; gap: 6px;
@@ -467,10 +474,22 @@
     <div class="ack-seal">
       <svg width="26" height="26" viewBox="0 0 24 24" fill="none"><path d="M12 3L2 8l10 5 8-4v6" stroke="#e8187a" stroke-width="1.6" stroke-linejoin="round"/><path d="M6 10.5V16c0 1.5 2.5 3 6 3s6-1.5 6-3v-5.5" stroke="#e8187a" stroke-width="1.6" stroke-linejoin="round"/></svg>
     </div>
-    <div>
-      <div class="ack-eyebrow">Acknowledgment</div>
-      <div class="ack-main">This project was completed through the Unit for Data Science and Analytics, ASU Library. Special thanks to Dr. Namig Abbasov and Dr. Kerri Rittschof for their mentorship, guidance, and support throughout the project.</div>
-      <div class="ack-sub">Dr. Namig Abbasov, Digital Humanities Analyst<span class="ack-dot">·</span>Dr. Kerri Rittschof, Director<span class="ack-dot">·</span>Aug 2025 – Dec 2025</div>
+    <div class="ack-body">
+      <div class="ack-top-row">
+        <span class="ack-eyebrow">Acknowledgment</span>
+        <span class="ack-date">Aug 2025 – Dec 2025</span>
+      </div>
+      <div class="ack-main">This project was completed through the Unit for Data Science and Analytics, ASU Library. Special thanks for the mentorship, guidance, and support of:</div>
+      <div class="ack-mentors">
+        <div class="ack-mentor-chip">
+          <span class="ack-mentor-name">Dr. Namig Abbasov</span>
+          <span class="ack-mentor-title">Digital Humanities Analyst, Unit for Data Science &amp; Analytics</span>
+        </div>
+        <div class="ack-mentor-chip">
+          <span class="ack-mentor-name">Dr. Kerri Rittschof</span>
+          <span class="ack-mentor-title">Director, Unit for Data Science &amp; Analytics</span>
+        </div>
+      </div>
     </div>
   </div>
 
