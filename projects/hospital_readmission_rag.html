@@ -267,6 +267,7 @@
     background: var(--black); color: #E8E6DD; font-family: var(--mono);
     font-size: var(--fs-small); line-height: 1.6; padding: 16px 20px; border-radius: 12px;
     overflow-x: auto; margin: 0 0 var(--s2); white-space: pre;
+    -webkit-overflow-scrolling: touch;
     /* Fade cue on the right edge signals more content when scrollable on mobile */
     background-image: linear-gradient(var(--black), var(--black)),
       linear-gradient(to right, transparent, var(--black) 90%);
@@ -339,7 +340,7 @@
        phone screen. Give them a scrollable floor instead of letting them
        shrink, same fix already used for the .dg-wrap diagrams elsewhere
        on the site. */
-    .chart-card { overflow-x: auto; position: relative; }
+    .chart-card { overflow-x: auto; position: relative; -webkit-overflow-scrolling: touch; }
     .chart-card svg[viewBox$=" 900 500"],
     .chart-card svg[viewBox$=" 900 80"],
     .chart-card svg[viewBox$=" 900 540"] {

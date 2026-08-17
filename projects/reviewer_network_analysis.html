@@ -79,7 +79,7 @@
   .c-red    { background: #FCEBEB; color: #791F1F; }
   .c-blue   { background: #E8F0FE; color: #1A4480; }
 
-  .dg-wrap { overflow-x: auto; margin-bottom: 8px; position: relative; }
+  .dg-wrap { overflow-x: auto; margin-bottom: 8px; position: relative; -webkit-overflow-scrolling: touch; }
   .dg-wrap::after { content: ''; position: absolute; top: 0; right: 0; bottom: 8px; width: 36px; background: linear-gradient(to right, transparent, rgba(255,255,255,0.98) 70%); pointer-events: none; }
   .dg-wrap svg { min-width: 600px; }
   /* Explicit mobile-only "swipe" hint: on a real phone the native scrollbar
@@ -203,7 +203,7 @@
        .chart-card with no .dg-wrap scroll wrapper, so width:100% squashes
        their data-label text illegibly small on a phone. Give them a
        scrollable floor instead, matching the .dg-wrap diagrams elsewhere. */
-    .chart-card { overflow-x: auto; }
+    .chart-card { overflow-x: auto; -webkit-overflow-scrolling: touch; }
     .chart-card > svg[viewBox="0 0 680 300"] { min-width: 560px; }
     .chart-card > svg[viewBox="0 0 420 460"] { min-width: 380px; }
     .chart-card > svg[viewBox="0 0 900 190"] { min-width: 640px; }
