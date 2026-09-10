@@ -1,0 +1,7 @@
+=== Promotion Impact & Causal Analysis ETL run ===
+[Sales] raw_rows=1017209
+[Sales] closed_store_rows_excluded=172817 open_but_zero_sales_anomalies_flagged=54 final_rows=844392
+[Store] raw_rows=1115 competition_distance_missing_imputed=3 competition_open_date_missing_left_null=354 promo2_fields_null_by_design(Promo2=0)=544
+[Dim_Date] 942 calendar days built (2013-01-01 to 2015-07-31)
+[Load] Fact_Daily_Sales: 844,392 rows | Dim_Date: 942 rows | Dim_Store: 1,115 rows
+[Load] SQLite warehouse written to C:\Users\rutuj\Documents\analyzewithrutuja.github.io\promotion-impact-causal-analysis\output\promotion_dw.db

@@ -1,0 +1,4 @@
+# Large data artifacts kept local-only to avoid bloating the repo (regenerate via each project's scripts)
+promotion-impact-causal-analysis/data/raw/train.csv
+promotion-impact-causal-analysis/data/processed/
+promotion-impact-causal-analysis/output/promotion_dw.db
