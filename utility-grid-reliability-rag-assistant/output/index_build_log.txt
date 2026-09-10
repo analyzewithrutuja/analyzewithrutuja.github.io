@@ -1,0 +1,8 @@
+=== Utility Grid Reliability RAG — index build ===
+[DOE_A_More_Resilient_Grid.pdf] 9 pages with extractable text -> 42 chunks
+[DOE_Economic_Benefits_Grid_Resilience.pdf] 28 pages with extractable text -> 84 chunks
+[DOE_Grid_Modernization_Strategy_2024.pdf] 40 pages with extractable text -> 179 chunks
+[FERC_Electric_Reliability_Primer.pdf] 75 pages with extractable text -> 273 chunks
+[FERC_Summer_Assessment_2025.pdf] 49 pages with extractable text -> 120 chunks
+[NERC_Reliability_Principles.pdf] 1 pages with extractable text -> 3 chunks
+[Embed] 701 chunks across 6 documents -> 384-dim vectors (all-MiniLM-L6-v2), FAISS IndexFlatIP

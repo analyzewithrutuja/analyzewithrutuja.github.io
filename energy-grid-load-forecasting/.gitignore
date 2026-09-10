@@ -1,0 +1,5 @@
+# Generated warehouse + extracts (regenerate via scripts/etl_pipeline.py) —
+# too large for GitHub's 100MB file limit and fully reproducible from data/raw/
+output/energy_dw.db
+output/tableau_extract_demand.csv
+data/processed/fact_hourly_demand_cleaned.csv

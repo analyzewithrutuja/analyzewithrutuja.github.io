@@ -1,0 +1,16 @@
+=== Energy Grid Load Forecasting ETL run ===
+Legacy/superseded feeds excluded: ['NI', 'PJM_Load']
+  NI (Northern Illinois) reporting stops 2011-01-01, the exact date COMED begins — PJM re-labeled this balancing area rather than the feed actually ending. PJM_Load stops 2002-01-01, the date PJME begins (PJMW follows in April 2002) — the same aggregate-to-split-zone transition. Keeping both would double-count demand already captured by their successor zones, so they are excluded from the fact table (raw files kept in data/raw/ for reference, not loaded).
+[AEP] raw_rows=121273 dst_duplicate_rows=8 dst_missing_hours_interpolated=27 zero_reading_artifacts_nulled=0 final_rows=121296
+[COMED] raw_rows=66497 dst_duplicate_rows=8 dst_missing_hours_interpolated=11 zero_reading_artifacts_nulled=0 final_rows=66504
+[DAYTON] raw_rows=121275 dst_duplicate_rows=8 dst_missing_hours_interpolated=25 zero_reading_artifacts_nulled=0 final_rows=121296
+[DEOK] raw_rows=57739 dst_duplicate_rows=8 dst_missing_hours_interpolated=9 zero_reading_artifacts_nulled=0 final_rows=57744
+[DOM] raw_rows=116189 dst_duplicate_rows=8 dst_missing_hours_interpolated=23 zero_reading_artifacts_nulled=0 final_rows=116208
+[DUQ] raw_rows=119068 dst_duplicate_rows=8 dst_missing_hours_interpolated=24 zero_reading_artifacts_nulled=0 final_rows=119088
+[EKPC] raw_rows=45334 dst_duplicate_rows=8 dst_missing_hours_interpolated=6 zero_reading_artifacts_nulled=0 final_rows=45336
+[FE] raw_rows=62874 dst_duplicate_rows=8 dst_missing_hours_interpolated=10 zero_reading_artifacts_nulled=1 final_rows=62880
+[PJME] raw_rows=145366 dst_duplicate_rows=8 dst_missing_hours_interpolated=30 zero_reading_artifacts_nulled=0 final_rows=145392
+[PJMW] raw_rows=143206 dst_duplicate_rows=8 dst_missing_hours_interpolated=30 zero_reading_artifacts_nulled=0 final_rows=143232
+[Dim_Date] 6059 calendar days built (2002-01-01 to 2018-08-03)
+[Load] Fact_Hourly_Demand: 998,976 rows | Dim_Date: 6,059 rows | Dim_Zone: 10 rows
+[Load] SQLite warehouse written to C:\Users\rutuj\Documents\analyzewithrutuja.github.io\energy-grid-load-forecasting\output\energy_dw.db
