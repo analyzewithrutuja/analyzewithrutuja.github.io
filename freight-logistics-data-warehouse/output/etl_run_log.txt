@@ -1,0 +1,26 @@
+ETL RUN SUMMARY
+========================================
+rows_extracted                               : 6880
+duplicate_bookings_removed                   : 5
+excel_epoch_date_artifacts_nulled            : 8
+customer_ids_with_inconsistent_casing_fixed  : 0
+vehicles_with_inconsistent_type_logging      : 46
+eta_derived_and_raw_flag_agree               : 6818
+eta_derived_and_raw_flag_disagree            : 18
+trips_missing_on_time_flag                   : 14
+rows_missing_distance                        : 712
+rows_missing_vehicle_type                    : 824
+rows_after_cleaning                          : 6875
+trips_using_booking_date_fallback_for_date_key: 2
+fact_row_count_before_key_merges             : 6875
+fact_row_count_after_key_merges              : 6875
+dim_date_rows                                : 629
+dim_supplier_rows                            : 321
+dim_customer_rows                            : 36
+dim_vehicle_rows                             : 2325
+dim_location_rows                            : 235
+dim_gps_provider_rows                        : 30
+fact_trips_rows                              : 6875
+fact_trips_unmatched_origin                  : 0
+fact_trips_unmatched_destination             : 0
+tableau_extract_rows                         : 6875
