@@ -2,7 +2,6 @@
   var WORKER_URL = 'https://rutuja-portfolio-chatbot.rutuja-patel.workers.dev';
 
   var QUICK_REPLIES = [
-    { label: 'Grill me 🔥', message: 'Ask yourself 5 tough interview questions (a mix of technical and behavioral) and answer all of them, one after another.' },
     { label: 'Match a job', jdPrompt: true },
     { label: 'Data Analyst fit', message: 'How do you specifically fit a Data Analyst role?' },
     { label: 'Data Scientist fit', message: 'How do you specifically fit a Data Scientist role?' },
@@ -364,7 +363,7 @@
 
   function sendMessage(text){
     text = (text || '').trim();
-    if (!text || state.sending) return;
+    if (!text || state.sending) return Promise.resolve();
 
     var input = document.getElementById('rp-chat-input');
     input.value = '';
@@ -373,7 +372,7 @@
     state.sending = true;
     showTyping();
 
-    fetch(WORKER_URL, {
+    return fetch(WORKER_URL, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ message: text, history: state.history.slice(-6) })
