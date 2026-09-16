@@ -1,4 +1,13 @@
 /* Portfolio chatbot widget — matches site design tokens from index.html */
+.rp-highlight-card{
+  animation:rp-card-pulse 2s ease-out 1;
+  border-radius:20px;
+}
+@keyframes rp-card-pulse{
+  0%{box-shadow:0 0 0 0 rgba(232,24,122,.6)}
+  60%{box-shadow:0 0 0 14px rgba(232,24,122,0)}
+  100%{box-shadow:0 0 0 0 rgba(232,24,122,0)}
+}
 #rp-chat-bubble{
   position:fixed;bottom:24px;right:24px;z-index:9999;
   width:58px;height:58px;border-radius:50%;
@@ -64,6 +73,7 @@
   display:flex;align-items:center;justify-content:center;transition:color .2s,background .2s;
 }
 .rp-chat-icon-btn:hover{color:#fff;background:rgba(255,255,255,.1)}
+.rp-chat-icon-btn.rp-tts-active{color:var(--pink,#e8187a);background:rgba(255,255,255,.15)}
 
 .rp-chat-messages{
   flex:1;overflow-y:auto;padding:16px;display:flex;flex-direction:column;gap:10px;
@@ -78,6 +88,16 @@
 .rp-msg-list{margin:6px 0;padding-left:18px}
 .rp-msg-list li{margin-bottom:4px}
 .rp-msg-list li:last-child{margin-bottom:0}
+.rp-msg-table-wrap{margin:8px 0;overflow-x:auto;max-width:100%}
+.rp-msg-table{border-collapse:collapse;font-size:.72rem;min-width:100%}
+.rp-msg-table th,.rp-msg-table td{border:1px solid var(--border,#e0e0e0);padding:5px 8px;text-align:left;vertical-align:top}
+.rp-msg-table th{background:var(--bg,#f0f0f0);font-weight:700;white-space:nowrap}
+.rp-jump-btn{
+  display:inline-block;font-family:var(--font,'Poppins',sans-serif);font-size:.65rem;font-weight:600;
+  padding:3px 9px;border-radius:12px;border:1px solid var(--pink,#e8187a);color:var(--pink,#e8187a);
+  background:transparent;cursor:pointer;white-space:nowrap;vertical-align:middle;margin-left:2px;
+}
+.rp-jump-btn:hover{background:var(--pink,#e8187a);color:#fff}
 .rp-msg-user{
   align-self:flex-end;background:var(--pink-grad,linear-gradient(135deg,#e8187a,#f9004d));
   color:#fff;border-bottom-right-radius:4px;

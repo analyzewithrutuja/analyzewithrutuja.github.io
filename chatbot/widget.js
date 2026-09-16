@@ -1,7 +1,13 @@
 (function(){
   var WORKER_URL = 'https://rutuja-portfolio-chatbot.rutuja-patel.workers.dev';
 
-  var QUICK_REPLIES = ['Skills', 'Resume', 'Projects'];
+  var QUICK_REPLIES = [
+    { label: 'Grill me 🔥', message: 'Ask yourself 5 tough interview questions (a mix of technical and behavioral) and answer all of them, one after another.' },
+    { label: 'Match a job', jdPrompt: true },
+    { label: 'Data Analyst fit', message: 'How do you specifically fit a Data Analyst role?' },
+    { label: 'Data Scientist fit', message: 'How do you specifically fit a Data Scientist role?' },
+    { label: 'Business Analyst fit', message: 'How do you specifically fit a Business Analyst role?' }
+  ];
   var HEADER_SUB = 'AI simulation, not the real Rutuja';
   var GREETING = "Hi, I'm an AI simulation of Rutuja, built on her real resume and projects — not the real person. Ask me about my skills, projects, or experience, in my own words, or tap a suggestion below.";
   var NUDGE_TEXT = "Hiring? Ask me anything about Rutuja's work.";
@@ -14,6 +20,9 @@
   var stopSvg = '<svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" width="13" height="13"><rect x="4" y="4" width="16" height="16" rx="2" fill="white"/></svg>';
   var expandSvg = '<svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" width="15" height="15"><path d="M8 3H5a2 2 0 0 0-2 2v3M16 3h3a2 2 0 0 1 2 2v3M21 16v3a2 2 0 0 1-2 2h-3M8 21H5a2 2 0 0 1-2-2v-3" stroke="rgba(255,255,255,.7)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>';
   var collapseSvg = '<svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" width="15" height="15"><path d="M4 9h4V5M4 9l6-6M20 9h-4V5M20 9l-6-6M4 15h4v4M4 15l6 6M20 15h-4v4M20 15l-6 6" stroke="rgba(255,255,255,.7)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>';
+  var downloadSvg = '<svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" width="15" height="15"><path d="M12 3v12m0 0-4-4m4 4 4-4M4 21h16" stroke="rgba(255,255,255,.7)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>';
+  var speakerOnSvg = '<svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" width="15" height="15"><path d="M4 9v6h4l5 5V4L8 9H4z" stroke="rgba(255,255,255,.7)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><path d="M17 8a5 5 0 0 1 0 8M20 5a9 9 0 0 1 0 14" stroke="rgba(255,255,255,.7)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>';
+  var speakerOffSvg = '<svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" width="15" height="15"><path d="M4 9v6h4l5 5V4L8 9H4z" stroke="rgba(255,255,255,.7)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><path d="M17 9l5 5M22 9l-5 5" stroke="rgba(255,255,255,.7)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>';
 
   var state = {
     open: false,
@@ -22,7 +31,8 @@
     sending: false,
     recording: false,
     mediaRecorder: null,
-    audioChunks: []
+    audioChunks: [],
+    ttsEnabled: false
   };
 
   function el(tag, attrs, html){
@@ -52,7 +62,13 @@
         trail = m[0] + trail;
         url = url.slice(0, -m[0].length);
       }
-      return '<a href="' + url + '" target="_blank" rel="noopener">' + url + '</a>' + trail;
+      var linkHtml = '<a href="' + url + '" target="_blank" rel="noopener">' + url + '</a>';
+      var jumpHtml = '';
+      var pm = url.match(/projects\/([a-zA-Z0-9_-]+)\.html/);
+      if (pm && document.getElementById('portfolio-' + pm[1])) {
+        jumpHtml = ' <button class="rp-jump-btn" data-project="' + pm[1] + '">↓ View on page</button>';
+      }
+      return linkHtml + trail + jumpHtml;
     });
     return text;
   }
@@ -70,9 +86,35 @@
       }
     }
 
+    function splitTableRow(r){
+      return r.trim().replace(/^\||\|$/g, '').split('|').map(function(c){ return c.trim(); });
+    }
+
     var i = 0;
     while (i < lines.length) {
       var line = lines[i];
+      if (/^\s*\|.*\|\s*$/.test(line)) {
+        flushText();
+        var rows = [];
+        while (i < lines.length && /^\s*\|.*\|\s*$/.test(lines[i])) {
+          rows.push(lines[i]);
+          i++;
+        }
+        var headerCells = splitTableRow(rows[0]);
+        var bodyRows = rows.slice(1);
+        if (bodyRows.length && /^[\s:-]+$/.test(bodyRows[0].replace(/\|/g, ''))) {
+          bodyRows = bodyRows.slice(1);
+        }
+        var tableHtml = '<table class="rp-msg-table"><thead><tr>' +
+          headerCells.map(function(c){ return '<th>' + inlineFormat(c) + '</th>'; }).join('') +
+          '</tr></thead><tbody>' +
+          bodyRows.map(function(r){
+            return '<tr>' + splitTableRow(r).map(function(c){ return '<td>' + inlineFormat(c) + '</td>'; }).join('') + '</tr>';
+          }).join('') +
+          '</tbody></table>';
+        htmlParts.push('<div class="rp-msg-table-wrap">' + tableHtml + '</div>');
+        continue;
+      }
       if (/^[-*]\s+/.test(line)) {
         flushText();
         var items = [];
@@ -123,8 +165,12 @@
     headerInfo.appendChild(headerText);
     header.appendChild(headerInfo);
     var headerActions = el('div', { class: 'rp-chat-header-actions' });
+    var ttsBtn = el('button', { id: 'rp-chat-tts', class: 'rp-chat-icon-btn', 'aria-label': 'Turn on voice replies' }, speakerOffSvg);
+    var downloadBtn = el('button', { class: 'rp-chat-icon-btn', 'aria-label': 'Download conversation' }, downloadSvg);
     var expandBtn = el('button', { id: 'rp-chat-expand', class: 'rp-chat-icon-btn', 'aria-label': 'Expand chat' }, expandSvg);
     var closeBtn = el('button', { class: 'rp-chat-icon-btn', 'aria-label': 'Close chat' }, '×');
+    headerActions.appendChild(ttsBtn);
+    headerActions.appendChild(downloadBtn);
     headerActions.appendChild(expandBtn);
     headerActions.appendChild(closeBtn);
     header.appendChild(headerActions);
@@ -132,10 +178,18 @@
     var messages = el('div', { class: 'rp-chat-messages', id: 'rp-chat-messages' });
 
     var quickReplies = el('div', { class: 'rp-chat-quickreplies', id: 'rp-chat-quickreplies' });
-    QUICK_REPLIES.forEach(function(label){
-      var qr = el('button', { class: 'rp-quickreply' }, label);
-      qr.addEventListener('click', function(){ sendMessage(label); });
-      quickReplies.appendChild(qr);
+    QUICK_REPLIES.forEach(function(qr){
+      var btn = el('button', { class: 'rp-quickreply' }, qr.label);
+      btn.addEventListener('click', function(){
+        if (qr.jdPrompt) {
+          addBotMessage("Paste the job description you're evaluating me against, and I'll break down where I match and where there are gaps.");
+          var inputEl = document.getElementById('rp-chat-input');
+          if (inputEl) inputEl.focus();
+        } else {
+          sendMessage(qr.message);
+        }
+      });
+      quickReplies.appendChild(btn);
     });
 
     var inputRow = el('div', { class: 'rp-chat-inputrow' });
@@ -167,8 +221,61 @@
     micBtn.addEventListener('click', toggleRecording);
     input.addEventListener('focus', function(){ setTimeout(syncMobileViewport, 300); });
     input.addEventListener('blur', function(){ setTimeout(syncMobileViewport, 300); });
+    downloadBtn.addEventListener('click', downloadTranscript);
+    ttsBtn.addEventListener('click', toggleTts);
+    messages.addEventListener('click', function(e){
+      var btn = e.target.closest && e.target.closest('.rp-jump-btn');
+      if (!btn) return;
+      var slug = btn.getAttribute('data-project');
+      var target = document.getElementById('portfolio-' + slug);
+      if (!target) return;
+      if (state.open) togglePanel();
+      setTimeout(function(){
+        target.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        target.classList.add('rp-highlight-card');
+        setTimeout(function(){ target.classList.remove('rp-highlight-card'); }, 2000);
+      }, 300);
+    });
 
     addBotMessage(GREETING);
+  }
+
+  function downloadTranscript(){
+    if (!state.history.length) return;
+    var lines = state.history.map(function(m){
+      return (m.role === 'user' ? 'Visitor: ' : 'Rutuja AI: ') + m.content;
+    });
+    var header = 'Conversation with Rutuja AI\n' + window.location.origin + '\n' + new Date().toLocaleString() + '\n\n';
+    var text = header + lines.join('\n\n');
+    var blob = new Blob([text], { type: 'text/plain' });
+    var url = URL.createObjectURL(blob);
+    var a = document.createElement('a');
+    a.href = url;
+    a.download = 'rutuja-ai-conversation.txt';
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    setTimeout(function(){ URL.revokeObjectURL(url); }, 1000);
+  }
+
+  function toggleTts(){
+    state.ttsEnabled = !state.ttsEnabled;
+    var ttsBtn = document.getElementById('rp-chat-tts');
+    if (ttsBtn) {
+      ttsBtn.innerHTML = state.ttsEnabled ? speakerOnSvg : speakerOffSvg;
+      ttsBtn.setAttribute('aria-label', state.ttsEnabled ? 'Turn off voice replies' : 'Turn on voice replies');
+      ttsBtn.classList.toggle('rp-tts-active', state.ttsEnabled);
+    }
+    if (!state.ttsEnabled && window.speechSynthesis) window.speechSynthesis.cancel();
+  }
+
+  function speak(text){
+    if (!state.ttsEnabled || !window.speechSynthesis) return;
+    var plain = text.replace(/<[^>]+>/g, '').replace(/\*\*/g, '').replace(/^[-*]\s+/gm, '').replace(/^\d+\.\s+/gm, '');
+    window.speechSynthesis.cancel();
+    var utterance = new SpeechSynthesisUtterance(plain);
+    utterance.rate = 1;
+    window.speechSynthesis.speak(utterance);
   }
 
   function togglePanel(){
@@ -240,7 +347,7 @@
     messages.scrollTop = messages.scrollHeight;
   }
 
-  function addBotMessage(text){ addMessage(text, 'bot'); }
+  function addBotMessage(text){ addMessage(text, 'bot'); speak(text); }
   function addUserMessage(text){ addMessage(text, 'user'); }
 
   function showTyping(){
