@@ -229,7 +229,10 @@ export default {
     try {
       let groqRes;
       let errText = '';
-      for (let attempt = 0; attempt < 3; attempt++) {
+      let reply = '';
+      const maxAttempts = 3;
+
+      for (let attempt = 0; attempt < maxAttempts; attempt++) {
         groqRes = await fetch('https://api.groq.com/openai/v1/chat/completions', {
           method: 'POST',
           headers: {
@@ -240,32 +243,36 @@ export default {
             model: GROQ_MODEL,
             messages,
             temperature: 0.4,
-            max_tokens: 700,
+            max_tokens: 900,
+            reasoning_effort: 'low',
           }),
         });
 
-        if (groqRes.ok) break;
+        if (!groqRes.ok) {
+          errText = await groqRes.text();
+          const isRateLimit = groqRes.status === 429 || groqRes.status === 413;
+          if (!isRateLimit || attempt === maxAttempts - 1) break;
+          const retryAfterMatch = errText.match(/try again in ([\d.]+)s/i);
+          const waitMs = retryAfterMatch ? Math.ceil(parseFloat(retryAfterMatch[1]) * 1000) + 200 : 1500 * (attempt + 1);
+          await new Promise((resolve) => setTimeout(resolve, waitMs));
+          continue;
+        }
 
-        errText = await groqRes.text();
-        const isRateLimit = groqRes.status === 429 || groqRes.status === 413;
-        if (!isRateLimit || attempt === 2) break;
-
-        const retryAfterMatch = errText.match(/try again in ([\d.]+)s/i);
-        const waitMs = retryAfterMatch ? Math.ceil(parseFloat(retryAfterMatch[1]) * 1000) + 200 : 1500 * (attempt + 1);
-        await new Promise((resolve) => setTimeout(resolve, waitMs));
+        const data = await groqRes.json();
+        reply = (data.choices && data.choices[0] && data.choices[0].message && data.choices[0].message.content) || '';
+        if (reply.trim()) break;
+        // empty content (e.g. reasoning consumed the token budget) -- retry
       }
 
-      if (!groqRes.ok) {
-        return new Response(JSON.stringify({ error: 'Upstream error', detail: errText }), {
-          status: 502,
-          headers: { 'Content-Type': 'application/json', ...corsHeaders(origin) },
-        });
+      if (!reply.trim()) {
+        if (!groqRes || !groqRes.ok) {
+          return new Response(JSON.stringify({ error: 'Upstream error', detail: errText }), {
+            status: 502,
+            headers: { 'Content-Type': 'application/json', ...corsHeaders(origin) },
+          });
+        }
+        reply = "Sorry, that one stumped me for a second -- could you ask again, maybe a bit more specifically?";
       }
-
-      const data = await groqRes.json();
-      const reply = data.choices && data.choices[0] && data.choices[0].message
-        ? data.choices[0].message.content
-        : "Sorry, I couldn't generate a response. Please try again.";
 
       return new Response(JSON.stringify({ reply }), {
         headers: { 'Content-Type': 'application/json', ...corsHeaders(origin) },
