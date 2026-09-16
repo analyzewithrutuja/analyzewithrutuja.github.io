@@ -43,11 +43,65 @@
     return div.innerHTML;
   }
 
-  function linkify(text){
-    var escaped = escapeHtml(text);
-    return escaped.replace(/(https?:\/\/[^\s]+)/g, function(url){
-      return '<a href="' + url + '" target="_blank" rel="noopener">' + url + '</a>';
+  function inlineFormat(text){
+    text = text.replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>');
+    text = text.replace(/(https?:\/\/[^\s<]+)/g, function(url){
+      var trail = '';
+      var m;
+      while ((m = url.match(/(&gt;|&lt;|&amp;|[.,;:!?)\]}]+)$/))) {
+        trail = m[0] + trail;
+        url = url.slice(0, -m[0].length);
+      }
+      return '<a href="' + url + '" target="_blank" rel="noopener">' + url + '</a>' + trail;
     });
+    return text;
+  }
+
+  function renderMessage(text){
+    var escaped = escapeHtml(text);
+    var lines = escaped.split(/\n/);
+    var htmlParts = [];
+    var textBuffer = [];
+
+    function flushText(){
+      if (textBuffer.length) {
+        htmlParts.push(textBuffer.map(inlineFormat).join('<br>'));
+        textBuffer = [];
+      }
+    }
+
+    var i = 0;
+    while (i < lines.length) {
+      var line = lines[i];
+      if (/^[-*]\s+/.test(line)) {
+        flushText();
+        var items = [];
+        while (i < lines.length && /^[-*]\s+/.test(lines[i])) {
+          items.push('<li>' + inlineFormat(lines[i].replace(/^[-*]\s+/, '')) + '</li>');
+          i++;
+        }
+        htmlParts.push('<ul class="rp-msg-list">' + items.join('') + '</ul>');
+        continue;
+      }
+      if (/^\d+\.\s+/.test(line)) {
+        flushText();
+        var nitems = [];
+        while (i < lines.length && /^\d+\.\s+/.test(lines[i])) {
+          nitems.push('<li>' + inlineFormat(lines[i].replace(/^\d+\.\s+/, '')) + '</li>');
+          i++;
+        }
+        htmlParts.push('<ol class="rp-msg-list">' + nitems.join('') + '</ol>');
+        continue;
+      }
+      if (line.trim() !== '') {
+        textBuffer.push(line);
+      } else {
+        flushText();
+      }
+      i++;
+    }
+    flushText();
+    return htmlParts.join('');
   }
 
   function buildWidget(){
@@ -181,7 +235,7 @@
 
   function addMessage(text, sender){
     var messages = document.getElementById('rp-chat-messages');
-    var msg = el('div', { class: 'rp-msg rp-msg-' + sender }, linkify(text));
+    var msg = el('div', { class: 'rp-msg rp-msg-' + sender }, renderMessage(text));
     messages.appendChild(msg);
     messages.scrollTop = messages.scrollHeight;
   }

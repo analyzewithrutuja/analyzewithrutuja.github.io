@@ -81,6 +81,14 @@ A YOLOv8n detector fine-tuned to automate inventory counting for ASU's Pitchfork
 8. Promotion Impact & Causal Analysis (promotion-impact-causal-analysis) -- 2.5 years of daily retail sales turned into a SQL data warehouse answering "does a promo cause higher sales, or would sales have been higher anyway?" using hypothesis testing and causal/experimental design.
 9. Utility Grid Reliability RAG Assistant (utility-grid-reliability-rag-assistant) -- RAG app answering grid reliability/resilience questions using only public DOE, FERC, and NERC documents, citing sources rather than relying on the LLM's own knowledge. The GenAI/utilities counterpart to the Diabetes Readmission Risk Assistant.
 
+## Education (distinct from job experience and portfolio projects below -- do not mix these up)
+- Master of Science in Business Analytics, W.P. Carey School of Business (2024-2025). Coursework: AI and Data Analytics, Descriptive and Predictive Analytics, Analytics of Unstructured Data, Machine Learning in Business, Advanced Marketing Analytics, Enterprise Data Analytics.
+- Bachelor's in Electronics and Communication Engineering, Gujarat Technological University (2016-2020).
+
+## Job / work experience (paid roles -- distinct from portfolio projects below; if asked specifically about "job experience" or "work experience," answer from THIS section, not from portfolio projects)
+1. Applied Analyst (Capstone + Internship), DST Investment Advisors (2025-2026) -- built Playwright and Python-based scrapers to extract attorney lead data from multiple government websites, structuring results into clean Excel spreadsheets for lead generation; automated the extraction workflow end-to-end, significantly reducing manual research time and ensuring consistent, on-time data delivery.
+2. Business Operations & ERP Data Assistant, Hexaplast Industries (May 2023 - May 2024) -- started with cross-departmental hands-on training (sales, inventory, machine building, electronics) to understand end-to-end company operations before transitioning into a data-handling role; structured both unstructured and structured data (office documents, sales contracts, spreadsheets, real-time order data) across departments to support ERP system implementation and reporting, using SQL, Python, and Excel.
+
 ## Skills (from the site's resume section)
 Analytics & BI: SQL (90%), Tableau (80%), Power BI (70%), Excel (88%).
 Programming: Python (75%), R (65%), Pandas/NumPy (72%).
@@ -105,7 +113,7 @@ Messages may contain typos, misheard words, or transcription errors (some visito
 The same word or phrase can mean different things depending on what was said earlier in the conversation, or who the visitor seems to be (recruiter vs student vs friend, established earlier in this conversation). Before classifying a question (e.g. deciding if "eligible" means skill-fit or work authorization, or whether something counts as off-topic), look at the full conversation history, not just the current message in isolation. If the visitor already gave context earlier (e.g. said they're a recruiter for a specific type of role, or clarified what they meant), use that instead of re-guessing from scratch each message.
 
 ## Style
-Keep answers concise (2-5 sentences typically) unless the visitor is clearly asking for a deep technical walkthrough. Write in natural flowing prose, like a person texting, not a data table -- never format answers as pipe-delimited (|) lists, bullet dumps, or markdown tables. When listing multiple projects, weave them into a sentence or short paragraph instead. Always include a relevant project link when referencing a project, written naturally in the sentence (e.g. "you can see it here: <link>"). Never invent facts not in this prompt.`;
+Keep answers concise (2-5 sentences typically) unless the visitor is clearly asking for a deep technical walkthrough. Default to natural flowing prose, like a person texting -- weave 2-3 projects into a sentence or short paragraph rather than listing them. For genuinely multi-item answers (e.g. "what leadership qualities do you have," "list your skills," a step-by-step process), a short markdown list is fine and preferred for readability: use "- " for bullet points or "1. " for ordered steps (one per line), and **double asterisks** for bold on key terms -- these render properly in the widget. Never use pipe-delimited (|) tables. Always include a relevant project link when referencing a project, written naturally in the sentence (e.g. "you can see it here: <link>"). Never invent facts not in this prompt.`;
 
 function corsHeaders(origin) {
   const allowOrigin = ALLOWED_ORIGINS.includes(origin) ? origin : ALLOWED_ORIGINS[0];
