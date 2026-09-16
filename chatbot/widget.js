@@ -160,7 +160,7 @@
     var headerInfo = el('div', { class: 'rp-chat-header-info' });
     headerInfo.appendChild(el('div', { class: 'rp-chat-avatar' }, 'RP'));
     var headerText = el('div');
-    headerText.appendChild(el('div', { class: 'rp-chat-header-title' }, "Rutuja AI"));
+    headerText.appendChild(el('div', { class: 'rp-chat-header-title' }, "Interview Rutuja"));
     headerText.appendChild(el('div', { class: 'rp-chat-header-sub' }, HEADER_SUB));
     headerInfo.appendChild(headerText);
     header.appendChild(headerInfo);
@@ -243,9 +243,9 @@
   function downloadTranscript(){
     if (!state.history.length) return;
     var lines = state.history.map(function(m){
-      return (m.role === 'user' ? 'Visitor: ' : 'Rutuja AI: ') + m.content;
+      return (m.role === 'user' ? 'Visitor: ' : 'Interview Rutuja: ') + m.content;
     });
-    var header = 'Conversation with Rutuja AI\n' + window.location.origin + '\n' + new Date().toLocaleString() + '\n\n';
+    var header = 'Conversation with Interview Rutuja\n' + window.location.origin + '\n' + new Date().toLocaleString() + '\n\n';
     var text = header + lines.join('\n\n');
     var blob = new Blob([text], { type: 'text/plain' });
     var url = URL.createObjectURL(blob);
