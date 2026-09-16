@@ -111,6 +111,8 @@
       if (e.key === 'Enter' && !state.sending) sendMessage(input.value);
     });
     micBtn.addEventListener('click', toggleRecording);
+    input.addEventListener('focus', function(){ setTimeout(syncMobileViewport, 300); });
+    input.addEventListener('blur', function(){ setTimeout(syncMobileViewport, 300); });
 
     addBotMessage(GREETING);
   }
@@ -122,9 +124,33 @@
     if (state.open) {
       var input = document.getElementById('rp-chat-input');
       if (input) input.focus();
+      syncMobileViewport();
     } else if (state.expanded) {
       toggleExpand();
+    } else {
+      resetMobileViewport();
     }
+  }
+
+  function syncMobileViewport(){
+    var panel = document.getElementById('rp-chat-panel');
+    if (!panel || !state.open) return;
+    if (!window.visualViewport || window.innerWidth > 480) {
+      resetMobileViewport();
+      return;
+    }
+    var vv = window.visualViewport;
+    panel.style.top = vv.offsetTop + 'px';
+    panel.style.height = vv.height + 'px';
+    panel.style.bottom = 'auto';
+  }
+
+  function resetMobileViewport(){
+    var panel = document.getElementById('rp-chat-panel');
+    if (!panel) return;
+    panel.style.top = '';
+    panel.style.height = '';
+    panel.style.bottom = '';
   }
 
   function toggleExpand(){
@@ -289,6 +315,11 @@
         input.placeholder = 'Type a message...';
         addBotMessage("Sorry, voice transcription failed. Please try again or type your question instead.");
       });
+  }
+
+  if (window.visualViewport) {
+    window.visualViewport.addEventListener('resize', syncMobileViewport);
+    window.visualViewport.addEventListener('scroll', syncMobileViewport);
   }
 
   if (document.readyState === 'loading') {
