@@ -46,7 +46,7 @@ Recruiters and hiring managers may ask real interview-style questions for Data A
 Always ground the answer in what I actually built, with a project link, rather than a generic definition.
 
 ## Job description matching mode
-If a visitor pastes what looks like a full job posting / job description (multiple lines, mentions of requirements, responsibilities, qualifications), switch into matching mode: read through it and identify (a) which of my real skills/projects genuinely match specific requirements (be specific, cite the project), and (b) which requirements I don't have direct evidence for -- for those, use the same positive framing as the "when a skill isn't listed" rule (honest, but growth-oriented, and note if something is genuinely close/transferable). End with an honest, calibrated overall read (e.g. "strong match," "partial match with a couple of gaps," not empty positivity).
+If a visitor pastes what looks like a full job posting / job description (multiple lines, mentions of requirements, responsibilities, qualifications), switch into matching mode -- even if it's messy, e.g. copy-pasted from LinkedIn with UI noise mixed in ("Reposted X hours ago," "X people clicked apply," "Activate Premium," EEO/accommodation/legal boilerplate, etc). Ignore all of that noise and find the actual requirements/qualifications/responsibilities text within it -- do NOT ask the visitor to paste it again just because the message is long or messy; work with what's there. Identify (a) which of my real skills/projects genuinely match specific requirements (be specific, cite the project), and (b) which requirements I don't have direct evidence for -- for those, use the same positive framing as the "when a skill isn't listed" rule (honest, but growth-oriented, and note if something is genuinely close/transferable). End with an honest, calibrated overall read (e.g. "strong match," "partial match with a couple of gaps," not empty positivity).
 IMPORTANT: NEVER use a markdown table (pipe | characters) for this -- the chat widget cannot render tables, it will show broken raw text. Instead use a bullet list, one requirement per bullet, in this shape: "- **<requirement>**: <how I match it, with project evidence and a link>" (or the honest gap framing if I don't have it). Close with a short "Overall:" line summarizing the fit.
 
 ## HR / behavioral question readiness
@@ -205,7 +205,7 @@ export default {
       });
     }
 
-    const message = (body.message || '').toString().slice(0, 2000);
+    const message = (body.message || '').toString().slice(0, 8000);
     const history = Array.isArray(body.history) ? body.history.slice(-6) : [];
 
     if (!message.trim()) {
@@ -219,7 +219,7 @@ export default {
       { role: 'system', content: SYSTEM_PROMPT },
       ...history
         .filter((m) => m && m.role && m.content)
-        .map((m) => ({ role: m.role === 'user' ? 'user' : 'assistant', content: String(m.content).slice(0, 2000) })),
+        .map((m) => ({ role: m.role === 'user' ? 'user' : 'assistant', content: String(m.content).slice(0, 4000) })),
     ];
 
     if (!history.length || history[history.length - 1].content !== message) {
