@@ -233,7 +233,7 @@ export default {
       let groqRes;
       let errText = '';
       let reply = '';
-      const maxAttempts = 3;
+      const maxAttempts = 4;
 
       for (let attempt = 0; attempt < maxAttempts; attempt++) {
         groqRes = await fetch('https://api.groq.com/openai/v1/chat/completions', {

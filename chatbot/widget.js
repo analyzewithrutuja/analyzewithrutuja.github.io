@@ -21,6 +21,7 @@
   var collapseSvg = '<svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" width="15" height="15"><path d="M4 9h4V5M4 9l6-6M20 9h-4V5M20 9l-6-6M4 15h4v4M4 15l6 6M20 15h-4v4M20 15l-6 6" stroke="rgba(255,255,255,.7)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>';
   var downloadSvg = '<svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" width="15" height="15"><path d="M12 3v12m0 0-4-4m4 4 4-4M4 21h16" stroke="rgba(255,255,255,.7)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>';
   var speakerOnSvg = '<svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" width="15" height="15"><path d="M4 9v6h4l5 5V4L8 9H4z" stroke="rgba(255,255,255,.7)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><path d="M17 8a5 5 0 0 1 0 8M20 5a9 9 0 0 1 0 14" stroke="rgba(255,255,255,.7)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>';
+  var speakerCurrentColorSvg = '<svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" width="11" height="11"><path d="M4 9v6h4l5 5V4L8 9H4z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><path d="M17 8a5 5 0 0 1 0 8M20 5a9 9 0 0 1 0 14" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>';
   var speakerOffSvg = '<svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" width="15" height="15"><path d="M4 9v6h4l5 5V4L8 9H4z" stroke="rgba(255,255,255,.7)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><path d="M17 9l5 5M22 9l-5 5" stroke="rgba(255,255,255,.7)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>';
 
   var state = {
@@ -218,8 +219,6 @@
       if (e.key === 'Enter' && !state.sending) sendMessage(input.value);
     });
     micBtn.addEventListener('click', toggleRecording);
-    input.addEventListener('focus', function(){ setTimeout(syncMobileViewport, 300); });
-    input.addEventListener('blur', function(){ setTimeout(syncMobileViewport, 300); });
     downloadBtn.addEventListener('click', downloadTranscript);
     ttsBtn.addEventListener('click', toggleTts);
     messages.addEventListener('click', function(e){
@@ -274,13 +273,18 @@
     if (!state.ttsEnabled && window.speechSynthesis) window.speechSynthesis.cancel();
   }
 
-  function speak(text){
-    if (!state.ttsEnabled || !window.speechSynthesis) return;
+  function speakNow(text){
+    if (!window.speechSynthesis) return;
     var plain = text.replace(/<[^>]+>/g, '').replace(/\*\*/g, '').replace(/^[-*]\s+/gm, '').replace(/^\d+\.\s+/gm, '');
     window.speechSynthesis.cancel();
     var utterance = new SpeechSynthesisUtterance(plain);
     utterance.rate = 1;
     window.speechSynthesis.speak(utterance);
+  }
+
+  function speak(text){
+    if (!state.ttsEnabled) return;
+    speakNow(text);
   }
 
   function togglePanel(){
@@ -290,33 +294,9 @@
     if (state.open) {
       var input = document.getElementById('rp-chat-input');
       if (input) input.focus();
-      syncMobileViewport();
     } else if (state.expanded) {
       toggleExpand();
-    } else {
-      resetMobileViewport();
     }
-  }
-
-  function syncMobileViewport(){
-    var panel = document.getElementById('rp-chat-panel');
-    if (!panel || !state.open) return;
-    if (!window.visualViewport || window.innerWidth > 480) {
-      resetMobileViewport();
-      return;
-    }
-    var vv = window.visualViewport;
-    panel.style.top = vv.offsetTop + 'px';
-    panel.style.height = vv.height + 'px';
-    panel.style.bottom = 'auto';
-  }
-
-  function resetMobileViewport(){
-    var panel = document.getElementById('rp-chat-panel');
-    if (!panel) return;
-    panel.style.top = '';
-    panel.style.height = '';
-    panel.style.bottom = '';
   }
 
   function toggleExpand(){
@@ -348,6 +328,11 @@
   function addMessage(text, sender){
     var messages = document.getElementById('rp-chat-messages');
     var msg = el('div', { class: 'rp-msg rp-msg-' + sender }, renderMessage(text));
+    if (sender === 'bot' && window.speechSynthesis) {
+      var speakBtn = el('button', { class: 'rp-msg-speak', 'aria-label': 'Read this reply aloud' }, speakerCurrentColorSvg);
+      speakBtn.addEventListener('click', function(){ speakNow(text); });
+      msg.appendChild(speakBtn);
+    }
     messages.appendChild(msg);
     messages.scrollTop = messages.scrollHeight;
   }
@@ -367,6 +352,18 @@
     if (typing) typing.remove();
   }
 
+  function fetchReply(text){
+    return fetch(WORKER_URL, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ message: text, history: state.history.slice(-6) })
+    })
+    .then(function(res){
+      if (!res.ok) throw new Error('Request failed: ' + res.status);
+      return res.json();
+    });
+  }
+
   function sendMessage(text){
     text = (text || '').trim();
     if (!text || state.sending) return Promise.resolve();
@@ -378,14 +375,10 @@
     state.sending = true;
     showTyping();
 
-    return fetch(WORKER_URL, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ message: text, history: state.history.slice(-6) })
-    })
-    .then(function(res){
-      if (!res.ok) throw new Error('Request failed: ' + res.status);
-      return res.json();
+    return fetchReply(text)
+    .catch(function(){
+      // one silent retry before surfacing an error -- covers transient upstream blips
+      return new Promise(function(resolve){ setTimeout(resolve, 1200); }).then(function(){ return fetchReply(text); });
     })
     .then(function(data){
       hideTyping();
@@ -481,11 +474,6 @@
         input.placeholder = 'Type a message...';
         addBotMessage("Sorry, voice transcription failed. Please try again or type your question instead.");
       });
-  }
-
-  if (window.visualViewport) {
-    window.visualViewport.addEventListener('resize', syncMobileViewport);
-    window.visualViewport.addEventListener('scroll', syncMobileViewport);
   }
 
   if (document.readyState === 'loading') {
