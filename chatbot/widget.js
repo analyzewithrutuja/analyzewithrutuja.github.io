@@ -265,6 +265,12 @@
       ttsBtn.setAttribute('aria-label', state.ttsEnabled ? 'Turn off voice replies' : 'Turn on voice replies');
       ttsBtn.classList.toggle('rp-tts-active', state.ttsEnabled);
     }
+    if (state.ttsEnabled && window.speechSynthesis) {
+      // Mobile browsers require speechSynthesis to be kicked off directly inside
+      // a user-gesture handler (this click) or later async speak() calls get silently blocked.
+      window.speechSynthesis.cancel();
+      window.speechSynthesis.speak(new SpeechSynthesisUtterance('Voice replies on.'));
+    }
     if (!state.ttsEnabled && window.speechSynthesis) window.speechSynthesis.cancel();
   }
 
