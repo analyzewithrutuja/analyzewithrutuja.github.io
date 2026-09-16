@@ -64,7 +64,7 @@
     var headerInfo = el('div', { class: 'rp-chat-header-info' });
     headerInfo.appendChild(el('div', { class: 'rp-chat-avatar' }, 'RP'));
     var headerText = el('div');
-    headerText.appendChild(el('div', { class: 'rp-chat-header-title' }, "Rutuja (AI simulation)"));
+    headerText.appendChild(el('div', { class: 'rp-chat-header-title' }, "Rutuja AI"));
     headerText.appendChild(el('div', { class: 'rp-chat-header-sub' }, HEADER_SUB));
     headerInfo.appendChild(headerText);
     header.appendChild(headerInfo);
