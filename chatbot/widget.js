@@ -273,12 +273,26 @@
     if (!state.ttsEnabled && window.speechSynthesis) window.speechSynthesis.cancel();
   }
 
+  function getFemaleVoice(){
+    if (!window.speechSynthesis) return null;
+    var voices = window.speechSynthesis.getVoices();
+    if (!voices || !voices.length) return null;
+    var englishVoices = voices.filter(function(v){ return /^en/i.test(v.lang); });
+    var pool = englishVoices.length ? englishVoices : voices;
+    var femaleNamed = pool.filter(function(v){
+      return /female|zira|samantha|victoria|susan|karen|moira|tessa|fiona|aria|jenny|google us english/i.test(v.name);
+    });
+    return femaleNamed[0] || pool[0];
+  }
+
   function speakNow(text){
     if (!window.speechSynthesis) return;
     var plain = text.replace(/<[^>]+>/g, '').replace(/\*\*/g, '').replace(/^[-*]\s+/gm, '').replace(/^\d+\.\s+/gm, '');
     window.speechSynthesis.cancel();
     var utterance = new SpeechSynthesisUtterance(plain);
     utterance.rate = 1;
+    var voice = getFemaleVoice();
+    if (voice) utterance.voice = voice;
     window.speechSynthesis.speak(utterance);
   }
 
@@ -474,6 +488,11 @@
         input.placeholder = 'Type a message...';
         addBotMessage("Sorry, voice transcription failed. Please try again or type your question instead.");
       });
+  }
+
+  if (window.speechSynthesis) {
+    window.speechSynthesis.getVoices();
+    window.speechSynthesis.addEventListener('voiceschanged', function(){ window.speechSynthesis.getVoices(); });
   }
 
   if (document.readyState === 'loading') {
