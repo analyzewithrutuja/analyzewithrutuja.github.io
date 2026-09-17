@@ -150,7 +150,26 @@ function stripJobPostingNoise(text) {
     }
   }
 
-  return cleaned.replace(/[ \t]{2,}/g, ' ').replace(/\n{3,}/g, '\n\n').trim();
+  cleaned = cleaned.replace(/[ \t]{2,}/g, ' ').replace(/\n{3,}/g, '\n\n').trim();
+
+  // Long "About [Company]" mission/culture preambles before the actual requirements
+  // section rarely matter for matching -- if the posting is still long, skip straight
+  // to the qualifications section (keeping a little lead-in context).
+  if (cleaned.length > 3500) {
+    const qualMarkers = /(Minimum qualifications|Basic Qualifications|Required Qualifications|Qualifications:|Requirements:|What you'll need|What You'll Need)/i;
+    const qm = cleaned.match(qualMarkers);
+    if (qm && qm.index !== undefined && qm.index > 500) {
+      cleaned = cleaned.slice(Math.max(0, qm.index - 150));
+    }
+  }
+
+  // Hard safety cap -- guarantees the cleaned JD never blows the token budget on its own,
+  // no matter how verbose the original posting was.
+  if (cleaned.length > 5000) {
+    cleaned = cleaned.slice(0, 5000) + '\n[...job posting truncated for length...]';
+  }
+
+  return cleaned;
 }
 
 export default {
