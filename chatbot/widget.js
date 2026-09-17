@@ -23,6 +23,7 @@
   var speakerOnSvg = '<svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" width="15" height="15"><path d="M4 9v6h4l5 5V4L8 9H4z" stroke="rgba(255,255,255,.7)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><path d="M17 8a5 5 0 0 1 0 8M20 5a9 9 0 0 1 0 14" stroke="rgba(255,255,255,.7)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>';
   var speakerCurrentColorSvg = '<svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" width="11" height="11"><path d="M4 9v6h4l5 5V4L8 9H4z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><path d="M17 8a5 5 0 0 1 0 8M20 5a9 9 0 0 1 0 14" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>';
   var speakerOffSvg = '<svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" width="15" height="15"><path d="M4 9v6h4l5 5V4L8 9H4z" stroke="rgba(255,255,255,.7)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><path d="M17 9l5 5M22 9l-5 5" stroke="rgba(255,255,255,.7)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>';
+  var stopCurrentColorSvg = '<svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" width="10" height="10"><rect x="4" y="4" width="16" height="16" rx="2" fill="currentColor"/></svg>';
 
   var state = {
     open: false,
@@ -32,7 +33,8 @@
     recording: false,
     mediaRecorder: null,
     audioChunks: [],
-    ttsEnabled: false
+    ttsEnabled: false,
+    activeSpeakBtn: null
   };
 
   function el(tag, attrs, html){
@@ -269,7 +271,11 @@
       // a user-gesture handler (this click) or later async speak() calls get silently blocked.
       speakNow('Voice replies on.');
     }
-    if (!state.ttsEnabled && window.speechSynthesis) window.speechSynthesis.cancel();
+    if (!state.ttsEnabled && window.speechSynthesis) {
+      window.speechSynthesis.cancel();
+      resetSpeakBtnIcon(state.activeSpeakBtn);
+      state.activeSpeakBtn = null;
+    }
   }
 
   function getFemaleVoice(){
@@ -284,21 +290,43 @@
     return femaleNamed[0] || pool[0];
   }
 
-  function speakNow(text){
+  function resetSpeakBtnIcon(btn){
+    if (!btn) return;
+    btn.innerHTML = speakerCurrentColorSvg;
+    btn.setAttribute('aria-label', 'Read this reply aloud');
+    btn.classList.remove('rp-speaking');
+  }
+
+  function speakNow(text, btn){
     if (!window.speechSynthesis) return;
-    var plain = text.replace(/<[^>]+>/g, '').replace(/\*\*/g, '').replace(/^[-*]\s+/gm, '').replace(/^\d+\.\s+/gm, '');
+    if (state.activeSpeakBtn && state.activeSpeakBtn !== btn) resetSpeakBtnIcon(state.activeSpeakBtn);
     window.speechSynthesis.cancel();
+
+    var plain = text.replace(/<[^>]+>/g, '').replace(/\*\*/g, '').replace(/^[-*]\s+/gm, '').replace(/^\d+\.\s+/gm, '');
     var utterance = new SpeechSynthesisUtterance(plain);
     utterance.rate = 1.08;
     utterance.pitch = 1.15;
     var voice = getFemaleVoice();
     if (voice) utterance.voice = voice;
+
+    if (btn) {
+      state.activeSpeakBtn = btn;
+      btn.innerHTML = stopCurrentColorSvg;
+      btn.setAttribute('aria-label', 'Stop reading');
+      btn.classList.add('rp-speaking');
+      utterance.onend = function(){
+        resetSpeakBtnIcon(btn);
+        if (state.activeSpeakBtn === btn) state.activeSpeakBtn = null;
+      };
+      utterance.onerror = utterance.onend;
+    }
+
     window.speechSynthesis.speak(utterance);
   }
 
-  function speak(text){
+  function speak(text, btn){
     if (!state.ttsEnabled) return;
-    speakNow(text);
+    speakNow(text, btn);
   }
 
   function togglePanel(){
@@ -342,16 +370,26 @@
   function addMessage(text, sender){
     var messages = document.getElementById('rp-chat-messages');
     var msg = el('div', { class: 'rp-msg rp-msg-' + sender }, renderMessage(text));
+    var speakBtn = null;
     if (sender === 'bot' && window.speechSynthesis) {
-      var speakBtn = el('button', { class: 'rp-msg-speak', 'aria-label': 'Read this reply aloud' }, speakerCurrentColorSvg);
-      speakBtn.addEventListener('click', function(){ speakNow(text); });
+      speakBtn = el('button', { class: 'rp-msg-speak', 'aria-label': 'Read this reply aloud' }, speakerCurrentColorSvg);
+      speakBtn.addEventListener('click', function(){
+        if (state.activeSpeakBtn === speakBtn) {
+          window.speechSynthesis.cancel();
+          resetSpeakBtnIcon(speakBtn);
+          state.activeSpeakBtn = null;
+        } else {
+          speakNow(text, speakBtn);
+        }
+      });
       msg.appendChild(speakBtn);
     }
     messages.appendChild(msg);
     messages.scrollTop = messages.scrollHeight;
+    return speakBtn;
   }
 
-  function addBotMessage(text){ addMessage(text, 'bot'); speak(text); }
+  function addBotMessage(text){ var btn = addMessage(text, 'bot'); speak(text, btn); }
   function addUserMessage(text){ addMessage(text, 'user'); }
 
   function showTyping(){

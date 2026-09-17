@@ -92,6 +92,7 @@
 }
 .rp-msg-speak:hover{border-color:var(--pink,#e8187a);color:var(--pink,#e8187a)}
 .rp-msg-speak svg{width:11px;height:11px}
+.rp-msg-speak.rp-speaking{background:var(--pink-grad,linear-gradient(135deg,#e8187a,#f9004d));border-color:transparent;color:#fff}
 .rp-msg-list{margin:6px 0;padding-left:18px}
 .rp-msg-list li{margin-bottom:4px}
 .rp-msg-list li:last-child{margin-bottom:0}
