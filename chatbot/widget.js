@@ -267,8 +267,7 @@
     if (state.ttsEnabled && window.speechSynthesis) {
       // Mobile browsers require speechSynthesis to be kicked off directly inside
       // a user-gesture handler (this click) or later async speak() calls get silently blocked.
-      window.speechSynthesis.cancel();
-      window.speechSynthesis.speak(new SpeechSynthesisUtterance('Voice replies on.'));
+      speakNow('Voice replies on.');
     }
     if (!state.ttsEnabled && window.speechSynthesis) window.speechSynthesis.cancel();
   }
@@ -290,7 +289,8 @@
     var plain = text.replace(/<[^>]+>/g, '').replace(/\*\*/g, '').replace(/^[-*]\s+/gm, '').replace(/^\d+\.\s+/gm, '');
     window.speechSynthesis.cancel();
     var utterance = new SpeechSynthesisUtterance(plain);
-    utterance.rate = 1;
+    utterance.rate = 1.08;
+    utterance.pitch = 1.15;
     var voice = getFemaleVoice();
     if (voice) utterance.voice = voice;
     window.speechSynthesis.speak(utterance);
