@@ -284,10 +284,15 @@
     if (!voices || !voices.length) return null;
     var englishVoices = voices.filter(function(v){ return /^en/i.test(v.lang); });
     var pool = englishVoices.length ? englishVoices : voices;
-    var femaleNamed = pool.filter(function(v){
-      return /female|zira|samantha|victoria|susan|karen|moira|tessa|fiona|aria|jenny|google us english/i.test(v.name);
-    });
-    return femaleNamed[0] || pool[0];
+
+    var femalePattern = /\bfemale\b|zira|aria|jenny|michelle|sonia|libby|natasha|samantha|victoria|karen|moira|tessa|fiona|susan|allison|joanna|salli|kimberly|ava|kate|emma|hazel|serena|nicky|princess/i;
+    var malePattern = /\bmale\b|david|mark|guy|ryan|christopher|eric|roger|alex|daniel|fred|aaron|arthur|gordon|james|george|oliver/i;
+
+    var female = pool.filter(function(v){ return femalePattern.test(v.name); });
+    if (female.length) return female[0];
+
+    var nonMale = pool.filter(function(v){ return !malePattern.test(v.name); });
+    return (nonMale.length ? nonMale : pool)[0];
   }
 
   function resetSpeakBtnIcon(btn){
