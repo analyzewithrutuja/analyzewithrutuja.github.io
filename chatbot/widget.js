@@ -538,6 +538,18 @@
     window.speechSynthesis.addEventListener('voiceschanged', function(){ window.speechSynthesis.getVoices(); });
   }
 
+  function updateViewportHeightVar(){
+    var h = (window.visualViewport && window.visualViewport.height) || window.innerHeight;
+    document.documentElement.style.setProperty('--rp-vh', h + 'px');
+  }
+  if (window.visualViewport) {
+    window.visualViewport.addEventListener('resize', updateViewportHeightVar);
+    window.visualViewport.addEventListener('scroll', updateViewportHeightVar);
+  } else {
+    window.addEventListener('resize', updateViewportHeightVar);
+  }
+  updateViewportHeightVar();
+
   if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', function(){ buildWidget(); scheduleNudge(); });
   } else {
