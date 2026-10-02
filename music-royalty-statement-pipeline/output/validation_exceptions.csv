@@ -1,0 +1,74 @@
+check_name,severity,statement_file,rows_affected,detail
+duplicate_statement,HIGH,B_2019-03_resend.xlsx,5608,identical content to B_2019-03.xlsx; whole file rejected
+missing_statement,HIGH,C_2019-06,0,no statement received from distributor C for 2019-06
+duplicate_line,MEDIUM,A_2019-01.csv,21,exact duplicate line removed
+duplicate_line,MEDIUM,A_2019-02.csv,21,exact duplicate line removed
+duplicate_line,MEDIUM,A_2019-03.csv,24,exact duplicate line removed
+duplicate_line,MEDIUM,A_2019-04.csv,23,exact duplicate line removed
+duplicate_line,MEDIUM,A_2019-05.csv,26,exact duplicate line removed
+duplicate_line,MEDIUM,A_2019-06.csv,22,exact duplicate line removed
+duplicate_line,MEDIUM,A_2019-07.csv,24,exact duplicate line removed
+duplicate_line,MEDIUM,A_2019-08.csv,27,exact duplicate line removed
+duplicate_line,MEDIUM,A_2019-09.csv,27,exact duplicate line removed
+duplicate_line,MEDIUM,A_2019-10.csv,22,exact duplicate line removed
+footer_mismatch,HIGH,B_2019-07.xlsx,0,"footer 8,458,110.97 vs sum of lines 8,456,860.97 (EUR +1,250.00)"
+missing_territory,MEDIUM,C_2019-01.csv,4,territory code blank; line quarantined
+missing_territory,MEDIUM,C_2019-02.csv,4,territory code blank; line quarantined
+missing_territory,MEDIUM,C_2019-03.csv,4,territory code blank; line quarantined
+missing_territory,MEDIUM,C_2019-04.csv,4,territory code blank; line quarantined
+missing_territory,MEDIUM,C_2019-05.csv,4,territory code blank; line quarantined
+missing_territory,MEDIUM,C_2019-07.csv,4,territory code blank; line quarantined
+missing_territory,MEDIUM,C_2019-08.csv,4,territory code blank; line quarantined
+missing_territory,MEDIUM,C_2019-09.csv,4,territory code blank; line quarantined
+missing_territory,MEDIUM,C_2019-10.csv,4,territory code blank; line quarantined
+multi_id_song_rollup,LOW,B_2019-01.xlsx,673,title+artist maps to several Spotify IDs of one song; rolled up to song_id
+multi_id_song_rollup,LOW,B_2019-02.xlsx,835,title+artist maps to several Spotify IDs of one song; rolled up to song_id
+multi_id_song_rollup,LOW,B_2019-03.xlsx,1248,title+artist maps to several Spotify IDs of one song; rolled up to song_id
+multi_id_song_rollup,LOW,B_2019-04.xlsx,1111,title+artist maps to several Spotify IDs of one song; rolled up to song_id
+multi_id_song_rollup,LOW,B_2019-05.xlsx,1297,title+artist maps to several Spotify IDs of one song; rolled up to song_id
+multi_id_song_rollup,LOW,B_2019-06.xlsx,1135,title+artist maps to several Spotify IDs of one song; rolled up to song_id
+multi_id_song_rollup,LOW,B_2019-07.xlsx,1047,title+artist maps to several Spotify IDs of one song; rolled up to song_id
+multi_id_song_rollup,LOW,B_2019-08.xlsx,994,title+artist maps to several Spotify IDs of one song; rolled up to song_id
+multi_id_song_rollup,LOW,B_2019-09.xlsx,908,title+artist maps to several Spotify IDs of one song; rolled up to song_id
+multi_id_song_rollup,LOW,B_2019-10.xlsx,776,title+artist maps to several Spotify IDs of one song; rolled up to song_id
+unmatched_track,MEDIUM,B_2019-01.xlsx,1,no catalog match (title/artist missing in source)
+name_format_drift,LOW,B_2019-01.xlsx,98,title casing/whitespace differs from catalog; matched after normalization
+name_format_drift,LOW,B_2019-02.xlsx,100,title casing/whitespace differs from catalog; matched after normalization
+name_format_drift,LOW,B_2019-03.xlsx,116,title casing/whitespace differs from catalog; matched after normalization
+name_format_drift,LOW,B_2019-04.xlsx,110,title casing/whitespace differs from catalog; matched after normalization
+name_format_drift,LOW,B_2019-05.xlsx,116,title casing/whitespace differs from catalog; matched after normalization
+name_format_drift,LOW,B_2019-06.xlsx,110,title casing/whitespace differs from catalog; matched after normalization
+name_format_drift,LOW,B_2019-07.xlsx,103,title casing/whitespace differs from catalog; matched after normalization
+name_format_drift,LOW,B_2019-08.xlsx,121,title casing/whitespace differs from catalog; matched after normalization
+name_format_drift,LOW,B_2019-09.xlsx,109,title casing/whitespace differs from catalog; matched after normalization
+name_format_drift,LOW,B_2019-10.xlsx,90,title casing/whitespace differs from catalog; matched after normalization
+negative_adjustment,LOW,A_2019-03.csv,5,reversal/chargeback line; kept and tagged is_adjustment
+negative_adjustment,LOW,A_2019-04.csv,5,reversal/chargeback line; kept and tagged is_adjustment
+negative_adjustment,LOW,A_2019-05.csv,5,reversal/chargeback line; kept and tagged is_adjustment
+negative_adjustment,LOW,A_2019-06.csv,5,reversal/chargeback line; kept and tagged is_adjustment
+negative_adjustment,LOW,A_2019-07.csv,5,reversal/chargeback line; kept and tagged is_adjustment
+negative_adjustment,LOW,A_2019-08.csv,5,reversal/chargeback line; kept and tagged is_adjustment
+negative_adjustment,LOW,A_2019-09.csv,5,reversal/chargeback line; kept and tagged is_adjustment
+negative_adjustment,LOW,A_2019-10.csv,5,reversal/chargeback line; kept and tagged is_adjustment
+negative_adjustment,LOW,C_2019-01.csv,3,reversal/chargeback line; kept and tagged is_adjustment
+negative_adjustment,LOW,C_2019-02.csv,3,reversal/chargeback line; kept and tagged is_adjustment
+negative_adjustment,LOW,C_2019-03.csv,3,reversal/chargeback line; kept and tagged is_adjustment
+negative_adjustment,LOW,C_2019-04.csv,3,reversal/chargeback line; kept and tagged is_adjustment
+negative_adjustment,LOW,C_2019-05.csv,3,reversal/chargeback line; kept and tagged is_adjustment
+negative_adjustment,LOW,C_2019-07.csv,3,reversal/chargeback line; kept and tagged is_adjustment
+negative_adjustment,LOW,C_2019-08.csv,3,reversal/chargeback line; kept and tagged is_adjustment
+negative_adjustment,LOW,C_2019-09.csv,3,reversal/chargeback line; kept and tagged is_adjustment
+negative_adjustment,LOW,C_2019-10.csv,3,reversal/chargeback line; kept and tagged is_adjustment
+rate_outlier,HIGH,A_2019-01.csv,3,"effective rate 0.35000 vs peer median 0.00350 (~100x, likely decimal shift)"
+rate_outlier,HIGH,A_2019-02.csv,3,"effective rate 0.12000 vs peer median 0.00120 (~100x, likely decimal shift)"
+rate_outlier,HIGH,A_2019-03.csv,3,"effective rate 0.06000 vs peer median 0.00060 (~100x, likely decimal shift)"
+rate_outlier,HIGH,A_2019-04.csv,3,"effective rate 0.12000 vs peer median 0.00120 (~100x, likely decimal shift)"
+rate_outlier,HIGH,A_2019-05.csv,3,"effective rate 0.12000 vs peer median 0.00120 (~100x, likely decimal shift)"
+rate_outlier,HIGH,A_2019-06.csv,3,"effective rate 0.12000 vs peer median 0.00120 (~100x, likely decimal shift)"
+rate_outlier,HIGH,A_2019-07.csv,3,"effective rate 0.12000 vs peer median 0.00120 (~100x, likely decimal shift)"
+rate_outlier,HIGH,A_2019-08.csv,3,"effective rate 0.12000 vs peer median 0.00120 (~100x, likely decimal shift)"
+rate_outlier,HIGH,A_2019-09.csv,3,"effective rate 0.06000 vs peer median 0.00060 (~100x, likely decimal shift)"
+rate_outlier,HIGH,A_2019-10.csv,3,"effective rate 0.45000 vs peer median 0.00450 (~100x, likely decimal shift)"
+volume_drop,MEDIUM,A_2019-10,0,"streams 4,405,885,948 = 70% of trailing-3 median; check for partial period"
+volume_drop,MEDIUM,B_2019-10,0,"streams 2,425,826,745 = 73% of trailing-3 median; check for partial period"
+volume_drop,MEDIUM,C_2019-10,0,"streams 1,857,222,233 = 72% of trailing-3 median; check for partial period"

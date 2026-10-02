@@ -1,0 +1,60 @@
+distributor,file,issue,rows_affected,detail
+A,A_2019-01.csv,duplicate_line,21,
+A,A_2019-01.csv,rate_outlier,3,earnings x100 decimal shift
+A,A_2019-02.csv,duplicate_line,21,
+A,A_2019-02.csv,rate_outlier,3,earnings x100 decimal shift
+A,A_2019-03.csv,duplicate_line,24,
+A,A_2019-03.csv,rate_outlier,3,earnings x100 decimal shift
+A,A_2019-03.csv,negative_adjustment,5,prior-month reversal
+A,A_2019-04.csv,duplicate_line,23,
+A,A_2019-04.csv,rate_outlier,3,earnings x100 decimal shift
+A,A_2019-04.csv,negative_adjustment,5,prior-month reversal
+A,A_2019-05.csv,duplicate_line,26,
+A,A_2019-05.csv,rate_outlier,3,earnings x100 decimal shift
+A,A_2019-05.csv,negative_adjustment,5,prior-month reversal
+A,A_2019-06.csv,duplicate_line,22,
+A,A_2019-06.csv,rate_outlier,3,earnings x100 decimal shift
+A,A_2019-06.csv,negative_adjustment,5,prior-month reversal
+A,A_2019-07.csv,duplicate_line,24,
+A,A_2019-07.csv,rate_outlier,3,earnings x100 decimal shift
+A,A_2019-07.csv,negative_adjustment,5,prior-month reversal
+A,A_2019-08.csv,duplicate_line,27,
+A,A_2019-08.csv,rate_outlier,3,earnings x100 decimal shift
+A,A_2019-08.csv,negative_adjustment,5,prior-month reversal
+A,A_2019-09.csv,duplicate_line,27,
+A,A_2019-09.csv,rate_outlier,3,earnings x100 decimal shift
+A,A_2019-09.csv,negative_adjustment,5,prior-month reversal
+A,A_2019-10.csv,duplicate_line,22,
+A,A_2019-10.csv,rate_outlier,3,earnings x100 decimal shift
+A,A_2019-10.csv,negative_adjustment,5,prior-month reversal
+B,B_2019-01.xlsx,name_format_drift,99,UPPER CASE + trailing spaces
+B,B_2019-02.xlsx,name_format_drift,98,UPPER CASE + trailing spaces
+B,B_2019-03.xlsx,name_format_drift,112,UPPER CASE + trailing spaces
+B,B_2019-03_resend.xlsx,duplicate_statement,5608,
+B,B_2019-04.xlsx,name_format_drift,107,UPPER CASE + trailing spaces
+B,B_2019-05.xlsx,name_format_drift,112,UPPER CASE + trailing spaces
+B,B_2019-06.xlsx,name_format_drift,107,UPPER CASE + trailing spaces
+B,B_2019-07.xlsx,footer_mismatch,0,"footer overstated by EUR 1,250.00"
+B,B_2019-07.xlsx,name_format_drift,97,UPPER CASE + trailing spaces
+B,B_2019-08.xlsx,name_format_drift,99,UPPER CASE + trailing spaces
+B,B_2019-09.xlsx,name_format_drift,89,UPPER CASE + trailing spaces
+B,B_2019-10.xlsx,name_format_drift,87,UPPER CASE + trailing spaces
+C,C_2019-01.csv,missing_territory,4,
+C,C_2019-01.csv,negative_adjustment,3,chargeback
+C,C_2019-02.csv,missing_territory,4,
+C,C_2019-02.csv,negative_adjustment,3,chargeback
+C,C_2019-03.csv,missing_territory,4,
+C,C_2019-03.csv,negative_adjustment,3,chargeback
+C,C_2019-04.csv,missing_territory,4,
+C,C_2019-04.csv,negative_adjustment,3,chargeback
+C,C_2019-05.csv,missing_territory,4,
+C,C_2019-05.csv,negative_adjustment,3,chargeback
+C,C_2019-06.csv,missing_statement,3602,file not delivered
+C,C_2019-07.csv,missing_territory,4,
+C,C_2019-07.csv,negative_adjustment,3,chargeback
+C,C_2019-08.csv,missing_territory,4,
+C,C_2019-08.csv,negative_adjustment,3,chargeback
+C,C_2019-09.csv,missing_territory,4,
+C,C_2019-09.csv,negative_adjustment,3,chargeback
+C,C_2019-10.csv,missing_territory,4,
+C,C_2019-10.csv,negative_adjustment,3,chargeback

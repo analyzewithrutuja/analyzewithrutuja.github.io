@@ -1,0 +1,27 @@
+=== Music Royalty Statement Pipeline — ETL run ===
+[Extract] 30 statement files, 165,921 raw lines (A=79,487, B=55,869, C=30,565)
+[Check 1] duplicate statements rejected: 1 (5,608 lines) ['B_2019-03_resend.xlsx']
+[Check 2] MISSING statement: distributor C, period 2019-06
+[Check 3] duplicate lines removed: 237
+[Check 4] FOOTER MISMATCH B_2019-07.xlsx: EUR +1,250.00
+[Check 5] lines with missing territory quarantined: 36
+[Check 6] master catalog: 17,217 track IDs -> 15,671 songs (1,467 songs released under 2+ IDs)
+[Check 6] Distributor B title+artist matching: 50,260/50,261 lines matched (100.00%); 10,024 rolled up from multi-ID songs, unmatched=1, format-drift lines recovered by normalization=1073
+[Check 7] negative adjustments: 67 lines, USD -79,538.79; 67/67 tied to an original line
+[Check 8] rate outliers quarantined: 30 lines reporting USD 5,158,001.64 vs USD 51,580.02 at the peer rate (overstatement of USD 5,106,421.62 blocked)
+[Check 9] VOLUME DROP distributor A 2019-10: 70% of trailing median
+[Check 9] VOLUME DROP distributor B 2019-10: 73% of trailing median
+[Check 9] VOLUME DROP distributor C 2019-10: 72% of trailing median
+
+=== Operational metrics ===
+statement files processed        : 30
+  AUTO-PASS / REVIEW / REJECTED  : 18 / 11 / 1
+raw lines in                     : 165,921
+lines loaded to fact table       : 160,009
+lines quarantined for review     : 67 ({'missing_territory': 36, 'rate_outlier': 30, 'unmatched_track': 1})
+line-level auto-pass rate        : 96.44%
+net USD loaded                   : 323,391,238.23
+net USD held in quarantine       : 5,197,454.87
+exceptions raised                : 73 ({'negative_adjustment': 17, 'multi_id_song_rollup': 10, 'duplicate_line': 10, 'name_format_drift': 10, 'rate_outlier': 10, 'missing_territory': 9, 'volume_drop': 3, 'missing_statement': 1, 'duplicate_statement': 1, 'unmatched_track': 1, 'footer_mismatch': 1})
+end-to-end runtime               : 8.9s (18,548 lines/sec)
+[Load] SQLite warehouse written to output/royalty_dw.db

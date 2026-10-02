@@ -1,0 +1,64 @@
+territory,iso2,iso3,tier,rate_usd
+Argentina,AR,ARG,3,0.0012
+Australia,AU,AUS,2,0.0035
+Austria,AT,AUT,2,0.0035
+Belgium,BE,BEL,2,0.0035
+Bolivia,BO,BOL,3,0.0012
+Brazil,BR,BRA,3,0.0012
+Bulgaria,BG,BGR,3,0.0012
+Canada,CA,CAN,2,0.0035
+Chile,CL,CHL,3,0.0012
+Colombia,CO,COL,3,0.0012
+Costa Rica,CR,CRI,3,0.0012
+Cyprus,CY,CYP,2,0.0035
+Czech Republic,CZ,CZE,3,0.0012
+Denmark,DK,DNK,1,0.0045
+Dominican Republic,DO,DOM,3,0.0012
+Ecuador,EC,ECU,3,0.0012
+El Salvador,SV,SLV,3,0.0012
+Estonia,EE,EST,3,0.0012
+Finland,FI,FIN,1,0.0045
+France,FR,FRA,2,0.0035
+Germany,DE,DEU,2,0.0035
+Greece,GR,GRC,3,0.0012
+Guatemala,GT,GTM,3,0.0012
+Honduras,HN,HND,3,0.0012
+Hong Kong,HK,HKG,2,0.0035
+Hungary,HU,HUN,3,0.0012
+Iceland,IS,ISL,1,0.0045
+India,IN,IND,4,0.0006
+Indonesia,ID,IDN,4,0.0006
+Ireland,IE,IRL,2,0.0035
+Israel,IL,ISR,2,0.0035
+Italy,IT,ITA,2,0.0035
+Japan,JP,JPN,2,0.0035
+Latvia,LV,LVA,3,0.0012
+Lithuania,LT,LTU,3,0.0012
+Luxembourg,LU,LUX,1,0.0045
+Malaysia,MY,MYS,4,0.0006
+Malta,MT,MLT,2,0.0035
+Mexico,MX,MEX,3,0.0012
+Netherlands,NL,NLD,2,0.0035
+New Zealand,NZ,NZL,2,0.0035
+Nicaragua,NI,NIC,3,0.0012
+Norway,NO,NOR,1,0.0045
+Panama,PA,PAN,3,0.0012
+Paraguay,PY,PRY,3,0.0012
+Peru,PE,PER,3,0.0012
+Philippines,PH,PHL,4,0.0006
+Poland,PL,POL,3,0.0012
+Portugal,PT,PRT,3,0.0012
+Romania,RO,ROU,3,0.0012
+Singapore,SG,SGP,2,0.0035
+Slovakia,SK,SVK,3,0.0012
+South Africa,ZA,ZAF,4,0.0006
+Spain,ES,ESP,2,0.0035
+Sweden,SE,SWE,1,0.0045
+Switzerland,CH,CHE,1,0.0045
+Taiwan,TW,TWN,4,0.0006
+Thailand,TH,THA,4,0.0006
+Turkey,TR,TUR,4,0.0006
+United Kingdom,GB,GBR,1,0.0045
+United States,US,USA,1,0.0045
+Uruguay,UY,URY,3,0.0012
+Vietnam,VN,VNM,4,0.0006

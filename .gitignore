@@ -2,3 +2,6 @@
 promotion-impact-causal-analysis/data/raw/train.csv
 promotion-impact-causal-analysis/data/processed/
 promotion-impact-causal-analysis/output/promotion_dw.db
+music-royalty-statement-pipeline/data/raw/spotify-charts.csv
+music-royalty-statement-pipeline/data/statements/
+music-royalty-statement-pipeline/output/royalty_dw.db
